@@ -1,0 +1,11 @@
+<Bindings>
+	<Binding name="BAGNON_TOGGLE" description="BINDING_NAME_BAGNON_TOGGLE" header="BAGNON">
+		Bagnon:ToggleFrame('inventory')
+	</Binding>
+	<Binding name="BANKNON_TOGGLE" description="BINDING_NAME_BANKNON_TOGGLE">
+		Bagnon:ToggleFrame('bank')
+	</Binding>
+	<Binding name="BAGNON_KEYS_TOGGLE" description="BINDING_NAME_BAGNON_KEYS_TOGGLE">
+		Bagnon:ToggleFrame('keys')
+	</Binding>
+</Bindings>

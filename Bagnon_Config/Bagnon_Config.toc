@@ -1,0 +1,9 @@
+## Interface: 30300
+## Title: Bagnon Config
+## Notes: GUI based configuration for Bagnon
+## Author: Tuller
+## Dependencies: Bagnon
+## LoadOnDemand: 1
+localization.xml
+widgets.xml
+panels.xml

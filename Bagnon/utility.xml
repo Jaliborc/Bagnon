@@ -1,0 +1,10 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="utility\ears.lua"/>
+	<Script file="utility\classy.lua"/>
+	<Script file="utility\callbacks.lua"/>
+	<Script file="utility\itemEvents.lua"/>
+
+	<Script file="utility\bagSlotInfo.lua"/>
+	<Script file="utility\itemSlotInfo.lua"/>
+	<Script file="utility\playerInfo.lua"/>
+</Ui>

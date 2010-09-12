@@ -1,0 +1,4 @@
+* Clean up tab display, if I can
+* Add guildmaster functionality (purchase/edit tabs)
+* Add money and item log viewing
+* Add basic cached item view

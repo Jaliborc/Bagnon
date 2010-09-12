@@ -1,0 +1,9 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="components\item.lua"/>
+	<Script file="components\itemFrame.lua"/>
+	<Script file="components\tab.lua"/>
+	<Script file="components\tabFrame.lua"/>
+	<Script file="components\frame.lua"/>
+	<Script file="components\savedFrameSettings.lua"/>
+	<Script file="components\moneyFrame.lua"/>
+</Ui>
