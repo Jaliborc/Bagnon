@@ -1,4 +1,4 @@
-## Interface: 30300
+## Interface: 40000
 ## Title: Bagnon Config
 ## Notes: GUI based configuration for Bagnon
 ## Author: Tuller

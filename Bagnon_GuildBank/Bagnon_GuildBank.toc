@@ -1,4 +1,4 @@
-## Interface: 30300
+## Interface: 40000
 ## Title: Bagnon Guild Bank
 ## Author: Tuller
 ## Notes: Single window display for your guild bank
