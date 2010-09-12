@@ -1,0 +1,41 @@
+h3. Have a question? Check the "wiki!":http://code.google.com/p/tullamods/wiki/Bagnon
+
+Bagnon is an addon that merges all of your bags into three frames: One for your inventory, one for your bank, and one for your keyring.  Beyond the basic all-in-one inventory functionality, Bagnon also provides the following features:
+* Items can be colored based on quality
+* Quest items can be highlighted
+* Text searching (see syntax below)
+* Offline viewing of inventory information from your other characters (via Bagnon_Forever)
+* Databroker plugin support. Both the inventory and bank frames allow you to display a databroker plugin in the bottom left corner. I find this works well with things like Currency Tracker
+
+
+h5. Included Addons
+
+* Bagnon - Provides single window displays for your inventory, bank, and keyring
+* Bagnon_Config - Provides a means of configuring said frames :P
+* Bagnon_Forever - Enables the ability to view your character's bank, or items from any other character on the same server, from anywhere. (You need to log onto each character at least once for this to work).
+* Bagnon_Tooltips - When hovering over an item, this tells you who has an item, and where.
+
+h5. Slash Commands
+
+* All commands can start with either /bagnon or /bgn
+* /bagnon keys - Toggles the keyring frame
+* /bagnon bags - Toggles the inventory frame
+* /bagnon bank - Toggles the bank frame
+* /bagnon config - Displays the main options menu
+
+h5. Search Syntax
+
+* Bagnon 2.0 uses the same search syntax as Combuctor.
+* To find an item by name, simply type the items name. Typing "silk" will find all items that have "silk" in their name.
+* To find an item by type, subtype, or equip location, type t:search. "t:weapon" will find all weapons. "t:main" will find all main hand items.
+* To find an item by quality, type q:quality."q:epic" will find all epic items. You can also use a quality number. "q:0" will find all grey items.
+* To find an item by name, type n:name. "n:muffins" will find all items with names containing "muffins".
+* To find items in an equipment set, type s:equipmentSet. "s:fire" will find all items in equipment sets you have with names that start with "fire".
+*  Searches can be negated using "!". "!q:epic" will find all items that are NOT epic.
+* A union of two searches can be performed using the | operator. Typing "q:epic|t:weapon" will find all items that are either epic OR weapons.
+*  An intersection of two searches can be performed using the & operator. Typing "q:epic&t:weapon" will find all items that are epic AND weapons
+* The following search keywords are also supported:
+** _boe_ - Bind on equip items.
+** _quest_ - Items with "quest item" in their tooltips.
+** _bop_ - Bind on pickup items.
+** _boa_ - Bind on account items.
