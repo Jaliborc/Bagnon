@@ -1,0 +1,3 @@
+[submodule "Bagnon/libs/LibItemSearch-1.0"]
+	path = Bagnon/libs/LibItemSearch-1.0
+	url = git@github.com:Tuller/LibItemSearch-1.0
