@@ -212,3 +212,18 @@ end
 function Settings:GetLastTextSearch()
 	return self.lastTextSearch or ''
 end
+
+-- Opens the inventory and broadcasts the search message to item frames
+function Settings:InventorySearch(name)
+	Bagnon:ShowFrame('inventory')
+	self:SendMessage('FLASH_SEARCH_UPDATE', name)
+end
+
+-- Function that is invoked when a chat link is clicked
+hooksecurefunc("SetItemRef", function(link, text, button)
+	local name = text:match('^|c%x+|Hitem.+|h%[(.*)%]')
+	-- Alt must be pressed and left mouse button must be used
+	if IsAltKeyDown() and button == "LeftButton" and name then
+		Settings:InventorySearch(name)
+	end
+end)

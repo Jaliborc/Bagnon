@@ -65,6 +65,8 @@ function ItemSlot:Create()
 	item:SetScript('OnShow', item.OnShow)
 	item:SetScript('OnHide', item.OnHide)
 	item:SetScript('PostClick', item.PostClick)
+	item:HookScript("OnClick", item.ItemClicked)
+
 	item.UpdateTooltip = nil
 
 	return item
@@ -187,6 +189,11 @@ function ItemSlot:UNIT_QUEST_LOG_CHANGED()
 	self:UpdateBorder()
 end
 
+-- Flash search broadcast hook
+function ItemSlot:FLASH_SEARCH_UPDATE(msg, search)
+	self:FlashSearch(search)
+end
+
 function ItemSlot:HandleEvent(msg, ...)
 	local action = self[msg]
 	if action then
@@ -303,22 +310,8 @@ function ItemSlot:UpdateSlotColor()
 			return
 		end
 
-		if self:IsAmmoBagSlot() then
-			local r, g, b = self:GetAmmoSlotColor()
-			SetItemButtonTextureVertexColor(self, r, g, b)
-			self:GetNormalTexture():SetVertexColor(r, g, b)
-			return
-		end
-
 		if self:IsTradeBagSlot() then
 			local r, g, b = self:GetTradeSlotColor()
-			SetItemButtonTextureVertexColor(self, r, g, b)
-			self:GetNormalTexture():SetVertexColor(r, g, b)
-			return
-		end
-
-		if self:IsShardBagSlot() then
-			local r, g, b = self:GetShardSlotColor()
 			SetItemButtonTextureVertexColor(self, r, g, b)
 			self:GetNormalTexture():SetVertexColor(r, g, b)
 			return
@@ -354,66 +347,41 @@ function ItemSlot:IsLocked()
 end
 
 --colors the item border based on the quality of the item.  hides it for common/poor items
-if hasBlizzQuestHighlight() then
-	function ItemSlot:SetBorderQuality(quality)
-		local border = self.border
-		local qBorder = self.questBorder
+function ItemSlot:SetBorderQuality(quality)
+	local border = self.border
+	local qBorder = self.questBorder
 
-		if self:HighlightingQuestItems() then
-			local isQuestItem, isQuestStarter = self:IsQuestItem()
-			if isQuestItem then
-				qBorder:SetTexture(TEXTURE_ITEM_QUEST_BORDER)
-				qBorder:SetAlpha(self:GetHighlightAlpha())
-				qBorder:Show()
-				border:Hide()
-				return
-			end
-
-			if isQuestStarter then
-				qBorder:SetTexture(TEXTURE_ITEM_QUEST_BANG)
-				qBorder:SetAlpha(self:GetHighlightAlpha())
-				qBorder:Show()
-				border:Hide()
-				return
-			end
+	if self:HighlightingQuestItems() then
+		local isQuestItem, isQuestStarter = self:IsQuestItem()
+		if isQuestItem then
+			qBorder:SetTexture(TEXTURE_ITEM_QUEST_BORDER)
+			qBorder:SetAlpha(self:GetHighlightAlpha())
+			qBorder:Show()
+			border:Hide()
+			return
 		end
 
-		if self:HighlightingItemsByQuality() then
-			if self:GetItem() and quality and quality > 1 then
-				local r, g, b = GetItemQualityColor(quality)
-				border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
-				border:Show()
-				qBorder:Hide()
-				return
-			end
+		if isQuestStarter then
+			qBorder:SetTexture(TEXTURE_ITEM_QUEST_BANG)
+			qBorder:SetAlpha(self:GetHighlightAlpha())
+			qBorder:Show()
+			border:Hide()
+			return
 		end
-
-		qBorder:Hide()
-		border:Hide()
 	end
-else
-	function ItemSlot:SetBorderQuality(quality)
-		local border = self.border
 
-		if self:HighlightingItemsByQuality() then
-			if self:GetItem() and quality and quality > 1 then
-				local r, g, b = GetItemQualityColor(quality)
-				border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
-				border:Show()
-				return
-			end
+	if self:HighlightingItemsByQuality() then
+		if self:GetItem() and quality and quality > 1 then
+			local r, g, b = GetItemQualityColor(quality)
+			border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
+			border:Show()
+			qBorder:Hide()
+			return
 		end
-
-		if self:HighlightingQuestItems() then
-			if self:IsQuestItem() then
-				border:SetVertexColor(1, 1, 0, self:GetHighlightAlpha())
-				border:Show()
-				return
-			end
-		end
-
-		border:Hide()
 	end
+
+	qBorder:Hide()
+	border:Hide()
 end
 
 function ItemSlot:UpdateBorder()
@@ -489,6 +457,29 @@ function ItemSlot:GetBagSearch()
 	return self:GetSettings():GetBagSearch()
 end
 
+--flash search
+-- If the current item does match the sought name, flash it
+function ItemSlot:FlashSearch(search)
+	--DEFAULT_CHAT_FRAME:AddMessage( "Flash: " .. search, 1.0, 0.8, 0.4 )
+	if search and search ~= '' then
+		local itemLink = self:GetItem()
+		if ItemSearch:Find(itemLink, search) then
+			UIFrameFlash(self, 0.2, 0.3, 1.5, true, 0.0, 0.0 )
+		end
+	end
+end
+
+-- Callback function for item slot clicked
+function ItemSlot:ItemClicked(button)
+	if IsAltKeyDown() and button == 'LeftButton' then
+		local link = self:GetItem()
+		if link then
+			self:SendMessage('FLASH_SEARCH_UPDATE', link:match('^|c%x+|Hitem.+|h%[(.*)%]'))
+		end
+	end
+end
+
+
 
 
 --[[ Accessor Methods ]]--
@@ -561,41 +552,22 @@ end
 --in 3.3, includes a second return to determine if the item is a quest starter for a quest the player lacks
 local QUEST_ITEM_SEARCH = string.format('t:%s|%s', select(12, GetAuctionItemClasses()), 'quest')
 
-if hasBlizzQuestHighlight() then
-	function ItemSlot:IsQuestItem()
-		local itemLink = self:GetItem()
-		if not itemLink then
-			return false, false
-		end
-
-		if self:IsCached() then
-			return ItemSearch:Find(itemLink, QUEST_ITEM_SEARCH), false
-		else
-			local isQuestItem, questID, isActive = GetContainerItemQuestInfo(self:GetBag(), self:GetID())
-			return isQuestItem, (questID and not isActive)
-		end
+function ItemSlot:IsQuestItem()
+	local itemLink = self:GetItem()
+	if not itemLink then
+		return false, false
 	end
-else
-	function ItemSlot:IsQuestItem()
-		local itemLink = self:GetItem()
-		if not itemLink then
-			return false
-		end
 
-		return ItemSearch:Find(itemLink, QUEST_ITEM_SEARCH)
+	if self:IsCached() then
+		return ItemSearch:Find(itemLink, QUEST_ITEM_SEARCH), false
+	else
+		local isQuestItem, questID, isActive = GetContainerItemQuestInfo(self:GetBag(), self:GetID())
+		return isQuestItem, (questID and not isActive)
 	end
 end
 
 
 --[[ Item Slot Coloring ]]--
-
-function ItemSlot:IsAmmoBagSlot()
-	return Bagnon.BagSlotInfo:IsAmmoBag(self:GetPlayer(), self:GetBag())
-end
-
-function ItemSlot:GetAmmoSlotColor()
-	return Bagnon.Settings:GetItemSlotColor('ammo')
-end
 
 function ItemSlot:IsTradeBagSlot()
 	return Bagnon.BagSlotInfo:IsTradeBag(self:GetPlayer(), self:GetBag())
@@ -603,14 +575,6 @@ end
 
 function ItemSlot:GetTradeSlotColor()
 	return Bagnon.Settings:GetItemSlotColor('trade')
-end
-
-function ItemSlot:IsShardBagSlot()
-	return Bagnon.BagSlotInfo:IsShardBag(self:GetPlayer(), self:GetBag())
-end
-
-function ItemSlot:GetShardSlotColor()
-	return Bagnon.Settings:GetItemSlotColor('shard')
 end
 
 function ItemSlot:IsKeyRingSlot()
