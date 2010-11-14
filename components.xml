@@ -1,0 +1,19 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="components\bag.lua"/>
+	<Script file="components\bagFrame.lua"/>
+	<Script file="components\bagToggle.lua"/>
+	<Script file="components\brokerDisplay.lua"/>
+	<Script file="components\frame.lua"/>
+	<Script file="components\frameSettings.lua"/>
+	<Script file="components\item.lua"/>
+	<Script file="components\itemFrame.lua"/>
+	<Script file="components\moneyFrame.lua"/>
+	<Script file="components\optionsToggle.lua"/>
+	<Script file="components\playerSelector.lua"/>
+	<Script file="components\savedSettings.lua"/>
+	<Script file="components\searchFrame.lua"/>
+	<Script file="components\searchToggle.lua"/>
+	<Script file="components\settings.lua"/>
+	<Script file="components\titleFrame.lua"/>
+    <Script file="components\savedFrameSettings.lua"/>
+</Ui>
