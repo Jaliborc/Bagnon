@@ -219,6 +219,79 @@ function Bagnon:HookBagClickEvents()
 			oOpenAllBags(force)
 		end
 	end
+
+	local function bag_checkIfInventoryShown(self)
+		if Bagnon:IsFrameEnabled('inventory') then
+			self:SetChecked(Bagnon.FrameSettings:Get('inventory'):IsShown())
+		end
+	end
+
+	--handle checking/unchecking of the backpack buttons based on frame display
+	hooksecurefunc('BagSlotButton_UpdateChecked', bag_checkIfInventoryShown)
+	hooksecurefunc('BackpackButton_UpdateChecked', bag_checkIfInventoryShown)
+
+	local function bag_checkIfKeysShown(self)
+		if Bagnon:IsFrameEnabled('keys') then
+			if Bagnon.FrameSettings:Get('keys'):IsShown() then
+		    		KeyRingButton:SetButtonState("PUSHED", 1)
+		    	else
+		    		KeyRingButton:SetButtonState("NORMAL")
+		    	end
+		end
+	end
+
+	hooksecurefunc('UpdateMicroButtons', bag_checkIfKeysShown)
+
+	self.Callbacks:Listen(self, 'FRAME_SHOW')
+	self.Callbacks:Listen(self, 'FRAME_HIDE')
+end
+--[[
+	Click Events
+--]]
+
+function Bagnon:FRAME_SHOW(msg, frameID)
+	if frameID == 'inventory' then
+		if self:IsFrameEnabled('inventory') then
+			self:CheckBagFrameBags(true)
+		end
+	end
+	if frameID == 'keys' then
+		if self:IsFrameEnabled('keys') then
+			self:CheckBagFrameKeys(true)
+		end
+	end
+end
+
+function Bagnon:FRAME_HIDE(msg, frameID)
+	if frameID == 'inventory' then
+		if self:IsFrameEnabled('inventory') then
+			self:CheckBagFrameBags(false)
+		end
+	end
+	if frameID == 'keys' then
+		if self:IsFrameEnabled('keys') then
+			self:CheckBagFrameKeys(false)
+		end
+	end
+end
+
+--check/uncheck the bag frames
+function Bagnon:CheckBagFrameBags(checked)
+	_G['MainMenuBarBackpackButton']:SetChecked(checked)
+	_G["CharacterBag0Slot"]:SetChecked(checked)
+	_G["CharacterBag1Slot"]:SetChecked(checked)
+	_G["CharacterBag2Slot"]:SetChecked(checked)
+	_G["CharacterBag3Slot"]:SetChecked(checked)
+end
+
+function Bagnon:CheckBagFrameKeys(checked)
+	if Bagnon:IsFrameEnabled('keys') then
+		if Bagnon.FrameSettings:Get('keys'):IsShown() then
+	    		KeyRingButton:SetButtonState("PUSHED", 1)
+	    	else
+	    		KeyRingButton:SetButtonState("NORMAL")
+	    	end
+	end
 end
 
 
