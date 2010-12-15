@@ -68,7 +68,7 @@ function SavedSettings:GetDefaultSettings()
 		showEmptyItemSlotTexture = true,
 		lockFramePositions = false,
 		colorBagSlots = true,
-		
+		enableFlashFind = true,
 		enableBlizzardBagPassThrough = false,
 		
 		enabledFrames = {

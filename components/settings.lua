@@ -212,3 +212,33 @@ end
 function Settings:GetLastTextSearch()
 	return self.lastTextSearch or ''
 end
+
+--flash search
+function Settings:SetEnableFlashFind(enable)
+	local enable = enable and true or false
+	if self:IsFlashFindEnabled() ~= enable then
+		self:GetDB().enableFlashFind = enable
+		self:SendMessage('FLASH_FIND_UPDATE', self:IsFlashFindEnabled())
+	end
+end
+
+function Settings:IsFlashFindEnabled()
+	return self:GetDB().enableFlashFind and true or false
+end
+
+-- Opens the inventory and broadcasts the search message to item frames
+function Settings:FlashFind(name)
+	if self:IsFlashFindEnabled() then
+		Bagnon:ShowFrame('inventory')
+		self:SendMessage('FLASH_SEARCH_UPDATE', name)
+	end
+end
+
+-- Function that is invoked when a chat link is clicked
+hooksecurefunc("SetItemRef", function(link, text, button)
+	local name = text and text:match('^|c%x+|Hitem.+|h%[(.*)%]')
+	-- Alt must be pressed and left mouse button must be used
+	if IsAltKeyDown() and button == "LeftButton" and name then
+		Settings:FlashFind(name)
+	end
+end)
