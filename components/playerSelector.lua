@@ -125,9 +125,9 @@ function PlayerSelector:GetPlayerIcon()
 		enRace = 'Undead'
 	end
 
-	local sex = UnitSex('player')
-	if sex == 3 then
-		return string.format([[Interface\Icons\Achievement_Character_%s_%s]], enRace, 'Female')
-	end
-	return string.format([[Interface\Icons\Achievement_Character_%s_%s]], enRace, 'Male')
+
+	local sex = UnitSex('player') == 3 and 'Female' or 'Male'
+	return string.format([[Interface\CharacterFrame\TEMPORARYPORTRAIT-%s-%s]], sex, enRace)
+-- switching to temporary portraits until the next holiday achievements that bring worgen ones in
+--	return string.format([[Interface\Icons\Achievement_Character_%s_%s]], enRace, sex)
 end
