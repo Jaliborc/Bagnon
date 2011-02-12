@@ -127,22 +127,8 @@ function BagSlotInfo:GetBagType(player, bagSlot)
 end
 
 -- Stolen from OneBag, since my bitflag knowledge could be better
--- BAGTYPE_QUIVER = Quiver + Ammo
-local BAGTYPE_QUIVER = 0x0001 + 0x0002 
-
-function BagSlotInfo:IsAmmoBag(player, bagSlot)
-	return bit.band(self:GetBagType(player, bagSlot), BAGTYPE_QUIVER) > 0
-end
-
--- BAGTYPE_SOUL = Soul Bags
-local BAGTYPE_SOUL = 0x004
-
-function BagSlotInfo:IsShardBag(player, bagSlot)
-	return bit.band(self:GetBagType(player, bagSlot), BAGTYPE_SOUL) > 0
-end
-
--- BAGTYPE_PROFESSION = Leather + Inscription + Herb + Enchanting + Engineering + Gem + Mining
-local BAGTYPE_PROFESSION = 0x0008 + 0x0010 + 0x0020 + 0x0040 + 0x0080 + 0x0200 + 0x0400 
+-- BAGTYPE_PROFESSION = Leather + Inscription + Herb + Enchanting + Engineering + Gem + Mining + Trade
+local BAGTYPE_PROFESSION = 0x0008 + 0x0010 + 0x0020 + 0x0040 + 0x0080 + 0x0200 + 0x0400  + 0x100000 
 
 function BagSlotInfo:IsTradeBag(player, bagSlot)
 	return bit.band(self:GetBagType(player, bagSlot), BAGTYPE_PROFESSION) > 0
