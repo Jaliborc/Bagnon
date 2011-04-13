@@ -490,6 +490,13 @@ function Frame:PlaceMenuButtons()
 		local toggle = self:GetBagToggle() or self:CreateBagToggle()
 		table.insert(menuButtons, toggle)
 	end
+	
+	-- guild bank support
+	if self:HasLogs() then
+		local log, moneyLog = self:GetLogToggles()
+		table.insert(menuButtons, log)
+		table.insert(menuButtons, moneyLog)
+	end
 
 	if self:HasSearchToggle() then
 		local toggle = self:GetSearchToggle() or self:CreateSearchToggle()
@@ -524,6 +531,11 @@ end
 --[[
 	Frame Components
 --]]
+
+function Frame:ShowFrame(frame)
+	frame:Show()
+	UIFrameFadeIn(frame, 0.3, 0, 1)
+end
 
 
 --[[ close button ]]--
@@ -868,6 +880,13 @@ end
 function Frame:HasOptionsToggle()
 	local name, title, notes, enabled = GetAddOnInfo('Bagnon_Config')
 	return enabled and self:GetSettings():HasOptionsToggle()
+end
+
+
+--[[ log toggles ]]--
+
+function Frame:HasLogs()
+	return nil
 end
 
 

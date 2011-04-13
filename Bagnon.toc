@@ -1,6 +1,6 @@
 ## Interface: 40000
 ## Title: Bagnon
-## Author: Tuller
+## Author: Tuller & & Jaliborc (João Libório)
 ## Notes: Single window displays for your inventory, bank, and keys
 ## SavedVariables: BagnonGlobalSettings
 ## SavedVariablesPerCharacter: BagnonFrameSettings
