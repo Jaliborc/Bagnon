@@ -219,6 +219,16 @@ function Bagnon:HookBagClickEvents()
 			oOpenAllBags(force)
 		end
 	end
+	
+	if ToggleAllBags then
+		local oToggleAllBags = ToggleAllBags
+		ToggleAllBags = function()
+			local toggled = self:FrameControlsBag('inventory', BACKPACK_CONTAINER) and self:ToggleFrame('inventory')
+			if not toggled then
+				oToggleAllBags()
+			end
+		end
+	end
 
 	local function bag_checkIfInventoryShown(self)
 		if Bagnon:IsFrameEnabled('inventory') then
