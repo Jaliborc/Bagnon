@@ -4,4 +4,4 @@
 
 [submodule "libs/Unfit-1.0"]
 	path = libs/Unfit-1.0
-	url = git://git.curseforge.net/wow/unfit/mainline.git
+	url = git://github.com/Jaliborc/Unfit-1.0.git
