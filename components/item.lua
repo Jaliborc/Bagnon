@@ -9,6 +9,7 @@ ItemSlot:Hide()
 Bagnon.ItemSlot = ItemSlot
 
 local ItemSearch = LibStub('LibItemSearch-1.0')
+local Unfit = LibStub('Unfit-1.0')
 
 local function hasBlizzQuestHighlight()
 	return GetContainerItemQuestInfo and true or false
@@ -368,6 +369,16 @@ function ItemSlot:SetBorderQuality(quality)
 			border:Hide()
 			return
 		end
+	end
+	
+	-- Maybe we should add an option? -> Jaliborc
+	local link = select(7, self:GetItemSlotInfo())
+	if Unfit:IsItemUnusable(link) then
+		local r, g, b = RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b
+		border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
+		border:Show()
+		qBorder:Hide()
+		return
 	end
 
 	if self:HighlightingItemsByQuality() then
