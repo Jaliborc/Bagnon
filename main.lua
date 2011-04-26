@@ -45,7 +45,7 @@ function Bagnon:CreateGuildBankLoader()
 	local name, title, notes, enabled, loadable = GetAddOnInfo('Bagnon_GuildBank')
 	if enabled and loadable then
 		GuildBankFrame_LoadUI = function()
-			LoadAddOn('Bagnon_GuildBank') 
+			LoadAddOn('Bagnon_GuildBank')
 		end
 	end
 end
@@ -219,7 +219,7 @@ function Bagnon:HookBagClickEvents()
 			oOpenAllBags(force)
 		end
 	end
-	
+
 	if ToggleAllBags then
 		local oToggleAllBags = ToggleAllBags
 		ToggleAllBags = function()
@@ -327,7 +327,7 @@ function Bagnon:RegisterAutoDisplayEvents()
 	--override normal bank display
 	BankFrame:UnregisterEvent('BANKFRAME_OPENED')
 	BankFrame:UnregisterEvent('BANKFRAME_CLOSED')
-	
+
 	local f = CreateFrame('Frame', nil, CharacterFrame)
 	f:SetScript('OnShow', function() Bagnon:PLAYER_FRAME_SHOW() end)
 	f:SetScript('OnHide', function() Bagnon:PLAYER_FRAME_HIDE() end)
