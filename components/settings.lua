@@ -45,7 +45,7 @@ end
 
 --highlight unusable items
 function Settings:SetHighlightUnusableItems(enable)
-	if self:HighlightUnusableItemsy() ~= enable then
+	if self:HighlightUnusableItems() ~= enable then
 		self:GetDB().highlightUnusableItems = enable
 		self:SendMessage('ITEM_HIGHLIGHT_UNUSABLE_UPDATE')
 	end

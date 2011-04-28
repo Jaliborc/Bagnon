@@ -162,6 +162,10 @@ function ItemSlot:ITEM_HIGHLIGHT_QUALITY_UPDATE(msg, enable)
 	self:UpdateBorder()
 end
 
+function ItemSlot:ITEM_HIGHLIGHT_UNUSABLE_UPDATE(msg, enable)
+	self:UpdateBorder()
+end
+
 function ItemSlot:ITEM_HIGHLIGHT_QUEST_UPDATE(msg, enable)
 	self:UpdateBorder()
 end
@@ -547,6 +551,10 @@ end
 
 function ItemSlot:HighlightingItemsByQuality()
 	return Bagnon.Settings:HighlightingItemsByQuality()
+end
+
+function ItemSlot:HighlightUnusableItems()
+	return Bagnon.Settings:HighlightUnusableItems()
 end
 
 function ItemSlot:HighlightingQuestItems()
