@@ -128,7 +128,7 @@ end
 
 -- Stolen from OneBag, since my bitflag knowledge could be better
 -- BAGTYPE_PROFESSION = Leather + Inscription + Herb + Enchanting + Engineering + Gem + Mining + Trade
-local BAGTYPE_PROFESSION = 0x0008 + 0x0010 + 0x0020 + 0x0040 + 0x0080 + 0x0200 + 0x0400  + 0x100000 
+local BAGTYPE_PROFESSION = 0x0008 + 0x0010 + 0x0020 + 0x0040 + 0x0080 + 0x0200 + 0x0400  + 0x8000 
 
 function BagSlotInfo:IsTradeBag(player, bagSlot)
 	return bit.band(self:GetBagType(player, bagSlot), BAGTYPE_PROFESSION) > 0

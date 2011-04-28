@@ -1,12 +1,17 @@
-## Interface: 40000
+## Interface: 40100
 ## Title: Bagnon
 ## Author: Tuller & Jaliborc (João Libório)
 ## Notes: Single window displays for your inventory, bank, and keys
 ## SavedVariables: BagnonGlobalSettings
 ## SavedVariablesPerCharacter: BagnonFrameSettings
+<<<<<<< HEAD
 ## Version: 2.16.1
 ## OptionalDeps: LibStub, Ace3, Bagnon_Forever, Bagnon_Armory, LibItemSearch
 
+=======
+## Version: 2.18.0
+## OptionalDeps: Ace3, Bagnon_Forever, Bagnon_Armory, LibItemSearch
+>>>>>>> origin/patch-1
 embeds.xml
 localization.xml
 main.lua
