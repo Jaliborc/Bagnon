@@ -43,6 +43,18 @@ function Settings:HighlightingItemsByQuality()
 	return self:GetDB().highlightItemsByQuality
 end
 
+--highlight unusable items
+function Settings:SetHighlightUnusableItems(enable)
+	if self:HighlightUnusableItemsy() ~= enable then
+		self:GetDB().highlightUnusableItems = enable
+		self:SendMessage('ITEM_HIGHLIGHT_UNUSABLE_UPDATE', enable)
+	end
+end
+
+function Settings:HighlightUnusableItems()
+	return self:GetDB().highlightUnusableItems
+end
+
 --highlight quest items
 function Settings:SetHighlightQuestItems(enable)
 	if self:HighlightingQuestItems() ~= enable then
