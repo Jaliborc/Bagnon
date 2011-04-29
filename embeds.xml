@@ -6,6 +6,7 @@
 	<Include file="libs\AceConsole-3.0\AceConsole-3.0.xml"/>
 	<Include file="libs\AceLocale-3.0\AceLocale-3.0.xml"/>
 	
+	<Script file="libs\Unfit-1.0\Unfit-1.0.lua"/>
 	<Script file="libs\LibDataBroker-1.1.lua"/>
 	<Script file="libs\LibItemSearch-1.0\LibItemSearch-1.0.lua"/>
 </Ui>
