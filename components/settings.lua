@@ -1,4 +1,4 @@
-﻿--[[
+--[[
 	profileSettings.lua
 		Handles non specific frame settings
 --]]
@@ -35,7 +35,7 @@ end
 function Settings:SetHighlightItemsByQuality(enable)
 	if self:HighlightingItemsByQuality() ~= enable then
 		self:GetDB().highlightItemsByQuality = enable
-		self:SendMessage('ITEM_HIGHLIGHT_QUALITY_UPDATE', enable)
+		self:SendMessage('ITEM_HIGHLIGHT_QUALITY_UPDATE')
 	end
 end
 
@@ -43,11 +43,23 @@ function Settings:HighlightingItemsByQuality()
 	return self:GetDB().highlightItemsByQuality
 end
 
+--highlight unusable items
+function Settings:SetHighlightUnusableItems(enable)
+	if self:HighlightUnusableItems() ~= enable then
+		self:GetDB().highlightUnusableItems = enable
+		self:SendMessage('ITEM_HIGHLIGHT_UNUSABLE_UPDATE')
+	end
+end
+
+function Settings:HighlightUnusableItems()
+	return self:GetDB().highlightUnusableItems
+end
+
 --highlight quest items
 function Settings:SetHighlightQuestItems(enable)
 	if self:HighlightingQuestItems() ~= enable then
 		self:GetDB().highlightQuestItems = enable
-		self:SendMessage('ITEM_HIGHLIGHT_QUEST_UPDATE', enable)
+		self:SendMessage('ITEM_HIGHLIGHT_QUEST_UPDATE')
 	end
 end
 
