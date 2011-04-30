@@ -9,6 +9,7 @@ ItemSlot:Hide()
 Bagnon.ItemSlot = ItemSlot
 
 local ItemSearch = LibStub('LibItemSearch-1.0')
+local Unfit = LibStub('Unfit-1.0')
 
 local function hasBlizzQuestHighlight()
 	return GetContainerItemQuestInfo and true or false
@@ -158,6 +159,10 @@ function ItemSlot:BAG_SEARCH_UPDATE(msg, frameID, search)
 end
 
 function ItemSlot:ITEM_HIGHLIGHT_QUALITY_UPDATE(msg, enable)
+	self:UpdateBorder()
+end
+
+function ItemSlot:ITEM_HIGHLIGHT_UNUSABLE_UPDATE(msg, enable)
 	self:UpdateBorder()
 end
 
@@ -369,6 +374,17 @@ function ItemSlot:SetBorderQuality(quality)
 			return
 		end
 	end
+	
+	if self:HighlightUnusableItems() then
+		local link = select(7, self:GetItemSlotInfo())
+		if Unfit:IsItemUnusable(link) then
+			local r, g, b = RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b
+			border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
+			border:Show()
+			qBorder:Hide()
+			return
+		end
+	end
 
 	if self:HighlightingItemsByQuality() then
 		if self:GetItem() and quality and quality > 1 then
@@ -535,6 +551,10 @@ end
 
 function ItemSlot:HighlightingItemsByQuality()
 	return Bagnon.Settings:HighlightingItemsByQuality()
+end
+
+function ItemSlot:HighlightUnusableItems()
+	return Bagnon.Settings:HighlightUnusableItems()
 end
 
 function ItemSlot:HighlightingQuestItems()

@@ -207,14 +207,8 @@ function Bagnon:HookBagClickEvents()
 	end)
 
 	local oOpenAllBags = OpenAllBags
-	OpenAllBags = function(force)
-		local opened = false
-		if force then
-			opened = self:FrameControlsBag('inventory', BACKPACK_CONTAINER) and self:ShowFrame('inventory')
-		else
-			opened = self:FrameControlsBag('inventory', BACKPACK_CONTAINER) and self:ToggleFrame('inventory')
-		end
-
+	OpenAllBags = function(frame)
+		local opened = self:FrameControlsBag('inventory', BACKPACK_CONTAINER) and self:ShowFrame('inventory')
 		if not opened then
 			oOpenAllBags(force)
 		end
