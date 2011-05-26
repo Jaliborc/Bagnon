@@ -79,7 +79,6 @@ function Bagnon:CreateLDBLauncher()
 			tooltip:AddLine('Bagnon')
 			tooltip:AddLine(L.TipShowInventory, 1, 1, 1)
 			tooltip:AddLine(L.TipShowBank, 1, 1, 1)
-			tooltip:AddLine(L.TipShowKeyring, 1, 1, 1)
 			tooltip:AddLine(L.TipShowOptions, 1, 1, 1)
 		end,
 	})
@@ -491,7 +490,6 @@ function Bagnon:PrintHelp()
 	self:Print(L.Commands)
 	PrintCmd('bags', L.CmdShowInventory)
 	PrintCmd('bank', L.CmdShowBank)
-	PrintCmd('keys', L.CmdShowKeyring)
 	PrintCmd('version', L.CmdShowVersion)
 end
 

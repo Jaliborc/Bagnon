@@ -1,4 +1,4 @@
-﻿--[[
+--[[
 	THIS FILE IS ENCODED IN UTF-8
 
 	Bagnon Localization Information: Chinese Traditional
@@ -30,7 +30,6 @@ L.UpdatedIncompatible = '由一個不相容版本升級，已載入默認設置�
 L.Commands = '命令：'
 L.CmdShowInventory = '開關背包介面'
 L.CmdShowBank = '開關銀行介面'
-L.CmdShowKeyring = '開關鑰匙鏈介面'
 L.CmdShowVersion = '顯示當前版本'
 
 
@@ -60,5 +59,4 @@ L.Total = '總共'
 --databroker plugin tooltips
 L.TipShowBank = 'Shift-點擊 開關銀行'
 L.TipShowInventory = '點擊 開關背包'
-L.TipShowKeyring = 'Alt-點擊 開關鑰匙鏈'
 L.TipShowOptions = '右擊 打開設置菜單'
