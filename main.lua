@@ -323,6 +323,8 @@ function Bagnon:RegisterAutoDisplayEvents()
 	self:RegisterEvent('TRADE_SKILL_CLOSE')
 	self:RegisterEvent('GUILDBANKFRAME_OPENED')
 	self:RegisterEvent('GUILDBANKFRAME_CLOSED')
+	self:RegisterEvent('PLAYER_REGEN_DISABLED')
+	self:RegisterEvent('UNIT_ENTERED_VEHICLE')
 
 	--override normal bank display
 	BankFrame:UnregisterEvent('BANKFRAME_OPENED')
@@ -359,6 +361,17 @@ end
 
 
 --[[ Display Events ]]--
+
+-- combat
+function Bagnon:PLAYER_REGEN_DISABLED()
+	self:HideFrameAtEvent('inventory', 'combat')
+end
+
+function Bagnon:UNIT_ENTERED_VEHICLE(unit)
+	if unit == 'player' then
+		self:HideFrameAtEvent('inventory', 'vehicle')
+	end
+end
 
 --visiting the bank
 function Bagnon:BANK_OPENED()
