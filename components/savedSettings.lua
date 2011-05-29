@@ -119,17 +119,6 @@ end
 
 function SavedSettings:UpgradeDB()
 	local major, minor, bugfix = self:GetDBVersion():match('(%w+)%.(%w+)%.(%w+)')
-	
-	--do upgrade stuff
-	if tonumber(minor) <= 6 and tonumber(bugfix) <= 2 then
-		local db = self.db
-		local autoDisplayEvents = self.db.autoDisplayEvents
-		if autoDisplayEvents then
-			for i = 1, #autoDisplayEvents do
-				autoDisplayEvents[i] = nil
-			end
-		end
-	end
 
 	self:GetDB().version = self:GetAddOnVersion()
 	Bagnon:Print(string.format(L.Updated, self:GetDBVersion()))
