@@ -121,9 +121,9 @@ function PlayerSelector:GetPlayerIcon()
 	local race, enRace = UnitRace('player')
 
 	--forsaken hack
-	if enRace == 'Scourge' then
-		enRace = 'Undead'
-	end
+	-- if enRace == 'Scourge' then
+		-- enRace = 'Undead'
+	-- end
 
 
 	local sex = UnitSex('player') == 3 and 'Female' or 'Male'
