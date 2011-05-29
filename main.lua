@@ -79,7 +79,6 @@ function Bagnon:CreateLDBLauncher()
 			tooltip:AddLine('Bagnon')
 			tooltip:AddLine(L.TipShowInventory, 1, 1, 1)
 			tooltip:AddLine(L.TipShowBank, 1, 1, 1)
-			tooltip:AddLine(L.TipShowKeyring, 1, 1, 1)
 			tooltip:AddLine(L.TipShowOptions, 1, 1, 1)
 		end,
 	})
@@ -317,6 +316,8 @@ function Bagnon:RegisterAutoDisplayEvents()
 	self:RegisterEvent('TRADE_SKILL_CLOSE')
 	self:RegisterEvent('GUILDBANKFRAME_OPENED')
 	self:RegisterEvent('GUILDBANKFRAME_CLOSED')
+	self:RegisterEvent('PLAYER_REGEN_DISABLED')
+	self:RegisterEvent('UNIT_ENTERED_VEHICLE')
 
 	--override normal bank display
 	BankFrame:UnregisterEvent('BANKFRAME_OPENED')
@@ -353,6 +354,17 @@ end
 
 
 --[[ Display Events ]]--
+
+-- combat
+function Bagnon:PLAYER_REGEN_DISABLED()
+	self:HideFrameAtEvent('inventory', 'combat')
+end
+
+function Bagnon:UNIT_ENTERED_VEHICLE(unit)
+	if unit == 'player' then
+		self:HideFrameAtEvent('inventory', 'vehicle')
+	end
+end
 
 --visiting the bank
 function Bagnon:BANK_OPENED()
@@ -472,7 +484,6 @@ function Bagnon:PrintHelp()
 	self:Print(L.Commands)
 	PrintCmd('bags', L.CmdShowInventory)
 	PrintCmd('bank', L.CmdShowBank)
-	PrintCmd('keys', L.CmdShowKeyring)
 	PrintCmd('version', L.CmdShowVersion)
 end
 

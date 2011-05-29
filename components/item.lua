@@ -308,23 +308,19 @@ end
 --item slot color
 function ItemSlot:UpdateSlotColor()
 	if (not self:GetItem()) and self:ColoringBagSlots() then
-		if self:IsKeyRingSlot() then
-			local r, g, b = self:GetKeyringSlotColor()
-			SetItemButtonTextureVertexColor(self, r, g, b)
-			self:GetNormalTexture():SetVertexColor(r, g, b)
-			return
-		end
-
 		if self:IsTradeBagSlot() then
-			local r, g, b = self:GetTradeSlotColor()
-			SetItemButtonTextureVertexColor(self, r, g, b)
-			self:GetNormalTexture():SetVertexColor(r, g, b)
-			return
+			self:SetSlotColor(self:GetTradeSlotColor())
+		else
+			self:SetSlotColor(self:GetNormalSlotColor())
 		end
+	else 
+		self:SetSlotColor(1, 1, 1)
 	end
+end
 
-	SetItemButtonTextureVertexColor(self, 1, 1, 1)
-	self:GetNormalTexture():SetVertexColor(1, 1, 1)
+function ItemSlot:SetSlotColor(...)
+	SetItemButtonTextureVertexColor(self, ...)
+	self:GetNormalTexture():SetVertexColor(...)
 end
 
 --item count
@@ -590,16 +586,12 @@ function ItemSlot:IsTradeBagSlot()
 	return Bagnon.BagSlotInfo:IsTradeBag(self:GetPlayer(), self:GetBag())
 end
 
+function ItemSlot:GetNormalSlotColor()
+	return Bagnon.Settings:GetItemSlotColor('normal')
+end
+
 function ItemSlot:GetTradeSlotColor()
 	return Bagnon.Settings:GetItemSlotColor('trade')
-end
-
-function ItemSlot:IsKeyRingSlot()
-	return Bagnon.BagSlotInfo:IsKeyRing(self:GetBag())
-end
-
-function ItemSlot:GetKeyringSlotColor()
-	return Bagnon.Settings:GetItemSlotColor('keyring')
 end
 
 function ItemSlot:ColoringBagSlots()
