@@ -143,10 +143,6 @@ function TitleFrame:GetTitleText()
 	if self:GetFrameID() == 'bank' then
 		return L.TitleBank
 	end
-
-	if self:GetFrameID() == 'keys' then
-		return L.TitleKeys
-	end
 	
 	if self:GetFrameID() == 'guildbank' then
 		return [[%s's Guild Bank]]

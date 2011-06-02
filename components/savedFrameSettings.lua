@@ -387,9 +387,7 @@ end
 function SavedFrameSettings:GetDefaultSettings(frameID)
 	local frameID = frameID or self:GetFrameID()
 
-	if frameID == 'keys' then
-		return self:GetDefaultKeyRingSettings()
-	elseif frameID == 'bank' then
+	if frameID == 'bank' then
 		return self:GetDefaultBankSettings()
 	elseif frameID == 'guildbank' then
 		return self:GetDefaultGuildBankSettings()
@@ -491,47 +489,6 @@ function SavedFrameSettings:GetDefaultBankSettings()
 		reverseSlotOrder = false,
 	}
 	SavedFrameSettings.bankDefaults = defaults
-	return defaults
-end
-
---keys
-function SavedFrameSettings:GetDefaultKeyRingSettings()
-	local defaults = SavedFrameSettings.keyDefaults or {
-		--bag settings
-		availableBags = {KEYRING_CONTAINER},
-		hiddenBags = {
-			[KEYRING_CONTAINER] = false
-		},
-
-		--frame,
-		frameColor = {0, 0, 0, 0.5},
-		frameBorderColor = {0, 1, 1, 1},
-		scale = 1,
-		opacity = 1,
-		point = 'BOTTOMRIGHT',
-		x = -350,
-		y = 150,
-		frameLayer = 'HIGH',
-
-		--itemFrame
-		itemFrameColumns = 4,
-		itemFrameSpacing = 2,
-		bagBreak = false,
-
-		--optional components
-		hasMoneyFrame = false,
-		hasBagFrame = false,
-		hasDBOFrame = false,
-		hasSearchToggle = false,
-		hasOptionsToggle = true,
-
-		--dbo display object
-		dataBrokerObject = 'BagnonLauncher',
-		
-		--slot ordering
-		reverseSlotOrder = false,
-	}
-	SavedFrameSettings.keyDefaults = defaults
 	return defaults
 end
 

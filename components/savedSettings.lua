@@ -74,7 +74,6 @@ function SavedSettings:GetDefaultSettings()
 		enabledFrames = {
 			inventory = true,
 			bank = true,
-			keys = true,
 		},
 		
 		autoDisplayEvents = {

@@ -14,7 +14,6 @@ if not L then return end
 --keybinding text
 L.ToggleBags = '开关 背包'
 L.ToggleBank = '开关 银行'
-L.ToggleKeys = '开关 钥匙链'
 
 
 --system messages
