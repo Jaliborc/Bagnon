@@ -14,7 +14,6 @@ local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 BINDING_HEADER_BAGNON = 'Bagnon'
 BINDING_NAME_BAGNON_TOGGLE = L.ToggleBags
 BINDING_NAME_BANKNON_TOGGLE = L.ToggleBank
-BINDING_NAME_BAGNON_KEYS_TOGGLE = L.ToggleKeys
 
 
 --[[

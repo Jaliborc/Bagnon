@@ -400,7 +400,7 @@ end
 function SavedFrameSettings:GetDefaultInventorySettings()
 	local defaults = SavedFrameSettings.invDefaults or {
 		--bag settings
-		availableBags = {BACKPACK_CONTAINER, 1, 2, 3, 4, KEYRING_CONTAINER},
+		availableBags = {BACKPACK_CONTAINER, 1, 2, 3, 4},
 	
 		hiddenBags = {			
 			[BACKPACK_CONTAINER] = false,
