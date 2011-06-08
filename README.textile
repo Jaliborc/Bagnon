@@ -1,6 +1,6 @@
 h3. Have a question? Check the "wiki!":http://code.google.com/p/tullamods/wiki/Bagnon
 
-Bagnon is an addon that merges all of your bags into three frames: One for your inventory, one for your bank, and one for your keyring.  Beyond the basic all-in-one inventory functionality, Bagnon also provides the following features:
+Bagnon is an addon that merges all of your bags into three frames: One for your inventory, one for your bank and one for your guild bank.  Beyond the basic all-in-one inventory functionality, Bagnon also provides the following features:
 * Items can be colored based on quality
 * Quest items can be highlighted
 * Text searching (see syntax below)
@@ -10,7 +10,7 @@ Bagnon is an addon that merges all of your bags into three frames: One for your 
 
 h5. Included Addons
 
-* Bagnon - Provides single window displays for your inventory, bank, and keyring
+* Bagnon - Provides single window displays for your inventory and bank
 * Bagnon_Config - Provides a means of configuring said frames :P
 * Bagnon_Forever - Enables the ability to view your character's bank, or items from any other character on the same server, from anywhere. (You need to log onto each character at least once for this to work).
 * Bagnon_Tooltips - When hovering over an item, this tells you who has an item, and where.
@@ -18,7 +18,6 @@ h5. Included Addons
 h5. Slash Commands
 
 * All commands can start with either /bagnon or /bgn
-* /bagnon keys - Toggles the keyring frame
 * /bagnon bags - Toggles the inventory frame
 * /bagnon bank - Toggles the bank frame
 * /bagnon config - Displays the main options menu

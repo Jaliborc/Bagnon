@@ -72,10 +72,6 @@ function Bag:CreateBag(slotID, parent)
 	if bag:IsBackpack() or bag:IsBank() then
 		SetItemButtonTexture(bag, [[Interface\Buttons\Button-Backpack-Up]])
 		SetItemButtonTextureVertexColor(bag, 1, 1, 1)
-	elseif bag:IsKeyRing() then
-		SetItemButtonTexture(bag, [[Interface\ContainerFrame\KeyRing-Bag-Icon]])
-		SetItemButtonTextureVertexColor(bag, 1, 1, 1)
-		_G[bag:GetName() .. 'IconTexture']:SetTexCoord(0, 0.9, 0.1, 1)
 	end
 
 	bag:RegisterForClicks('anyUp')
@@ -213,8 +209,6 @@ function Bag:OnClick()
 	elseif CursorHasItem() and not self:IsCached() then
 		if self:IsBackpack() then
 			PutItemInBackpack()
-		elseif self:IsKeyRing() then
-			PutKeyInKeyRing()
 		else
 			PutItemInBag(self:GetInventorySlot())
 		end
@@ -260,8 +254,6 @@ function Bag:UpdateTooltip()
 		GameTooltip:SetText(BACKPACK_TOOLTIP, 1, 1, 1)
 	elseif self:IsBank() then
 		GameTooltip:SetText(L.TipBank, 1, 1, 1)
-	elseif self:IsKeyRing() then
-		GameTooltip:SetText(KEYRING, 1, 1, 1)
 	elseif self:IsCached() then
 		self:UpdateCachedBagTooltip()
 	else
@@ -418,7 +410,7 @@ function Bag:IsSlotShown()
 end
 
 function Bag:CanToggleSlot()
-	return self:IsBank() or self:IsBackpack() or self:IsKeyRing() or (self:IsBagSlot() and self.hasItem)
+	return self:IsBank() or self:IsBackpack() or (self:IsBagSlot() and self.hasItem)
 end
 
 
@@ -453,10 +445,6 @@ end
 --returns true if the given bag represetns the main bank container
 function Bag:IsBank()
 	return Bagnon.BagSlotInfo:IsBank(self:GetID())
-end
-
-function Bag:IsKeyRing()
-	return Bagnon.BagSlotInfo:IsKeyRing(self:GetID())
 end
 
 --returns true if the given bag slot is an inventory bag slot

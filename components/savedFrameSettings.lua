@@ -387,9 +387,7 @@ end
 function SavedFrameSettings:GetDefaultSettings(frameID)
 	local frameID = frameID or self:GetFrameID()
 
-	if frameID == 'keys' then
-		return self:GetDefaultKeyRingSettings()
-	elseif frameID == 'bank' then
+	if frameID == 'bank' then
 		return self:GetDefaultBankSettings()
 	elseif frameID == 'guildbank' then
 		return self:GetDefaultGuildBankSettings()
@@ -402,7 +400,7 @@ end
 function SavedFrameSettings:GetDefaultInventorySettings()
 	local defaults = SavedFrameSettings.invDefaults or {
 		--bag settings
-		availableBags = {BACKPACK_CONTAINER, 1, 2, 3, 4, KEYRING_CONTAINER},
+		availableBags = {BACKPACK_CONTAINER, 1, 2, 3, 4},
 	
 		hiddenBags = {			
 			[BACKPACK_CONTAINER] = false,
@@ -434,7 +432,6 @@ function SavedFrameSettings:GetDefaultInventorySettings()
 		hasDBOFrame = true,
 		hasSearchToggle = true,
 		hasOptionsToggle = true,
-		hasKeyringToggle = true,
 
 		--dbo display object
 		dataBrokerObject = 'BagnonLauncher',
@@ -484,7 +481,6 @@ function SavedFrameSettings:GetDefaultBankSettings()
 		hasDBOFrame = true,
 		hasSearchToggle = true,
 		hasOptionsToggle = true,
-		hasKeyringToggle = false,
 
 		--dbo display object
 		dataBrokerObject = 'BagnonLauncher',
@@ -493,48 +489,6 @@ function SavedFrameSettings:GetDefaultBankSettings()
 		reverseSlotOrder = false,
 	}
 	SavedFrameSettings.bankDefaults = defaults
-	return defaults
-end
-
---keys
-function SavedFrameSettings:GetDefaultKeyRingSettings()
-	local defaults = SavedFrameSettings.keyDefaults or {
-		--bag settings
-		availableBags = {KEYRING_CONTAINER},
-		hiddenBags = {
-			[KEYRING_CONTAINER] = false
-		},
-
-		--frame,
-		frameColor = {0, 0, 0, 0.5},
-		frameBorderColor = {0, 1, 1, 1},
-		scale = 1,
-		opacity = 1,
-		point = 'BOTTOMRIGHT',
-		x = -350,
-		y = 150,
-		frameLayer = 'HIGH',
-
-		--itemFrame
-		itemFrameColumns = 4,
-		itemFrameSpacing = 2,
-		bagBreak = false,
-
-		--optional components
-		hasMoneyFrame = false,
-		hasBagFrame = false,
-		hasDBOFrame = false,
-		hasSearchToggle = false,
-		hasOptionsToggle = true,
-		hasKeyringToggle = false,
-
-		--dbo display object
-		dataBrokerObject = 'BagnonLauncher',
-		
-		--slot ordering
-		reverseSlotOrder = false,
-	}
-	SavedFrameSettings.keyDefaults = defaults
 	return defaults
 end
 

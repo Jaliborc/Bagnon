@@ -8,7 +8,6 @@ local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'enUS', true)
 --keybinding text
 L.ToggleBags = 'Toggle Inventory'
 L.ToggleBank = 'Toggle Bank'
-L.ToggleKeys = 'Toggle Keyring'
 
 
 --system messages
@@ -21,7 +20,6 @@ L.UpdatedIncompatible = 'Updating from an incompatible version, defaults loaded'
 L.Commands = 'Commands:'
 L.CmdShowInventory = 'Toggles the inventory frame'
 L.CmdShowBank = 'Toggles the bank frame'
-L.CmdShowKeyring = 'Toggles the keyring'
 L.CmdShowVersion = 'Prints the current verison'
 
 
@@ -51,5 +49,4 @@ L.Total = 'Total'
 --databroker plugin tooltips
 L.TipShowBank = '<Shift Left Click> to toggle your bank.'
 L.TipShowInventory = '<Left Click> to toggle your inventory.'
-L.TipShowKeyring = '<Alt Left Click> to toggle your keyring.'
 L.TipShowOptions = '<Right Click> to open the options menu.'

@@ -21,7 +21,6 @@ L.UpdatedIncompatible = 'Aktualisierung von einer inkompatiblen Version. Standar
 L.Commands = 'Befehle:'
 L.CmdShowInventory = 'Schaltet die Inventaranzeige um'
 L.CmdShowBank = 'Schaltet die Bankanzeige um'
-L.CmdShowKeyring = 'Schaltet die Schl\195\188sselringanzeige um'
 L.CmdShowVersion = 'Zeigt die aktuelle Version an'
 
 
@@ -51,5 +50,4 @@ L.Total = 'Gesamt'
 --databroker plugin tooltips
 L.TipShowBank = '<Umschalt-Linksklick> um die Bank umzuschalten'
 L.TipShowInventory = '<Linksklick> um das Inventar umzuschalten'
-L.TipShowKeyring = '<Alt-Linksklick> um den Schl\195\188sselring umzuschalten'
 L.TipShowOptions = '<Rechtsklick> um das Konfigurationsmen\195\188 anzuzeigen'
