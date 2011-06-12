@@ -1,4 +1,4 @@
-﻿--[[
+--[[
 	bagSlotInfo.lua
 		Generic methods for accessing bag slot information
 --]]
@@ -30,11 +30,6 @@ function BagSlotInfo:IsBackpackBag(bagSlot)
 	return bagSlot > 0 and bagSlot < (NUM_BAG_SLOTS + 1)
 end
 
---returns true if the given bagSlot is the keyring
-function BagSlotInfo:IsKeyRing(bagSlot)
-	return bagSlot == KEYRING_CONTAINER
-end
-
 --returns true if the given bagSlot for the given player is cached
 function BagSlotInfo:IsCached(player, bagSlot)
 	if Bagnon.PlayerInfo:IsCached(player) then
@@ -64,7 +59,7 @@ function BagSlotInfo:IsPurchasable(player, bagSlot)
 end
 
 function BagSlotInfo:IsLocked(player, bagSlot)
-	if self:IsBackpack(bagSlot) or self:IsKeyRing(bagSlot) or self:IsBank(bagSlot) or self:IsCached(player, bagSlot) then
+	if self:IsBackpack(bagSlot) or self:IsBank(bagSlot) or self:IsCached(player, bagSlot) then
 		return false
 	end
 	return IsInventoryItemLocked(self:ToInventorySlot(bagSlot))
@@ -82,8 +77,6 @@ function BagSlotInfo:GetSize(player, bagSlot)
 		end
 	elseif self:IsBank(bagSlot) then
 		size = NUM_BANKGENERIC_SLOTS
-	elseif self:IsKeyRing(bagSlot) then
-		size = GetKeyRingSize()
 	else
 		size = GetContainerNumSlots(bagSlot)
 	end
@@ -110,10 +103,6 @@ end
 --[[ Slot Type Info ]]--
 
 function BagSlotInfo:GetBagType(player, bagSlot)
-	if self:IsKeyRing(bagSlot) then
-		return 256
-	end
-
 	if self:IsBank(bagSlot) or self:IsBackpack(bagSlot) then
 		return 0
 	end
@@ -139,10 +128,6 @@ end
 
 --converts the given bag slot into an applicable inventory slot
 function BagSlotInfo:ToInventorySlot(bagSlot)
-	if self:IsKeyRing(bagSlot) then
-		return KeyRingButtonIDToInvSlotID(bagSlot)
-	end
-	
 	if self:IsBackpackBag(bagSlot) then
 		return ContainerIDToInventoryID(bagSlot)
 	end

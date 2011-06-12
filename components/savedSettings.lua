@@ -1,4 +1,4 @@
-﻿--[[
+--[[
 	dbSettings.lua
 		Database access for Bagnon
 --]]
@@ -74,7 +74,6 @@ function SavedSettings:GetDefaultSettings()
 		enabledFrames = {
 			inventory = true,
 			bank = true,
-			keys = true,
 		},
 		
 		autoDisplayEvents = {
@@ -91,10 +90,8 @@ function SavedSettings:GetDefaultSettings()
 		},
 		
 		slotColors = {
-			ammo = {0.7, 0.7, 1},
 			trade = {0.5, 1, 0.5},
-			shard = {0.9, 0.7, 1},
-			keyring = {1, 0.8, 0},
+			normal = {1, 1, 1},
 		},
 		
 		highlightOpacity = 0.5,
