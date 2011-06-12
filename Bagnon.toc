@@ -1,4 +1,4 @@
-## Interface: 40100
+## Interface: 40200
 ## Title: Bagnon
 ## Author: Tuller & Jaliborc (João Libório)
 ## Notes: Single window displays for your inventory and bank
