@@ -32,10 +32,10 @@ L.CmdShowVersion = '显示当前版本'
 --frame text
 L.TitleBags = '%s的背包'
 L.TitleBank = '%s的银行'
-L.TitleKeys = '%s的钥匙链'
 
 
 --tooltips
+L.TipBags = '背包'
 L.TipBank = '银行'
 L.TipChangePlayer = '查看其他角色的物品'
 L.TipGoldOnRealm = '%s上的总资产'
@@ -50,6 +50,8 @@ L.TipShowSearch = '显示搜索界面'
 L.TipShowSearch = '搜索'
 L.TipShowFrameConfig = '打开设置菜单'
 L.TipDoubleClickSearch = '双击打开搜索框'
+L.TipBagToggle = '<左键点击> 切换是否显示背包'
+L.TipInventoryToggle = '<右键点击> 显示整合背包'
 L.Total = '总共'
 
 --databroker plugin tooltips

@@ -27,7 +27,6 @@ L.CmdShowVersion = 'Zeigt die aktuelle Version an'
 --frame text
 L.TitleBags = '%s\'s Inventar'
 L.TitleBank = '%s\'s Bank'
-L.TitleKeys = '%s\'s Schl\195\188ssel'
 
 
 --tooltips

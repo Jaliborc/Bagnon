@@ -1,62 +1,76 @@
 --[[
-	THIS FILE IS ENCODED IN UTF-8
+THIS FILE IS ENCODED IN UTF-8
 
-	Bagnon Localization Information: Chinese Traditional
-	        2007/11/17 by matini< yiting.jheng <at> gmail <dot> com
-	        2008/12/01 by yleaf@cwdg(yaroot@gmail.com)
-	        2009/04/23 by youngway@水晶之刺
-		2009/06/19 by 狂飆@cwdg(networm@qq.com)
+Bagnon Config Localization Information: Chinese Traditional
+2008/12/01 by yleaf@cwdg(yaroot@gmail.com)
+2009/06/19 by 狂飆@cwdg(networm@qq.com)
+2011/07/06 by Seraveegd@鬼霧峰
+2011/08/30 by Seraveegd@鬼霧峰
 
-	Last Update: 2009/06/19 by 狂飆@cwdg(networm@qq.com)
+Last Update: 2011/08/30 by Seraveegd@鬼霧峰
 
 --]]
 
-local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'zhTW')
+local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon-Config', 'zhTW')
 if not L then return end
 
---keybinding text
-L.ToggleBags = '開關 背包'
-L.ToggleBank = '開關 銀行'
-L.ToggleKeys = '開關 鑰匙鏈'
+L.Columns = '列數'
+L.Scale = '縮放'
+L.Spacing = '間距'
+L.Opacity = '透明度'
+L.FrameColor = '視窗顏色'
+L.FrameBorderColor = '視窗邊框顏色'
+L.Frame = '視窗'
+L.Inventory = '背包'
+L.Bank = '銀行'
+L.KeyRing = '鑰匙鏈'
+L.GuildBank = '公會銀行'
+L.LockFramePositions = '鎖定位置'
+L.ShowEmptyItemSlotBackground = '顯示空的物品槽的背景'
+L.HighlightItemsByQuality = '按物品品質高亮物品'
+L.HighlightUnusableItems = '高亮無法使用的物品'
+L.HighlightQuestItems = '高亮任務物品'
+L.ReverseSlotOrdering = '反向排列'
+L.ColorItemSlotsByBagType = '按背包類型對空的物品槽上色'
+L.FrameLayer = '視窗層級'
+L.EnableBagFrame = '啟用背包框架'
+L.EnableMoneyFrame = '啟用貨幣視窗'
+L.EnableDBOFrame = '啟用資訊視窗'
+L.EnableSearchToggle = '啟用搜索按鈕'
+L.EnableOptionsToggle = '啟用設定按鈕'
+L.EnableFrame_inventory = '啟用背包框架'
+L.EnableFrame_bank = '啟用銀行框架'
+L.SettingRequiresRestart = '這個設定將在你下次登錄時生效'
 
+L.EnableAutoDisplay_bank = '開啟銀行時顯示背包'
+L.EnableAutoDisplay_ah = '開啟拍賣行時顯示背包'
+L.EnableAutoDisplay_vendor = '離開商人時關閉背包'
+L.EnableAutoDisplay_trade = '交易物品時顯示背包'
+L.EnableAutoDisplay_craft = '製作物品時顯示背包'
+L.EnableAutoDisplay_mail = '檢查郵箱時顯示背包'
+L.EnableAutoDisplay_guildbank = '開啟公會銀行時顯示背包'
+L.EnableAutoDisplay_player = '開啟角色資訊時顯示背包'
+L.EnableAutoDisplay_combat = '進入戰鬥時關閉背包'
+L.EnableAutoDisplay_vehicle = '進入載具時關閉背包'
 
---system messages
-L.NewUser = '這是該角色第一次使用 Bagnon，已載入默認設置。'
-L.Updated = '已更新到 Bagnon v%s'
-L.UpdatedIncompatible = '由一個不相容版本升級，已載入默認設置。'
+L.DisplaySettings = '自動顯示'
+L.DisplaySettingsTitle = '自動顯示視窗設定'
+L.FrameSettings = '框架設定'
+L.FrameSettingsTitle = '視窗顯示設定'
+L.GeneralSettings = '通用設定'
+L.GeneralSettingsTitle = 'Bagnon的通用設定'
+L.EnableBlizzardBagPassThrough = '禁用的背包顯示內建框架'
+L.EnableBagBreak = '啟用背包分散佈局'
+L.ColorSettings = '顏色設定'
+L.ColorSettingsTitle = '物品槽顏色設定'
+L.ItemHighlightOpacity = '物品高亮亮度'
+L.EnableFlashFind = '啟用閃爍尋找'
 
-
---slash commands
-L.Commands = '命令：'
-L.CmdShowInventory = '開關背包介面'
-L.CmdShowBank = '開關銀行介面'
-L.CmdShowVersion = '顯示當前版本'
-
-
---frame text
-L.TitleBags = '%s的背包'
-L.TitleBank = '%s的銀行'
-L.TitleKeys = '%s的鑰匙鏈'
-
-
---tooltips
-L.TipBank = '銀行'
-L.TipChangePlayer = '查看其他角色的物品'
-L.TipGoldOnRealm = '%s上的總資產'
-L.TipHideBag = '隱藏包裹'
-L.TipHideBags = '隱藏背包'
-L.TipHideSearch = '隱藏搜索介面'
-L.TipPurchaseBag = '購買銀行空位'
-L.TipShowBag = '顯示包裹'
-L.TipShowBags = '顯示背包'
-L.TipShowMenu = '右擊打開設置菜單'
-L.TipShowSearch = '顯示搜索介面'
-L.TipShowSearch = '搜索'
-L.TipShowFrameConfig = '打開設置菜單'
-L.TipDoubleClickSearch = '按兩下打開搜索框'
-L.Total = '總共'
-
---databroker plugin tooltips
-L.TipShowBank = 'Shift-點擊 開關銀行'
-L.TipShowInventory = '點擊 開關背包'
-L.TipShowOptions = '右擊 打開設置菜單'
+L.ItemSlotColor_normal = '一般背包槽顏色'
+L.ItemSlotColor_leather = '製皮包槽顏色'
+L.ItemSlotColor_inscri = '銘文包槽顏色'
+L.ItemSlotColor_herb = '草藥包槽顏色'
+L.ItemSlotColor_enchant = '附魔包槽顏色'
+L.ItemSlotColor_engineer = '工具箱槽顏色'
+L.ItemSlotColor_gem = '寶石包槽顏色'
+L.ItemSlotColor_mine = '礦石包槽顏色'
