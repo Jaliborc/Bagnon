@@ -5,6 +5,7 @@
 
 local SavedFrameSettings = {}
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
+local Facade = LibStub('LibButtonFacade', true)
 Bagnon.SavedFrameSettings = SavedFrameSettings
 
 
@@ -357,7 +358,7 @@ function SavedFrameSettings:IsBagBreakEnabled()
 end
 
 
---[[ Item Frame Slot ORdering ]]--
+--[[ Item Frame Slot Ordering ]]--
 
 function SavedFrameSettings:SetReverseSlotOrder(enable)
 	self:GetDB().reverseSlotOrder = enable
@@ -376,6 +377,16 @@ end
 
 function SavedFrameSettings:GetBrokerDisplayObject()
 	return self:GetDB().dataBrokerObject
+end
+
+
+--[[ ButtonFacade Settings ]]--
+
+if Facade then
+	function SavedFrameSettings:GetFacade()
+		local facade = self:GetDB().facade
+		return facade and unpack(facade)
+	end
 end
 
 

@@ -102,31 +102,35 @@ end
 
 --[[ Slot Type Info ]]--
 
-function BagSlotInfo:GetBagType(player, bagSlot)
-	if self:IsBank(bagSlot) or self:IsBackpack(bagSlot) then
-		return 0
-	end
-	
-	local itemLink = (self:GetItemInfo(player, bagSlot))
-	if itemLink then
-		return GetItemFamily(itemLink)
-	end
-	
-	return 0
+BAGNON_BAG_TYPES = {
+	[0x0008] = 'leather',
+	[0x0010] = 'inscri',
+	[0x0020] = 'herb',
+	[0x0040] = 'enchant',
+	[0x0080] = 'engineer',
+	[0x0200] = 'gem',
+	[0x0400] = 'mine',
+  [32768] = 'tackle'
+}
+
+function BagSlotInfo:GetBagType(...)
+	return self:GetBagFamily(...) or 'normal'
 end
 
--- Stolen from OneBag, since my bitflag knowledge could be better
--- BAGTYPE_PROFESSION = Leather + Inscription + Herb + Enchanting + Engineering + Gem + Mining + Trade
-local BAGTYPE_PROFESSION = 0x0008 + 0x0010 + 0x0020 + 0x0040 + 0x0080 + 0x0200 + 0x0400  + 0x8000 
-
-function BagSlotInfo:IsTradeBag(player, bagSlot)
-	return bit.band(self:GetBagType(player, bagSlot), BAGTYPE_PROFESSION) > 0
+function BagSlotInfo:GetBagFamily(player, bag)
+	if self:IsBank(bag) or self:IsBackpack(bag) then
+		return
+	end
+	
+	local itemLink = (self:GetItemInfo(player, bag))
+	if itemLink then
+		return BAGNON_BAG_TYPES[GetItemFamily(itemLink)]
+	end
 end
 
 
 --[[ Conversion Methods ]]--
 
---converts the given bag slot into an applicable inventory slot
 function BagSlotInfo:ToInventorySlot(bagSlot)
 	if self:IsBackpackBag(bagSlot) then
 		return ContainerIDToInventoryID(bagSlot)

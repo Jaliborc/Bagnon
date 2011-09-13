@@ -6,7 +6,6 @@
 Bagnon = LibStub('AceAddon-3.0'):NewAddon('Bagnon', 'AceEvent-3.0', 'AceConsole-3.0')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 
-
 --[[
 	Binding Setup
 --]]
@@ -29,6 +28,19 @@ function Bagnon:OnInitialize()
 	self:CreateOptionsLoader()
 	self:CreateLDBLauncher()
 	self:CreateGuildBankLoader()
+	
+	
+	--------- TEMP!! REMOVE NEXT WOW PATCH!! --------
+	if BagnonGlobalSettings then
+		BagnonGlobalSettings.facade = nil
+		
+		if BagnonGlobalSettings.frames then
+			for name, sets in pairs(BagnonGlobalSettings.frames) do
+				sets.facade = nil
+			end
+		end
+	end
+	------------------------------------------------
 end
 
 --create a loader for the options menu

@@ -89,13 +89,13 @@ function MoneyFrame:OnClick()
 	local name = self:GetName()
 
 	if MouseIsOver(_G[name .. 'GoldButton']) then
-		OpenCoinPickupFrame(COPPER_PER_GOLD, MoneyTypeInfo[self.moneyType].UpdateFunc(), self)
+		OpenCoinPickupFrame(COPPER_PER_GOLD, MoneyTypeInfo[self.moneyType].UpdateFunc(self), self)
 		self.hasPickup = 1
 	elseif MouseIsOver(_G[name .. 'SilverButton']) then
-		OpenCoinPickupFrame(COPPER_PER_SILVER, MoneyTypeInfo[self.moneyType].UpdateFunc(), self)
+		OpenCoinPickupFrame(COPPER_PER_SILVER, MoneyTypeInfo[self.moneyType].UpdateFunc(self), self)
 		self.hasPickup = 1
 	elseif MouseIsOver(_G[name .. 'CopperButton']) then
-		OpenCoinPickupFrame(1, MoneyTypeInfo[self.moneyType].UpdateFunc(), self)
+		OpenCoinPickupFrame(1, MoneyTypeInfo[self.moneyType].UpdateFunc(self), self)
 		self.hasPickup = 1
 	end
 	

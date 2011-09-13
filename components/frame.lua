@@ -6,6 +6,7 @@
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 local Frame = Bagnon.Classy:New('Frame')
+
 Frame:Hide()
 Bagnon.Frame = Frame
 
@@ -47,7 +48,6 @@ end
 
 function Frame:UpdateEvents()
 	self:UnregisterAllMessages()
-
 	self:RegisterMessage('FRAME_SHOW')
 
 	if self:IsVisible() then
@@ -881,9 +881,6 @@ function Frame:HasOptionsToggle()
 	local name, title, notes, enabled = GetAddOnInfo('Bagnon_Config')
 	return enabled and self:GetSettings():HasOptionsToggle()
 end
-
-
---[[ log toggles ]]--
 
 function Frame:HasLogs()
 	return nil

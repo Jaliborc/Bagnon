@@ -42,11 +42,9 @@ end
 function ItemSlot:Create()
 	local id = self:GetNextItemSlotID()
 	local item = self:Bind(self:GetBlizzardItemSlot(id) or self:ConstructNewItemSlot(id))
-	item:Hide()
+	local name = item:GetName()
 
 	--add a quality border texture
-	item.questBorder = _G[item:GetName() .. 'IconQuestTexture']
-
 	local border = item:CreateTexture(nil, 'OVERLAY')
 	border:SetWidth(67)
 	border:SetHeight(67)
@@ -54,10 +52,12 @@ function ItemSlot:Create()
 	border:SetTexture([[Interface\Buttons\UI-ActionButton-Border]])
 	border:SetBlendMode('ADD')
 	border:Hide()
-	item.border = border
-
+	
 	--hack, make sure the cooldown model stays visible
-	item.cooldown = _G[item:GetName() .. 'Cooldown']
+	item.questBorder = _G[name .. 'IconQuestTexture']
+	item.cooldown = _G[name .. 'Cooldown']
+	item.UpdateTooltip = nil
+	item.border = border
 
 	--get rid of any registered frame events, and use my own
 	item:SetScript('OnEvent', nil)
@@ -67,8 +67,7 @@ function ItemSlot:Create()
 	item:SetScript('OnHide', item.OnHide)
 	item:SetScript('PostClick', item.PostClick)
 	item:HookScript("OnClick", item.ItemClicked)
-
-	item.UpdateTooltip = nil
+	item:Hide()
 
 	return item
 end
@@ -308,11 +307,7 @@ end
 --item slot color
 function ItemSlot:UpdateSlotColor()
 	if (not self:GetItem()) and self:ColoringBagSlots() then
-		if self:IsTradeBagSlot() then
-			self:SetSlotColor(self:GetTradeSlotColor())
-		else
-			self:SetSlotColor(self:GetNormalSlotColor())
-		end
+		self:SetSlotColor(self:GetBagColor(self:GetBagType()))
 	else 
 		self:SetSlotColor(1, 1, 1)
 	end
@@ -351,22 +346,21 @@ end
 function ItemSlot:SetBorderQuality(quality)
 	local border = self.border
 	local qBorder = self.questBorder
+	
+	qBorder:Hide()
+	border:Hide()
 
 	if self:HighlightingQuestItems() then
 		local isQuestItem, isQuestStarter = self:IsQuestItem()
 		if isQuestItem then
-			qBorder:SetTexture(TEXTURE_ITEM_QUEST_BORDER)
-			qBorder:SetAlpha(self:GetHighlightAlpha())
-			qBorder:Show()
-			border:Hide()
+			border:SetVertexColor(1, .82, .2,  self:GetHighlightAlpha())
+			border:Show()
 			return
 		end
 
 		if isQuestStarter then
 			qBorder:SetTexture(TEXTURE_ITEM_QUEST_BANG)
-			qBorder:SetAlpha(self:GetHighlightAlpha())
 			qBorder:Show()
-			border:Hide()
 			return
 		end
 	end
@@ -377,7 +371,6 @@ function ItemSlot:SetBorderQuality(quality)
 			local r, g, b = RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b
 			border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
 			border:Show()
-			qBorder:Hide()
 			return
 		end
 	end
@@ -387,13 +380,8 @@ function ItemSlot:SetBorderQuality(quality)
 			local r, g, b = GetItemQualityColor(quality)
 			border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
 			border:Show()
-			qBorder:Hide()
-			return
 		end
 	end
-
-	qBorder:Hide()
-	border:Hide()
 end
 
 function ItemSlot:UpdateBorder()
@@ -582,16 +570,12 @@ end
 
 --[[ Item Slot Coloring ]]--
 
-function ItemSlot:IsTradeBagSlot()
-	return Bagnon.BagSlotInfo:IsTradeBag(self:GetPlayer(), self:GetBag())
+function ItemSlot:GetBagType()
+	return Bagnon.BagSlotInfo:GetBagType(self:GetPlayer(), self:GetBag())
 end
 
-function ItemSlot:GetNormalSlotColor()
-	return Bagnon.Settings:GetItemSlotColor('normal')
-end
-
-function ItemSlot:GetTradeSlotColor()
-	return Bagnon.Settings:GetItemSlotColor('trade')
+function ItemSlot:GetBagColor(bagType)
+	return Bagnon.Settings:GetItemSlotColor(bagType)
 end
 
 function ItemSlot:ColoringBagSlots()

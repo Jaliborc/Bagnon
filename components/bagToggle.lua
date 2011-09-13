@@ -1,4 +1,4 @@
-﻿--[[
+--[[
 	bagToggle.lua
 		A bag toggle widget
 --]]
@@ -76,8 +76,16 @@ end
 
 --[[ Frame Events ]]--
 
-function BagToggle:OnClick()
-	self:GetSettings():ToggleBagFrame()
+function BagToggle:OnClick(button)
+	if button == 'LeftButton' then
+		self:GetSettings():ToggleBagFrame()
+	else
+		if self:GetFrameID() == 'inventory' then
+			Bagnon:ToggleFrame('bank')
+		else
+			Bagnon:ToggleFrame('inventory')
+		end
+	end
 end
 
 function BagToggle:OnEnter()
@@ -118,13 +126,25 @@ function BagToggle:UpdateEvents()
 end
 
 function BagToggle:UpdateTooltip()
-	if not GameTooltip:IsOwned(self) then return end
+	if not GameTooltip:IsOwned(self) then
+		return
+	end
+	
+	GameTooltip:SetText(L.TipBags)
 
 	if self:IsBagFrameShown() then
-		GameTooltip:SetText(L.TipHideBags)
+		GameTooltip:AddLine(L.TipHideBags, 1,1,1)
 	else
-		GameTooltip:SetText(L.TipShowBags)
+		GameTooltip:AddLine(L.TipShowBags, 1,1,1)
 	end
+	
+	if self:GetFrameID() == 'inventory' then
+		GameTooltip:AddLine(L.TipBankToggle, 1,1,1)
+	else
+		GameTooltip:AddLine(L.TipInventoryToggle, 1,1,1)
+	end
+	
+	GameTooltip:Show()
 end
 
 

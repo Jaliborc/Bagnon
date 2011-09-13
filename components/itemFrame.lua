@@ -5,6 +5,7 @@
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local ItemFrame = Bagnon.Classy:New('Frame')
+
 ItemFrame:Hide()
 Bagnon.ItemFrame = ItemFrame
 

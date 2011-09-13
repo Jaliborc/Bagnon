@@ -90,7 +90,14 @@ function SavedSettings:GetDefaultSettings()
 		},
 		
 		slotColors = {
-			trade = {0.5, 1, 0.5},
+			leather = {1, .6, .45},
+      enchant = {0.64, 0.83, 1},
+			inscri = {.64, 1, .82},
+			engineer = {.68, .63, .25},
+      tackle = {0.42, 0.59, 1},
+			gem = {1, .65, .98},
+			mine = {1, .81, .38},
+			herb = {.5, 1, .5},
 			normal = {1, 1, 1},
 		},
 		
@@ -116,6 +123,17 @@ end
 
 function SavedSettings:UpgradeDB()
 	local major, minor, bugfix = self:GetDBVersion():match('(%w+)%.(%w+)%.(%w+)')
+	
+	--do upgrade stuff
+	if tonumber(minor) <= 6 and tonumber(bugfix) <= 2 then
+		local db = self.db
+		local autoDisplayEvents = self.db.autoDisplayEvents
+		if autoDisplayEvents then
+			for i = 1, #autoDisplayEvents do
+				autoDisplayEvents[i] = nil
+			end
+		end
+	end
 
 	self:GetDB().version = self:GetAddOnVersion()
 	Bagnon:Print(string.format(L.Updated, self:GetDBVersion()))
