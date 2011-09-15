@@ -1,3 +1,6 @@
+====== 4.2.9
+* Jaliborc: Fixed a bug with the Traditional Chinese translations
+
 ====== 4.2.8
 * Jaliborc: Tackle boxes can now be colored separately
 * Jaliborc: Updated Traditional Chinese translations (thank you Seraveegd@鬼霧峰)
