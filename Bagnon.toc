@@ -5,7 +5,7 @@
 ## SavedVariables: BagnonGlobalSettings
 ## SavedVariablesPerCharacter: BagnonFrameSettings
 
-## Version: 4.2.8
+## Version: 4.2.9
 ## OptionalDeps: LibStub, Ace3, Bagnon_Forever, Bagnon_Armory, LibItemSearch, Unfit-1.0
 
 embeds.xml
