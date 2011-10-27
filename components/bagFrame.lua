@@ -5,8 +5,7 @@
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local BagFrame = Bagnon.Classy:New('Frame')
-Bagnon.BagFrame = BagFrame
+local BagFrame = Bagnon:NewClass('BagFrame', 'Frame')
 
 
 --[[ Constructor ]]--

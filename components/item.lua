@@ -4,20 +4,10 @@
 --]]
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local ItemSlot = Bagnon.Classy:New('Button')
-ItemSlot:Hide()
-Bagnon.ItemSlot = ItemSlot
+local ItemSlot = Bagnon:NewClass('ItemSlot', 'Button')
 
 local ItemSearch = LibStub('LibItemSearch-1.0')
 local Unfit = LibStub('Unfit-1.0')
-
-local function hasBlizzQuestHighlight()
-	return GetContainerItemQuestInfo and true or false
-end
-
---[[
-	The item widget
---]]
 
 
 --[[ ItemSlot Constructor ]]--
@@ -65,7 +55,6 @@ function ItemSlot:Create()
 	item:SetScript('OnLeave', item.OnLeave)
 	item:SetScript('OnShow', item.OnShow)
 	item:SetScript('OnHide', item.OnHide)
-	item:SetScript('PostClick', item.PostClick)
 	item:HookScript("OnClick", item.ItemClicked)
 	item:Hide()
 
@@ -263,10 +252,11 @@ end
 
 -- Update the texture, lock status, and other information about an item
 function ItemSlot:Update()
-	if not self:IsVisible() then return end
+	if not self:IsVisible() then
+    return
+  end
 
-	local texture, count, locked, quality, readable, lootable, link = self:GetItemSlotInfo()
-
+	local texture, count, locked, quality, readable, lootable, link = self:GetInfo()
 	self:SetItem(link)
 	self:SetTexture(texture)
 	self:SetCount(count)
@@ -318,17 +308,17 @@ function ItemSlot:SetSlotColor(...)
 	self:GetNormalTexture():SetVertexColor(...)
 end
 
---item count
 function ItemSlot:SetCount(count)
 	SetItemButtonCount(self, count)
 end
 
---readable status
 function ItemSlot:SetReadable(readable)
 	self.readable = readable
 end
 
---locked status
+
+--[[ Locked ]]--
+
 function ItemSlot:SetLocked(locked)
 	SetItemButtonDesaturated(self, locked)
 end
@@ -337,12 +327,13 @@ function ItemSlot:UpdateLocked()
 	self:SetLocked(self:IsLocked())
 end
 
---returns true if the slot is locked, and false otherwise
 function ItemSlot:IsLocked()
-	return Bagnon.ItemSlotInfo:IsLocked(self:GetPlayer(), self:GetBag(), self:GetID())
+	return Bagnon:IsItemLocked(self:GetPlayer(), self:GetBag(), self:GetID())
 end
 
---colors the item border based on the quality of the item.  hides it for common/poor items
+
+--[[ Border Quality ]]--
+
 function ItemSlot:SetBorderQuality(quality)
 	local border = self.border
 	local qBorder = self.questBorder
@@ -366,7 +357,7 @@ function ItemSlot:SetBorderQuality(quality)
 	end
 	
 	if self:HighlightUnusableItems() then
-		local link = select(7, self:GetItemSlotInfo())
+		local link = select(7, self:GetInfo())
 		if Unfit:IsItemUnusable(link) then
 			local r, g, b = RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b
 			border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
@@ -385,8 +376,7 @@ function ItemSlot:SetBorderQuality(quality)
 end
 
 function ItemSlot:UpdateBorder()
-	local texture, count, locked, quality = self:GetItemSlotInfo()
-	self:SetBorderQuality(quality)
+	self:SetBorderQuality(select(4, self:GetInfo()))
 end
 
 --cooldown
@@ -417,14 +407,16 @@ function ItemSlot:AnchorTooltip()
 	end
 end
 
---search
+
+--[[ Search ]]--
+
 function ItemSlot:UpdateSearch()
 	local shouldFade = false
 	local search = self:GetItemSearch()
 
 	if search and search ~= '' then
-		local itemLink = self:GetItem()
-		shouldFade = not(itemLink and ItemSearch:Find(itemLink, search))
+		local link = self:GetItem()
+		shouldFade = not (link and ItemSearch:Find(link, search))
 	end
 
 	if shouldFade then
@@ -443,7 +435,6 @@ function ItemSlot:GetItemSearch()
 	return Bagnon.Settings:GetTextSearch()
 end
 
---bag search
 function ItemSlot:UpdateBagSearch()
 	local search = self:GetBagSearch()
 	if self:GetBag() == search then
@@ -457,12 +448,11 @@ function ItemSlot:GetBagSearch()
 	return self:GetSettings():GetBagSearch()
 end
 
---flash search
--- If the current item does match the sought name, flash it
+-- if the current item does match the sought name, flash it
 function ItemSlot:FlashSearch(search)
 	if search and search ~= '' then
-		local itemLink = self:GetItem()
-		if ItemSearch:Find(itemLink, search) then
+		local link = self:GetItem()
+		if link:Find(itemLink, search) then
 			UIFrameFlash(self, 0.2, 0.3, 1.5, true, 0.0, 0.0 )
 		end
 	end
@@ -509,25 +499,20 @@ function ItemSlot:IsSlot(bag, slot)
 end
 
 function ItemSlot:IsCached()
-	return Bagnon.BagSlotInfo:IsCached(self:GetPlayer(), self:GetBag())
+	return Bagnon:IsBagCached(self:GetPlayer(), self:GetBag())
 end
 
 function ItemSlot:IsBank()
-	return Bagnon.BagSlotInfo:IsBank(self:GetBag())
+	return Bagnon:IsBank(self:GetBag())
 end
 
 function ItemSlot:IsBankSlot()
 	local bag = self:GetBag()
-	return Bagnon.BagSlotInfo:IsBank(bag) or Bagnon.BagSlotInfo:IsBankBag(bag)
+	return Bagnon:IsBank(bag) or Bagnon:IsBankBag(bag)
 end
 
-function ItemSlot:AtBank()
-	return Bagnon.PlayerInfo:AtBank()
-end
-
-function ItemSlot:GetItemSlotInfo()
-	local texture, count, locked, quality, readable, lootable, link = Bagnon.ItemSlotInfo:GetItemInfo(self:GetPlayer(), self:GetBag(), self:GetID())
-	return texture, count, locked, quality, readable, lootable, link
+function ItemSlot:GetInfo()
+	return Bagnon:GetItemInfo(self:GetPlayer(), self:GetBag(), self:GetID())
 end
 
 
@@ -571,7 +556,7 @@ end
 --[[ Item Slot Coloring ]]--
 
 function ItemSlot:GetBagType()
-	return Bagnon.BagSlotInfo:GetBagType(self:GetPlayer(), self:GetBag())
+	return Bagnon:GetBagType(self:GetPlayer(), self:GetBag())
 end
 
 function ItemSlot:GetBagColor(bagType)

@@ -5,9 +5,7 @@
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local OptionsToggle = Bagnon.Classy:New('Button')
-Bagnon.OptionsToggle = OptionsToggle
-
+local OptionsToggle = Bagnon:NewClass('OptionsToggle', 'Button')
 
 local SIZE = 20
 local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)

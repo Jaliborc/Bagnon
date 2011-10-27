@@ -1,3 +1,7 @@
+====== 4.2.10
+* Jaliborc: Say hello to BagBrother, the new item cache! And make a more interesting sentence...
+* Jaliborc: brought the much nicer character race icons back
+
 ====== 4.2.9
 * Jaliborc: Fixed a bug with the Traditional Chinese translations
 

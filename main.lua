@@ -6,22 +6,15 @@
 Bagnon = LibStub('AceAddon-3.0'):NewAddon('Bagnon', 'AceEvent-3.0', 'AceConsole-3.0')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 
---[[
-	Binding Setup
---]]
-
 BINDING_HEADER_BAGNON = 'Bagnon'
 BINDING_NAME_BAGNON_TOGGLE = L.ToggleBags
 BINDING_NAME_BANKNON_TOGGLE = L.ToggleBank
 
 
---[[
-	Startup
---]]
+--[[ Startup ]]--
 
 function Bagnon:OnInitialize()
 	self.frames = {}
-
 	self:HookBagClickEvents()
 	self:RegisterAutoDisplayEvents()
 	self:AddSlashCommands()
@@ -43,7 +36,6 @@ function Bagnon:OnInitialize()
 	------------------------------------------------
 end
 
---create a loader for the options menu
 function Bagnon:CreateOptionsLoader()
 	local f = CreateFrame('Frame', nil, InterfaceOptionsFrame)
 	f:SetScript('OnShow', function(self)
@@ -67,7 +59,6 @@ function Bagnon:CreateLDBLauncher()
 
 	LDB:NewDataObject('BagnonLauncher', {
 		type = 'launcher',
-
 		icon = [[Interface\Icons\INV_Misc_Bag_07]],
 
 		OnClick = function(_, button)
@@ -83,8 +74,6 @@ function Bagnon:CreateLDBLauncher()
 		end,
 
 		OnTooltipShow = function(tooltip)
-			if not tooltip or not tooltip.AddLine then return end
-
 			tooltip:AddLine('Bagnon')
 			tooltip:AddLine(L.TipShowInventory, 1, 1, 1)
 			tooltip:AddLine(L.TipShowBank, 1, 1, 1)
@@ -94,9 +83,11 @@ function Bagnon:CreateLDBLauncher()
 end
 
 
---[[
-	Frame Display
---]]
+--[[ Frames ]]--
+
+function Bagnon:CreateFrame(frameID)
+  table.insert(self.frames, self.Frame:New(frameID))
+end
 
 function Bagnon:GetFrame(frameID)
 	for i, frame in pairs(self.frames) do
@@ -104,10 +95,6 @@ function Bagnon:GetFrame(frameID)
 			return frame
 		end
 	end
-end
-
-function Bagnon:CreateFrame(frameID)
-	table.insert(self.frames, self.Frame:New(frameID))
 end
 
 function Bagnon:ShowFrame(frameID)
@@ -155,9 +142,7 @@ function Bagnon:IsBlizzardBagPassThroughEnabled()
 end
 
 
---[[
-	Bag Click Events
---]]
+--[[ Bag Buttons Hooks ]]--
 
 function Bagnon:HookBagClickEvents()
 	--backpack
@@ -186,7 +171,7 @@ function Bagnon:HookBagClickEvents()
 	--single bag
 	local oToggleBag = ToggleBag
 	ToggleBag = function(bagSlot)
-		local frameID = self.BagSlotInfo:IsBankBag(bagSlot) and 'bank' or 'inventory'
+		local frameID = self:IsBankBag(bagSlot) and 'bank' or 'inventory'
 		local toggled = self:FrameControlsBag(frameID, bagSlot) and self:ToggleFrame(frameID)
 
 		if not toggled then
@@ -231,14 +216,14 @@ function Bagnon:HookBagClickEvents()
 	self.Callbacks:Listen(self, 'FRAME_SHOW')
 	self.Callbacks:Listen(self, 'FRAME_HIDE')
 end
---[[
-	Click Events
---]]
+
+
+--[[ Frames Events ]]--
 
 function Bagnon:FRAME_SHOW(msg, frameID)
 	if frameID == 'inventory' then
 		if self:IsFrameEnabled('inventory') then
-			self:CheckBagFrameBags(true)
+			self:CheckBagButtons(true)
 		end
 	end
 end
@@ -246,13 +231,13 @@ end
 function Bagnon:FRAME_HIDE(msg, frameID)
 	if frameID == 'inventory' then
 		if self:IsFrameEnabled('inventory') then
-			self:CheckBagFrameBags(false)
+			self:CheckBagButtons(false)
 		end
 	end
 end
 
---check/uncheck the bag frames
-function Bagnon:CheckBagFrameBags(checked)
+--check/uncheck the bag buttons
+function Bagnon:CheckBagButtons(checked)
 	_G['MainMenuBarBackpackButton']:SetChecked(checked)
 	_G["CharacterBag0Slot"]:SetChecked(checked)
 	_G["CharacterBag1Slot"]:SetChecked(checked)
@@ -260,9 +245,8 @@ function Bagnon:CheckBagFrameBags(checked)
 	_G["CharacterBag3Slot"]:SetChecked(checked)
 end
 
---[[
-	Automatic Display
---]]
+
+--[[ Automatic Display ]]--
 
 function Bagnon:RegisterAutoDisplayEvents()
 	self.BagEvents:Listen(self, 'BANK_OPENED')
@@ -404,9 +388,7 @@ function Bagnon:PLAYER_FRAME_HIDE()
 end
 
 
---[[
-	Slash Commands
---]]
+--[[ Slash Commands ]]--
 
 function Bagnon:AddSlashCommands()
 	self:RegisterChatCommand('bagnon', 'HandleSlashCommand')

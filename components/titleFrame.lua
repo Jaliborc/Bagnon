@@ -6,10 +6,7 @@
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-
-local TitleFrame = Bagnon.Classy:New('Button')
-TitleFrame:Hide()
-Bagnon.TitleFrame = TitleFrame
+local TitleFrame = Bagnon:NewClass('TitleFrame', 'Button')
 
 
 --[[ Constructor ]]--

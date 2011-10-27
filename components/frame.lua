@@ -5,15 +5,10 @@
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local Frame = Bagnon.Classy:New('Frame')
-
-Frame:Hide()
-Bagnon.Frame = Frame
+local Frame = Bagnon:NewClass('Frame', 'Frame')
 
 
---[[
-	Constructor
---]]
+--[[ Constructor ]]--
 
 function Frame:New(frameID)
 	local f = self:Bind(CreateFrame('Frame', 'BagnonFrame' .. frameID, UIParent))
@@ -209,9 +204,7 @@ function Frame:OnHide()
 end
 
 function Frame:CloseBankFrame()
-	if Bagnon.PlayerInfo:AtBank() then
-		CloseBankFrame()
-	end
+  CloseBankFrame() -- Will it bug out?
 end
 
 function Frame:IsBankFrame()
@@ -770,7 +763,7 @@ function Frame:CreatePlayerSelector()
 end
 
 function Frame:HasPlayerSelector()
-	return BagnonDB and true or false
+	return LibStub('LibItemCache-1.0'):HasCache()
 end
 
 

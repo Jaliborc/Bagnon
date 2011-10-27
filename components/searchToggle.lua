@@ -5,12 +5,11 @@
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local SearchToggle = Bagnon.Classy:New('CheckButton')
-Bagnon.SearchToggle = SearchToggle
-
+local SearchToggle = Bagnon:NewClass('SearchToggle', 'CheckButton')
 
 local SIZE = 20
 local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
+
 
 --[[ Constructor ]]--
 

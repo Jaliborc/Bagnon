@@ -5,11 +5,7 @@
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local SearchFrame = Bagnon.Classy:New('EditBox')
-SearchFrame:Hide()
-
-Bagnon.SearchFrame = SearchFrame
-
+local SearchFrame = Bagnon:NewClass('SearchFrame', 'EditBox')
 SearchFrame.backdrop = {
 	edgeFile = [[Interface\Tooltips\UI-Tooltip-Border]],
 	bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
@@ -23,6 +19,9 @@ SearchFrame.backdrop = {
 	tileSize = 16,
 	edgeSize = 16,
 }
+
+
+--[[ Constructor ]]--
 
 function SearchFrame:New(frameID, parent)
 	local f = self:Bind(CreateFrame('EditBox', nil, parent))

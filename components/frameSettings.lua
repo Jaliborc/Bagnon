@@ -5,7 +5,6 @@
 
 local FrameSettings = {}
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local Facade = LibStub('LibButtonFacade', true)
 Bagnon.FrameSettings = FrameSettings
 
 

@@ -1,13 +1,12 @@
 --[[
 	playerSelector.lua
-		A player selector widget
+		A player selector button
 --]]
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local PlayerSelector = Bagnon.Classy:New('Button')
-Bagnon.PlayerSelector = PlayerSelector
-
+local PlayerSelector = Bagnon:NewClass('PlayerSelector', 'Button')
+local ItemCache = LibStub('LibItemCache-1.0')
 
 local SIZE = 20
 local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
@@ -82,9 +81,8 @@ end
 --[[ Update Methods ]]--
 
 function PlayerSelector:ShowPlayerSelector()
-	if BagnonDB then
-		BagnonDB:SetDropdownFrame(self)
-		BagnonDB:ToggleDropdown(self, -4, -2)
+	if ItemCache:HasCache() then
+		Bagnon:TogglePlayerDropdown(self, -4, -2)
 	end
 end
 
@@ -118,16 +116,17 @@ function PlayerSelector:GetPlayer()
 end
 
 function PlayerSelector:GetPlayerIcon()
-	local race, enRace = UnitRace('player')
+	local _, race = UnitRace('player')
+  local sex = UnitSex('player') == 3 and 'Female' or 'Male'
 
-	--forsaken hack
-	--if enRace == 'Scourge' then
-		--enRace = 'Undead'
-	--end
+  if race ~= 'Worgen' and race ~= 'Goblin' then
+    if race == 'Scourge' then
+      race = 'Undead'
+    end
 
-
-	local sex = UnitSex('player') == 3 and 'Female' or 'Male'
-	return string.format([[Interface\CharacterFrame\TEMPORARYPORTRAIT-%s-%s]], sex, enRace)
--- switching to temporary portraits until the next holiday achievements that bring worgen ones in
---	return string.format([[Interface\Icons\Achievement_Character_%s_%s]], enRace, sex)
+    return string.format([[Interface\Icons\Achievement_Character_%s_%s]], race, sex)
+  else
+    -- temporary portraits until the next holiday achievements bring the cata races in
+    return string.format([[Interface\CharacterFrame\TEMPORARYPORTRAIT-%s-%s]], sex, race)
+  end
 end

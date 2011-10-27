@@ -4,10 +4,7 @@
 --]]
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local BrokerDisplay = Bagnon.Classy:New('Button')
-BrokerDisplay:Hide()
-Bagnon.BrokerDisplay = BrokerDisplay
-
+local BrokerDisplay = Bagnon:NewClass('BrokerDisplay', 'Button')
 local ICON_SIZE = 18
 
 

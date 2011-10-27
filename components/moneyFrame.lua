@@ -4,9 +4,8 @@
 --]]
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local MoneyFrame = Bagnon.Classy:New('Frame')
-MoneyFrame:Hide()
-Bagnon.MoneyFrame = MoneyFrame
+local MoneyFrame = Bagnon:NewClass('MoneyFrame', 'Frame')
+local ItemCache = LibStub('LibItemCache-1.0')
 
 
 --[[ Things! ]]--
@@ -103,22 +102,24 @@ function MoneyFrame:OnClick()
 end
 
 function MoneyFrame:OnEnter()
-	if not BagnonDB then return end
+	if not ItemCache:HasCache() then
+    return
+  end
 
 	GameTooltip:SetOwner(self, 'ANCHOR_TOPRIGHT')
 	GameTooltip:SetText(string.format(L.TipGoldOnRealm, GetRealmName()))
 
 	local totalMoney = 0
-	for i, player in pairs(BagnonDB:GetPlayerList()) do
-		local money = Bagnon.PlayerInfo:GetMoney(player)
+	for player in ItemCache:IteratePlayers() do
+		local money = ItemCache:GetMoney(player)
 		if money > 0 then
 			totalMoney = totalMoney + money
-			self:AddPlayerTotalToTooltip(player, money, GameTooltip)
+			self:AddPlayer(player, money)
 		end
 	end
 
 	GameTooltip:AddLine('----------------------------------------')
-	self:AddPlayerTotalToTooltip(L.Total, totalMoney, GameTooltip)
+	self:AddPlayer(L.Total, totalMoney)
 	GameTooltip:Show()
 end
 
@@ -173,40 +174,42 @@ function MoneyFrame:GetFrameID()
 end
 
 function MoneyFrame:GetMoney()
-	return Bagnon.PlayerInfo:GetMoney(self:GetPlayer())
+	return ItemCache:GetMoney(self:GetPlayer())
 end
 
-function MoneyFrame:GetGoldSilverCopper(money)
-	local gold = math.floor(money / (COPPER_PER_SILVER * SILVER_PER_GOLD))
-	local silver = math.floor((money - (gold * COPPER_PER_SILVER * SILVER_PER_GOLD)) / COPPER_PER_SILVER)
-	local copper = money % COPPER_PER_SILVER
 
-	return gold, silver, copper
-end
+--[[ API ]]--
 
-function MoneyFrame:AddPlayerTotalToTooltip(player, money, tooltip)
-	local gold, silver, copper = self:GetGoldSilverCopper(money)
+function MoneyFrame:AddPlayer(player, money)
+	local gold, silver, copper = self:GetCoins(money)
 	local text
 
 	if gold > 0 then
-		text = string.format('|cffffffff%d|r%s', gold, GOLD_TEXT)
+		text = format('|cffffffff%d|r%s', gold, GOLD_TEXT)
 	end
 
 	if silver > 0 then
 		if text then
-			text = text .. string.format(' |cffffffff%d|r%s', silver, SILVER_TEXT)
+			text = text .. format(' |cffffffff%d|r%s', silver, SILVER_TEXT)
 		else
-			text = string.format('|cffffffff%d|r%s', silver, SILVER_TEXT)
+			text = format('|cffffffff%d|r%s', silver, SILVER_TEXT)
 		end
 	end
 
 	if copper > 0 then
 		if text then
-			text = text .. string.format(' |cffffffff%d|r%s', copper, COPPER_TEXT)
+			text = text .. format(' |cffffffff%d|r%s', copper, COPPER_TEXT)
 		else
-			text = string.format('|cffffffff%d|r%s', copper, COPPER_TEXT)
+			text = format('|cffffffff%d|r%s', copper, COPPER_TEXT)
 		end
 	end
 
-	tooltip:AddDoubleLine(player, text, 1, 1, 1, 1, 1, 1, 0)
+	GameTooltip:AddDoubleLine(player, text, 1, 1, 1, 1, 1, 1, 0)
+end
+
+function MoneyFrame:GetCoins(money)
+  local gold = floor(money / (COPPER_PER_SILVER * SILVER_PER_GOLD))
+  local silver = floor((money - (gold * COPPER_PER_SILVER * SILVER_PER_GOLD)) / COPPER_PER_SILVER)
+  local copper = money % COPPER_PER_SILVER
+  return gold, silver, copper
 end

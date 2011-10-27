@@ -4,17 +4,8 @@
 --]]
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local ItemFrame = Bagnon.Classy:New('Frame')
-
-ItemFrame:Hide()
-Bagnon.ItemFrame = ItemFrame
-
-local function hasBlizzQuestHighlight() 
-	return GetContainerItemQuestInfo and true or false 
-end
-
-
---[[ Extreme Constants! ]]--
+local ItemFrame = Bagnon:NewClass('ItemFrame', 'Frame')
+local Cache = LibStub('LibItemCache-1.0')
 
 ItemFrame.ITEM_SIZE = 39
 
@@ -198,14 +189,10 @@ function ItemFrame:UpdateEvents()
 	self:UnregisterAllMessages()
 
 	if self:IsVisible() then
-		--live item events
 		if not self:IsCached() then
 			self:RegisterEvent('ITEM_LOCK_CHANGED')
-			
-			if hasBlizzQuestHighlight() then
-				self:RegisterEvent('QUEST_ACCEPTED')
-				self:RegisterEvent('UNIT_QUEST_LOG_CHANGED')
-			end
+      self:RegisterEvent('QUEST_ACCEPTED')
+      self:RegisterEvent('UNIT_QUEST_LOG_CHANGED')
 
 			self:RegisterItemEvent('ITEM_SLOT_ADD')
 			self:RegisterItemEvent('ITEM_SLOT_REMOVE')
@@ -460,7 +447,7 @@ function ItemFrame:GetPlayer()
 end
 
 function ItemFrame:IsCached()
-	return Bagnon.PlayerInfo:IsCached(self:GetPlayer())
+	return Cache:PlayerCached(self:GetPlayer())
 end
 
 --bag info
@@ -469,7 +456,7 @@ function ItemFrame:HasBag(bag)
 end
 
 function ItemFrame:GetBagSize(bag)
-	return Bagnon.BagSlotInfo:GetSize(self:GetPlayer(), bag)
+	return Bagnon:GetBagSize(self:GetPlayer(), bag)
 end
 
 function ItemFrame:IsBagShown(bag)
@@ -477,7 +464,7 @@ function ItemFrame:IsBagShown(bag)
 end
 
 function ItemFrame:IsBagSlotCached(bag)
-	return Bagnon.BagSlotInfo:IsCached(self:GetPlayer(), bag)
+	return Bagnon:IsBagCached(self:GetPlayer(), bag)
 end
 
 function ItemFrame:GetVisibleBags()
@@ -486,7 +473,7 @@ end
 
 function ItemFrame:HasBankBags()
 	for _, bag in self:GetVisibleBags() do
-		if Bagnon.BagSlotInfo:IsBank(bag) or Bagnon.BagSlotInfo:IsBankBag(bag) then
+		if Bagnon:IsBank(bag) or Bagnon:IsBankBag(bag) then
 			return true
 		end
 	end

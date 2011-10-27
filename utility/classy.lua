@@ -4,23 +4,21 @@
 --]]
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local Classy = {}
-Bagnon.Classy = Classy
 
-function Classy:New(frameType, parentClass)
-	local class = CreateFrame(frameType)
+function Bagnon:NewClass(name, type, parent)
+	local class = CreateFrame(type)
 	class.mt = {__index = class}
-
-	if parentClass then
-		class = setmetatable(class, {__index = parentClass})
-		class.super = parentClass
+  class:Hide()
+  
+	if parent then
+		class = setmetatable(class, {__index = parent})
+		class.super = parent
 	end
 
 	class.Bind = function(self, obj)
 		return setmetatable(obj, self.mt)
 	end
 	
-	--callback support
 	class.RegisterMessage = function(self, ...)
 		Bagnon.Callbacks:Listen(self, ...)
 	end
@@ -37,5 +35,6 @@ function Classy:New(frameType, parentClass)
 		Bagnon.Callbacks:IgnoreAll(self, ...)
 	end
 
+  self[name] = class
 	return class
 end

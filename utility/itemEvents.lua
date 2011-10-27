@@ -39,7 +39,7 @@ local BagEvents = Bagnon.Ears:New()
 Bagnon.BagEvents = BagEvents 
 
 
---[[ privates? ]]--
+--[[ Locals ]]--
 
 local slots = {}
 local bagTypes = {}
@@ -58,7 +58,6 @@ end
 function BagEvents:Load()
 	self.atBank = false
 	self.firstVisit = true
-	
 	self.frame = CreateFrame('Frame')
 	
 	self.RegisterEvent = function(self, event)
@@ -187,7 +186,7 @@ end
 
 
 function BagEvents:UpdateBagSizes()
-	if self:AtBank() then
+	if self.atBank then
 		for bag = 1, NUM_BAG_SLOTS + GetNumBankSlots() do
 			self:UpdateBagSize(bag)
 		end
@@ -200,7 +199,7 @@ function BagEvents:UpdateBagSizes()
 end
 
 function BagEvents:UpdateBagTypes()
-	if self:AtBank() then
+	if self.atBank then
 		for bag = 1, NUM_BAG_SLOTS + GetNumBankSlots() do
 			self:UpdateBagType(bag)
 		end
@@ -268,12 +267,4 @@ function BagEvents:BAG_UPDATE_COOLDOWN(...)
 	end
 end
 
---[[ Accessor Methods ]]--
-
-function BagEvents:AtBank()
-	return self.atBank
-end
-
-
---load the thing
 BagEvents:Load()
