@@ -68,6 +68,6 @@ end
 
 --show the character select list at the given location
 function Bagnon:TogglePlayerDropdown(anchor, offX, offY)
-  currentFrame = anchor
+ 	currentFrame = anchor
 	ToggleDropDownMenu(1, nil, dropdown or CharSelect_Create(), anchor, offX, offY)
 end

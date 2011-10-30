@@ -9,7 +9,9 @@ local PlayerSelector = Bagnon:NewClass('PlayerSelector', 'Button')
 local ItemCache = LibStub('LibItemCache-1.0')
 
 local SIZE = 20
-local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
+local TEXTURE_SIZE = 64 * (SIZE/36)
+local ALTERNATIVE_ICONS = [[Interface\CharacterFrame\TEMPORARYPORTRAIT-%s-%s]]
+local ICONS = [[Interface\Icons\Achievement_Character_%s_%s]]
 
 
 --[[ Constructor ]]--
@@ -22,8 +24,7 @@ function PlayerSelector:New(frameID, parent)
 
 	local nt = b:CreateTexture()
 	nt:SetTexture([[Interface\Buttons\UI-Quickslot2]])
-	nt:SetWidth(NORMAL_TEXTURE_SIZE)
-	nt:SetHeight(NORMAL_TEXTURE_SIZE)
+	nt:SetSize(TEXTURE_SIZE, TEXTURE_SIZE)
 	nt:SetPoint('CENTER', 0, -1)
 	b:SetNormalTexture(nt)
 
@@ -39,7 +40,6 @@ function PlayerSelector:New(frameID, parent)
 
 	local icon = b:CreateTexture()
 	icon:SetAllPoints(b)
-	icon:SetTexture(self:GetPlayerIcon())
 	b.icon = icon
 
 	b:SetScript('OnClick', b.OnClick)
@@ -55,7 +55,7 @@ end
 --[[ Frame Events ]]--
 
 function PlayerSelector:OnShow()
-	self.icon:SetTexture(self:GetPlayerIcon())
+	self:UpdateIcon()
 end
 
 function PlayerSelector:OnClick()
@@ -86,6 +86,26 @@ function PlayerSelector:ShowPlayerSelector()
 	end
 end
 
+function PlayerSelector:UpdateIcon()
+	local _, race, sex = ItemCache:GetPlayer(self:GetPlayer())
+  if not race then
+    return
+  else
+    sex = sex == 3 and 'Female' or 'Male'
+  end
+
+	if race ~= 'Worgen' and race ~= 'Goblin' then
+		if race == 'Scourge' then
+			race = 'Undead'
+		end
+
+		self.icon:SetTexture( ICONS:format(race, sex) )
+	else
+		-- temporary portraits until the holiday achievements bring the cata races in
+		self.icon:SetTexture( ALTERNATIVE_ICONS:format(sex, race) )
+	end
+end
+
 function PlayerSelector:UpdateTooltip()
 	GameTooltip:SetText(L.TipChangePlayer)
 end
@@ -109,24 +129,9 @@ end
 
 function PlayerSelector:SetPlayer(player)
 	self:GetSettings():SetPlayerFilter(player)
+	self:UpdateIcon()
 end
 
 function PlayerSelector:GetPlayer()
 	return self:GetSettings():GetPlayerFilter()
-end
-
-function PlayerSelector:GetPlayerIcon()
-	local _, race = UnitRace('player')
-  local sex = UnitSex('player') == 3 and 'Female' or 'Male'
-
-  if race ~= 'Worgen' and race ~= 'Goblin' then
-    if race == 'Scourge' then
-      race = 'Undead'
-    end
-
-    return string.format([[Interface\Icons\Achievement_Character_%s_%s]], race, sex)
-  else
-    -- temporary portraits until the next holiday achievements bring the cata races in
-    return string.format([[Interface\CharacterFrame\TEMPORARYPORTRAIT-%s-%s]], sex, race)
-  end
 end
