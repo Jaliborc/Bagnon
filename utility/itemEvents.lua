@@ -221,9 +221,6 @@ function BagEvents:PLAYER_LOGIN(...)
 	self:RegisterEvent('BANKFRAME_OPENED')
 	self:RegisterEvent('BANKFRAME_CLOSED')
 
-	self:UpdateBagSize(KEYRING_CONTAINER)
-	self:UpdateItems(KEYRING_CONTAINER)
-
 	self:UpdateBagSize(BACKPACK_CONTAINER)
 	self:UpdateItems(BACKPACK_CONTAINER)
 end

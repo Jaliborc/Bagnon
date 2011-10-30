@@ -36,7 +36,7 @@ function ItemFrame:New(frameID, parent)
 end
 
 
---[[ Messages ]]--
+--[[ Client Events ]]--
 
 function ItemFrame:OnEvent(event, ...)
 	local action = self[event]
@@ -44,6 +44,21 @@ function ItemFrame:OnEvent(event, ...)
 		action(self, event, ...)
 	end
 end
+
+function ItemFrame:GET_ITEM_INFO_RECEIVED()
+	self:UpdateEverything()
+end
+
+function ItemFrame:BANK_OPENED()
+	self:UpdateEverything()
+end
+
+function ItemFrame:BANK_CLOSED()
+	self:UpdateEverything()
+end
+
+
+--[[ Item Events ]]--
 
 function ItemFrame:ITEM_SLOT_ADD(msg, bag, slot)
 	if self:IsBagShown(bag) and (not self:IsBagSlotCached(bag)) then
@@ -61,14 +76,6 @@ function ItemFrame:ITEM_LOCK_CHANGED(msg, bag, slot, ...)
 	if slot and self:IsBagShown(bag) and (not self:IsBagSlotCached(bag)) then
 		self:HandleSpecificItemEvent(msg, bag, slot, ...)
 	end
-end
-
-function ItemFrame:BANK_OPENED(msg)
-	self:UpdateEverything()
-end
-
-function ItemFrame:BANK_CLOSED(msg)
-	self:UpdateEverything()
 end
 
 function ItemFrame:PLAYER_UPDATE(msg, frameID, player)
@@ -129,6 +136,7 @@ function ItemFrame:QUEST_ACCEPTED(event)
 	self:HandleGlobalItemEvent(event)
 end
 
+-- API
 function ItemFrame:HandleGlobalItemEvent(msg, ...)
 	for i, item in self:GetAllItemSlots() do
 		item:HandleEvent(msg, ...)
@@ -191,8 +199,8 @@ function ItemFrame:UpdateEvents()
 	if self:IsVisible() then
 		if not self:IsCached() then
 			self:RegisterEvent('ITEM_LOCK_CHANGED')
-      self:RegisterEvent('QUEST_ACCEPTED')
-      self:RegisterEvent('UNIT_QUEST_LOG_CHANGED')
+      		self:RegisterEvent('QUEST_ACCEPTED')
+      		self:RegisterEvent('UNIT_QUEST_LOG_CHANGED')
 
 			self:RegisterItemEvent('ITEM_SLOT_ADD')
 			self:RegisterItemEvent('ITEM_SLOT_REMOVE')
@@ -204,6 +212,8 @@ function ItemFrame:UpdateEvents()
 				self:RegisterItemEvent('BANK_OPENED')
 				self:RegisterItemEvent('BANK_CLOSED')
 			end
+		else
+			self:RegisterEvent('GET_ITEM_INFO_RECEIVED')
 		end
 
 		self:RegisterMessage('BAG_SLOT_SHOW')
