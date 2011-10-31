@@ -67,7 +67,7 @@ end
 function BagFrame:UpdateShown()
 	if self:IsBagFrameShown() then
 		if not self:IsShown() then
-			UIFrameFadeIn(self, 0.1)
+			UIFrameFadeIn(self, 0.3)
 		end
 	else
 		self:Hide()

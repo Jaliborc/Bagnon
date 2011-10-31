@@ -8,7 +8,9 @@ local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 local Frame = Bagnon:NewClass('Frame', 'Frame')
 
 
---[[ Constructor ]]--
+--[[
+  Constructor
+]]--
 
 function Frame:New(frameID)
 	local f = self:Bind(CreateFrame('Frame', 'BagnonFrame' .. frameID, UIParent))
@@ -38,8 +40,8 @@ end
 
 
 --[[
-	Frame Messages
---]]
+  Frame Messages
+]]--
 
 function Frame:UpdateEvents()
 	self:UnregisterAllMessages()
@@ -69,7 +71,7 @@ end
 
 function Frame:FRAME_SHOW(msg, frameID)
 	if self:GetFrameID() == frameID then
-		self:Show()
+		self:FadeFrame(self, self:GetFrameOpacity())
 	end
 end
 
@@ -178,8 +180,8 @@ end
 
 
 --[[
-	Frame Events
---]]
+  Frame Events
+]]--
 
 function Frame:OnShow()
 	PlaySound('igBackPackOpen')
@@ -213,8 +215,8 @@ end
 
 
 --[[
-	Update Methods
---]]
+  Update Methods
+]]--
 
 function Frame:UpdateEverything()
 	self:UpdateEvents()
@@ -275,6 +277,11 @@ end
 
 function Frame:GetFrameOpacity()
 	return self:GetSettings():GetOpacity()
+end
+
+function Frame:FadeFrame(frame, alpha)
+  UIFrameFadeIn(frame, 0.3, 0, alpha or 1)
+  frame:Show()
 end
 
 
@@ -518,16 +525,6 @@ function Frame:GetMenuButtons()
 		self:PlaceMenuButtons()
 	end
 	return self.menuButtons
-end
-
-
---[[
-	Frame Components
---]]
-
-function Frame:ShowFrame(frame)
-	frame:Show()
-	UIFrameFadeIn(frame, 0.3, 0, 1)
 end
 
 

@@ -14,10 +14,9 @@ local Unfit = LibStub('Unfit-1.0')
 
 function ItemSlot:New(bag, slot, frameID, parent)
 	local item = self:Restore() or self:Create()
-
 	item:SetParent(item:GetDummyBag(parent, bag))
-	item:SetID(slot)
 	item:SetFrameID(frameID)
+  item:SetID(slot)
 
 	if item:IsVisible() then
 		item:Update()

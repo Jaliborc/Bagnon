@@ -106,7 +106,6 @@ function Bagnon:ShowFrame(frameID)
 		self.FrameSettings:Get(frameID):Show()
 		return true
 	end
-	return false
 end
 
 function Bagnon:HideFrame(frameID)
@@ -114,7 +113,6 @@ function Bagnon:HideFrame(frameID)
 		self.FrameSettings:Get(frameID):Hide()
 		return true
 	end
-	return false
 end
 
 function Bagnon:ToggleFrame(frameID)
@@ -126,7 +124,6 @@ function Bagnon:ToggleFrame(frameID)
 		self.FrameSettings:Get(frameID):Toggle()
 		return true
 	end
-	return false
 end
 
 function Bagnon:IsFrameEnabled(frameID)
