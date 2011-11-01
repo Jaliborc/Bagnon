@@ -235,7 +235,7 @@ function Settings:SetEnableFlashFind(enable)
 end
 
 function Settings:IsFlashFindEnabled()
-	return self:GetDB().enableFlashFind and true or false
+	return self:GetDB().enableFlashFind
 end
 
 -- Opens the inventory and broadcasts the search message to item frames
@@ -254,3 +254,12 @@ hooksecurefunc("SetItemRef", function(link, text, button)
 		Settings:FlashFind(name)
 	end
 end)
+
+--tip count
+function Settings:SetEnableTipCount(enable)
+	self:GetDB().enableTipCount = enable and true or false
+end
+
+function Settings:IsTipCountEnabled()
+	return self:GetDB().enableTipCount
+end

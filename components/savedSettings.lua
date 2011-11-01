@@ -69,6 +69,7 @@ function SavedSettings:GetDefaultSettings()
 		lockFramePositions = false,
 		colorBagSlots = true,
 		enableFlashFind = true,
+    enableTipCount = true,
 		enableBlizzardBagPassThrough = false,
 		
 		enabledFrames = {
