@@ -18,7 +18,7 @@ function Bagnon:OnInitialize()
   self:AddSlashCommands()
   self:RegisterAutoDisplayEvents()
 	self:HookBagClickEvents()
-  --self:HookTooltips()
+  self:HookTooltips()
 
 	self:CreateOptionsLoader()
 	self:CreateLDBLauncher()

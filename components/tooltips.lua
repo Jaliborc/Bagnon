@@ -8,13 +8,23 @@ local ItemCache = LibStub('LibItemCache-1.0')
 local Items = {}
 
 local HEARTHSTONE = tostring(HEARTHSTONE_ITEM_ID)
+local CLASS_COLOR = '|cff%02x%02x%02x'
 local SILVER = '|cffc7c7cf%s|r'
 local TEAL = '|cff00ff9a%s|r'
 
-print('hello')
+
 --[[ Methods ]]--
 
-local function FormatCounts(...)
+local function GetColor(class)
+	if class then
+		local colors = RAID_CLASS_COLORS[class]
+		return CLASS_COLOR:format(colors.r * 255, colors.g * 255, colors.b * 255) .. '%s|r'
+	else
+		return TEAL
+	end
+end
+
+local function FormatCounts(color, ...)
 	local text = ''
 	local total = 0
 	
@@ -28,7 +38,7 @@ local function FormatCounts(...)
 	end
 
 	if total > 0 then
-		return TEAL:format(total) .. ' ' .. SILVER:format(text)
+		return color:format(total) .. ' ' .. SILVER:format('('.. text.sub(2, -1) .. ')')
 	end
 end
 
@@ -39,10 +49,12 @@ local function AddOwners(tooltip, link)
 	end
 
 	for player in ItemCache:IteratePlayers() do
+		local class = ItemCache:GetPlayer(player)
 		local countText = Items[player][id]
+		local color = GetColor(class)
 		
 		if countText ~= false then
-			countText = FormatCounts(ItemCache:GetItemCounts(player, id))
+			countText = FormatCounts(color, ItemCache:GetItemCount(player, id))
 			
 			if ItemCache:PlayerCached(player) then
 				Items[player][id] = countText or false
@@ -50,7 +62,7 @@ local function AddOwners(tooltip, link)
 		end
 
 		if countText then
-			tooltip:AddDoubleLine(TEAL:format(player), countText)
+			tooltip:AddDoubleLine(color:format(player), countText)
 		end
 	end
 	
@@ -74,13 +86,17 @@ local function hookTip(tooltip)
 			end
 		end
 	end)
-end)
+end
 
 
 --[[ Start this Thing! ]]--
 
 function Bagnon:HookTooltips()
-	if self.Settings:IsTipCountEnabled() then
+	if ItemCache:HasCache() and self.Settings:IsTipCountEnabled() then
+		for player in ItemCache:IteratePlayers() do
+			Items[player] = {}
+		end
+		
 		hookTip(GameTooltip)
 		hookTip(ItemRefTooltip)
 	end
