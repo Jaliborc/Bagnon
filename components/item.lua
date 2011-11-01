@@ -5,26 +5,30 @@
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local ItemSlot = Bagnon:NewClass('ItemSlot', 'Button')
+ItemSlot.nextID = 0
 
 local ItemSearch = LibStub('LibItemSearch-1.0')
 local Unfit = LibStub('Unfit-1.0')
 
 
---[[ ItemSlot Constructor ]]--
+--[[ Constructor ]]--
 
 function ItemSlot:New(bag, slot, frameID, parent)
 	local item = self:Restore() or self:Create()
-	item:SetParent(item:GetDummyBag(parent, bag))
+	item:SetFrame(parent, bag, slot)
 	item:SetFrameID(frameID)
-  item:SetID(slot)
 
 	if item:IsVisible() then
 		item:Update()
 	else
 		item:Show()
 	end
-
 	return item
+end
+
+function ItemSlot:SetFrame(parent, bag, slot)
+  self:SetParent(self:GetDummyBag(parent, bag))
+  self:SetID(slot)
 end
 
 --constructs a brand new item slot
@@ -35,8 +39,7 @@ function ItemSlot:Create()
 
 	--add a quality border texture
 	local border = item:CreateTexture(nil, 'OVERLAY')
-	border:SetWidth(67)
-	border:SetHeight(67)
+	border:SetSize(67, 67)
 	border:SetPoint('CENTER', item)
 	border:SetTexture([[Interface\Buttons\UI-ActionButton-Border]])
 	border:SetBlendMode('ADD')
@@ -55,21 +58,20 @@ function ItemSlot:Create()
 	item:SetScript('OnShow', item.OnShow)
 	item:SetScript('OnHide', item.OnHide)
 	item:HookScript("OnClick", item.ItemClicked)
+	item:RegisterForClicks('anyUp')
+	item:RegisterForDrag('LeftButton')
 	item:Hide()
 
 	return item
 end
 
---creates a new item slot for <id>
 function ItemSlot:ConstructNewItemSlot(id)
 	return CreateFrame('Button', 'BagnonItemSlot' .. id, nil, 'ContainerFrameItemButtonTemplate')
 end
 
---returns an available blizzard item slot for <id>
 function ItemSlot:GetBlizzardItemSlot(id)
-	--only allow reuse of blizzard frames if all frames are enabled
 	if not self:CanReuseBlizzardBagSlots() then
-		return nil
+		return
 	end
 
 	local bag = math.ceil(id / MAX_CONTAINER_ITEMS)
@@ -87,28 +89,21 @@ function ItemSlot:CanReuseBlizzardBagSlots()
 	return Bagnon.Settings:AreAllFramesEnabled() and (not Bagnon.Settings:IsBlizzardBagPassThroughEnabled())
 end
 
---returns the next available item slot
 function ItemSlot:Restore()
-	local item = ItemSlot.unused and next(ItemSlot.unused)
+	local item = self.unused and next(self.unused)
 	if item then
-		ItemSlot.unused[item] = nil
+		self.unused[item] = nil
 		return item
 	end
 end
 
---gets the next unique item slot id
-do
-	local id = 1
-	function ItemSlot:GetNextItemSlotID()
-		local nextID = id
-		id = id + 1
-		return nextID
-	end
+function ItemSlot:GetNextItemSlotID()
+  self.nextID = self.nextID + 1
+  return self.nextID
 end
 
 
-
---[[ ItemSlot Destructor ]]--
+--[[ Destructor ]]--
 
 function ItemSlot:Free()
 	self:Hide()
@@ -116,8 +111,8 @@ function ItemSlot:Free()
 	self:UnregisterAllEvents()
 	self:UnregisterAllMessages()
 
-	ItemSlot.unused = ItemSlot.unused or {}
-	ItemSlot.unused[self] = true
+	self.unused = self.unused or {}
+	self.unused[self] = true
 end
 
 

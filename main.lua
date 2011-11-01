@@ -21,19 +21,6 @@ function Bagnon:OnInitialize()
 	self:CreateOptionsLoader()
 	self:CreateLDBLauncher()
 	self:CreateGuildBankLoader()
-	
-	
-	--------- TEMP!! REMOVE NEXT WOW PATCH!! --------
-	if BagnonGlobalSettings then
-		BagnonGlobalSettings.facade = nil
-		
-		if BagnonGlobalSettings.frames then
-			for name, sets in pairs(BagnonGlobalSettings.frames) do
-				sets.facade = nil
-			end
-		end
-	end
-	------------------------------------------------
 end
 
 function Bagnon:CreateOptionsLoader()

@@ -280,7 +280,7 @@ function Frame:GetFrameOpacity()
 end
 
 function Frame:FadeFrame(frame, alpha)
-  UIFrameFadeIn(frame, 0.3, 0, alpha or 1)
+  UIFrameFadeIn(frame, 0.2, 0, alpha or 1)
   frame:Show()
 end
 
