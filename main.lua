@@ -15,9 +15,11 @@ BINDING_NAME_BANKNON_TOGGLE = L.ToggleBank
 
 function Bagnon:OnInitialize()
 	self.frames = {}
+  self:AddSlashCommands()
+  self:RegisterAutoDisplayEvents()
 	self:HookBagClickEvents()
-	self:RegisterAutoDisplayEvents()
-	self:AddSlashCommands()
+  --self:HookTooltips()
+
 	self:CreateOptionsLoader()
 	self:CreateLDBLauncher()
 	self:CreateGuildBankLoader()
