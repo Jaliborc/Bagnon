@@ -5,7 +5,7 @@
 
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 local ItemCache = LibStub('LibItemCache-1.0')
-local Items = {}
+local Items, Enabled, Hooked = {}
 
 local HEARTHSTONE = tostring(HEARTHSTONE_ITEM_ID)
 local CLASS_COLOR = '|cff%02x%02x%02x'
@@ -77,7 +77,7 @@ local function hookTip(tooltip)
 	end)
 
 	tooltip:HookScript('OnTooltipSetItem', function(self)
-		if not modified  then
+		if not modified and Enabled then
 			modified = true
 			
 			local name, link = self:GetItem()
@@ -93,11 +93,18 @@ end
 
 function Bagnon:HookTooltips()
 	if ItemCache:HasCache() and self.Settings:IsTipCountEnabled() then
-		for player in ItemCache:IteratePlayers() do
-			Items[player] = {}
+		if not Hooked then
+			for player in ItemCache:IteratePlayers() do
+				Items[player] = {}
+			end
+		
+			hookTip(GameTooltip)
+			hookTip(ItemRefTooltip)
+			Hooked = true
 		end
 		
-		hookTip(GameTooltip)
-		hookTip(ItemRefTooltip)
+		Enabled = true
+	else
+		Enabled = nil
 	end
 end

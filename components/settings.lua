@@ -258,6 +258,7 @@ end)
 --tip count
 function Settings:SetEnableTipCount(enable)
 	self:GetDB().enableTipCount = enable and true or false
+	Bagnon:HookTooltips()
 end
 
 function Settings:IsTipCountEnabled()
