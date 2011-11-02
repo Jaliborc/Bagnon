@@ -23,8 +23,8 @@ L.CmdShowVersion = 'Mostra a versão atual'
 
 
 --frame text
-L.TitleBags = 'Sacos do %s'
-L.TitleBank = 'Banco do %s'
+L.TitleBags = 'Sacos de %s'
+L.TitleBank = 'Banco de %s'
 
 
 --tooltips

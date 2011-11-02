@@ -268,12 +268,12 @@ function ItemSlot:Update()
 end
 
 --item link
-function ItemSlot:SetItem(itemLink)
-	self.hasItem = itemLink or nil
+function ItemSlot:SetItem(item)
+	self.item = item
 end
 
 function ItemSlot:GetItem()
-	return self.hasItem
+	return self.item
 end
 
 --item texture
@@ -446,7 +446,7 @@ end
 function ItemSlot:FlashSearch(search)
 	if search and search ~= '' then
 		local link = self:GetItem()
-		if link:Find(itemLink, search) then
+		if ItemSearch:Find(itemLink, search) then
 			UIFrameFlash(self, 0.2, 0.3, 1.5, true, 0.0, 0.0 )
 		end
 	end
@@ -533,13 +533,13 @@ end
 local QUEST_ITEM_SEARCH = string.format('t:%s|%s', select(10, GetAuctionItemClasses()), 'quest')
 
 function ItemSlot:IsQuestItem()
-	local itemLink = self:GetItem()
-	if not itemLink then
+	local item = self:GetItem()
+	if not item then
 		return false, false
 	end
 
 	if self:IsCached() then
-		return ItemSearch:Find(itemLink, QUEST_ITEM_SEARCH), false
+		return ItemSearch:Find(item, QUEST_ITEM_SEARCH), false
 	else
 		local isQuestItem, questID, isActive = GetContainerItemQuestInfo(self:GetBag(), self:GetID())
 		return isQuestItem, (questID and not isActive)
