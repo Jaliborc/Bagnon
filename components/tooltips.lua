@@ -31,14 +31,13 @@ local function FormatCounts(color, ...)
 	for i = 1, select('#', ...) do
 		local count = select(i, ...)
 		if count and count > 0 then
-			--text = text .. ', ' .. L['TipCount' .. i]:format(count)
-			text = text .. ', ' .. count
+			text = text .. L['TipCount' .. i]:format(count)
 			total = total + count
 		end
 	end
 
 	if total > 0 then
-		return color:format(total) .. ' ' .. SILVER:format('('.. text.sub(2, -1) .. ')')
+		return color:format(total) .. ' ' .. SILVER:format('('.. text:sub(3) .. ')')
 	end
 end
 
@@ -54,7 +53,7 @@ local function AddOwners(tooltip, link)
 		local color = GetColor(class)
 		
 		if countText ~= false then
-			countText = FormatCounts(color, ItemCache:GetItemCount(player, id))
+			countText = FormatCounts(color, ItemCache:GetItemCounts(player, id))
 			
 			if ItemCache:PlayerCached(player) then
 				Items[player][id] = countText or false
@@ -92,9 +91,9 @@ end
 --[[ Start this Thing! ]]--
 
 function Bagnon:HookTooltips()
-	if ItemCache:HasCache() and self.Settings:IsTipCountEnabled() then
+	if BagBrother and ItemCache:HasCache() and self.Settings:IsTipCountEnabled() then
 		if not Hooked then
-			for player in ItemCache:IteratePlayers() do
+			for i, player in ItemCache:IteratePlayers() do
 				Items[player] = {}
 			end
 		

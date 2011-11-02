@@ -47,7 +47,12 @@ L.TipShowFrameConfig = 'Click to configure this window.'
 L.TipDoubleClickSearch = '<Alt-Drag> to move.\n<Right-Click> to configure.\n<Double-Click> to search.'
 L.Total = 'Total'
 
---databroker plugin tooltips
+--itemcount tooltips
+L.TipCount1 = ', Equipped: %d'
+L.TipCount2 = ', Bags: %d'
+L.TipCount3 = ', Bank: %d'
+
+--databroker tooltips
 L.TipShowBank = '<Shift Left Click> to toggle your bank.'
 L.TipShowInventory = '<Left Click> to toggle your inventory.'
 L.TipShowOptions = '<Right Click> to open the options menu.'
