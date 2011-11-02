@@ -110,7 +110,7 @@ function MoneyFrame:OnEnter()
 	GameTooltip:SetText(string.format(L.TipGoldOnRealm, GetRealmName()))
 
 	local totalMoney = 0
-	for player in ItemCache:IteratePlayers() do
+	for i, player in ItemCache:IteratePlayers() do
 		local money = ItemCache:GetMoney(player)
 		if money > 0 then
 			totalMoney = totalMoney + money

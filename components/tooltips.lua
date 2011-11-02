@@ -48,7 +48,7 @@ local function AddOwners(tooltip, link)
 		return
 	end
 
-	for player in ItemCache:IteratePlayers() do
+	for i, player in ItemCache:IteratePlayers() do
 		local class = ItemCache:GetPlayer(player)
 		local countText = Items[player][id]
 		local color = GetColor(class)

@@ -50,7 +50,7 @@ local function CharSelect_Initialize(self, level)
   else
     local selected = currentFrame:GetPlayer()
 
-    for player in Cache:IteratePlayers() do
+    for i, player in Cache:IteratePlayers() do
       AddItem(player, true, player == selected, Cache:PlayerCached(player), level, player)
     end
 	end
