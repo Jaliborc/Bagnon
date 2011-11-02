@@ -1,9 +1,10 @@
 ====== 4.2.10
 * Jaliborc: Bagnon_Forever has been replaced by BagBrother, an item cache which will be shared with Combuctor
 * Jaliborc: Now comes bundled with LibItemCache, a library that adds support for other item caches, such as BagSync and Armory
-* Jaliborc: With the new cache approach, Bagnon Tooltips is no more. Now you can toggle the feature at the Interface Options.
+* Jaliborc: With the new cache approach, Bagnon_Tooltips is no more. Now you can toggle the feature at the Interface Options.
 * Jaliborc: The character selector now changes depending on the selected character and has much better icons
 * Jaliborc: BagnonFacade now should work properly with the guild bank
+* Jaliborc: The tooltip item count is now colored by class
 
 ====== 4.2.9
 * Jaliborc: Fixed a bug with the Traditional Chinese translations
