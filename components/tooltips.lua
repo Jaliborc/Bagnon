@@ -17,8 +17,9 @@ local TEAL = '|cff00ff9a%s|r'
 
 local function GetColor(class)
 	if class then
-		local colors = RAID_CLASS_COLORS[class]
-		return CLASS_COLOR:format(colors.r * 255, colors.g * 255, colors.b * 255) .. '%s|r'
+		local colors = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
+    local color = colors[class]
+		return CLASS_COLOR:format(color.r * 255, color.g * 255, color.b * 255) .. '%s|r'
 	else
 		return TEAL
 	end

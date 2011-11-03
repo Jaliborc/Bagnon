@@ -1,3 +1,8 @@
+====== 4.2.11
+* Jaliborc: Several bug fixes
+* Jaliborc: Started to implement portuguese translations
+* Jaliborc: Tweaked guild bank log position in the window
+
 ====== 4.2.10
 * Jaliborc: Bagnon_Forever has been replaced by BagBrother, an item cache which will be shared with Combuctor
 * Jaliborc: Now comes bundled with LibItemCache, a library that adds support for other item caches, such as BagSync and Armory
