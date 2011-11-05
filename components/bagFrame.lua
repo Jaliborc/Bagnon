@@ -66,9 +66,7 @@ end
 
 function BagFrame:UpdateShown()
 	if self:IsBagFrameShown() then
-		if not self:IsShown() then
-			UIFrameFadeIn(self, 0.3)
-		end
+		self:Show()
 	else
 		self:Hide()
 	end
@@ -76,7 +74,6 @@ end
 
 function BagFrame:UpdateEvents()
 	self:UnregisterAllMessages()
-
 	self:RegisterMessage('BAG_FRAME_SHOW')
 	self:RegisterMessage('BAG_FRAME_HIDE')
 end

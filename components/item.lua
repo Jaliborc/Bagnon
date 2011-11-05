@@ -52,14 +52,12 @@ function ItemSlot:Create()
 	item.border = border
 
 	--get rid of any registered frame events, and use my own
-	item:SetScript('OnEvent', nil)
+	item:HookScript("OnClick", item.ItemClicked)
 	item:SetScript('OnEnter', item.OnEnter)
 	item:SetScript('OnLeave', item.OnLeave)
 	item:SetScript('OnShow', item.OnShow)
 	item:SetScript('OnHide', item.OnHide)
-	item:HookScript("OnClick", item.ItemClicked)
-	item:RegisterForClicks('anyUp')
-	item:RegisterForDrag('LeftButton')
+	item:SetScript('OnEvent', nil)
 	item:Hide()
 
 	return item
@@ -118,53 +116,53 @@ end
 
 --[[ Events ]]--
 
-function ItemSlot:ITEM_SLOT_UPDATE(msg, bag, slot)
+function ItemSlot:ITEM_SLOT_UPDATE()
 	self:Update()
 end
 
-function ItemSlot:ITEM_LOCK_CHANGED(event, bag, slot)
+function ItemSlot:ITEM_LOCK_CHANGED()
 	self:UpdateLocked()
 end
 
-function ItemSlot:ITEM_SLOT_UPDATE_COOLDOWN(msg, bag, slot)
+function ItemSlot:ITEM_SLOT_UPDATE_COOLDOWN()
 	self:UpdateCooldown()
 end
 
-function ItemSlot:TEXT_SEARCH_UPDATE(msg, frameID, search)
+function ItemSlot:TEXT_SEARCH_UPDATE()
 	self:UpdateSearch()
 end
 
-function ItemSlot:BAG_SEARCH_UPDATE(msg, frameID, search)
+function ItemSlot:BAG_SEARCH_UPDATE(msg, frameID)
 	if self:GetFrameID() == frameID then
 		self:UpdateBagSearch()
 	end
 end
 
-function ItemSlot:ITEM_HIGHLIGHT_QUALITY_UPDATE(msg, enable)
+function ItemSlot:ITEM_HIGHLIGHT_QUALITY_UPDATE()
 	self:UpdateBorder()
 end
 
-function ItemSlot:ITEM_HIGHLIGHT_UNUSABLE_UPDATE(msg, enable)
+function ItemSlot:ITEM_HIGHLIGHT_UNUSABLE_UPDATE()
 	self:UpdateBorder()
 end
 
-function ItemSlot:ITEM_HIGHLIGHT_QUEST_UPDATE(msg, enable)
+function ItemSlot:ITEM_HIGHLIGHT_QUEST_UPDATE()
 	self:UpdateBorder()
 end
 
-function ItemSlot:ITEM_HIGHLIGHT_OPACITY_UPDATE(msg, opacity)
+function ItemSlot:ITEM_HIGHLIGHT_OPACITY_UPDATE()
 	self:UpdateBorder()
 end
 
-function ItemSlot:SHOW_EMPTY_ITEM_SLOT_TEXTURE_UPDATE(msg, enable)
+function ItemSlot:SHOW_EMPTY_ITEM_SLOT_TEXTURE_UPDATE()
 	self:Update()
 end
 
-function ItemSlot:ITEM_SLOT_COLOR_ENABLED_UPDATE(msg, type, r, g, b)
+function ItemSlot:ITEM_SLOT_COLOR_ENABLED_UPDATE()
 	self:Update()
 end
 
-function ItemSlot:ITEM_SLOT_COLOR_UPDATE(msg, type, r, g, b)
+function ItemSlot:ITEM_SLOT_COLOR_UPDATE()
 	self:Update()
 end
 
@@ -250,9 +248,9 @@ function ItemSlot:Update()
     return
   end
 
-	local texture, count, locked, quality, readable, lootable, link = self:GetInfo()
+	local icon, count, locked, quality, readable, lootable, link = self:GetInfo()
 	self:SetItem(link)
-	self:SetTexture(texture)
+	self:SetTexture(icon)
 	self:SetCount(count)
 	self:SetLocked(locked)
 	self:SetReadable(readable)
@@ -351,7 +349,7 @@ function ItemSlot:SetBorderQuality(quality)
 	end
 	
 	if self:HighlightUnusableItems() then
-		local link = select(7, self:GetInfo())
+		local link = self:GetItem()
 		if Unfit:IsItemUnusable(link) then
 			local r, g, b = RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b
 			border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
@@ -359,7 +357,7 @@ function ItemSlot:SetBorderQuality(quality)
 			return
 		end
 	end
-
+	
 	if self:HighlightingItemsByQuality() then
 		if self:GetItem() and quality and quality > 1 then
 			local r, g, b = GetItemQualityColor(quality)
@@ -529,8 +527,8 @@ function ItemSlot:GetHighlightAlpha()
 end
 
 --returns true if the item is a quest item or not
---in 3.3, includes a second return to determine if the item is a quest starter for a quest the player lacks
-local QUEST_ITEM_SEARCH = string.format('t:%s|%s', select(10, GetAuctionItemClasses()), 'quest')
+--includes a second return to determine if the item is a quest starter for a quest the player lacks
+local QUEST_ITEM_SEARCH = format('t:%s|%s', select(10, GetAuctionItemClasses()), 'quest')
 
 function ItemSlot:IsQuestItem()
 	local item = self:GetItem()
@@ -616,7 +614,6 @@ function ItemSlot:CreateDummyItemSlot()
 	slot:SetScript('OnLeave', Slot_OnLeave)
 	slot:SetScript('OnShow', Slot_OnEnter)
 	slot:SetScript('OnHide', Slot_OnHide)
-
 	return slot
 end
 

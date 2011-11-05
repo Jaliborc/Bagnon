@@ -1,3 +1,8 @@
+====== 4.2.12
+* Jaliborc: Several bug fixes
+* Jaliborc: Guild bank now should work like a charm
+* Thank you to thelucid for borrowing me his guild bank
+
 ====== 4.2.11
 * Jaliborc: Several bug fixes
 * Jaliborc: Started to implement portuguese translations
