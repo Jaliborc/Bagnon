@@ -457,7 +457,7 @@ function ItemFrame:GetPlayer()
 end
 
 function ItemFrame:IsCached()
-	return Cache:PlayerCached(self:GetPlayer())
+	return Cache:IsPlayerCached(self:GetPlayer())
 end
 
 --bag info

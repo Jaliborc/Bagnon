@@ -49,14 +49,14 @@ local function AddOwners(tooltip, link)
 	end
 
 	for i, player in ItemCache:IteratePlayers() do
-		local class = ItemCache:GetPlayer(player)
+		local class = ItemCache:GetPlayerInfo(player)
 		local countText = Items[player][id]
 		local color = GetColor(class)
 		
 		if countText ~= false then
 			countText = FormatCounts(color, ItemCache:GetItemCounts(player, id))
 			
-			if ItemCache:PlayerCached(player) then
+			if ItemCache:IsPlayerCached(player) then
 				Items[player][id] = countText or false
 			end
 		end

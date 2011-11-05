@@ -34,7 +34,7 @@ end
 
 --returns link, count, icon, slot, size, cached
 function Bagnon:GetBagInfo(...)
-  return Cache:GetBag(...)
+  return Cache:GetBagInfo(...)
 end
 
 function Bagnon:IsBagPurchasable(player, ...)
