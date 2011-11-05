@@ -427,7 +427,7 @@ function Frame:Layout()
 	local padH = 16
 	local width, height = 0, 0
 
-	--place menu butons, this determines our base width
+	--place menu butons
 	local w, h = self:PlaceMenuButtons()
 	width = width + w
 

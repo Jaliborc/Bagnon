@@ -87,7 +87,7 @@ function PlayerSelector:ShowPlayerSelector()
 end
 
 function PlayerSelector:UpdateIcon()
-	local _, race, sex = ItemCache:GetPlayer(self:GetPlayer())
+	local _, race, sex = ItemCache:GetPlayerInfo(self:GetPlayer())
   if not race then
     return
   else

@@ -149,6 +149,7 @@ end
 function Bag:BAG_UPDATE(event, bag)
 	self:UpdateLock()
 	self:UpdateSlotInfo()
+  self:UpdateToggle()
 end
 
 function Bag:PLAYERBANKSLOTS_UPDATED(event)
@@ -171,15 +172,15 @@ function Bag:BANK_CLOSED(msg)
 	self:UpdateSlotInfo()
 end
 
-function Bag:BAG_SLOT_SHOW(msg, frameID, slotID)
-	if frameID == self:GetFrameID() and slotID == self:GetID() then
-		self:UpdateShown()
+function Bag:BAG_SLOT_SHOW(msg, frameID, slot)
+	if frameID == self:GetFrameID() and slot == self:GetID() then
+		self:UpdateToggle()
 	end
 end
 
-function Bag:BAG_SLOT_HIDE(msg, frameID, slotID)
-	if frameID == self:GetFrameID() and slotID == self:GetID() then
-		self:UpdateShown()
+function Bag:BAG_SLOT_HIDE(msg, frameID, slot)
+	if frameID == self:GetFrameID() and slot == self:GetID() then
+		self:UpdateToggle()
 	end
 end
 
@@ -215,7 +216,7 @@ function Bag:OnClick()
 		self:ToggleSlot()
 	end
 
-	self:UpdateShown()
+	self:UpdateToggle()
 end
 
 function Bag:OnDrag()
@@ -299,12 +300,14 @@ function Bag:UpdateEverything()
 end
 
 function Bag:Update()
-	if not self:IsVisible() then return end
+	if not self:IsVisible() then
+    return
+  end
 
 	self:UpdateLock()
 	self:UpdateSlotInfo()
 	self:UpdateCursor()
-	self:UpdateShown()
+	self:UpdateToggle()
 end
 
 function Bag:UpdateLock()
@@ -314,7 +317,7 @@ function Bag:UpdateLock()
 end
 
 function Bag:UpdateCursor()
-	if self:IsCustomSlot() then
+	if not self:IsCustomSlot() then
       return
   end
 
@@ -400,7 +403,7 @@ function Bag:ToggleSlot()
 	self:GetSettings():ToggleBagSlot(self:GetID())
 end
 
-function Bag:UpdateShown()
+function Bag:UpdateToggle()
 	self:SetChecked(self:IsSlotShown())
 end
 
