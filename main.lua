@@ -15,10 +15,10 @@ BINDING_NAME_BANKNON_TOGGLE = L.ToggleBank
 
 function Bagnon:OnInitialize()
 	self.frames = {}
-  self:AddSlashCommands()
-  self:RegisterAutoDisplayEvents()
+ 	self:AddSlashCommands()
+ 	self:RegisterAutoDisplayEvents()
 	self:HookBagClickEvents()
-  self:HookTooltips()
+ 	self:HookTooltips()
 
 	self:CreateOptionsLoader()
 	self:CreateLDBLauncher()
@@ -383,18 +383,17 @@ end
 
 function Bagnon:HandleSlashCommand(cmd)
 	cmd = cmd and cmd:lower() or ''
+	
 	if cmd == 'bank' then
 		self:ToggleFrame('bank')
-	elseif cmd == 'bags' then
+	elseif cmd == 'bags' or cmd == 'inventory' then
 		self:ToggleFrame('inventory')
 	elseif cmd == 'version' then
 		self:PrintVersion()
-	elseif cmd == 'config' then
-		self:ShowOptions()
 	elseif cmd == '?' or cmd == 'help' then
 		self:PrintHelp()
 	else
-		if not self:ShowOptions() then
+		if not self:ShowOptions() and cmd ~= 'config' and cmd ~= 'options' then
 			self:PrintHelp()
 		end
 	end

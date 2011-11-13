@@ -87,58 +87,40 @@ function Frame:FRAME_MOVE_START(msg, frameID)
 	end
 end
 
-function Frame:FRAME_MOVE_STOP(msg, frameID)
+function Frame:FRAME_MOVE_STOP (msg, frameID)
 	if self:GetFrameID() == frameID then
 		self:StopMovingOrSizing()
 		self:SavePosition()
 	end
 end
 
-function Frame:FRAME_POSITION_UPDATE(msg, frameID)
+function Frame:FRAME_POSITION_UPDATE (msg, frameID)
 	if self:GetFrameID() == frameID then
 		self:UpdatePosition()
 	end
 end
 
-function Frame:FRAME_SCALE_UPDATE(msg, frameID, scale)
+function Frame:FRAME_SCALE_UPDATE (msg, frameID, scale)
 	if self:GetFrameID() == frameID then
 		self:UpdateScale()
 	end
 end
 
-function Frame:FRAME_OPACITY_UPDATE(msg, frameID, opacity)
+function Frame:FRAME_OPACITY_UPDATE (msg, frameID, opacity)
 	if self:GetFrameID() == frameID then
 		self:UpdateOpacity()
 	end
 end
 
-function Frame:FRAME_COLOR_UPDATE(msg, frameID, r, g, b, a)
+function Frame:FRAME_COLOR_UPDATE (msg, frameID, r, g, b, a)
 	if self:GetFrameID() == frameID then
 		self:UpdateBackdrop()
 	end
 end
 
-function Frame:FRAME_BORDER_COLOR_UPDATE(msg, frameID, r, g, b, a)
+function Frame:FRAME_BORDER_COLOR_UPDATE (msg, frameID, r, g, b, a)
 	if self:GetFrameID() == frameID then
 		self:UpdateBackdropBorder()
-	end
-end
-
-function Frame:BAG_FRAME_UPDATE_SHOWN(msg, frameID)
-	if self:GetFrameID() == frameID then
-		self:Layout()
-	end
-end
-
-function Frame:BAG_FRAME_UPDATE_LAYOUT(msg, frameID)
-	if self:GetFrameID() == frameID then
-		self:Layout()
-	end
-end
-
-function Frame:ITEM_FRAME_SIZE_CHANGE(msg, frameID)
-	if self:GetFrameID() == frameID then
-		self:Layout()
 	end
 end
 
@@ -148,33 +130,26 @@ function Frame:FRAME_LAYER_UPDATE(msg, frameID, layer)
 	end
 end
 
-function Frame:BAG_FRAME_ENABLE_UPDATE(msg, frameID, enable)
-	if self:GetFrameID() == frameID then
-		self:Layout()
+do
+	local function LayoutMessage (self, msg, frameID)
+		if self:GetFrameID() == frameID then
+			self:Layout()
+		end
 	end
-end
 
-function Frame:MONEY_FRAME_ENABLE_UPDATE(msg, frameID, enable)
-	if self:GetFrameID() == frameID then
-		self:Layout()
-	end
-end
-
-function Frame:DATABROKER_FRAME_ENABLE_UPDATE(msg, frameID, enable)
-	if self:GetFrameID() == frameID then
-		self:Layout()
-	end
-end
-
-function Frame:SEARCH_TOGGLE_ENABLE_UPDATE(msg, frameID, enable)
-	if self:GetFrameID() == frameID then
-		self:Layout()
-	end
-end
-
-function Frame:OPTIONS_TOGGLE_ENABLE_UPDATE(msg, frameID, enable)
-	if self:GetFrameID() == frameID then
-		self:Layout()
+	local messages = {
+		'BAG_FRAME_UPDATE_LAYOUT',
+		'BAG_FRAME_UPDATE_SHOWN',
+		'ITEM_FRAME_SIZE_CHANGE',
+		'BAG_FRAME_ENABLE_UPDATE',
+		'MONEY_FRAME_ENABLE_UPDATE',
+		'DATABROKER_FRAME_ENABLE_UPDATE',
+		'SEARCH_TOGGLE_ENABLE_UPDATE',
+		'OPTIONS_TOGGLE_ENABLE_UPDATE'
+	}
+	
+	for _, msg in ipairs(messages) do
+		Frame[msg] = LayoutMessage
 	end
 end
 
@@ -299,14 +274,12 @@ end
 
 --get a frame's position relative to its parent
 function Frame:GetRelativePosition()
-	local parent = self:GetParent()
-	local w, h = parent:GetWidth(), parent:GetHeight()
 	local x, y = self:GetCenter()
-	local s = self:GetScale()
-	if not (x and y) then return end
-
-	w = w/s h = h/s
-
+	local scale = self:GetScale()
+	
+	local h = UIParent:GetHeight() / scale
+	local w = UIParent:GetWidth() / scale
+	
 	local dx, dy
 	local hHalf = (x > w/2) and 'RIGHT' or 'LEFT'
 	if hHalf == 'RIGHT' then
@@ -465,7 +438,6 @@ function Frame:Layout()
 	--adjust size
 	self:SetWidth(math.max(width, 156) + padW)
 	self:SetHeight(height + padH)
-	self:SavePosition()
 end
 
 

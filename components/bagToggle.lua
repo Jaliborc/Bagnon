@@ -79,11 +79,11 @@ function BagToggle:OnClick(button)
 	if button == 'LeftButton' then
 		self:GetSettings():ToggleBagFrame()
 	else
-		if self:GetFrameID() == 'inventory' then
-			Bagnon:ToggleFrame('bank')
-		else
-			Bagnon:ToggleFrame('inventory')
-		end
+		local frame = self:GetFrameID() == 'inventory' and 'bank' or 'inventory'
+		local frameSettings = Bagnon.FrameSettings:Get(frame)
+		
+		frameSettings:SetPlayerFilter(self:GetSettings():GetPlayerFilter())
+		Bagnon:ToggleFrame(frame)
 	end
 end
 
