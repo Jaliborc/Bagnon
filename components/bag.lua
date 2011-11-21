@@ -114,6 +114,8 @@ function Bag:UpdateEvents()
 				self:RegisterEvent('BAG_UPDATE')
 				self:RegisterEvent('PLAYERBANKSLOTS_UPDATED')
 				self:RegisterEvent('PLAYERBANKBAGSLOTS_UPDATED')
+			else
+				self:RegisterEvent('GET_ITEM_INFO_RECEIVED')
 			end
 		end
 
@@ -149,45 +151,40 @@ end
 function Bag:BAG_UPDATE(event, bag)
 	self:UpdateLock()
 	self:UpdateSlotInfo()
-  self:UpdateToggle()
-end
-
-function Bag:PLAYERBANKSLOTS_UPDATED(event)
-	self:UpdateLock()
-	self:UpdateSlotInfo()
-end
-
-function Bag:PLAYERBANKBAGSLOTS_UPDATED(event)
-	self:UpdateLock()
-	self:UpdateSlotInfo()
-end
-
-function Bag:BANK_OPENED(msg)
-	self:UpdateLock()
-	self:UpdateSlotInfo()
-end
-
-function Bag:BANK_CLOSED(msg)
-	self:UpdateLock()
-	self:UpdateSlotInfo()
-end
-
-function Bag:BAG_SLOT_SHOW(msg, frameID, slot)
-	if frameID == self:GetFrameID() and slot == self:GetID() then
-		self:UpdateToggle()
-	end
-end
-
-function Bag:BAG_SLOT_HIDE(msg, frameID, slot)
-	if frameID == self:GetFrameID() and slot == self:GetID() then
-		self:UpdateToggle()
-	end
+  	self:UpdateToggle()
 end
 
 function Bag:PLAYER_UPDATE(msg, frameID, player)
 	if frameID == self:GetFrameID() then
 		self:Update()
 	end
+end
+
+function Bag:GET_ITEM_INFO_RECEIVED()
+	self:UpdateSlotInfo()
+end
+
+do
+	local function updateSlot(self)
+		self:UpdateLock()
+		self:UpdateSlotInfo()
+	end
+	
+	Bag.PLAYERBANKSLOTS_UPDATED = updateSlot
+	Bag.PLAYERBANKBAGSLOTS_UPDATED = updateSlot
+	Bag.BANK_OPENED = updateSlot
+	Bag.BANK_CLOSED = updateSlot
+end
+
+do
+	local function updateToggle(self) 
+		if frameID == self:GetFrameID() and slot == self:GetID() then
+			self:UpdateToggle()
+		end
+	end
+	
+	Bag.BAG_SLOT_SHOW = updateToggle
+	Bag.BAG_SLOT_HIDE = updateToggle
 end
 
 
@@ -202,11 +199,9 @@ function Bag:OnHide()
 end
 
 function Bag:OnClick()
-  local cached = self:IsCached()
-
-	if self:IsPurchasable() and not cached then
+	if self:IsPurchasable() then
 		self:PurchaseSlot()
-	elseif CursorHasItem() and not cached then
+	elseif CursorHasItem() and not self:IsCached() then
 		if self:IsBackpack() then
 			PutItemInBackpack()
 		else
@@ -349,7 +344,7 @@ function Bag:UpdateSlotInfo()
 	end
 
 	self:SetCount(count)
-  self.link = link
+  	self.link = link
 end
 
 function Bag:SetCount(count)
