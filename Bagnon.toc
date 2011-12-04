@@ -1,11 +1,11 @@
-## Interface: 40200
+## Interface: 40300
 ## Title: |cff20ff20Bagnon|r
 ## Author: Tuller & Jaliborc (João Libório)
 ## Notes: Single window displays for your inventory and bank
 ## SavedVariablesPerCharacter: BagnonFrameSettings
 ## SavedVariables: BagnonGlobalSettings
 
-## Version: 4.2.13
+## Version: 4.3.1
 ## OptionalDeps: LibStub, Ace3, LibItemSearch-1.0, LibItemCache-1.0, Unfit-1.0, BagBrother, BagSync, Armory
 
 embeds.xml

@@ -1,3 +1,7 @@
+====== 4.3.1
+* Updated for WoW 4.3
+* Finalized portuguese translations
+
 ====== 4.2.14
 * Fixed a bug causing Bagnon to request already bought bag slots to be purchased over and over
 * Fixed bug causing bag slot icons to not show for the first time on cached players
