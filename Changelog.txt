@@ -1,3 +1,9 @@
+====== 4.3.3
+* Updated LibItemCache - fixes a bug causing money to not be correctly tracked with BagSync.
+
+====== 4.3.2
+* Critical bug fix
+
 ====== 4.3.1
 * Updated for WoW 4.3
 * Finalized portuguese translations
