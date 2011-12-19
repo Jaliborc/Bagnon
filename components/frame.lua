@@ -255,7 +255,7 @@ function Frame:GetFrameOpacity()
 end
 
 function Frame:FadeFrame(frame, alpha)
-	if self.Settings:IsFadingEnabled() then
+	if self:GetSettings():IsFadingEnabled() then
 		UIFrameFadeIn(frame, 0.2, 0, alpha or 1)
 	end
 	
