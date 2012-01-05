@@ -207,18 +207,14 @@ end
 --[[ Frames Events ]]--
 
 function Bagnon:FRAME_SHOW(msg, frameID)
-	if frameID == 'inventory' then
-		if self:IsFrameEnabled('inventory') then
-			self:CheckBagButtons(true)
-		end
+	if frameID == 'inventory' and self:IsFrameEnabled('inventory') then
+		self:CheckBagButtons(true)
 	end
 end
 
 function Bagnon:FRAME_HIDE(msg, frameID)
-	if frameID == 'inventory' then
-		if self:IsFrameEnabled('inventory') then
-			self:CheckBagButtons(false)
-		end
+	if frameID == 'inventory' and self:IsFrameEnabled('inventory') then
+		self:CheckBagButtons(false)
 	end
 end
 
