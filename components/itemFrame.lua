@@ -102,6 +102,10 @@ function ItemFrame:BAG_SLOT_HIDE(msg, frameID, bagSlot)
 	end
 end
 
+function ItemFrame:BAG_DISABLE_UPDATE()
+	self:ReloadAllItemSlots()
+end
+
 function ItemFrame:ITEM_FRAME_SPACING_UPDATE(msg, frameID, spacing)
 	if self:GetFrameID() == frameID then
 		self:RequestLayout()
@@ -199,8 +203,8 @@ function ItemFrame:UpdateEvents()
 	if self:IsVisible() then
 		if not self:IsCached() then
 			self:RegisterEvent('ITEM_LOCK_CHANGED')
-      		self:RegisterEvent('QUEST_ACCEPTED')
-      		self:RegisterEvent('UNIT_QUEST_LOG_CHANGED')
+      	self:RegisterEvent('QUEST_ACCEPTED')
+      	self:RegisterEvent('UNIT_QUEST_LOG_CHANGED')
 
 			self:RegisterItemEvent('ITEM_SLOT_ADD')
 			self:RegisterItemEvent('ITEM_SLOT_REMOVE')
@@ -223,6 +227,7 @@ function ItemFrame:UpdateEvents()
 		self:RegisterMessage('ITEM_FRAME_COLUMNS_UPDATE')
 		self:RegisterMessage('SLOT_ORDER_UPDATE')
 		self:RegisterMessage('ITEM_FRAME_BAG_BREAK_UPDATE')
+		self:RegisterMessage('BAG_DISABLE_UPDATE')
 
 		self:RegisterMessage('TEXT_SEARCH_UPDATE', 'HandleGlobalItemEvent')
 		self:RegisterMessage('BAG_SEARCH_UPDATE', 'HandleGlobalItemEvent')

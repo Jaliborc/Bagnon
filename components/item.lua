@@ -203,10 +203,10 @@ function ItemSlot:OnDragStart()
 	end
 end
 
-function ItemSlot:OnModifiedClick(button)
+function ItemSlot:OnModifiedClick(...)
 	local link = self:IsCached() and self:GetItem()
-	if link then
-		HandleModifiedItemClick(link)
+	if link and not HandleModifiedItemClick(link) then
+		self:ItemClicked(...)
 	end
 end
 
@@ -444,7 +444,7 @@ end
 function ItemSlot:FlashSearch(search)
 	if search and search ~= '' then
 		local link = self:GetItem()
-		if ItemSearch:Find(itemLink, search) then
+		if ItemSearch:Find(link, search) then
 			UIFrameFlash(self, 0.2, 0.3, 1.5, true, 0.0, 0.0 )
 		end
 	end

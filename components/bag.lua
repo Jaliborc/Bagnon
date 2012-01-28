@@ -104,6 +104,7 @@ function Bag:UpdateEvents()
 	if self:IsVisible() then
 		self:RegisterMessage('BAG_SLOT_SHOW')
 		self:RegisterMessage('BAG_SLOT_HIDE')
+		self:RegisterMessage('BAG_DISABLE_UPDATE')
 
 		if self:IsCustomSlot() then
 			self:RegisterMessage('PLAYER_UPDATE')
@@ -174,6 +175,10 @@ do
 	Bag.PLAYERBANKBAGSLOTS_UPDATED = updateSlot
 	Bag.BANK_OPENED = updateSlot
 	Bag.BANK_CLOSED = updateSlot
+end
+
+function Bag:BAG_DISABLE_UPDATE()
+	self:UpdateToggle()
 end
 
 do
@@ -407,7 +412,9 @@ function Bag:IsSlotShown()
 end
 
 function Bag:CanToggleSlot()
-	return self:IsBank() or self:IsBackpack() or (self:IsCustomSlot() and self.link)
+	if Bagnon.Settings:CanDisableBags() then
+		return self:IsBank() or self:IsBackpack() or (self:IsCustomSlot() and self.link)
+	end
 end
 
 

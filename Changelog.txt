@@ -1,3 +1,10 @@
+====== 4.3.6
+* The ability to toggle bag slots can now be toggled at the General Options and is disabled by default
+
+====== 4.3.5
+* Fixed a bug with Flash Find
+* Flash Find now also works for cached items
+
 ====== 4.3.4
 * More bug fixing
 * Tagging as release
@@ -22,7 +29,7 @@
 * Jaliborc: Windows no longer change position when viewing other characters items
 * Jaliborc: Should have fixed a bug causing BagBrother to loose bank data on some situations
 * Jaliborc: Fixed a bug causing the items in the guild bank to show the cooldown of the items in your bags
-* Jaliborc: no more "Jaliborc:" tag from now on. If no tag is here, it means it was me.
+* Jaliborc: No more "Jaliborc:" tag from now on. If no tag is here, it means it was me.
 
 ====== 4.2.12
 * Jaliborc: Several bug fixes
