@@ -1,5 +1,8 @@
+====== 4.3.7
+* Added support for viewing and editing Guild Bank tab information
+
 ====== 4.3.6
-* The ability to toggle bag slots can now be toggled at the General Options and is disabled by default
+* The ability to hide individual bag slots can now be toggled at the General Options and is disabled by default
 
 ====== 4.3.5
 * Fixed a bug with Flash Find
@@ -48,6 +51,7 @@
 * Jaliborc: The character selector now changes depending on the selected character and has much better icons
 * Jaliborc: BagnonFacade now should work properly with the guild bank
 * Jaliborc: The tooltip item count is now colored by class
+* Jaliborc: Updated LibIemCache, providing many improvements in the search syntax
 
 ====== 4.2.9
 * Jaliborc: Fixed a bug with the Traditional Chinese translations
@@ -314,4 +318,4 @@
 * Fixed bank frame closing
 * Fixed an error when hovering over a bank item when at the bank
 * Fixed an error when clicking on a databroker object with no click event
-* Added sounds when opening/closing frames
+* Added sounds when opening/closing framess

@@ -71,7 +71,7 @@ end
 
 function Frame:FRAME_SHOW(msg, frameID)
 	if self:GetFrameID() == frameID then
-		self:FadeFrame(self, self:GetFrameOpacity())
+		self:FadeInFrame(self, self:GetFrameOpacity())
 	end
 end
 
@@ -254,12 +254,18 @@ function Frame:GetFrameOpacity()
 	return self:GetSettings():GetOpacity()
 end
 
-function Frame:FadeFrame(frame, alpha)
+function Frame:FadeInFrame(frame, alpha)
 	if Bagnon.Settings:IsFadingEnabled() then
 		UIFrameFadeIn(frame, 0.2, 0, alpha or 1)
 	end
 	
 	frame:Show()
+end
+
+function Frame:FadeOutFrame(frame)
+	if frame then
+		frame:Hide()
+	end
 end
 
 
@@ -421,16 +427,16 @@ function Frame:Layout()
 
 	--place the middle frames
 	local w, h = self:PlaceBagFrame()
-	width = math.max(w, width)
+	width = max(w, width)
 	height = height + h
 
 	local w, h = self:PlaceItemFrame()
-	width = math.max(w, width)
+	width = max(w, width)
 	height = height + h
 
 	--place the bottom menu frames
 	local w, h = self:PlaceMoneyFrame()
-	width = math.max(w, width)
+	width = max(w, width)
 	height = height + h
 
 	local w, h = self:PlaceBrokerDisplayFrame()
@@ -458,24 +464,24 @@ function Frame:PlaceMenuButtons()
 
 	if self:HasPlayerSelector() then
 		local selector = self:GetPlayerSelector() or self:CreatePlayerSelector()
-		table.insert(menuButtons, selector)
+		tinsert(menuButtons, selector)
 	end
 
 	if self:HasBagFrame() and self:HasBagToggle() then
 		local toggle = self:GetBagToggle() or self:CreateBagToggle()
-		table.insert(menuButtons, toggle)
+		tinsert(menuButtons, toggle)
 	end
 	
 	-- guild bank support
 	if self:HasLogs() then
-		local log, moneyLog = self:GetLogToggles()
-		table.insert(menuButtons, log)
-		table.insert(menuButtons, moneyLog)
+		for i, toggle in ipairs(self:GetLogToggles()) do
+			tinsert(menuButtons, toggle)
+		end
 	end
 
 	if self:HasSearchToggle() then
 		local toggle = self:GetSearchToggle() or self:CreateSearchToggle()
-		table.insert(menuButtons, toggle)
+		tinsert(menuButtons, toggle)
 	end
 
 	for i, button in ipairs(menuButtons) do
