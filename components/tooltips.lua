@@ -27,18 +27,26 @@ local function GetColor(class)
 end
 
 local function FormatCounts(color, ...)
-	local text = ''
+	local places = 0
 	local total = 0
+	local text = ''
 	
 	for i = 1, select('#', ...) do
 		local count = select(i, ...)
-		if count and count > 0 then
+		if count > 0 then
 			text = text .. L['TipCount' .. i]:format(count)
 			total = total + count
+			places = places + 1
 		end
 	end
-
-	return total, total > 0 and color:format(total) .. ' ' .. SILVER:format('('.. text:sub(3) .. ')')
+	
+	if places > 1 then
+		text = color:format(total) .. ' ' .. SILVER:format('('.. text:sub(3) .. ')')
+	else
+		text = color:format(text:sub(3))
+	end
+		
+	return total, total > 0 and text
 end
 
 local function AddOwners(tooltip, link)
@@ -47,7 +55,9 @@ local function AddOwners(tooltip, link)
 		return
 	end
 	
+	local players = 0
 	local total = 0
+	
 	for i, player in ItemCache:IteratePlayers() do
 		local class = ItemCache:GetPlayerInfo(player)
 		local countText = ItemText[player][id]
@@ -66,10 +76,11 @@ local function AddOwners(tooltip, link)
 		if countText then
 			tooltip:AddDoubleLine(color:format(player), countText)
 			total = total + count
+			players = players + 1
 		end
 	end
 	
-	if total > 0 then
+	if players > 1 and total > 0 then
 		tooltip:AddDoubleLine(TOTAL, SILVER:format(total))
 	end
 	
