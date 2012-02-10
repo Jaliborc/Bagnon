@@ -1,3 +1,8 @@
+====== 4.3.8
+* German translations updated (thanks to Reinhard Griedelbach)
+* Tooltip item count now also displays the sum of all characters on the server
+* Tooltip item count syntax improved
+
 ====== 4.3.7
 * Added support for viewing and editing Guild Bank tab information
 
@@ -318,4 +323,4 @@
 * Fixed bank frame closing
 * Fixed an error when hovering over a bank item when at the bank
 * Fixed an error when clicking on a databroker object with no click event
-* Added sounds when opening/closing framess
+* Added sounds when opening/closing framessssess
