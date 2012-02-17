@@ -50,9 +50,9 @@ L.TipDoubleClickSearch = '<Alt-Ziehen> zum Verschieben.\n<Rechtsklick> zum Konfi
 L.Total = 'Gesamt'
 
 --itemcount tooltips
-L.TipCount1 = ', Angelegt: %d'
-L.TipCount2 = ', Taschen: %d'
-L.TipCount3 = ', Bank: %d'
+L.TipCount1 = 'Angelegt: %d'
+L.TipCount2 = 'Taschen: %d'
+L.TipCount3 = 'Bank: %d'
 
 --databroker plugin tooltips
 L.TipShowBank = '<Umschalt-Linksklick> um die Bank umzuschalten'

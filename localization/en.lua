@@ -48,9 +48,10 @@ L.TipDoubleClickSearch = '<Alt-Drag> to move.\n<Right-Click> to configure.\n<Dou
 L.Total = 'Total'
 
 --itemcount tooltips
-L.TipCount1 = ', Equipped: %d'
-L.TipCount2 = ', Bags: %d'
-L.TipCount3 = ', Bank: %d'
+L.TipCount1 = 'Equipped: %d'
+L.TipCount2 = 'Bags: %d'
+L.TipCount3 = 'Bank: %d'
+L.TipDelimiter = '|'
 
 --databroker tooltips
 L.TipShowBank = '<Shift Left Click> to toggle your bank.'

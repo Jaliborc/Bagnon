@@ -1,3 +1,8 @@
+====== 4.3.9
+* Added guild bank german and portuguese translations
+* Small money tooltip bug prevention
+* Fixed bug causing logs to appear and overlap items on odd situations
+
 ====== 4.3.8
 * German translations updated (thanks to Reinhard Griedelbach)
 * Tooltip item count now also displays the sum of all characters on the server

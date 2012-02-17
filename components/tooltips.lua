@@ -34,16 +34,17 @@ local function FormatCounts(color, ...)
 	for i = 1, select('#', ...) do
 		local count = select(i, ...)
 		if count > 0 then
-			text = text .. L['TipCount' .. i]:format(count)
+			text = text .. L.TipDelimiter .. L['TipCount' .. i]:format(count)
 			total = total + count
 			places = places + 1
 		end
 	end
 	
+	text = text:sub(#L.TipDelimiter + 1)
 	if places > 1 then
-		text = color:format(total) .. ' ' .. SILVER:format('('.. text:sub(3) .. ')')
+		text = color:format(total) .. ' ' .. SILVER:format('('.. text .. ')')
 	else
-		text = color:format(text:sub(3))
+		text = color:format(text)
 	end
 		
 	return total, total > 0 and text
