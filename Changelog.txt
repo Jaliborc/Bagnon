@@ -1,3 +1,6 @@
+====== 4.3.10
+* BagBrother no longer disables itself when BagSync or Armory are enabled (could confuse users)
+
 ====== 4.3.9
 * Added guild bank german and portuguese translations
 * Small money tooltip bug prevention
