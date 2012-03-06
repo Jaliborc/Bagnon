@@ -1,3 +1,7 @@
+====== 4.3.11
+* Fixed bug causing tooltip searches to not work properly
+* Enabled search tags that were disabled for unkown reasons.
+
 ====== 4.3.10
 * BagBrother no longer disables itself when BagSync or Armory are enabled (could confuse users)
 
