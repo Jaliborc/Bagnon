@@ -26,6 +26,7 @@ function ItemFrame:New(frameID, parent)
 	f.itemSlots = {}
 	f.throttledUpdater = CreateFrame('Frame', nil, f)
 	f.throttledUpdater:SetScript('OnUpdate', throttledUpdater_OnUpdate)
+	
 	f:SetFrameID(frameID)
 	f:SetScript('OnSizeChanged', f.OnSizeChanged)
 	f:SetScript('OnEvent', f.OnEvent)
@@ -278,7 +279,7 @@ end
 --takes a bag and a slot, and returns an array index
 function ItemFrame:GetSlotIndex(bag, slot)
 	if bag < 0 then
-		return bag*100 - slot
+		return bag * 100 - slot
 	end
 	return bag * 100 + slot
 end
@@ -340,7 +341,11 @@ end
 --[[ Layout Methods ]]--
 
 function ItemFrame:Layout()
-	if self:IsBagBreakEnabled() then
+	self.needsLayout = nil
+	
+	if self.USE_COLUMN_LAYOUT then
+		self:Layout_Collumn()
+	elseif self:IsBagBreakEnabled() then
 		self:Layout_BagBreak()
 	else
 		self:Layout_Default()
@@ -349,8 +354,6 @@ end
 
 --arranges itemSlots on the itemFrame, and adjusts size to fit
 function ItemFrame:Layout_Default()
-	self.needsLayout = nil
-
 	local columns = self:NumColumns()
 	local spacing = self:GetSpacing()
 	local effItemSize = self.ITEM_SIZE + spacing
@@ -362,23 +365,22 @@ function ItemFrame:Layout_Default()
 			if itemSlot then
 				i = i + 1
 				local row = (i - 1) % columns
-				local col = math.ceil(i / columns) - 1
+				local col = ceil(i / columns) - 1
 				itemSlot:ClearAllPoints()
 				itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', effItemSize * row, -effItemSize * col)
 			end
 		end
 	end
 
-	local width = effItemSize * math.min(columns, i) - spacing
+	local width = effItemSize * min(columns, i) - spacing
 	local height = effItemSize * ceil(i / columns) - spacing
 	self:SetWidth(width)
 	self:SetHeight(height)
 end
 
 
+-- groups items in bags, much alike text in paragraphs
 function ItemFrame:Layout_BagBreak()
-	self.needsLayout = nil
-
 	local columns = self:NumColumns()
 	local spacing = self:GetSpacing()
 	local effItemSize = self.ITEM_SIZE + spacing
@@ -402,7 +404,7 @@ function ItemFrame:Layout_BagBreak()
 				end
 			else
 				col = col + 1
-				maxCols = math.max(maxCols, col)
+				maxCols = max(maxCols, col)
 			end
 		end
 
@@ -415,6 +417,34 @@ function ItemFrame:Layout_BagBreak()
 	self:SetWidth(width)
 	self:SetHeight(height)
 end
+
+
+-- for use on non-bag frames (ex: guilBank). Items go down a collumn
+function ItemFrame:Layout_Collumn()
+	local numColumns = min(self:NumColumns(), self.MAX_ITEMS)
+	local numRows = floor(self.MAX_ITEMS / numColumns + .5)
+	
+	local spacing = self:GetSpacing()
+	local effItemSize = self.ITEM_SIZE + spacing
+
+	local row, col = 0, 1
+	for i, itemSlot in self:GetAllItemSlots() do
+		row = row + 1
+		if row > numRows then
+			row = 1
+			col = col + 1
+		end
+		
+		itemSlot:ClearAllPoints()
+		itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', effItemSize * (col - 1), -effItemSize * (row - 1))
+	end
+
+	local width = effItemSize * col - spacing
+	local height = effItemSize * numRows - spacing
+	self:SetWidth(width)
+	self:SetHeight(height)
+end
+
 
 --request a layout update on this frame
 function ItemFrame:RequestLayout()
