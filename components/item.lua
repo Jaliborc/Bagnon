@@ -244,7 +244,7 @@ end
 
 -- Update the texture, lock status, and other information about an item
 function ItemSlot:Update()
-	if not self:IsVisible() then
+  if not self:IsVisible() then
     return
   end
 

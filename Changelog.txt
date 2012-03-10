@@ -1,3 +1,8 @@
+====== 4.3.12
+* Locked guild bank tabs behaviour improvements
+* Chinese localization update
+* Delicious tweaks and goodies
+
 ====== 4.3.11
 * Fixed bug causing tooltip searches to not work properly
 * Enabled search tags that were disabled for unkown reasons.

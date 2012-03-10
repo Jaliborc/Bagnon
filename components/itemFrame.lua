@@ -45,16 +45,12 @@ function ItemFrame:OnEvent(event, ...)
 	end
 end
 
-function ItemFrame:GET_ITEM_INFO_RECEIVED()
-	self:UpdateEverything()
-end
-
-function ItemFrame:BANK_OPENED()
-	self:UpdateEverything()
-end
-
-function ItemFrame:BANK_CLOSED()
-	self:UpdateEverything()
+do
+	local UpdateEverything = ItemFrame.UpdateEverything
+	
+	ItemFrame.GET_ITEM_INFO_RECEIVED = UpdateEverything
+	ItemFrame.BANK_OPENED = UpdateEverything
+	ItemFrame.BANK_CLOSED = UpdateEverything
 end
 
 
@@ -106,28 +102,8 @@ function ItemFrame:BAG_DISABLE_UPDATE()
 	self:ReloadAllItemSlots()
 end
 
-function ItemFrame:ITEM_FRAME_SPACING_UPDATE(msg, frameID, spacing)
-	if self:GetFrameID() == frameID then
-		self:RequestLayout()
-	end
-end
-
-function ItemFrame:ITEM_FRAME_COLUMNS_UPDATE(msg, frameID, columns)
-	if self:GetFrameID() == frameID then
-		self:RequestLayout()
-	end
-end
-
-function ItemFrame:SLOT_ORDER_UPDATE(msg, frameID, enable)
-	if self:GetFrameID() == frameID then
-		self:RequestLayout()
-	end
-end
-
-function ItemFrame:ITEM_FRAME_BAG_BREAK_UPDATE(msg, frameID, enable)
-	if self:GetFrameID() == frameID then
-		self:RequestLayout()
-	end
+function ItemFrame:QUEST_ACCEPTED(event)
+	self:HandleGlobalItemEvent(event)
 end
 
 function ItemFrame:UNIT_QUEST_LOG_CHANGED(event, unit)
@@ -136,11 +112,22 @@ function ItemFrame:UNIT_QUEST_LOG_CHANGED(event, unit)
 	end
 end
 
-function ItemFrame:QUEST_ACCEPTED(event)
-	self:HandleGlobalItemEvent(event)
+do
+	local function LayoutEvent(self, msg, frameID)
+        if self:GetFrameID() == frameID then
+        	self:RequestLayout()
+        end
+	end
+
+	ItemFrame.SLOT_ORDER_UPDATE = LayoutEvent
+	ItemFrame.ITEM_FRAME_SPACING_UPDATE = LayoutEvent
+	ItemFrame.ITEM_FRAME_COLUMNS_UPDATE = LayoutEvent
+	ItemFrame.ITEM_FRAME_BAG_BREAK_UPDATE = LayoutEvent
 end
 
--- API
+
+--[[ Item Events API ]]--
+
 function ItemFrame:HandleGlobalItemEvent(msg, ...)
 	for i, item in self:GetAllItemSlots() do
 		item:HandleEvent(msg, ...)
@@ -203,8 +190,8 @@ function ItemFrame:UpdateEvents()
 	if self:IsVisible() then
 		if not self:IsCached() then
 			self:RegisterEvent('ITEM_LOCK_CHANGED')
-      	self:RegisterEvent('QUEST_ACCEPTED')
-      	self:RegisterEvent('UNIT_QUEST_LOG_CHANGED')
+      		self:RegisterEvent('QUEST_ACCEPTED')
+      		self:RegisterEvent('UNIT_QUEST_LOG_CHANGED')
 
 			self:RegisterItemEvent('ITEM_SLOT_ADD')
 			self:RegisterItemEvent('ITEM_SLOT_REMOVE')
@@ -223,23 +210,27 @@ function ItemFrame:UpdateEvents()
 		self:RegisterMessage('BAG_SLOT_SHOW')
 		self:RegisterMessage('BAG_SLOT_HIDE')
 		self:RegisterMessage('PLAYER_UPDATE')
-		self:RegisterMessage('ITEM_FRAME_SPACING_UPDATE')
-		self:RegisterMessage('ITEM_FRAME_COLUMNS_UPDATE')
 		self:RegisterMessage('SLOT_ORDER_UPDATE')
 		self:RegisterMessage('ITEM_FRAME_BAG_BREAK_UPDATE')
 		self:RegisterMessage('BAG_DISABLE_UPDATE')
-
-		self:RegisterMessage('TEXT_SEARCH_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('BAG_SEARCH_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_HIGHLIGHT_QUEST_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_HIGHLIGHT_QUALITY_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_HIGHLIGHT_UNUSABLE_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_HIGHLIGHT_OPACITY_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('SHOW_EMPTY_ITEM_SLOT_TEXTURE_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_SLOT_COLOR_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_SLOT_COLOR_ENABLED_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('FLASH_SEARCH_UPDATE', 'HandleGlobalItemEvent')
+		self:RegisterGlobalItemEvents()
 	end
+end
+
+function ItemFrame:RegisterGlobalItemEvents()
+	self:RegisterMessage('ITEM_FRAME_SPACING_UPDATE')
+	self:RegisterMessage('ITEM_FRAME_COLUMNS_UPDATE')
+	
+	self:RegisterMessage('TEXT_SEARCH_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('BAG_SEARCH_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_HIGHLIGHT_QUEST_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_HIGHLIGHT_QUALITY_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_HIGHLIGHT_UNUSABLE_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_HIGHLIGHT_OPACITY_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('SHOW_EMPTY_ITEM_SLOT_TEXTURE_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_SLOT_COLOR_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_SLOT_COLOR_ENABLED_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('FLASH_SEARCH_UPDATE', 'HandleGlobalItemEvent')
 end
 
 

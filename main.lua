@@ -20,9 +20,10 @@ function Bagnon:OnInitialize()
 	self:HookBagClickEvents()
  	self:HookTooltips()
 
+	self:CreateFrameLoader('Bagnon_GuildBank', 'GuildBankFrame_LoadUI')
+	self:CreateFrameLoader('Bagnon_VoidStorage', 'VoidStorage_LoadUI')
 	self:CreateOptionsLoader()
 	self:CreateLDBLauncher()
-	self:CreateGuildBankLoader()
 end
 
 function Bagnon:CreateOptionsLoader()
@@ -33,11 +34,11 @@ function Bagnon:CreateOptionsLoader()
 	end)
 end
 
-function Bagnon:CreateGuildBankLoader()
-	local name, title, notes, enabled, loadable = GetAddOnInfo('Bagnon_GuildBank')
+function Bagnon:CreateFrameLoader (addon, method)
+	local name, title, notes, enabled, loadable = GetAddOnInfo(addon)
 	if enabled and loadable then
-		GuildBankFrame_LoadUI = function()
-			LoadAddOn('Bagnon_GuildBank')
+		_G[method] = function()
+			LoadAddOn(addon)
 		end
 	end
 end
