@@ -1,4 +1,4 @@
-====== 4.3.12
+====== 4.3.12 (beta)
 * Locked guild bank tabs behaviour improvements
 * Chinese localization update
 * Delicious tweaks and goodies
