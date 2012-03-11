@@ -47,7 +47,9 @@ function ItemFrame:OnEvent(event, ...)
 end
 
 do
-	local UpdateEverything = ItemFrame.UpdateEverything
+	local function UpdateEverything(self)
+		self:UpdateEverything()
+	end
 	
 	ItemFrame.GET_ITEM_INFO_RECEIVED = UpdateEverything
 	ItemFrame.BANK_OPENED = UpdateEverything

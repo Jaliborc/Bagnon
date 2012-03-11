@@ -12,7 +12,7 @@ local Frame = Bagnon:NewClass('Frame', 'Frame')
   Constructor
 ]]--
 
-function Frame:New(frameID)
+function Frame:New(frameID, title)
 	local f = self:Bind(CreateFrame('Frame', 'BagnonFrame' .. frameID, UIParent))
 	f:Hide()
 	f:SetClampedToScreen(true)
@@ -30,11 +30,11 @@ function Frame:New(frameID)
 	f:SetScript('OnShow', f.OnShow)
 	f:SetScript('OnHide', f.OnHide)
 	f.frameID = frameID
+	f.title = title
 	f:Rescale()
 	f:UpdateEverything()
 
-	table.insert(UISpecialFrames, f:GetName())
-
+	tinsert(UISpecialFrames, f:GetName())
 	return f
 end
 
@@ -660,7 +660,7 @@ end
 --[[ title frame ]]--
 
 function Frame:CreateTitleFrame()
-	local f = Bagnon.TitleFrame:New(self:GetFrameID(), self)
+	local f = Bagnon.TitleFrame:New(self:GetFrameID(), self.title, self)
 	self.titleFrame = f
 	return f
 end
