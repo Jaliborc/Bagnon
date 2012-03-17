@@ -1,0 +1,6 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="frameSettings.lua"/>
+	<Script file="savedSettings.lua"/>
+	<Script file="settings.lua"/>
+  	<Script file="savedFrameSettings.lua"/>
+</Ui>

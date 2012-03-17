@@ -8,8 +8,13 @@
 ## Version: 4.3.12
 ## OptionalDeps: LibStub, Ace3, LibItemSearch-1.0, LibItemCache-1.0, Unfit-1.0, BagBrother, BagSync, Armory
 
-embeds.xml
-localization.xml
+libs\libs.xml
+localization\localization.xml
 main.lua
-utility.xml
-components.xml
+
+core\core.xml
+events\events.xml
+info\info.xml
+
+settings\settings.xml
+components\components.xml

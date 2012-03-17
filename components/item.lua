@@ -52,7 +52,7 @@ function ItemSlot:Create()
 	item.border = border
 
 	--get rid of any registered frame events, and use my own
-	item:HookScript("OnClick", item.ItemClicked)
+	item:HookScript('OnClick', item.ItemClicked)
 	item:SetScript('OnEnter', item.OnEnter)
 	item:SetScript('OnLeave', item.OnLeave)
 	item:SetScript('OnShow', item.OnShow)
@@ -72,7 +72,7 @@ function ItemSlot:GetBlizzardItemSlot(id)
 		return
 	end
 
-	local bag = math.ceil(id / MAX_CONTAINER_ITEMS)
+	local bag = ceil(id / MAX_CONTAINER_ITEMS)
 	local slot = (id-1) % MAX_CONTAINER_ITEMS + 1
 	local item = _G[format('ContainerFrame%dItem%d', bag, slot)]
 
@@ -389,7 +389,9 @@ function ItemSlot:HideStackSplitFrame()
 end
 
 --tooltip methods
-ItemSlot.UpdateTooltip = ItemSlot.OnEnter
+function ItemSlot:UpdateTooltip()
+	self:OnEnter()
+end
 
 function ItemSlot:AnchorTooltip()
 	if self:GetRight() >= (GetScreenWidth() / 2) then
@@ -533,7 +535,7 @@ local QUEST_ITEM_SEARCH = format('t:%s|%s', select(10, GetAuctionItemClasses()),
 function ItemSlot:IsQuestItem()
 	local item = self:GetItem()
 	if not item then
-		return false, false
+		return false
 	end
 
 	if self:IsCached() then

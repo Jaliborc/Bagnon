@@ -71,7 +71,7 @@ BAGNON_BAG_TYPES = {
 	[0x0080] = 'engineer',
 	[0x0200] = 'gem',
 	[0x0400] = 'mine',
-  [32768] = 'tackle'
+  	[32768] = 'tackle'
 }
 
 function Bagnon:GetBagType(...)
