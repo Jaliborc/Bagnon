@@ -8,16 +8,14 @@ local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 local Frame = Bagnon:NewClass('Frame', 'Frame')
 
 
---[[
-  Constructor
-]]--
+--[[ Constructor ]]--
 
 function Frame:New(frameID, title)
 	local f = self:Bind(CreateFrame('Frame', 'BagnonFrame' .. frameID, UIParent))
-	f:Hide()
 	f:SetClampedToScreen(true)
 	f:SetMovable(true)
 	f:EnableMouse(true)
+	f:Hide()
 
 	f:SetBackdrop{
 	  bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
@@ -35,13 +33,12 @@ function Frame:New(frameID, title)
 	f:UpdateEverything()
 
 	tinsert(UISpecialFrames, f:GetName())
+	tinsert(Bagnon.frames, f)
 	return f
 end
 
 
---[[
-  Frame Messages
-]]--
+--[[ Frame Messages ]]--
 
 function Frame:UpdateEvents()
 	self:UnregisterAllMessages()

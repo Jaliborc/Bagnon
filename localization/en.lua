@@ -26,18 +26,18 @@ L.CmdShowVersion = 'Prints the current verison'
 --frame text
 L.TitleBags = '%s\'s Inventory'
 L.TitleBank = '%s\'s Bank'
+L.Bank = 'Bank'
 
 
 --tooltips
 L.TipBags = 'Bags'
 L.TipBank = 'Bank'
-L.TipBankToggle = '<Right-Click> to toggle your bank.'
 L.TipChangePlayer = 'Click to view another character\'s items.'
 L.TipGoldOnRealm = '%s Totals'
 L.TipHideBag = 'Click to hide this bag.'
 L.TipHideBags = '<Left-Click> to hide the bags display.'
 L.TipHideSearch = 'Click to hide the search box.'
-L.TipInventoryToggle = '<Right-Click> to toggle your inventory.'
+L.TipFrameToggle = '<Right-Click> to toggle other windows.'
 L.TipPurchaseBag = 'Click to purchase this bank slot.'
 L.TipShowBag = 'Click to show this bag.'
 L.TipShowBags = '<Left-Click> to show the bags display.'

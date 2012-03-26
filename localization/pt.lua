@@ -26,6 +26,7 @@ L.CmdShowVersion = 'Mostra a versão atual'
 --frame text
 L.TitleBags = 'Mochila de %s'
 L.TitleBank = 'Banco de %s'
+L.Bank = 'Banco'
 
 
 --tooltips

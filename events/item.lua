@@ -195,7 +195,6 @@ function BagEvents:UpdateBagSizes()
 			self:UpdateBagSize(bag)
 		end
 	end
-	self:UpdateBagSize(KEYRING_CONTAINER)
 end
 
 function BagEvents:UpdateBagTypes()

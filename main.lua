@@ -13,8 +13,8 @@ BINDING_NAME_BANKNON_TOGGLE = L.ToggleBank
 
 --[[ Startup ]]--
 
+Bagnon.frames = {}
 function Bagnon:OnInitialize()
-	self.frames = {}
  	self:AddSlashCommands()
  	self:RegisterAutoDisplayEvents()
 	self:HookBagClickEvents()
@@ -76,7 +76,7 @@ end
 --[[ Frames ]]--
 
 function Bagnon:CreateFrame(frameID)
-  table.insert(self.frames, self.Frame:New(frameID))
+  self.Frame:New(frameID)
 end
 
 function Bagnon:GetFrame(frameID)

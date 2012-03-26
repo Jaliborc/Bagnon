@@ -1,3 +1,9 @@
+====== 4.3.14 (beta)
+* Fixed bug causing "quest bangs" to show up at the guild bank items
+
+====== 4.3.13 (beta)
+* Prevention of code taint
+
 ====== 4.3.12 (beta)
 * Locked guild bank tabs behaviour improvements
 * Chinese localization update
@@ -340,4 +346,4 @@
 * Fixed bank frame closing
 * Fixed an error when hovering over a bank item when at the bank
 * Fixed an error when clicking on a databroker object with no click event
-* Added sounds when opening/closing framessssess
+* Added sounds when opening/closing framessssessess

@@ -32,6 +32,7 @@ L.CmdShowVersion = '显示当前版本'
 --frame text
 L.TitleBags = '%s的背包'
 L.TitleBank = '%s的银行'
+L.Bank = '银行'
 
 
 --tooltips

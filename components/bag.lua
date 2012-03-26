@@ -390,6 +390,7 @@ function Bag:PurchaseSlot()
 			hasMoneyFrame = 1,
 			timeout = 0,
 			hideOnEscape = 1,
+			preferredIndex = 3,
 		}
 	end
 
@@ -440,7 +441,7 @@ function Bag:IsBackpack()
 	return Bagnon:IsBackpack(self:GetID())
 end
 
-function Bag:IsInventoryBagSlot()
+function Bag:IsBackpackBag()
   return Bagnon:IsBackpackBag(self:GetID())
 end
 
@@ -453,7 +454,7 @@ function Bag:IsBankBagSlot()
 end
 
 function Bag:IsCustomSlot()
-	return self:IsInventoryBagSlot() or self:IsBankBagSlot()
+	return self:IsBackpackBag() or self:IsBankBagSlot()
 end
 
 
