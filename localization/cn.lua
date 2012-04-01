@@ -4,7 +4,7 @@
 	Bagnon Localization Information: Chinese Simplified
 		Credits: Diablohu, yleaf@cwdg(yaroot@gmail.com), 狂飙@cwdg(networm@qq.com), 天下牧@萨格拉斯
 
-	Last Update: 2012/03/06 by 天下牧@萨格拉斯
+	Last Update: 2012/03/27 by 天下牧@萨格拉斯
 
 --]]
 
@@ -38,13 +38,12 @@ L.Bank = '银行'
 --tooltips
 L.TipBags = '背包'
 L.TipBank = '银行'
-L.TipBankToggle = '<右键点击> 显示银行'
 L.TipChangePlayer = '查看其他角色的物品'
 L.TipGoldOnRealm = '%s上的总资产'
 L.TipHideBag = '隐藏包裹'
 L.TipHideBags = '隐藏背包'
 L.TipHideSearch = '隐藏搜索界面'
-L.TipInventoryToggle = '<右键点击> 显示整合背包'
+L.TipFrameToggle = '<右键点击> 显示其他窗口'
 L.TipPurchaseBag = '购买银行空位'
 L.TipShowBag = '显示包裹'
 L.TipShowBags = '显示背包'

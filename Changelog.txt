@@ -1,5 +1,9 @@
+====== 4.3.15 (beta)
+* Hotfix
+
 ====== 4.3.14 (beta)
 * Fixed bug causing "quest bangs" to show up at the guild bank items
+* Fixed bug causing default Guild Bank to show up
 
 ====== 4.3.13 (beta)
 * Prevention of code taint

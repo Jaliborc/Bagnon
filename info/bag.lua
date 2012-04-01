@@ -37,7 +37,7 @@ function Bagnon:GetBagInfo(...)
   return Cache:GetBagInfo(...)
 end
 
-function Bagnon:IsPurchasableBag(player, bag)
+function Bagnon:IsBagPurchasable(player, bag)
 	return not self:IsBagCached(player, bag) and (bag - NUM_BAG_SLOTS) > GetNumBankSlots()
 end
 
