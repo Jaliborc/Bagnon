@@ -6,7 +6,9 @@
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local ItemSlot = Bagnon:NewClass('ItemSlot', 'Button')
 ItemSlot.nextID = 0
+ItemSlot.unused = {}
 
+local Cache = LibStub('LibItemCache-1.0')
 local ItemSearch = LibStub('LibItemSearch-1.0')
 local Unfit = LibStub('Unfit-1.0')
 
@@ -108,9 +110,8 @@ function ItemSlot:Free()
 	self:SetParent(nil)
 	self:UnregisterAllEvents()
 	self:UnregisterAllMessages()
-
-	self.unused = self.unused or {}
 	self.unused[self] = true
+	self.depositSlot = nil
 end
 
 
@@ -320,7 +321,7 @@ function ItemSlot:UpdateLocked()
 end
 
 function ItemSlot:IsLocked()
-	return Bagnon:IsItemLocked(self:GetPlayer(), self:GetBag(), self:GetID())
+	return select(3, self:GetInfo())
 end
 
 
@@ -459,6 +460,13 @@ function ItemSlot:ItemClicked(button)
 		if link then
 			Bagnon.Settings:FlashFind(link:match('^|c%x+|Hitem.+|h%[(.*)%]'))
 		end
+	elseif GetNumVoidTransferDeposit() > 0 then
+		if self.depositSlot then
+			ClickVoidTransferDepositSlot(self.depositSlot, true)
+			self.depositSlot = nil
+		else
+			self.depositSlot = GetNumVoidTransferDeposit()
+		end	
 	end
 end
 
@@ -493,7 +501,7 @@ function ItemSlot:IsSlot(bag, slot)
 end
 
 function ItemSlot:IsCached()
-	return Bagnon:IsBagCached(self:GetPlayer(), self:GetBag())
+	return select(8, self:GetInfo())
 end
 
 function ItemSlot:IsBank()
@@ -506,7 +514,7 @@ function ItemSlot:IsBankSlot()
 end
 
 function ItemSlot:GetInfo()
-	return Bagnon:GetItemInfo(self:GetPlayer(), self:GetBag(), self:GetID())
+	return Cache:GetItemInfo(self:GetPlayer(), self:GetBag(), self:GetID())
 end
 
 

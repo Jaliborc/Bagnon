@@ -6,8 +6,8 @@
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local ItemFrame = Bagnon:NewClass('ItemFrame', 'Frame')
 local Cache = LibStub('LibItemCache-1.0')
-
 ItemFrame.ITEM_SIZE = 39
+ItemFrame.COLUMN_OFF = 0
 
 
 --[[ Constructor ]]--
@@ -20,12 +20,16 @@ local function throttledUpdater_OnUpdate(self, elapsed)
 	self:Hide()
 end
 
-function ItemFrame:New(frameID, parent)
+function ItemFrame:New(frameID, parent, kind)
 	local f = self:Bind(CreateFrame('Frame', nil, parent))
 
+	f.kind = kind
 	f.itemSlots = {}
 	f.throttledUpdater = CreateFrame('Frame', nil, f)
 	f.throttledUpdater:SetScript('OnUpdate', throttledUpdater_OnUpdate)
+	
+	f.title = f:CreateFontString(nil, nil, 'GameFontHighlight')
+	f.title:SetPoint('TOPLEFT', 0, 15)
 	
 	f:SetFrameID(frameID)
 	f:SetScript('OnSizeChanged', f.OnSizeChanged)
@@ -376,8 +380,7 @@ function ItemFrame:Layout_Default()
 
 	local width = effItemSize * min(columns, i) - spacing
 	local height = effItemSize * ceil(i / columns) - spacing
-	self:SetWidth(width)
-	self:SetHeight(height)
+	self:SetSize(width, height)
 end
 
 
@@ -416,25 +419,29 @@ function ItemFrame:Layout_BagBreak()
 
 	local width = effItemSize * maxCols - spacing*2
 	local height = effItemSize * (rows - 1) - spacing*2
-	self:SetWidth(width)
-	self:SetHeight(height)
+	self:SetSize(width, height)
 end
 
 
 -- for use on non-bag frames (ex: guilBank). Items go down a collumn
 function ItemFrame:Layout_Collumn()
-	local numColumns = min(self:NumColumns(), self.MAX_ITEMS)
-	local numRows = floor(self.MAX_ITEMS / numColumns + .5)
+	local numSlots = self:GetNumSlots()
+	if numSlots == 0 then
+		return
+	end
+	
+	local numColumns = min(self:NumColumns() - self.COLUMN_OFF, numSlots)
+	local numRows = ceil(numSlots / numColumns)
 	
 	local spacing = self:GetSpacing()
 	local effItemSize = self.ITEM_SIZE + spacing
 
-	local row, col = 0, 1
+	local row, col = 1, 0
 	for i, itemSlot in self:GetAllItemSlots() do
-		row = row + 1
-		if row > numRows then
-			row = 1
-			col = col + 1
+		col = col + 1
+		if col > numColumns then
+			col = 1
+			row = row + 1
 		end
 		
 		itemSlot:ClearAllPoints()
@@ -443,8 +450,7 @@ function ItemFrame:Layout_Collumn()
 
 	local width = effItemSize * col - spacing
 	local height = effItemSize * numRows - spacing
-	self:SetWidth(width)
-	self:SetHeight(height)
+	self:SetSize(width, height)
 end
 
 

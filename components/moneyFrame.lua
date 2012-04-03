@@ -18,13 +18,18 @@ local COPPER_TEXT = format('|cffeda55f%s|r', 'c')
 function MoneyFrame:New(frameID, parent)
 	local name = 'BagnonMoneyFrame' .. self:GetNextID()
 	local f = self:Bind(CreateFrame('Button', name, parent, 'SmallMoneyFrameTemplate'))
-	f:SetFrameID(frameID)
-	f:AddClickFrame()
+	local click = CreateFrame('Button', nil, f)
+	click:SetFrameLevel(self:GetFrameLevel() + 3)
+	click:SetAllPoints()
 
 	f:SetScript('OnEvent', f.UpdateValue)
 	f:SetScript('OnClick', f.OnClick)
 	f:SetScript('OnShow', f.OnShow)
 	f:SetScript('OnHide', f.OnHide)
+	
+	f:AddClickFrame(click)
+	f:SetFrameID(frameID)
+	f:SetHeight(24)
 	return f
 end
 
@@ -42,15 +47,10 @@ do
 		self:GetParent():OnLeave()
 	end
 
-	function MoneyFrame:AddClickFrame()
-		local f = CreateFrame('Button', self:GetName() .. 'Click', self)
-		f:SetFrameLevel(self:GetFrameLevel() + 3)
-		f:SetAllPoints(self)
-
-		f:SetScript('OnClick', ClickFrame_OnClick)
-		f:SetScript('OnEnter', ClickFrame_OnEnter)
-		f:SetScript('OnLeave', ClickFrame_OnLeave)
-		return f
+	function MoneyFrame:AddClickFrame(frame)
+		frame:SetScript('OnClick', ClickFrame_OnClick)
+		frame:SetScript('OnEnter', ClickFrame_OnEnter)
+		frame:SetScript('OnLeave', ClickFrame_OnLeave)
 	end
 end
 
@@ -106,7 +106,7 @@ function MoneyFrame:OnEnter()
   	end
 
 	GameTooltip:SetOwner(self, 'ANCHOR_TOPRIGHT')
-	GameTooltip:SetText(string.format(L.TipGoldOnRealm, GetRealmName()))
+	GameTooltip:SetText(format(L.TipGoldOnRealm, GetRealmName()))
 
 	local totalMoney = 0
 	for i, player in ItemCache:IteratePlayers() do
