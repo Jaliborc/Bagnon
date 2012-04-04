@@ -53,8 +53,9 @@ function ItemSlot:Create()
 	item.UpdateTooltip = nil
 	item.border = border
 
-	--get rid of any registered frame events, and use my own
-	item:HookScript('OnClick', item.ItemClicked)
+	--get rid of any registered frame events, and use our own
+	item:SetScript('OnMouseDown', item.OnMouseDown)
+	item:HookScript('OnClick', item.OnClick)
 	item:SetScript('OnEnter', item.OnEnter)
 	item:SetScript('OnLeave', item.OnLeave)
 	item:SetScript('OnShow', item.OnShow)
@@ -204,10 +205,36 @@ function ItemSlot:OnDragStart()
 	end
 end
 
+function ItemSlot:OnMouseDown(button)
+	if button == 'RightButton' and not self.canDeposit then
+		for i = 1,9 do
+			if not GetVoidTransferDepositInfo(i) then
+				self.depositSlot = i
+				return
+			end
+		end
+	end
+end
+
+function ItemSlot:OnClick(button)
+	if IsAltKeyDown() and button == 'LeftButton' then
+		local link = self:GetItem()
+		if link then
+			Bagnon.Settings:FlashFind(link:match('^|c%x+|Hitem.+|h%[(.*)%]'))
+		end
+	elseif GetNumVoidTransferDeposit() > 0 and button == 'RightButton' then
+		if self.canDeposit then
+			ClickVoidTransferDepositSlot(self.depositSlot, true)
+		end
+
+		self.canDeposit = not self.canDeposit
+	end
+end
+
 function ItemSlot:OnModifiedClick(...)
 	local link = self:IsCached() and self:GetItem()
 	if link and not HandleModifiedItemClick(link) then
-		self:ItemClicked(...)
+		self:OnClick(...)
 	end
 end
 
@@ -450,23 +477,6 @@ function ItemSlot:FlashSearch(search)
 		if ItemSearch:Find(link, search) then
 			UIFrameFlash(self, 0.2, 0.3, 1.5, true, 0.0, 0.0 )
 		end
-	end
-end
-
--- Callback function for item slot clicked
-function ItemSlot:ItemClicked(button)
-	if IsAltKeyDown() and button == 'LeftButton' then
-		local link = self:GetItem()
-		if link then
-			Bagnon.Settings:FlashFind(link:match('^|c%x+|Hitem.+|h%[(.*)%]'))
-		end
-	elseif GetNumVoidTransferDeposit() > 0 then
-		if self.depositSlot then
-			ClickVoidTransferDepositSlot(self.depositSlot, true)
-			self.depositSlot = nil
-		else
-			self.depositSlot = GetNumVoidTransferDeposit()
-		end	
 	end
 end
 

@@ -37,9 +37,9 @@ end
 function Bagnon:CreateFrameLoader (addon, method)
 	local name, title, notes, enabled, loadable = GetAddOnInfo(addon)
 	if enabled and loadable then
-	--	_G[method] = function()
+		_G[method] = function()
 			LoadAddOn(addon)
-	--	end
+		end
 	end
 end
 
@@ -416,5 +416,4 @@ function Bagnon:ShowOptions()
 		InterfaceOptionsFrame_OpenToCategory(self.GeneralOptions)
 		return true
 	end
-	return false
 end
