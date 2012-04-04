@@ -1,5 +1,10 @@
+====== 4.3.17 (beta)
+* Fixed a bug causing weird behaviour when the void storage was configured while transfering items.
+* Fixed a bug with the GuildBank localization
+
 ====== 4.3.16 (beta)
 * After asking the mafia for money, Bagnon was able to buy a Void Storage support for itself, packed up with offline viewing capabilities.
+* Many tweaks and improvements were made to bring you this piece of joy and get the mafia approval.
 
 ====== 4.3.15 (beta)
 * Hotfix
