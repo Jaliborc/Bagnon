@@ -1,6 +1,7 @@
 ====== 4.3.17 (beta)
-* Fixed a bug causing weird behaviour when the void storage was configured while transfering items.
-* Fixed a bug with the GuildBank localization
+* Fixed a bug causing weird behavior when the void storage was configured while transferring items.
+* Fixed bugs related with the order of items being deposited/withdrawn
+* Many GuildBank hotfixes
 
 ====== 4.3.16 (beta)
 * After asking the mafia for money, Bagnon was able to buy a Void Storage support for itself, packed up with offline viewing capabilities.
@@ -17,13 +18,13 @@
 * Prevention of code taint
 
 ====== 4.3.12 (beta)
-* Locked guild bank tabs behaviour improvements
+* Locked guild bank tabs behavior improvements
 * Chinese localization update
 * Delicious tweaks and goodies
 
 ====== 4.3.11
 * Fixed bug causing tooltip searches to not work properly
-* Enabled search tags that were disabled for unkown reasons.
+* Enabled search tags that were disabled for unknown reasons.
 
 ====== 4.3.10
 * BagBrother no longer disables itself when BagSync or Armory are enabled (could confuse users)
@@ -71,7 +72,7 @@
 * Jaliborc: Now when opening the bank window by right clicking in the "bag toggle" button at the inventory one, the selected player will be the same on both
 * Jaliborc: Windows no longer change position when viewing other characters items
 * Jaliborc: Should have fixed a bug causing BagBrother to loose bank data on some situations
-* Jaliborc: Fixed a bug causing the items in the guild bank to show the cooldown of the items in your bags
+* Jaliborc: Fixed a bug causing the items in the guild bank to show the cool-down of the items in your bags
 * Jaliborc: No more "Jaliborc:" tag from now on. If no tag is here, it means it was me.
 
 ====== 4.2.12
