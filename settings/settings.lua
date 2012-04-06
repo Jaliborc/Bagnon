@@ -180,6 +180,19 @@ function Settings:IsFrameShownAtEvent(frameID, event)
 	return Bagnon.SavedSettings:IsFrameShownAtEvent(frameID, event)
 end
 
+--bag disable
+function Settings:AllowDisableBags(enable)
+	local enable = enable and true or false
+	if self:CanDisableBags() ~= enable then
+		self:GetDB().allowDisableBags = enable
+		self:SendMessage('BAG_DISABLE_UPDATE', enable)
+	end
+end
+
+function Settings:CanDisableBags()
+	return self:GetDB().allowDisableBags
+end
+
 
 --blizzard bag passthrough
 function Settings:SetEnableBlizzardBagPassThrough(enable)

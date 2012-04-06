@@ -26,6 +26,7 @@ L.CmdShowVersion = 'Mostra a versão atual'
 --frame text
 L.TitleBags = 'Mochila de %s'
 L.TitleBank = 'Banco de %s'
+L.Bank = 'Banco'
 
 
 --tooltips
@@ -47,9 +48,9 @@ L.TipShowFrameConfig = 'Clique para configurar esta janela.'
 L.TipDoubleClickSearch = '<Alt-Arraste> para mover.\n<Clique Direito> para configurar.\n<Duplo Clique> para pesquisar.'
 
 --itemcount tooltips
-L.TipCount1 = ', Equipado: %d'
-L.TipCount2 = ', Mochila: %d'
-L.TipCount3 = ', Banco: %d'
+L.TipCount1 = 'Equipado: %d'
+L.TipCount2 = 'Mochila: %d'
+L.TipCount3 = 'Banco: %d'
 
 --databroker tooltips
 L.TipShowBank = '<Shift-Clique Esquerdo> para abrir o banco.'

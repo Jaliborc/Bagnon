@@ -104,6 +104,7 @@ function Bag:UpdateEvents()
 	if self:IsVisible() then
 		self:RegisterMessage('BAG_SLOT_SHOW')
 		self:RegisterMessage('BAG_SLOT_HIDE')
+		self:RegisterMessage('BAG_DISABLE_UPDATE')
 
 		if self:IsCustomSlot() then
 			self:RegisterMessage('PLAYER_UPDATE')
@@ -174,6 +175,10 @@ do
 	Bag.PLAYERBANKBAGSLOTS_UPDATED = updateSlot
 	Bag.BANK_OPENED = updateSlot
 	Bag.BANK_CLOSED = updateSlot
+end
+
+function Bag:BAG_DISABLE_UPDATE()
+	self:UpdateToggle()
 end
 
 do
@@ -373,22 +378,19 @@ function Bag:PurchaseSlot()
 			text = CONFIRM_BUY_BANK_SLOT,
 			button1 = YES,
 			button2 = NO,
-
-			OnAccept = function()
-				PurchaseSlot()
-			end,
+			OnAccept = PurchaseSlot,
 
 			OnShow = function(self)
 				MoneyFrame_Update(self:GetName() .. 'MoneyFrame', GetBankSlotCost(GetNumBankSlots()))
 			end,
 
 			hasMoneyFrame = 1,
-			timeout = 0,
-			hideOnEscape = 1,
+			hideOnEscape = 1, timeout = 0,
+			preferredIndex = 3
 		}
 	end
 
-  PlaySound('igMainMenuOption')
+  	PlaySound('igMainMenuOption')
 	StaticPopup_Show('CONFIRM_BUY_BANK_SLOT_BAGNON')
 end
 
@@ -407,7 +409,9 @@ function Bag:IsSlotShown()
 end
 
 function Bag:CanToggleSlot()
-	return self:IsBank() or self:IsBackpack() or (self:IsCustomSlot() and self.link)
+	if Bagnon.Settings:CanDisableBags() then
+		return self:IsBank() or self:IsBackpack() or (self:IsCustomSlot() and self.link)
+	end
 end
 
 
@@ -433,7 +437,7 @@ function Bag:IsBackpack()
 	return Bagnon:IsBackpack(self:GetID())
 end
 
-function Bag:IsInventoryBagSlot()
+function Bag:IsBackpackBag()
   return Bagnon:IsBackpackBag(self:GetID())
 end
 
@@ -446,7 +450,7 @@ function Bag:IsBankBagSlot()
 end
 
 function Bag:IsCustomSlot()
-	return self:IsInventoryBagSlot() or self:IsBankBagSlot()
+	return self:IsBackpackBag() or self:IsBankBagSlot()
 end
 
 

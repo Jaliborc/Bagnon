@@ -1,0 +1,5 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="ears.lua"/>
+	<Script file="classy.lua"/>
+	<Script file="callbacks.lua"/>
+</Ui>

@@ -11,7 +11,7 @@ local TitleFrame = Bagnon:NewClass('TitleFrame', 'Button')
 
 --[[ Constructor ]]--
 
-function TitleFrame:New(frameID, parent)
+function TitleFrame:New(frameID, title, parent)
 	local b = self:Bind(CreateFrame('Button', nil, parent))
 	b:SetToplevel(true)
 
@@ -28,6 +28,7 @@ function TitleFrame:New(frameID, parent)
 	b:SetScript('OnLeave', b.OnLeave)
 	b:SetScript('OnClick', b.OnClick)
 
+	b:SetTitleText(title)
 	b:SetFrameID(frameID)
 	b:UpdateEvents()
 
@@ -124,7 +125,7 @@ end
 
 --[[ Properties ]]--
 
-function TitleFrame:SetFrameID(frameID)
+function TitleFrame:SetFrameID (frameID)
 	if self:GetFrameID() ~= frameID then
 		self.frameID = frameID
 		self:UpdateText()
@@ -135,17 +136,12 @@ function TitleFrame:GetFrameID()
 	return self.frameID
 end
 
---yeah, still hardcoded
-function TitleFrame:GetTitleText()
-	if self:GetFrameID() == 'bank' then
-		return L.TitleBank
-	end
-	
-	if self:GetFrameID() == 'guildbank' then
-		return [[%s's Guild Bank]]
-	end
+function TitleFrame:SetTitleText (title)
+	self.title = title
+end
 
-	return L.TitleBags
+function TitleFrame:GetTitleText()
+	return self.title or self:GetFrameID() == 'bank' and L.TitleBank or L.TitleBags
 end
 
 

@@ -5,12 +5,13 @@
 
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 local ItemCache = LibStub('LibItemCache-1.0')
-local Items, Enabled, Hooked = {}
+local ItemText, ItemCount, Enabled, Hooked = {}, {}
 
-local HEARTHSTONE = tostring(HEARTHSTONE_ITEM_ID)
-local CLASS_COLOR = '|cff%02x%02x%02x'
-local SILVER = '|cffc7c7cf%s|r'
 local TEAL = '|cff00ff9a%s|r'
+local SILVER = '|cffc7c7cf%s|r'
+local CLASS_COLOR = '|cff%02x%02x%02x'
+local HEARTHSTONE = tostring(HEARTHSTONE_ITEM_ID)
+local TOTAL = SILVER:format(L.Total)
 
 
 --[[ Methods ]]--
@@ -18,7 +19,7 @@ local TEAL = '|cff00ff9a%s|r'
 local function GetColor(class)
 	if class then
 		local colors = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
-    local color = colors[class]
+    	local color = colors[class]
 		return CLASS_COLOR:format(color.r * 255, color.g * 255, color.b * 255) .. '%s|r'
 	else
 		return TEAL
@@ -26,20 +27,27 @@ local function GetColor(class)
 end
 
 local function FormatCounts(color, ...)
-	local text = ''
+	local places = 0
 	local total = 0
+	local text = ''
 	
 	for i = 1, select('#', ...) do
 		local count = select(i, ...)
-		if count and count > 0 then
-			text = text .. L['TipCount' .. i]:format(count)
+		if count > 0 then
+			text = text .. L.TipDelimiter .. L['TipCount' .. i]:format(count)
 			total = total + count
+			places = places + 1
 		end
 	end
-
-	if total > 0 then
-		return color:format(total) .. ' ' .. SILVER:format('('.. text:sub(3) .. ')')
+	
+	text = text:sub(#L.TipDelimiter + 1)
+	if places > 1 then
+		text = color:format(total) .. ' ' .. SILVER:format('('.. text .. ')')
+	else
+		text = color:format(text)
 	end
+		
+	return total, total > 0 and text
 end
 
 local function AddOwners(tooltip, link)
@@ -47,23 +55,34 @@ local function AddOwners(tooltip, link)
 	if not id or id == HEARTHSTONE then
 		return
 	end
-
+	
+	local players = 0
+	local total = 0
+	
 	for i, player in ItemCache:IteratePlayers() do
 		local class = ItemCache:GetPlayerInfo(player)
-		local countText = Items[player][id]
+		local countText = ItemText[player][id]
+		local count = ItemCount[player][id]
 		local color = GetColor(class)
 		
-		if countText ~= false then
-			countText = FormatCounts(color, ItemCache:GetItemCounts(player, id))
-			
+		if countText == nil then
+			count, countText = FormatCounts(color, ItemCache:GetItemCounts(player, id))
+
 			if ItemCache:IsPlayerCached(player) then
-				Items[player][id] = countText or false
+				ItemText[player][id] = countText or false
+				ItemCount[player][id] = count
 			end
 		end
 
 		if countText then
 			tooltip:AddDoubleLine(color:format(player), countText)
+			total = total + count
+			players = players + 1
 		end
+	end
+	
+	if players > 1 and total > 0 then
+		tooltip:AddDoubleLine(TOTAL, SILVER:format(total))
 	end
 	
 	tooltip:Show()
@@ -95,7 +114,8 @@ function Bagnon:HookTooltips()
 	if BagBrother and ItemCache:HasCache() and self.Settings:IsTipCountEnabled() then
 		if not Hooked then
 			for i, player in ItemCache:IteratePlayers() do
-				Items[player] = {}
+				ItemCount[player] = {}
+				ItemText[player] = {}
 			end
 		
 			hookTip(GameTooltip)

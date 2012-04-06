@@ -15,14 +15,12 @@ local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
 
 function SearchToggle:New(frameID, parent)
 	local b = self:Bind(CreateFrame('CheckButton', nil, parent))
-	b:SetWidth(SIZE)
-	b:SetHeight(SIZE)
 	b:RegisterForClicks('anyUp')
+	b:SetSize(SIZE, SIZE)
 
 	local nt = b:CreateTexture()
 	nt:SetTexture([[Interface\Buttons\UI-Quickslot2]])
-	nt:SetWidth(NORMAL_TEXTURE_SIZE)
-	nt:SetHeight(NORMAL_TEXTURE_SIZE)
+	nt:SetSize(NORMAL_TEXTURE_SIZE, NORMAL_TEXTURE_SIZE)
 	nt:SetPoint('CENTER', 0, -1)
 	b:SetNormalTexture(nt)
 

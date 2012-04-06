@@ -6,6 +6,7 @@
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 local BagToggle = Bagnon:NewClass('BagToggle', 'CheckButton')
+local Dropdown = CreateFrame('Frame', 'BagnonBagToggleDropdown', nil, 'UIDropDownMenuTemplate')
 
 local SIZE = 20
 local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
@@ -78,12 +79,27 @@ end
 function BagToggle:OnClick(button)
 	if button == 'LeftButton' then
 		self:GetSettings():ToggleBagFrame()
-	else
-		local frame = self:GetFrameID() == 'inventory' and 'bank' or 'inventory'
-		local frameSettings = Bagnon.FrameSettings:Get(frame)
+	elseif select(5, GetAddOnInfo('Bagnon_VoidStorage')) then
 		
-		frameSettings:SetPlayerFilter(self:GetSettings():GetPlayerFilter())
-		Bagnon:ToggleFrame(frame)
+		-- yes, harcoded for now
+		EasyMenu({
+			{
+				text = self:GetFrameID() == 'inventory' and L.Bank or INVENTORY_TOOLTIP,
+				notCheckable = 1,
+				func = function()
+					self:OpenOther()
+				end
+			},
+			{
+				text = VOID_STORAGE,
+				notCheckable = 1,
+				func = function()
+					self:OpenVault()
+				end
+			}
+		}, Dropdown, self, 0, 0, 'MENU')
+	else
+		self:OpenOther()
 	end
 end
 
@@ -108,6 +124,26 @@ end
 function BagToggle:OnHide()
 	self:UpdateEvents()
 	self:Update()
+end
+
+
+--[[ Open Frames ]]--
+
+function BagToggle:OpenVault()
+	if LoadAddOn('Bagnon_VoidStorage') then
+		self:OpenFrame('voidstorage')
+		--Bagnon.FrameSettings:Get('voidstorage'):Show()
+	end
+end
+
+function BagToggle:OpenOther()
+	self:OpenFrame(self:GetFrameID() == 'inventory' and 'bank' or 'inventory')
+end
+
+function BagToggle:OpenFrame(frame)
+	--local frameSettings = Bagnon.FrameSettings:Get(frame)
+	--frameSettings:SetPlayerFilter(self:GetSettings():GetPlayerFilter())
+	Bagnon:ToggleFrame(frame)
 end
 
 
@@ -137,12 +173,7 @@ function BagToggle:UpdateTooltip()
 		GameTooltip:AddLine(L.TipShowBags, 1,1,1)
 	end
 	
-	if self:GetFrameID() == 'inventory' then
-		GameTooltip:AddLine(L.TipBankToggle, 1,1,1)
-	else
-		GameTooltip:AddLine(L.TipInventoryToggle, 1,1,1)
-	end
-	
+	GameTooltip:AddLine(L.TipFrameToggle, 1,1,1)
 	GameTooltip:Show()
 end
 
@@ -161,7 +192,7 @@ function BagToggle:GetFrameID()
 end
 
 
---[[ Frame Settings ]]--
+--[[ Settings ]]--
 
 function BagToggle:GetSettings()
 	return Bagnon.FrameSettings:Get(self:GetFrameID())

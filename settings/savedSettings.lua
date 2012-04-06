@@ -74,6 +74,8 @@ function SavedSettings:GetDefaultSettings()
 		fading = true,
 		
 		enabledFrames = {
+			voidstorage = true,
+			guildbank = true,
 			inventory = true,
 			bank = true,
 		},
