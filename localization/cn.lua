@@ -1,10 +1,10 @@
---[[
+﻿--[[
 	THIS FILE IS ENCODED IN UTF-8
 
 	Bagnon Localization Information: Chinese Simplified
-		Credits: Diablohu, yleaf@cwdg(yaroot@gmail.com), 狂飙@cwdg(networm@qq.com)
+		Credits: Diablohu, yleaf@cwdg(yaroot@gmail.com), 狂飙@cwdg(networm@qq.com), 天下牧@萨格拉斯
 
-	Last Update: 2009/06/19 by 狂飙@cwdg(networm@qq.com)
+	Last Update: 2012/03/27 by 天下牧@萨格拉斯
 
 --]]
 
@@ -32,6 +32,7 @@ L.CmdShowVersion = '显示当前版本'
 --frame text
 L.TitleBags = '%s的背包'
 L.TitleBank = '%s的银行'
+L.Bank = '银行'
 
 
 --tooltips
@@ -42,17 +43,21 @@ L.TipGoldOnRealm = '%s上的总资产'
 L.TipHideBag = '隐藏包裹'
 L.TipHideBags = '隐藏背包'
 L.TipHideSearch = '隐藏搜索界面'
+L.TipFrameToggle = '<右键点击> 显示其他窗口'
 L.TipPurchaseBag = '购买银行空位'
 L.TipShowBag = '显示包裹'
 L.TipShowBags = '显示背包'
 L.TipShowMenu = '右击打开设置菜单'
-L.TipShowSearch = '显示搜索界面'
 L.TipShowSearch = '搜索'
 L.TipShowFrameConfig = '打开设置菜单'
-L.TipDoubleClickSearch = '双击打开搜索框'
-L.TipBagToggle = '<左键点击> 切换是否显示背包'
-L.TipInventoryToggle = '<右键点击> 显示整合背包'
+L.TipDoubleClickSearch = '<Alt-拖动> 移动\n<右键点击> 设置\n<双击> 搜索'
 L.Total = '总共'
+
+--itemcount tooltips
+L.TipCount1 = '装备: %d'
+L.TipCount2 = '背包: %d'
+L.TipCount3 = '银行: %d'
+L.TipDelimiter = '|'
 
 --databroker plugin tooltips
 L.TipShowBank = 'Shift-点击 开关银行'

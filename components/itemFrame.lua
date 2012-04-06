@@ -6,8 +6,8 @@
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local ItemFrame = Bagnon:NewClass('ItemFrame', 'Frame')
 local Cache = LibStub('LibItemCache-1.0')
-
 ItemFrame.ITEM_SIZE = 39
+ItemFrame.COLUMN_OFF = 0
 
 
 --[[ Constructor ]]--
@@ -20,12 +20,17 @@ local function throttledUpdater_OnUpdate(self, elapsed)
 	self:Hide()
 end
 
-function ItemFrame:New(frameID, parent)
+function ItemFrame:New(frameID, parent, kind)
 	local f = self:Bind(CreateFrame('Frame', nil, parent))
 
+	f.kind = kind
 	f.itemSlots = {}
 	f.throttledUpdater = CreateFrame('Frame', nil, f)
 	f.throttledUpdater:SetScript('OnUpdate', throttledUpdater_OnUpdate)
+	
+	f.title = f:CreateFontString(nil, nil, 'GameFontHighlight')
+	f.title:SetPoint('TOPLEFT', 0, 15)
+	
 	f:SetFrameID(frameID)
 	f:SetScript('OnSizeChanged', f.OnSizeChanged)
 	f:SetScript('OnEvent', f.OnEvent)
@@ -45,16 +50,14 @@ function ItemFrame:OnEvent(event, ...)
 	end
 end
 
-function ItemFrame:GET_ITEM_INFO_RECEIVED()
-	self:UpdateEverything()
-end
-
-function ItemFrame:BANK_OPENED()
-	self:UpdateEverything()
-end
-
-function ItemFrame:BANK_CLOSED()
-	self:UpdateEverything()
+do
+	local function UpdateEverything(self)
+		self:UpdateEverything()
+	end
+	
+	ItemFrame.GET_ITEM_INFO_RECEIVED = UpdateEverything
+	ItemFrame.BANK_OPENED = UpdateEverything
+	ItemFrame.BANK_CLOSED = UpdateEverything
 end
 
 
@@ -102,28 +105,12 @@ function ItemFrame:BAG_SLOT_HIDE(msg, frameID, bagSlot)
 	end
 end
 
-function ItemFrame:ITEM_FRAME_SPACING_UPDATE(msg, frameID, spacing)
-	if self:GetFrameID() == frameID then
-		self:RequestLayout()
-	end
+function ItemFrame:BAG_DISABLE_UPDATE()
+	self:ReloadAllItemSlots()
 end
 
-function ItemFrame:ITEM_FRAME_COLUMNS_UPDATE(msg, frameID, columns)
-	if self:GetFrameID() == frameID then
-		self:RequestLayout()
-	end
-end
-
-function ItemFrame:SLOT_ORDER_UPDATE(msg, frameID, enable)
-	if self:GetFrameID() == frameID then
-		self:RequestLayout()
-	end
-end
-
-function ItemFrame:ITEM_FRAME_BAG_BREAK_UPDATE(msg, frameID, enable)
-	if self:GetFrameID() == frameID then
-		self:RequestLayout()
-	end
+function ItemFrame:QUEST_ACCEPTED(event)
+	self:HandleGlobalItemEvent(event)
 end
 
 function ItemFrame:UNIT_QUEST_LOG_CHANGED(event, unit)
@@ -132,11 +119,22 @@ function ItemFrame:UNIT_QUEST_LOG_CHANGED(event, unit)
 	end
 end
 
-function ItemFrame:QUEST_ACCEPTED(event)
-	self:HandleGlobalItemEvent(event)
+do
+	local function LayoutEvent(self, msg, frameID)
+        if self:GetFrameID() == frameID then
+        	self:RequestLayout()
+        end
+	end
+
+	ItemFrame.SLOT_ORDER_UPDATE = LayoutEvent
+	ItemFrame.ITEM_FRAME_SPACING_UPDATE = LayoutEvent
+	ItemFrame.ITEM_FRAME_COLUMNS_UPDATE = LayoutEvent
+	ItemFrame.ITEM_FRAME_BAG_BREAK_UPDATE = LayoutEvent
 end
 
--- API
+
+--[[ Item Events API ]]--
+
 function ItemFrame:HandleGlobalItemEvent(msg, ...)
 	for i, item in self:GetAllItemSlots() do
 		item:HandleEvent(msg, ...)
@@ -219,22 +217,27 @@ function ItemFrame:UpdateEvents()
 		self:RegisterMessage('BAG_SLOT_SHOW')
 		self:RegisterMessage('BAG_SLOT_HIDE')
 		self:RegisterMessage('PLAYER_UPDATE')
-		self:RegisterMessage('ITEM_FRAME_SPACING_UPDATE')
-		self:RegisterMessage('ITEM_FRAME_COLUMNS_UPDATE')
 		self:RegisterMessage('SLOT_ORDER_UPDATE')
 		self:RegisterMessage('ITEM_FRAME_BAG_BREAK_UPDATE')
-
-		self:RegisterMessage('TEXT_SEARCH_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('BAG_SEARCH_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_HIGHLIGHT_QUEST_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_HIGHLIGHT_QUALITY_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_HIGHLIGHT_UNUSABLE_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_HIGHLIGHT_OPACITY_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('SHOW_EMPTY_ITEM_SLOT_TEXTURE_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_SLOT_COLOR_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('ITEM_SLOT_COLOR_ENABLED_UPDATE', 'HandleGlobalItemEvent')
-		self:RegisterMessage('FLASH_SEARCH_UPDATE', 'HandleGlobalItemEvent')
+		self:RegisterMessage('BAG_DISABLE_UPDATE')
+		self:RegisterGlobalItemEvents()
 	end
+end
+
+function ItemFrame:RegisterGlobalItemEvents()
+	self:RegisterMessage('ITEM_FRAME_SPACING_UPDATE')
+	self:RegisterMessage('ITEM_FRAME_COLUMNS_UPDATE')
+	
+	self:RegisterMessage('TEXT_SEARCH_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('BAG_SEARCH_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_HIGHLIGHT_QUEST_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_HIGHLIGHT_QUALITY_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_HIGHLIGHT_UNUSABLE_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_HIGHLIGHT_OPACITY_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('SHOW_EMPTY_ITEM_SLOT_TEXTURE_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_SLOT_COLOR_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('ITEM_SLOT_COLOR_ENABLED_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('FLASH_SEARCH_UPDATE', 'HandleGlobalItemEvent')
 end
 
 
@@ -282,7 +285,7 @@ end
 --takes a bag and a slot, and returns an array index
 function ItemFrame:GetSlotIndex(bag, slot)
 	if bag < 0 then
-		return bag*100 - slot
+		return bag * 100 - slot
 	end
 	return bag * 100 + slot
 end
@@ -344,7 +347,11 @@ end
 --[[ Layout Methods ]]--
 
 function ItemFrame:Layout()
-	if self:IsBagBreakEnabled() then
+	self.needsLayout = nil
+	
+	if self.USE_COLUMN_LAYOUT then
+		self:Layout_Collumn()
+	elseif self:IsBagBreakEnabled() then
 		self:Layout_BagBreak()
 	else
 		self:Layout_Default()
@@ -353,8 +360,6 @@ end
 
 --arranges itemSlots on the itemFrame, and adjusts size to fit
 function ItemFrame:Layout_Default()
-	self.needsLayout = nil
-
 	local columns = self:NumColumns()
 	local spacing = self:GetSpacing()
 	local effItemSize = self.ITEM_SIZE + spacing
@@ -366,23 +371,21 @@ function ItemFrame:Layout_Default()
 			if itemSlot then
 				i = i + 1
 				local row = (i - 1) % columns
-				local col = math.ceil(i / columns) - 1
+				local col = ceil(i / columns) - 1
 				itemSlot:ClearAllPoints()
 				itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', effItemSize * row, -effItemSize * col)
 			end
 		end
 	end
 
-	local width = effItemSize * math.min(columns, i) - spacing
+	local width = effItemSize * min(columns, i) - spacing
 	local height = effItemSize * ceil(i / columns) - spacing
-	self:SetWidth(width)
-	self:SetHeight(height)
+	self:SetSize(width, height)
 end
 
 
+-- groups items in bags, much alike text in paragraphs
 function ItemFrame:Layout_BagBreak()
-	self.needsLayout = nil
-
 	local columns = self:NumColumns()
 	local spacing = self:GetSpacing()
 	local effItemSize = self.ITEM_SIZE + spacing
@@ -406,7 +409,7 @@ function ItemFrame:Layout_BagBreak()
 				end
 			else
 				col = col + 1
-				maxCols = math.max(maxCols, col)
+				maxCols = max(maxCols, col)
 			end
 		end
 
@@ -416,9 +419,40 @@ function ItemFrame:Layout_BagBreak()
 
 	local width = effItemSize * maxCols - spacing*2
 	local height = effItemSize * (rows - 1) - spacing*2
-	self:SetWidth(width)
-	self:SetHeight(height)
+	self:SetSize(width, height)
 end
+
+
+-- for use on non-bag frames (ex: guilBank). Items go down a collumn
+function ItemFrame:Layout_Collumn()
+	local numSlots = self:GetNumSlots()
+	if numSlots == 0 then
+		return
+	end
+	
+	local numColumns = min(self:NumColumns() - self.COLUMN_OFF, numSlots)
+	local numRows = ceil(numSlots / numColumns)
+	
+	local spacing = self:GetSpacing()
+	local effItemSize = self.ITEM_SIZE + spacing
+
+	local row, col = 1, 0
+	for i, itemSlot in self:GetAllItemSlots() do
+		col = col + 1
+		if col > numColumns then
+			col = 1
+			row = row + 1
+		end
+		
+		itemSlot:ClearAllPoints()
+		itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', effItemSize * (col - 1), -effItemSize * (row - 1))
+	end
+
+	local width = effItemSize * col - spacing
+	local height = effItemSize * numRows - spacing
+	self:SetSize(width, height)
+end
+
 
 --request a layout update on this frame
 function ItemFrame:RequestLayout()

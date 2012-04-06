@@ -8,16 +8,14 @@ local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 local Frame = Bagnon:NewClass('Frame', 'Frame')
 
 
---[[
-  Constructor
-]]--
+--[[ Constructor ]]--
 
-function Frame:New(frameID)
+function Frame:New(frameID, title)
 	local f = self:Bind(CreateFrame('Frame', 'BagnonFrame' .. frameID, UIParent))
-	f:Hide()
 	f:SetClampedToScreen(true)
 	f:SetMovable(true)
 	f:EnableMouse(true)
+	f:Hide()
 
 	f:SetBackdrop{
 	  bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
@@ -30,18 +28,17 @@ function Frame:New(frameID)
 	f:SetScript('OnShow', f.OnShow)
 	f:SetScript('OnHide', f.OnHide)
 	f.frameID = frameID
+	f.title = title
 	f:Rescale()
 	f:UpdateEverything()
 
-	table.insert(UISpecialFrames, f:GetName())
-
+	tinsert(UISpecialFrames, f:GetName())
+	tinsert(Bagnon.frames, f)
 	return f
 end
 
 
---[[
-  Frame Messages
-]]--
+--[[ Frame Messages ]]--
 
 function Frame:UpdateEvents()
 	self:UnregisterAllMessages()
@@ -71,7 +68,7 @@ end
 
 function Frame:FRAME_SHOW(msg, frameID)
 	if self:GetFrameID() == frameID then
-		self:FadeFrame(self, self:GetFrameOpacity())
+		self:FadeInFrame(self, self:GetFrameOpacity())
 	end
 end
 
@@ -254,12 +251,18 @@ function Frame:GetFrameOpacity()
 	return self:GetSettings():GetOpacity()
 end
 
-function Frame:FadeFrame(frame, alpha)
+function Frame:FadeInFrame(frame, alpha)
 	if Bagnon.Settings:IsFadingEnabled() then
 		UIFrameFadeIn(frame, 0.2, 0, alpha or 1)
 	end
 	
 	frame:Show()
+end
+
+function Frame:FadeOutFrame(frame)
+	if frame then
+		frame:Hide()
+	end
 end
 
 
@@ -399,38 +402,36 @@ function Frame:Layout()
 		return
 	end
 
-	local padW = 16
-	local padH = 16
 	local width, height = 0, 0
 
 	--place menu butons
-	local w, h = self:PlaceMenuButtons()
+	local w = self:PlaceMenuButtons()
 	width = width + w
 
-	local w, h = self:PlaceCloseButton()
+	local w = self:PlaceCloseButton()
 	width = width + w
 
 	local w, h = self:PlaceOptionsToggle()
 	width = width + w + 24 --append spacing between close button and this
 	height = height + 20
 
-	local w, h = self:PlaceTitleFrame()
+	local w = self:PlaceTitleFrame()
 	width = width + w
 
-	local w, h = self:PlaceSearchFrame()
+	self:PlaceSearchFrame()
 
 	--place the middle frames
 	local w, h = self:PlaceBagFrame()
-	width = math.max(w, width)
+	width = max(w, width)
 	height = height + h
 
 	local w, h = self:PlaceItemFrame()
-	width = math.max(w, width)
+	width = max(w, width)
 	height = height + h
 
 	--place the bottom menu frames
 	local w, h = self:PlaceMoneyFrame()
-	width = math.max(w, width)
+	width = max(w, width)
 	height = height + h
 
 	local w, h = self:PlaceBrokerDisplayFrame()
@@ -439,8 +440,8 @@ function Frame:Layout()
 	end
 
 	--adjust size
-	self:SetWidth(math.max(width, 156) + padW)
-	self:SetHeight(height + padH)
+	self:SetWidth(max(width, 156) + 16)
+	self:SetHeight(height + 16)
 end
 
 
@@ -458,24 +459,24 @@ function Frame:PlaceMenuButtons()
 
 	if self:HasPlayerSelector() then
 		local selector = self:GetPlayerSelector() or self:CreatePlayerSelector()
-		table.insert(menuButtons, selector)
+		tinsert(menuButtons, selector)
 	end
 
 	if self:HasBagFrame() and self:HasBagToggle() then
 		local toggle = self:GetBagToggle() or self:CreateBagToggle()
-		table.insert(menuButtons, toggle)
+		tinsert(menuButtons, toggle)
 	end
 	
 	-- guild bank support
 	if self:HasLogs() then
-		local log, moneyLog = self:GetLogToggles()
-		table.insert(menuButtons, log)
-		table.insert(menuButtons, moneyLog)
+		for i, toggle in ipairs(self:GetLogToggles()) do
+			tinsert(menuButtons, toggle)
+		end
 	end
 
 	if self:HasSearchToggle() then
 		local toggle = self:GetSearchToggle() or self:CreateSearchToggle()
-		table.insert(menuButtons, toggle)
+		tinsert(menuButtons, toggle)
 	end
 
 	for i, button in ipairs(menuButtons) do
@@ -654,7 +655,7 @@ end
 --[[ title frame ]]--
 
 function Frame:CreateTitleFrame()
-	local f = Bagnon.TitleFrame:New(self:GetFrameID(), self)
+	local f = Bagnon.TitleFrame:New(self:GetFrameID(), self.title, self)
 	self.titleFrame = f
 	return f
 end
@@ -759,9 +760,9 @@ function Frame:PlaceMoneyFrame()
 	if self:HasMoneyFrame() then
 		local frame = self:GetMoneyFrame() or self:CreateMoneyFrame()
 		frame:ClearAllPoints()
-		frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', 0, 10)
+		frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -(frame.ICON_SIZE or 0) - (frame.ICON_OFF or 0), 4)
 		frame:Show()
-		return frame:GetWidth(), 24
+		return frame:GetSize()
 	end
 
 	local frame = self:GetMoneyFrame()
@@ -796,7 +797,7 @@ function Frame:PlaceBrokerDisplayFrame()
 		frame:SetPoint('BOTTOMLEFT', self, 'BOTTOMLEFT', 8, 10)
 
 		if self:HasMoneyFrame() then
-			frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -(self:GetMoneyFrame():GetWidth() + 4), 10)
+			frame:SetPoint('RIGHT', self:GetMoneyFrame(), 'LEFT', -4, 10)
 		else
 			frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -8, 10)
 		end

@@ -401,7 +401,7 @@ function FrameSettings:IsBagSlotShown(slot)
 end
 
 function FrameSettings:IsBagSlotHidden(slot)
-	return not self:GetDB():IsBagShown(slot)
+	return Bagnon.Settings:CanDisableBags() and not self:GetDB():IsBagShown(slot)
 end
 
 

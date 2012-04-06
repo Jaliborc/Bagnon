@@ -2,6 +2,7 @@
 	Bagnon Localization Information: German
 --]]
 
+
 local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'deDE')
 if not L then return end
 
@@ -27,24 +28,32 @@ L.CmdShowVersion = 'Zeigt die aktuelle Version an'
 --frame text
 L.TitleBags = '%s\'s Inventar'
 L.TitleBank = '%s\'s Bank'
+L.Bank = 'Bank'
 
 
 --tooltips
+L.TipBags = 'Taschen'
 L.TipBank = 'Bank'
+L.TipBankToggle = '<Rechts-Klick> um die Bank umzuschalten.'
 L.TipChangePlayer = '<Klicken> um die Gegenst\195\164nde anderer Charaktere anzuzeigen.'
 L.TipGoldOnRealm = 'Auf %s gesamt'
 L.TipHideBag = '<Klicken> um diese Tasche zu verstecken.'
 L.TipHideBags = '<Klicken> um die Taschenanzeige zu verstecken.'
 L.TipHideSearch = '<Klicken> um das Suchfenster zu verstecken.'
+L.TipInventoryToggle = '<Rechts-Klick> um das Inventar umzuschalten.'
 L.TipPurchaseBag = '<Klicken> um das Bankfach zu kaufen.'
 L.TipShowBag = '<Klicken> um diese Tasche anzuzeigen.'
 L.TipShowBags = '<Klicken> um das Taschenfenster anzuzeigen.'
 L.TipShowMenu = '<Rechtsklick> um das Fenster zu konfigurieren.'
-L.TipShowSearch = '<Klicken> um das Suchfenster anzuzeigen.'
 L.TipShowSearch = '<Klicken> zum Suchen.'
 L.TipShowFrameConfig = '<Klick> um dieses Fenster zu konfigurieren.'
 L.TipDoubleClickSearch = '<Alt-Ziehen> zum Verschieben.\n<Rechtsklick> zum Konfigurieren.\n<Doppelklick> zum Suchen.'
 L.Total = 'Gesamt'
+
+--itemcount tooltips
+L.TipCount1 = 'Angelegt: %d'
+L.TipCount2 = 'Taschen: %d'
+L.TipCount3 = 'Bank: %d'
 
 --databroker plugin tooltips
 L.TipShowBank = '<Umschalt-Linksklick> um die Bank umzuschalten'

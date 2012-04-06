@@ -6,7 +6,9 @@
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local ItemSlot = Bagnon:NewClass('ItemSlot', 'Button')
 ItemSlot.nextID = 0
+ItemSlot.unused = {}
 
+local Cache = LibStub('LibItemCache-1.0')
 local ItemSearch = LibStub('LibItemSearch-1.0')
 local Unfit = LibStub('Unfit-1.0')
 
@@ -51,8 +53,9 @@ function ItemSlot:Create()
 	item.UpdateTooltip = nil
 	item.border = border
 
-	--get rid of any registered frame events, and use my own
-	item:HookScript("OnClick", item.ItemClicked)
+	--get rid of any registered frame events, and use our own
+	item:SetScript('OnMouseDown', item.OnMouseDown)
+	item:HookScript('OnClick', item.OnClick)
 	item:SetScript('OnEnter', item.OnEnter)
 	item:SetScript('OnLeave', item.OnLeave)
 	item:SetScript('OnShow', item.OnShow)
@@ -72,7 +75,7 @@ function ItemSlot:GetBlizzardItemSlot(id)
 		return
 	end
 
-	local bag = math.ceil(id / MAX_CONTAINER_ITEMS)
+	local bag = ceil(id / MAX_CONTAINER_ITEMS)
 	local slot = (id-1) % MAX_CONTAINER_ITEMS + 1
 	local item = _G[format('ContainerFrame%dItem%d', bag, slot)]
 
@@ -108,9 +111,8 @@ function ItemSlot:Free()
 	self:SetParent(nil)
 	self:UnregisterAllEvents()
 	self:UnregisterAllMessages()
-
-	self.unused = self.unused or {}
 	self.unused[self] = true
+	self.depositSlot = nil
 end
 
 
@@ -203,10 +205,36 @@ function ItemSlot:OnDragStart()
 	end
 end
 
-function ItemSlot:OnModifiedClick(button)
+function ItemSlot:OnMouseDown(button)
+	if button == 'RightButton' and not self.canDeposit then
+		for i = 1,9 do
+			if not GetVoidTransferDepositInfo(i) then
+				self.depositSlot = i
+				return
+			end
+		end
+	end
+end
+
+function ItemSlot:OnClick(button)
+	if IsAltKeyDown() and button == 'LeftButton' then
+		local link = self:GetItem()
+		if link then
+			Bagnon.Settings:FlashFind(link:match('^|c%x+|Hitem.+|h%[(.*)%]'))
+		end
+	elseif GetNumVoidTransferDeposit() > 0 and button == 'RightButton' then
+		if self.canDeposit then
+			ClickVoidTransferDepositSlot(self.depositSlot, true)
+		end
+
+		self.canDeposit = not self.canDeposit
+	end
+end
+
+function ItemSlot:OnModifiedClick(...)
 	local link = self:IsCached() and self:GetItem()
-	if link then
-		HandleModifiedItemClick(link)
+	if link and not HandleModifiedItemClick(link) then
+		self:OnClick(...)
 	end
 end
 
@@ -244,7 +272,7 @@ end
 
 -- Update the texture, lock status, and other information about an item
 function ItemSlot:Update()
-	if not self:IsVisible() then
+  if not self:IsVisible() then
     return
   end
 
@@ -320,7 +348,7 @@ function ItemSlot:UpdateLocked()
 end
 
 function ItemSlot:IsLocked()
-	return Bagnon:IsItemLocked(self:GetPlayer(), self:GetBag(), self:GetID())
+	return select(3, self:GetInfo())
 end
 
 
@@ -389,7 +417,9 @@ function ItemSlot:HideStackSplitFrame()
 end
 
 --tooltip methods
-ItemSlot.UpdateTooltip = ItemSlot.OnEnter
+function ItemSlot:UpdateTooltip()
+	self:OnEnter()
+end
 
 function ItemSlot:AnchorTooltip()
 	if self:GetRight() >= (GetScreenWidth() / 2) then
@@ -444,18 +474,8 @@ end
 function ItemSlot:FlashSearch(search)
 	if search and search ~= '' then
 		local link = self:GetItem()
-		if ItemSearch:Find(itemLink, search) then
+		if ItemSearch:Find(link, search) then
 			UIFrameFlash(self, 0.2, 0.3, 1.5, true, 0.0, 0.0 )
-		end
-	end
-end
-
--- Callback function for item slot clicked
-function ItemSlot:ItemClicked(button)
-	if IsAltKeyDown() and button == 'LeftButton' then
-		local link = self:GetItem()
-		if link then
-			Bagnon.Settings:FlashFind(link:match('^|c%x+|Hitem.+|h%[(.*)%]'))
 		end
 	end
 end
@@ -491,7 +511,7 @@ function ItemSlot:IsSlot(bag, slot)
 end
 
 function ItemSlot:IsCached()
-	return Bagnon:IsBagCached(self:GetPlayer(), self:GetBag())
+	return select(8, self:GetInfo())
 end
 
 function ItemSlot:IsBank()
@@ -504,7 +524,7 @@ function ItemSlot:IsBankSlot()
 end
 
 function ItemSlot:GetInfo()
-	return Bagnon:GetItemInfo(self:GetPlayer(), self:GetBag(), self:GetID())
+	return Cache:GetItemInfo(self:GetPlayer(), self:GetBag(), self:GetID())
 end
 
 
@@ -533,7 +553,7 @@ local QUEST_ITEM_SEARCH = format('t:%s|%s', select(10, GetAuctionItemClasses()),
 function ItemSlot:IsQuestItem()
 	local item = self:GetItem()
 	if not item then
-		return false, false
+		return false
 	end
 
 	if self:IsCached() then
