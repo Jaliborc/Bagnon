@@ -4,18 +4,14 @@
 	<Script file="bagToggle.lua"/>
 	<Script file="brokerDisplay.lua"/>
 	<Script file="frame.lua"/>
-	<Script file="frameSettings.lua"/>
 	<Script file="item.lua"/>
 	<Script file="itemFrame.lua"/>
 	<Script file="moneyFrame.lua"/>
 	<Script file="optionsToggle.lua"/>
 	<Script file="playerSelector.lua"/>
   	<Script file="playerDropdown.lua"/>
-	<Script file="savedSettings.lua"/>
 	<Script file="searchFrame.lua"/>
 	<Script file="searchToggle.lua"/>
-	<Script file="settings.lua"/>
 	<Script file="titleFrame.lua"/>
-  	<Script file="savedFrameSettings.lua"/>
   	<Script file="tooltips.lua"/>
 </Ui>
