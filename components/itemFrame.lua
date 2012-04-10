@@ -349,8 +349,8 @@ end
 function ItemFrame:Layout()
 	self.needsLayout = nil
 	
-	if self.USE_COLUMN_LAYOUT then
-		self:Layout_Collumn()
+	if self.HasRowLayout then
+		self:Layout_NoBag()
 	elseif self:IsBagBreakEnabled() then
 		self:Layout_BagBreak()
 	else
@@ -423,8 +423,8 @@ function ItemFrame:Layout_BagBreak()
 end
 
 
--- for use on non-bag frames (ex: guilBank). Items go down a collumn
-function ItemFrame:Layout_Collumn()
+-- for use on non-bag frames (ex: guilBank). Items go down a collumn or a row.
+function ItemFrame:Layout_NoBag()
 	local numSlots = self:GetNumSlots()
 	if numSlots == 0 then
 		return
@@ -433,23 +433,31 @@ function ItemFrame:Layout_Collumn()
 	local numColumns = min(self:NumColumns() - self.COLUMN_OFF, numSlots)
 	local numRows = ceil(numSlots / numColumns)
 	
+	local useRows = self:HasRowLayout()
+	local limit = useRows and numRows or numColumns
+	
 	local spacing = self:GetSpacing()
-	local effItemSize = self.ITEM_SIZE + spacing
+	local itemSize = self.ITEM_SIZE + spacing
 
-	local row, col = 1, 0
+	local a, b = 0, 0
 	for i, itemSlot in self:GetAllItemSlots() do
-		col = col + 1
-		if col > numColumns then
-			col = 1
-			row = row + 1
+		if a == limit then
+			a = 1
+			b = b + 1
+		end
+	
+		itemSlot:ClearAllPoints()
+		if useRows then
+			itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', itemSize * b, -itemSize * a)
+		else
+			itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', itemSize * a, -itemSize * b)
 		end
 		
-		itemSlot:ClearAllPoints()
-		itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', effItemSize * (col - 1), -effItemSize * (row - 1))
+		a = a + 1
 	end
 
-	local width = effItemSize * col - spacing
-	local height = effItemSize * numRows - spacing
+	local width = itemSize * col - spacing
+	local height = itemSize * numRows - spacing
 	self:SetSize(width, height)
 end
 
