@@ -223,7 +223,7 @@ function ItemSlot:OnClick(button)
 			Bagnon.Settings:FlashFind(link:match('^|c%x+|Hitem.+|h%[(.*)%]'))
 		end
 	elseif GetNumVoidTransferDeposit() > 0 and button == 'RightButton' then
-		if self.canDeposit then
+		if self.canDeposit and self.depositSlot then
 			ClickVoidTransferDepositSlot(self.depositSlot, true)
 		end
 

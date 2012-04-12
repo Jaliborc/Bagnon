@@ -350,7 +350,7 @@ end
 function ItemFrame:Layout()
 	self.needsLayout = nil
 	
-	if self.HasColumnLayout then
+	if self.HasRowLayout then
 		self:Layout_NoBag()
 	elseif self:IsBagBreakEnabled() then
 		self:Layout_BagBreak()
@@ -434,8 +434,8 @@ function ItemFrame:Layout_NoBag()
 	local numCol = min(self:NumColumns() - self.COLUMN_OFF, numSlots)
 	local numRows = ceil(numSlots / numCol)
 	
-	local useCols = self:HasColumnLayout()
-	local limit = useCols and numCol or numRows
+	local useRows = self:HasRowLayout()
+	local limit = useRows and numCol or numRows
 	
 	local spacing = self:GetSpacing()
 	local itemSize = self.ITEM_SIZE + spacing
@@ -448,7 +448,7 @@ function ItemFrame:Layout_NoBag()
 		end
 	
 		itemSlot:ClearAllPoints()
-		if useCols then
+		if useRows then
 			itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', itemSize * a, -itemSize * b)
 		else
 			itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', itemSize * b, -itemSize * a)
