@@ -31,6 +31,7 @@ function ItemFrame:New(frameID, parent, kind)
 	f.title = f:CreateFontString(nil, nil, 'GameFontHighlight')
 	f.title:SetPoint('TOPLEFT', 0, 15)
 	
+	f:SetSize(1,1)
 	f:SetFrameID(frameID)
 	f:SetScript('OnSizeChanged', f.OnSizeChanged)
 	f:SetScript('OnEvent', f.OnEvent)
@@ -349,7 +350,7 @@ end
 function ItemFrame:Layout()
 	self.needsLayout = nil
 	
-	if self.HasRowLayout then
+	if self.HasColumnLayout then
 		self:Layout_NoBag()
 	elseif self:IsBagBreakEnabled() then
 		self:Layout_BagBreak()
@@ -423,18 +424,18 @@ function ItemFrame:Layout_BagBreak()
 end
 
 
--- for use on non-bag frames (ex: guilBank). Items go down a collumn or a row.
+-- for use on non-bag frames (ex: guilBank). Items go down a column or a row.
 function ItemFrame:Layout_NoBag()
 	local numSlots = self:GetNumSlots()
 	if numSlots == 0 then
 		return
 	end
 	
-	local numColumns = min(self:NumColumns() - self.COLUMN_OFF, numSlots)
-	local numRows = ceil(numSlots / numColumns)
+	local numCol = min(self:NumColumns() - self.COLUMN_OFF, numSlots)
+	local numRows = ceil(numSlots / numCol)
 	
-	local useRows = self:HasRowLayout()
-	local limit = useRows and numRows or numColumns
+	local useCols = self:HasColumnLayout()
+	local limit = useCols and numCol or numRows
 	
 	local spacing = self:GetSpacing()
 	local itemSize = self.ITEM_SIZE + spacing
@@ -442,21 +443,21 @@ function ItemFrame:Layout_NoBag()
 	local a, b = 0, 0
 	for i, itemSlot in self:GetAllItemSlots() do
 		if a == limit then
-			a = 1
+			a = 0
 			b = b + 1
 		end
 	
 		itemSlot:ClearAllPoints()
-		if useRows then
-			itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', itemSize * b, -itemSize * a)
-		else
+		if useCols then
 			itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', itemSize * a, -itemSize * b)
+		else
+			itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', itemSize * b, -itemSize * a)
 		end
 		
 		a = a + 1
 	end
 
-	local width = itemSize * col - spacing
+	local width = itemSize * numCol - spacing
 	local height = itemSize * numRows - spacing
 	self:SetSize(width, height)
 end

@@ -391,6 +391,8 @@ function SavedFrameSettings:GetDefaultSettings(frameID)
 		return self:GetDefaultBankSettings()
 	elseif frameID == 'guildbank' then
 		return self:GetDefaultGuildBankSettings()
+	elseif frameID == 'voidstorage' then
+		return self:GetDefaultVaultSettings()
 	end
 
 	return self:GetDefaultInventorySettings()
@@ -465,9 +467,9 @@ function SavedFrameSettings:GetDefaultBankSettings()
 		frameBorderColor = {1, 1, 0, 1},
 		scale = 1,
 		opacity = 1,
-		point = 'BOTTOMLEFT',
-		x = 0,
-		y = 150,
+		point = 'LEFT',
+		x = 40,
+		y = 0,
 		frameLayer = 'HIGH',
 
 		--itemFrame
