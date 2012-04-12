@@ -1,3 +1,8 @@
+====== 4.3.18 (beta)
+* Guild Bank and Void Storage now displays items in the same order as in the default interface
+* German and Portuguese localizations update
+* Void Storage bugfixes
+
 ====== 4.3.17 (beta)
 * Fixed a bug causing weird behavior when the void storage was configured while transferring items.
 * Fixed bugs related with the order of items being deposited/withdrawn
