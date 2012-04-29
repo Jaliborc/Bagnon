@@ -1,7 +1,19 @@
+====== 4.3.21
+* Fixed bug when depositing money on guild bank
+
+====== 4.3.20
+* Added binding to toggle Void Storage
+* Fixed bug causing GuildBank money frame to be unresponsive to clicks
+
+====== 4.3.19
+* VoidStorage and GuildBank hotfixes
+* Tagging as release
+
 ====== 4.3.18 (beta)
 * Guild Bank and Void Storage now displays items in the same order as in the default interface
 * German and Portuguese localizations update
 * Void Storage bugfixes
+* Money frame tooltip redesigned
 
 ====== 4.3.17 (beta)
 * Fixed a bug causing weird behavior when the void storage was configured while transferring items.
@@ -364,4 +376,4 @@
 * Fixed bank frame closing
 * Fixed an error when hovering over a bank item when at the bank
 * Fixed an error when clicking on a databroker object with no click event
-* Added sounds when opening/closing framessssessess opening/closing framessssessess
+* Added sounds when opening/closing framessssessess opening/closing framessssessesss opening/closing framessssessess

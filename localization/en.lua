@@ -8,6 +8,7 @@ local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'enUS', true)
 --keybinding text
 L.ToggleBags = 'Toggle Inventory'
 L.ToggleBank = 'Toggle Bank'
+L.ToggleVault = 'Toggle Void Storage'
 
 
 --system messages

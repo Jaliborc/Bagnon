@@ -4,16 +4,17 @@
 --]]
 
 Bagnon = LibStub('AceAddon-3.0'):NewAddon('Bagnon', 'AceEvent-3.0', 'AceConsole-3.0')
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
+Bagnon.frames = {}
 
+local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 BINDING_HEADER_BAGNON = 'Bagnon'
 BINDING_NAME_BAGNON_TOGGLE = L.ToggleBags
-BINDING_NAME_BANKNON_TOGGLE = L.ToggleBank
+BINDING_NAME_BAGNON_BANK_TOGGLE = L.ToggleBank
+BINDING_NAME_BAGNON_VAULT_TOGGLE = L.ToggleVault
 
 
 --[[ Startup ]]--
 
-Bagnon.frames = {}
 function Bagnon:OnInitialize()
  	self:AddSlashCommands()
  	self:RegisterAutoDisplayEvents()
