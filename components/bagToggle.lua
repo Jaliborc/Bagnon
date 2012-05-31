@@ -132,7 +132,6 @@ end
 function BagToggle:OpenVault()
 	if LoadAddOn('Bagnon_VoidStorage') then
 		self:OpenFrame('voidstorage')
-		--Bagnon.FrameSettings:Get('voidstorage'):Show()
 	end
 end
 

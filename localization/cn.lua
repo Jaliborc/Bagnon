@@ -4,7 +4,7 @@
 	Bagnon Localization Information: Chinese Simplified
 		Credits: Diablohu, yleaf@cwdg(yaroot@gmail.com), 狂飙@cwdg(networm@qq.com), 天下牧@萨格拉斯
 
-	Last Update: 2012/03/27 by 天下牧@萨格拉斯
+	Last Update: 2012/05/17 by 天下牧@萨格拉斯
 
 --]]
 
@@ -14,6 +14,7 @@ if not L then return end
 --keybinding text
 L.ToggleBags = '开关 背包'
 L.ToggleBank = '开关 银行'
+L.ToggleVault = '开关 虚空仓库'
 
 
 --system messages
