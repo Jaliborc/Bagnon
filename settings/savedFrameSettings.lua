@@ -497,3 +497,7 @@ end
 function SavedFrameSettings:GetDefaultGuildBankSettings()
 	return self:GetDefaultInventorySettings()
 end
+
+function SavedFrameSettings:GetDefaultVaultSettings()
+	return self:GetDefaultInventorySettings()
+end
