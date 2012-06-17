@@ -1,5 +1,8 @@
+====== 4.3.24
+* Small bug fix
+
 ====== 4.3.23
-* Chinese trabslations update
+* Chinese translations update
 
 ====== 4.3.22
 * Hacky hotfix of bug caused by unknown reasons
