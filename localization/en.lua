@@ -52,6 +52,7 @@ L.Total = 'Total'
 L.TipCount1 = 'Equipped: %d'
 L.TipCount2 = 'Bags: %d'
 L.TipCount3 = 'Bank: %d'
+L.TipCount4 = 'Vault: %d'
 L.TipDelimiter = '|'
 
 --databroker tooltips

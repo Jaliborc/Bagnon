@@ -236,6 +236,7 @@ function Bagnon:RegisterAutoDisplayEvents()
 	self.BagEvents:Listen(self, 'BANK_OPENED')
 	self.BagEvents:Listen(self, 'BANK_CLOSED')
 	self:RegisterEvent('MAIL_CLOSED')
+	self:RegisterEvent('SOCKET_INFO_UPDATE')
 	self:RegisterEvent('AUCTION_HOUSE_SHOW')
 	self:RegisterEvent('AUCTION_HOUSE_CLOSED')
 	self:RegisterEvent('MERCHANT_SHOW')
@@ -315,6 +316,10 @@ end
 --mail frame is a special case, since its automatically handled by the stock interface
 function Bagnon:MAIL_CLOSED()
 	self:HideFrame('inventory')
+end
+
+function Bagnon:SOCKET_INFO_UPDATE()
+	self:ShowFrameAtEvent('inventory', 'gems')
 end
 
 --visiting the auction house
