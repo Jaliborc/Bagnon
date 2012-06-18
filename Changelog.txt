@@ -1,3 +1,9 @@
+====== 4.3.25
+* Now it is possible to drag items into the void storage for deposit
+* Now tooltip counts track items deposited in the void storage
+* Now tooltip counts can be enabled with BagBrother disabled.
+* Added option to show inventory while socketing items.
+
 ====== 4.3.24
 * Small bug fix
 

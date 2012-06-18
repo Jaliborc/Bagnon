@@ -111,7 +111,7 @@ end
 --[[ Start this Thing! ]]--
 
 function Bagnon:HookTooltips()
-	if BagBrother and ItemCache:HasCache() and self.Settings:IsTipCountEnabled() then
+	if ItemCache:HasCache() and self.Settings:IsTipCountEnabled() then
 		if not Hooked then
 			for i, player in ItemCache:IteratePlayers() do
 				ItemCount[player] = {}

@@ -54,8 +54,9 @@ function ItemSlot:Create()
 	item.border = border
 
 	--get rid of any registered frame events, and use our own
-	item:SetScript('OnMouseDown', item.OnMouseDown)
 	item:HookScript('OnClick', item.OnClick)
+	item:HookScript('OnDragStart', item.OnDragStart)
+	item:SetScript('OnMouseDown', item.OnMouseDown)
 	item:SetScript('OnEnter', item.OnEnter)
 	item:SetScript('OnLeave', item.OnLeave)
 	item:SetScript('OnShow', item.OnShow)
@@ -200,9 +201,7 @@ function ItemSlot:OnHide()
 end
 
 function ItemSlot:OnDragStart()
-	if self:IsCached() and CursorHasItemSlot() then
-		ClearCursor()
-	end
+	ItemSlot.Cursor = self
 end
 
 function ItemSlot:OnMouseDown(button)
