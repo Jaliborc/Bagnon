@@ -88,13 +88,13 @@ end
 
 function PlayerSelector:UpdateIcon()
 	local _, race, sex = ItemCache:GetPlayerInfo(self:GetPlayer())
-  if not race then
-    return
-  else
-    sex = sex == 3 and 'Female' or 'Male'
-  end
+	if not race then
+		return
+	else
+		sex = sex == 3 and 'Female' or 'Male'
+ 	end
 
-	if race ~= 'Worgen' and race ~= 'Goblin' then
+	if race ~= 'Worgen' and race ~= 'Goblin' and race ~= "Pandaren" then
 		if race == 'Scourge' then
 			race = 'Undead'
 		end

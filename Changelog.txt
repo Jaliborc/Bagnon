@@ -1,3 +1,8 @@
+====== 5.0.0
+* Updated and tested for Mists of Pandaria.
+* Added monk class and pandaren race.
+* Bug fixes and internal improvements.
+
 ====== 4.3.25
 * Now it is possible to drag items into the void storage for deposit
 * Now tooltip counts track items deposited in the void storage
@@ -391,4 +396,4 @@
 * Fixed bank frame closing
 * Fixed an error when hovering over a bank item when at the bank
 * Fixed an error when clicking on a databroker object with no click event
-* Added sounds when opening/closing framessssessess opening/closing framessssessesss opening/closing framessssessess
+* Added sounds when opening/closing framessssessess opening/closing framessssessesss opening/closing framessssessessssessess
