@@ -3,11 +3,12 @@
 		The bagnon driver thingy
 --]]
 
-Bagnon = LibStub('AceAddon-3.0'):NewAddon('Bagnon', 'AceEvent-3.0', 'AceConsole-3.0')
-Bagnon.frames = {}
+local ADDON, Addon = ...
+_G[ADDON] = LibStub('AceAddon-3.0'):NewAddon(Addon, ADDON, 'AceEvent-3.0', 'AceConsole-3.0')
+Addon.frames = {}
 
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-BINDING_HEADER_BAGNON = 'Bagnon'
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+BINDING_HEADER_BAGNON = ADDON
 BINDING_NAME_BAGNON_TOGGLE = L.ToggleBags
 BINDING_NAME_BAGNON_BANK_TOGGLE = L.ToggleBank
 BINDING_NAME_BAGNON_VAULT_TOGGLE = L.ToggleVault
@@ -15,27 +16,27 @@ BINDING_NAME_BAGNON_VAULT_TOGGLE = L.ToggleVault
 
 --[[ Startup ]]--
 
-function Bagnon:OnInitialize()
+function Addon:OnInitialize()
  	self:AddSlashCommands()
  	self:RegisterAutoDisplayEvents()
 	self:HookBagClickEvents()
  	self:HookTooltips()
 
-	self:CreateFrameLoader('Bagnon_GuildBank', 'GuildBankFrame_LoadUI')
-	self:CreateFrameLoader('Bagnon_VoidStorage', 'VoidStorage_LoadUI')
+	self:CreateFrameLoader(ADDON .. '_GuildBank', 'GuildBankFrame_LoadUI')
+	self:CreateFrameLoader(ADDON .. '_VoidStorage', 'VoidStorage_LoadUI')
 	self:CreateOptionsLoader()
 	self:CreateLDBLauncher()
 end
 
-function Bagnon:CreateOptionsLoader()
+function Addon:CreateOptionsLoader()
 	local f = CreateFrame('Frame', nil, InterfaceOptionsFrame)
 	f:SetScript('OnShow', function(self)
 		self:SetScript('OnShow', nil)
-		LoadAddOn('Bagnon_Config')
+		LoadAddOn(ADDON .. '_Config')
 	end)
 end
 
-function Bagnon:CreateFrameLoader (addon, method)
+function Addon:CreateFrameLoader (addon, method)
 	local name, title, notes, enabled, loadable = GetAddOnInfo(addon)
 	if enabled and loadable then
 		_G[method] = function()
@@ -44,28 +45,28 @@ function Bagnon:CreateFrameLoader (addon, method)
 	end
 end
 
-function Bagnon:CreateLDBLauncher()
+function Addon:CreateLDBLauncher()
 	local LDB = LibStub:GetLibrary('LibDataBroker-1.1', true)
 	if not LDB then return end
 
-	LDB:NewDataObject('BagnonLauncher', {
+	LDB:NewDataObject(ADDON .. 'Launcher', {
 		type = 'launcher',
 		icon = [[Interface\Icons\INV_Misc_Bag_07]],
 
 		OnClick = function(_, button)
 			if button == 'LeftButton' then
 				if IsShiftKeyDown() then
-					Bagnon:ToggleFrame('bank')
+					Addon:ToggleFrame('bank')
 				else
-					Bagnon:ToggleFrame('inventory')
+					Addon:ToggleFrame('inventory')
 				end
 			elseif button == 'RightButton' then
-				Bagnon:ShowOptions()
+				Addon:ShowOptions()
 			end
 		end,
 
 		OnTooltipShow = function(tooltip)
-			tooltip:AddLine('Bagnon')
+			tooltip:AddLine(ADDON)
 			tooltip:AddLine(L.TipShowInventory, 1, 1, 1)
 			tooltip:AddLine(L.TipShowBank, 1, 1, 1)
 			tooltip:AddLine(L.TipShowOptions, 1, 1, 1)
@@ -76,11 +77,11 @@ end
 
 --[[ Frames ]]--
 
-function Bagnon:CreateFrame(frameID)
+function Addon:CreateFrame(frameID)
   self.Frame:New(frameID)
 end
 
-function Bagnon:GetFrame(frameID)
+function Addon:GetFrame(frameID)
 	for i, frame in pairs(self.frames) do
 		if frame:GetFrameID() == frameID then
 			return frame
@@ -88,7 +89,7 @@ function Bagnon:GetFrame(frameID)
 	end
 end
 
-function Bagnon:ShowFrame(frameID)
+function Addon:ShowFrame(frameID)
 	if self:IsFrameEnabled(frameID) then
 		if not self:GetFrame(frameID) then
 			self:CreateFrame(frameID)
@@ -99,14 +100,14 @@ function Bagnon:ShowFrame(frameID)
 	end
 end
 
-function Bagnon:HideFrame(frameID)
+function Addon:HideFrame(frameID)
 	if self:IsFrameEnabled(frameID) then
 		self.FrameSettings:Get(frameID):Hide()
 		return true
 	end
 end
 
-function Bagnon:ToggleFrame(frameID)
+function Addon:ToggleFrame(frameID)
 	if self:IsFrameEnabled(frameID) then
 		if not self:GetFrame(frameID) then
 			self:CreateFrame(frameID)
@@ -117,22 +118,22 @@ function Bagnon:ToggleFrame(frameID)
 	end
 end
 
-function Bagnon:IsFrameEnabled(frameID)
+function Addon:IsFrameEnabled(frameID)
 	return self.Settings:IsFrameEnabled(frameID)
 end
 
-function Bagnon:FrameControlsBag(frameID, bagSlot)
+function Addon:FrameControlsBag(frameID, bagSlot)
 	return self.FrameSettings:Get(frameID):IsBagSlotShown(bagSlot) or (not self:IsBlizzardBagPassThroughEnabled())
 end
 
-function Bagnon:IsBlizzardBagPassThroughEnabled()
+function Addon:IsBlizzardBagPassThroughEnabled()
 	return self.Settings:IsBlizzardBagPassThroughEnabled()
 end
 
 
 --[[ Bag Buttons Hooks ]]--
 
-function Bagnon:HookBagClickEvents()
+function Addon:HookBagClickEvents()
 	--backpack
 	hooksecurefunc('CloseBackpack', function()
 		self:HideFrame('inventory')
@@ -192,8 +193,8 @@ function Bagnon:HookBagClickEvents()
 	end
 
 	local function bag_checkIfInventoryShown(self)
-		if Bagnon:IsFrameEnabled('inventory') then
-			self:SetChecked(Bagnon.FrameSettings:Get('inventory'):IsShown())
+		if Addon:IsFrameEnabled('inventory') then
+			self:SetChecked(Addon.FrameSettings:Get('inventory'):IsShown())
 		end
 	end
 
@@ -208,20 +209,20 @@ end
 
 --[[ Frames Events ]]--
 
-function Bagnon:FRAME_SHOW(msg, frameID)
+function Addon:FRAME_SHOW(msg, frameID)
 	if frameID == 'inventory' and self:IsFrameEnabled('inventory') then
 		self:CheckBagButtons(true)
 	end
 end
 
-function Bagnon:FRAME_HIDE(msg, frameID)
+function Addon:FRAME_HIDE(msg, frameID)
 	if frameID == 'inventory' and self:IsFrameEnabled('inventory') then
 		self:CheckBagButtons(false)
 	end
 end
 
 --check/uncheck the bag buttons
-function Bagnon:CheckBagButtons(checked)
+function Addon:CheckBagButtons(checked)
 	_G['MainMenuBarBackpackButton']:SetChecked(checked)
 	_G["CharacterBag0Slot"]:SetChecked(checked)
 	_G["CharacterBag1Slot"]:SetChecked(checked)
@@ -232,7 +233,7 @@ end
 
 --[[ Automatic Display ]]--
 
-function Bagnon:RegisterAutoDisplayEvents()
+function Addon:RegisterAutoDisplayEvents()
 	self.BagEvents:Listen(self, 'BANK_OPENED')
 	self.BagEvents:Listen(self, 'BANK_CLOSED')
 	self:RegisterEvent('MAIL_CLOSED')
@@ -255,31 +256,31 @@ function Bagnon:RegisterAutoDisplayEvents()
 	BankFrame:UnregisterEvent('BANKFRAME_CLOSED')
 
 	local f = CreateFrame('Frame', nil, CharacterFrame)
-	f:SetScript('OnShow', function() Bagnon:PLAYER_FRAME_SHOW() end)
-	f:SetScript('OnHide', function() Bagnon:PLAYER_FRAME_HIDE() end)
+	f:SetScript('OnShow', function() Addon:PLAYER_FRAME_SHOW() end)
+	f:SetScript('OnHide', function() Addon:PLAYER_FRAME_HIDE() end)
 end
 
-function Bagnon:ShowFrameAtEvent(frameID, event)
+function Addon:ShowFrameAtEvent(frameID, event)
 	if self:AutoDisplayingFrameOnEvent(frameID, event) then
 		self:ShowFrame(frameID)
 	end
 end
 
-function Bagnon:HideFrameAtEvent(frameID, event)
+function Addon:HideFrameAtEvent(frameID, event)
 	if self:AutoDisplayingFrameOnEvent(frameID, event) then
 		self:HideFrame(frameID)
 	end
 end
 
-function Bagnon:AutoDisplayingFrameOnEvent(frameID, event)
+function Addon:AutoDisplayingFrameOnEvent(frameID, event)
 	return self.Settings:IsFrameShownAtEvent(frameID, event)
 end
 
-function Bagnon:ShowBlizzardBankFrame()
+function Addon:ShowBlizzardBankFrame()
 	BankFrame_OnEvent(_G['BankFrame'], 'BANKFRAME_OPENED')
 end
 
-function Bagnon:HideBlizzardBankFrame()
+function Addon:HideBlizzardBankFrame()
 	BankFrame_OnEvent(_G['BankFrame'], 'BANKFRAME_CLOSED')
 end
 
@@ -287,25 +288,25 @@ end
 --[[ Display Events ]]--
 
 -- combat
-function Bagnon:PLAYER_REGEN_DISABLED()
+function Addon:PLAYER_REGEN_DISABLED()
 	self:HideFrameAtEvent('inventory', 'combat')
 end
 
-function Bagnon:UNIT_ENTERED_VEHICLE(unit)
+function Addon:UNIT_ENTERED_VEHICLE(unit)
 	if unit == 'player' then
 		self:HideFrameAtEvent('inventory', 'vehicle')
 	end
 end
 
 --visiting the bank
-function Bagnon:BANK_OPENED()
+function Addon:BANK_OPENED()
 	if not self:ShowFrame('bank') then
 		self:ShowBlizzardBankFrame()
 	end
 	self:ShowFrameAtEvent('inventory', 'bank')
 end
 
-function Bagnon:BANK_CLOSED()
+function Addon:BANK_CLOSED()
 	if not self:HideFrame('bank') then
 		self:HideBlizzardBankFrame()
 	end
@@ -314,77 +315,77 @@ end
 
 --visiting the mailbox
 --mail frame is a special case, since its automatically handled by the stock interface
-function Bagnon:MAIL_CLOSED()
+function Addon:MAIL_CLOSED()
 	self:HideFrame('inventory')
 end
 
-function Bagnon:SOCKET_INFO_UPDATE()
+function Addon:SOCKET_INFO_UPDATE()
 	self:ShowFrameAtEvent('inventory', 'gems')
 end
 
 --visiting the auction house
-function Bagnon:AUCTION_HOUSE_SHOW()
+function Addon:AUCTION_HOUSE_SHOW()
 	self:ShowFrameAtEvent('inventory', 'ah')
 end
 
-function Bagnon:AUCTION_HOUSE_CLOSED()
+function Addon:AUCTION_HOUSE_CLOSED()
 	self:HideFrameAtEvent('inventory', 'ah')
 end
 
 --visitng a vendor
-function Bagnon:MERCHANT_SHOW()
+function Addon:MERCHANT_SHOW()
 	self:ShowFrameAtEvent('inventory', 'vendor')
 end
 
-function Bagnon:MERCHANT_CLOSED()
+function Addon:MERCHANT_CLOSED()
 	self:HideFrameAtEvent('inventory', 'vendor')
 end
 
 --trading
-function Bagnon:TRADE_SHOW()
+function Addon:TRADE_SHOW()
 	self:ShowFrameAtEvent('inventory', 'trade')
 end
 
-function Bagnon:TRADE_CLOSED()
+function Addon:TRADE_CLOSED()
 	self:HideFrameAtEvent('inventory', 'trade')
 end
 
 --visiting the guild bank
-function Bagnon:GUILDBANKFRAME_OPENED()
+function Addon:GUILDBANKFRAME_OPENED()
 	self:ShowFrameAtEvent('inventory', 'guildbank')
 end
 
-function Bagnon:GUILDBANKFRAME_CLOSED()
+function Addon:GUILDBANKFRAME_CLOSED()
 	self:HideFrameAtEvent('inventory', 'guildbank')
 end
 
 --crafting
-function Bagnon:TRADE_SKILL_SHOW()
+function Addon:TRADE_SKILL_SHOW()
 	self:ShowFrameAtEvent('inventory', 'craft')
 end
 
-function Bagnon:TRADE_SKILL_CLOSE()
+function Addon:TRADE_SKILL_CLOSE()
 	self:HideFrameAtEvent('inventory', 'craft')
 end
 
 --player frame
-function Bagnon:PLAYER_FRAME_SHOW()
+function Addon:PLAYER_FRAME_SHOW()
 	self:ShowFrameAtEvent('inventory', 'player')
 end
 
-function Bagnon:PLAYER_FRAME_HIDE()
+function Addon:PLAYER_FRAME_HIDE()
 	self:HideFrameAtEvent('inventory', 'player')
 end
 
 
 --[[ Slash Commands ]]--
 
-function Bagnon:AddSlashCommands()
-	self:RegisterChatCommand('bagnon', 'HandleSlashCommand')
+function Addon:AddSlashCommands()
+	self:RegisterChatCommand(ADDON:lower(), 'HandleSlashCommand')
 	self:RegisterChatCommand('bgn', 'HandleSlashCommand')
 end
 
-function Bagnon:HandleSlashCommand(cmd)
+function Addon:HandleSlashCommand(cmd)
 	cmd = cmd and cmd:lower() or ''
 	
 	if cmd == 'bank' then
@@ -402,11 +403,11 @@ function Bagnon:HandleSlashCommand(cmd)
 	end
 end
 
-function Bagnon:PrintVersion()
+function Addon:PrintVersion()
 	self:Print(self.SavedSettings:GetDBVersion())
 end
 
-function Bagnon:PrintHelp()
+function Addon:PrintHelp()
 	local function PrintCmd(cmd, desc)
 		print(string.format(' - |cFF33FF99%s|r: %s', cmd, desc))
 	end
@@ -417,8 +418,8 @@ function Bagnon:PrintHelp()
 	PrintCmd('version', L.CmdShowVersion)
 end
 
-function Bagnon:ShowOptions()
-	if LoadAddOn('Bagnon_Config') then
+function Addon:ShowOptions()
+	if LoadAddOn(ADDON .. '_Config') then
 		InterfaceOptionsFrame_OpenToCategory(self.GeneralOptions)
 		return true
 	end

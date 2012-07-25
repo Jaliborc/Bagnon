@@ -58,7 +58,6 @@ L.Total = '总共'
 L.TipCount1 = '装备: %d'
 L.TipCount2 = '背包: %d'
 L.TipCount3 = '银行: %d'
-L.TipDelimiter = '|'
 
 --databroker plugin tooltips
 L.TipShowBank = 'Shift-点击 开关银行'

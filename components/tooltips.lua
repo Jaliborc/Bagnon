@@ -3,15 +3,18 @@
 		Adds item counts to tooltips
 ]]--
 
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local ItemCache = LibStub('LibItemCache-1.0')
-local ItemText, ItemCount, Enabled, Hooked = {}, {}
+
+local ADDON, Addon = ...
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 
 local TEAL = '|cff00ff9a%s|r'
 local SILVER = '|cffc7c7cf%s|r'
 local CLASS_COLOR = '|cff%02x%02x%02x'
 local HEARTHSTONE = tostring(HEARTHSTONE_ITEM_ID)
 local TOTAL = SILVER:format(L.Total)
+
+local ItemCache = LibStub('LibItemCache-1.0')
+local ItemText, ItemCount, Enabled, Hooked = {}, {}
 
 
 --[[ Methods ]]--
@@ -110,7 +113,7 @@ end
 
 --[[ Start this Thing! ]]--
 
-function Bagnon:HookTooltips()
+function Addon:HookTooltips()
 	if ItemCache:HasCache() and self.Settings:IsTipCountEnabled() then
 		if not Hooked then
 			for i, player in ItemCache:IteratePlayers() do

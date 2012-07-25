@@ -51,6 +51,7 @@ L.TipDoubleClickSearch = '<Alt-Arraste> para mover.\n<Clique Direito> para confi
 L.TipCount1 = 'Equipado: %d'
 L.TipCount2 = 'Mochila: %d'
 L.TipCount3 = 'Banco: %d'
+L.TipCount4 = 'Cofre: %d'
 
 --databroker tooltips
 L.TipShowBank = '<Shift-Clique Esquerdo> para abrir o banco.'
