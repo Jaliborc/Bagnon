@@ -89,6 +89,12 @@ function Addon:GetFrame(frameID)
 	end
 end
 
+function Addon:UpdateFrames()
+	for _,frame in pairs(self.frames) do
+		frame.itemFrame:UpdateEverything()
+	end
+end
+
 function Addon:ShowFrame(frameID)
 	if self:IsFrameEnabled(frameID) then
 		if not self:GetFrame(frameID) then

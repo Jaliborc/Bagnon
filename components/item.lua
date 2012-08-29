@@ -239,24 +239,19 @@ end
 
 function ItemSlot:OnEnter()
 	local dummySlot = self:GetDummyItemSlot()
+	ResetCursor()
 
 	if self:IsCached() then
 		dummySlot:SetParent(self)
 		dummySlot:SetAllPoints(self)
 		dummySlot:Show()
-	else
-		dummySlot:Hide()
+		
+	elseif self:GetItem() then
+		self:AnchorTooltip()
+		self:ShowTooltip()
 
-		if self:IsBank() then
-			if self:GetItem() then
-				self:AnchorTooltip()
-				GameTooltip:SetInventoryItem('player', BankButtonIDToInvSlotID(self:GetID()))
-				GameTooltip:Show()
-				CursorUpdate(self)
-			end
-		else
-			ContainerFrameItemButton_OnEnter(self)
-		end
+	else
+		GameTooltip:Hide()
 	end
 end
 
@@ -418,6 +413,16 @@ end
 --tooltip methods
 function ItemSlot:UpdateTooltip()
 	self:OnEnter()
+end
+
+function ItemSlot:ShowTooltip()
+	if self:IsBank() then
+		GameTooltip:SetInventoryItem('player', BankButtonIDToInvSlotID(self:GetID()))
+		GameTooltip:Show()
+		CursorUpdate(self)
+	else
+		ContainerFrameItemButton_OnEnter(self)
+	end	
 end
 
 function ItemSlot:AnchorTooltip()
@@ -591,6 +596,7 @@ end
 -- dummy slot - A hack, used to provide a tooltip for cached items without tainting other item code
 function ItemSlot:GetDummyItemSlot()
 	ItemSlot.dummySlot = ItemSlot.dummySlot or ItemSlot:CreateDummyItemSlot()
+	ItemSlot.dummySlot:Hide()
 	return ItemSlot.dummySlot
 end
 

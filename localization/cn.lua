@@ -4,7 +4,7 @@
 	Bagnon Localization Information: Chinese Simplified
 		Credits: Diablohu, yleaf@cwdg(yaroot@gmail.com), 狂飙@cwdg(networm@qq.com), 天下牧@萨格拉斯
 
-	Last Update: 2012/05/17 by 天下牧@萨格拉斯
+	Last Update: 2012/08/16 by 天下牧@萨格拉斯
 
 --]]
 
@@ -58,6 +58,8 @@ L.Total = '总共'
 L.TipCount1 = '装备: %d'
 L.TipCount2 = '背包: %d'
 L.TipCount3 = '银行: %d'
+L.TipCount4 = '虚空仓库: %d'
+L.TipDelimiter = '|'
 
 --databroker plugin tooltips
 L.TipShowBank = 'Shift-点击 开关银行'
