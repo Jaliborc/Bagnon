@@ -1,3 +1,10 @@
+====== 5.0.4
+* Fixed bug causing guild money display to behave incorrectly for users with no withdraw limit.
+
+====== 5.0.3
+* Fixed bug causing void storage purchase dialog to sometimes show up when vewing void storage offline.* Fixed error causing "Failed to load void storage items." message to show up.
+* Fixed bug causing tooltips to now show for cached void storage items.
+
 ====== 5.0.2
 * Tagging as release.
 
