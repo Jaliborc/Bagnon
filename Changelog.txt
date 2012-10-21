@@ -1,3 +1,7 @@
+====== 5.0.5
+* Offline view of caged pets is now supported.
+* For now, disabled support for Armory and Baggins caching systems. Very few players use them, were costly yo maintain, and made bug reports harder to decypher.
+
 ====== 5.0.4
 * Fixed bug causing guild money display to behave incorrectly for users with no withdraw limit.
 
@@ -409,4 +413,4 @@
 * Fixed bank frame closing
 * Fixed an error when hovering over a bank item when at the bank
 * Fixed an error when clicking on a databroker object with no click event
-* Added sounds when opening/closing framessssessess opening/closing framessssessesss opening/closing framessssessessssessess
+* Added sounds when opening/closing framessssessess opening/closing framessssessesss opening/closing framessssessessssessesss

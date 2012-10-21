@@ -251,12 +251,13 @@ function ItemSlot:OnEnter()
 		self:ShowTooltip()
 
 	else
-		GameTooltip:Hide()
+		self:OnLeave()
 	end
 end
 
 function ItemSlot:OnLeave()
 	GameTooltip:Hide()
+	BattlePetTooltip:Hide()
 	ResetCursor()
 end
 
@@ -305,7 +306,6 @@ function ItemSlot:GetEmptyItemTexture()
 	if self:ShowingEmptyItemSlotTexture() then
 		return [[Interface\PaperDoll\UI-Backpack-EmptySlot]]
 	end
-	return nil
 end
 
 --item slot color
@@ -608,17 +608,28 @@ function ItemSlot:CreateDummyItemSlot()
 
 	local function Slot_OnEnter(self)
 		local parent = self:GetParent()
-		parent:LockHighlight()
-
-		if parent:IsCached() and parent:GetItem() then
-			ItemSlot.AnchorTooltip(self)
-			GameTooltip:SetHyperlink(parent:GetItem())
-			GameTooltip:Show()
+		local item = parent:IsCached() and parent:GetItem()
+		
+		if item then
+			parent.AnchorTooltip(self)
+			
+			if item:find('battlepet:') then
+				local _, specie, level, quality, health, power, speed = strsplit(':', item)
+				local name = item:match('%[(.-)%]')
+				
+				BattlePetToolTip_Show(
+					tonumber(specie), level, tonumber(quality), health, power, speed, name)
+			else
+				GameTooltip:SetHyperlink(item)
+				GameTooltip:Show()
+			end
 		end
+		
+		parent:LockHighlight()
 	end
 
 	local function Slot_OnLeave(self)
-		GameTooltip:Hide()
+		self:GetParent():OnLeave()
 		self:Hide()
 	end
 
