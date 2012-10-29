@@ -1,6 +1,12 @@
+====== 5.0.7
+* Small bug fix.
+
+====== 5.0.6
+* Fixed bug causing item icons to not always display.
+
 ====== 5.0.5
 * Offline view of caged pets is now supported.
-* For now, disabled support for Armory and Baggins caching systems. Very few players use them, were costly yo maintain, and made bug reports harder to decypher.
+* For now, disabled support for Armory and Baggins caching systems. Very few players use them, were costly yo maintain, and made bug reports harder to decipher.
 
 ====== 5.0.4
 * Fixed bug causing guild money display to behave incorrectly for users with no withdraw limit.

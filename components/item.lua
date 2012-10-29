@@ -3,8 +3,8 @@
 		An item slot button
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local ItemSlot = Bagnon:NewClass('ItemSlot', 'Button')
+local AddonName, Addon = ...
+local ItemSlot = Addon:NewClass('ItemSlot', 'Button')
 ItemSlot.nextID = 0
 ItemSlot.unused = {}
 
@@ -68,7 +68,7 @@ function ItemSlot:Create()
 end
 
 function ItemSlot:ConstructNewItemSlot(id)
-	return CreateFrame('Button', 'BagnonItemSlot' .. id, nil, 'ContainerFrameItemButtonTemplate')
+	return CreateFrame('Button', ('%sItem%d'):format(AddonName, id), nil, 'ContainerFrameItemButtonTemplate')
 end
 
 function ItemSlot:GetBlizzardItemSlot(id)
@@ -88,7 +88,7 @@ function ItemSlot:GetBlizzardItemSlot(id)
 end
 
 function ItemSlot:CanReuseBlizzardBagSlots()
-	return Bagnon.Settings:AreAllFramesEnabled() and (not Bagnon.Settings:IsBlizzardBagPassThroughEnabled())
+	return Addon.Settings:AreAllFramesEnabled() and (not Addon.Settings:IsBlizzardBagPassThroughEnabled())
 end
 
 function ItemSlot:Restore()
@@ -219,7 +219,7 @@ function ItemSlot:OnClick(button)
 	if IsAltKeyDown() and button == 'LeftButton' then
 		local link = self:GetItem()
 		if link then
-			Bagnon.Settings:FlashFind(link:match('^|c%x+|Hitem.+|h%[(.*)%]'))
+			Addon.Settings:FlashFind(link:match('^|c%x+|Hitem.+|h%[(.*)%]'))
 		end
 	elseif GetNumVoidTransferDeposit() > 0 and button == 'RightButton' then
 		if self.canDeposit and self.depositSlot then
@@ -458,7 +458,7 @@ function ItemSlot:UpdateSearch()
 end
 
 function ItemSlot:GetItemSearch()
-	return Bagnon.Settings:GetTextSearch()
+	return Addon.Settings:GetTextSearch()
 end
 
 function ItemSlot:UpdateBagSearch()
@@ -499,7 +499,7 @@ function ItemSlot:GetFrameID()
 end
 
 function ItemSlot:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
+	return Addon.FrameSettings:Get(self:GetFrameID())
 end
 
 function ItemSlot:GetPlayer()
@@ -519,12 +519,12 @@ function ItemSlot:IsCached()
 end
 
 function ItemSlot:IsBank()
-	return Bagnon:IsBank(self:GetBag())
+	return Addon:IsBank(self:GetBag())
 end
 
 function ItemSlot:IsBankSlot()
 	local bag = self:GetBag()
-	return Bagnon:IsBank(bag) or Bagnon:IsBankBag(bag)
+	return Addon:IsBank(bag) or Addon:IsBankBag(bag)
 end
 
 function ItemSlot:GetInfo()
@@ -535,19 +535,19 @@ end
 --[[ Item Type Highlighting ]]--
 
 function ItemSlot:HighlightingItemsByQuality()
-	return Bagnon.Settings:HighlightingItemsByQuality()
+	return Addon.Settings:HighlightingItemsByQuality()
 end
 
 function ItemSlot:HighlightUnusableItems()
-	return Bagnon.Settings:HighlightUnusableItems()
+	return Addon.Settings:HighlightUnusableItems()
 end
 
 function ItemSlot:HighlightingQuestItems()
-	return Bagnon.Settings:HighlightingQuestItems()
+	return Addon.Settings:HighlightingQuestItems()
 end
 
 function ItemSlot:GetHighlightAlpha()
-	return Bagnon.Settings:GetHighlightOpacity()
+	return Addon.Settings:GetHighlightOpacity()
 end
 
 --returns true if the item is a quest item or not
@@ -572,22 +572,22 @@ end
 --[[ Item Slot Coloring ]]--
 
 function ItemSlot:GetBagType()
-	return Bagnon:GetBagType(self:GetPlayer(), self:GetBag())
+	return Addon:GetBagType(self:GetPlayer(), self:GetBag())
 end
 
 function ItemSlot:GetBagColor(bagType)
-	return Bagnon.Settings:GetItemSlotColor(bagType)
+	return Addon.Settings:GetItemSlotColor(bagType)
 end
 
 function ItemSlot:ColoringBagSlots()
-	return Bagnon.Settings:ColoringBagSlots()
+	return Addon.Settings:ColoringBagSlots()
 end
 
 
 --[[ Empty Slot Visibility ]]--
 
 function ItemSlot:ShowingEmptyItemSlotTexture()
-	return Bagnon.Settings:ShowingEmptyItemSlotTextures()
+	return Addon.Settings:ShowingEmptyItemSlotTextures()
 end
 
 
