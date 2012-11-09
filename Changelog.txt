@@ -1,3 +1,6 @@
+====== 5.0.8
+* Bagnon is now fully localized in french! (by Noaah)
+
 ====== 5.0.7
 * Small bug fix.
 
