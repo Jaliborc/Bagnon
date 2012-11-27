@@ -80,7 +80,10 @@ function MoneyFrame:OnEnter()
 	for i, player in ItemCache:IteratePlayers() do
 		local money = ItemCache:GetMoney(player)
 		if money > 0 then
-			GameTooltip:AddDoubleLine(player, self:GetCoinsText(money), 1,1,1, 1,1,1)
+			local color = Bagnon:GetPlayerColor(player)
+			local coins = self:GetCoinsText(money)
+
+			GameTooltip:AddDoubleLine(player, coins, color.r, color.g, color.b, 1,1,1)
 		end
 	end
 	

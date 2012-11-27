@@ -1,5 +1,12 @@
+====== 5.1.0
+* Updated for patch 5.1: Landfall!
+* The realm money tooltip now displays class colors.
+
+====== 5.0.9
+* Quick hotfix.
+
 ====== 5.0.8
-* Bagnon is now fully localized in french! (by Noaah)
+* Bagnon is now fully localized in French (by Noaah) and Russian (by Vgorishny).
 
 ====== 5.0.7
 * Small bug fix.

@@ -5,7 +5,7 @@
 ## SavedVariablesPerCharacter: BagnonFrameSettings
 ## SavedVariables: BagnonGlobalSettings
 
-## Version: 5.0.7
+## Version: 5.0.9
 ## OptionalDeps: LibStub, Ace3, LibItemSearch-1.0, LibItemCache-1.0, Unfit-1.0, BagBrother, BagSync, Armory
 
 libs\libs.xml
