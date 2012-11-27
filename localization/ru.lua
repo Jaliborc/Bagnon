@@ -1,16 +1,14 @@
 --[[
-	Bagnon Localization Information: Russian Localization by kutensky
-	Updated by StingerSoft
-		This file must be present to have partial translations
+	Bagnon Localization: Russian
 --]]
 
 local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'ruRU')
 if not L then return end
 
 --keybinding text
-L.ToggleBags = 'Открыть/закрыть инвентарь'
-L.ToggleBank = 'Открыть/закрыть банк'
-L.ToggleKeys = 'Открыть/закрыть связку ключей'
+L.ToggleBags = 'Переключить инвентарь'
+L.ToggleBank = 'Переключить банк'
+L.ToggleVault = 'Переключить Хранилище Бездны'
 
 
 --system messages
@@ -33,23 +31,31 @@ L.Bank = 'Банк'
 
 
 --tooltips
+L.TipBags = 'Сумки'
 L.TipBank = 'Банк'
 L.TipChangePlayer = '<Клик> - просмотр предметов другого персонажа.'
 L.TipGoldOnRealm = 'Всего денег на %s'
-L.TipHideBag = '<Клик> - скрыть сумку.'
-L.TipHideBags = '<Клик> - скрыть область сумок.'
-L.TipHideSearch = '<Клик> скрыть область поиска.'
-L.TipPurchaseBag = '<Клик> - купить ячейку в банке.'
-L.TipShowBag = '<Клик> - показать сумку.'
-L.TipShowBags = '<Клик> - показать область сумки.'
-L.TipShowMenu = '<Правый-клик> - настройки.'
-L.TipShowSearch = '<Клик> - показать область поиска.'
+L.TipHideBag = '<Клик> - скрыть эту сумку.'
+L.TipHideBags = '<Левый-клик> - скрыть область сумок.'
+L.TipHideSearch = '<Клик> - скрыть область поиска.'
+L.TipFrameToggle = '<Правый-клик> - переключить другие окна.'
+L.TipPurchaseBag = '<Клик> - купить банковскую ячейку.'
+L.TipShowBag = '<Клик> - показать эту сумку.'
+L.TipShowBags = '<Левый-клик> - показать область сумок.'
+L.TipShowMenu = '<Правый-клик> - настроить это окно.'
 L.TipShowSearch = '<Клик> - поиск.'
-L.TipShowFrameConfig = '<Правый-клик> - настройки.'
-L.TipDoubleClickSearch = '<Alt-тищить> - переместить.\n<Правый-клик> - настройка.\n<Двойной-клик> - поиск.'
+L.TipShowFrameConfig = '<Клик> - настроить это окно.'
+L.TipDoubleClickSearch = '<Alt-Двигать> - переместить.\n<Правый-клик> - настройки.\n<Двойной-клик> - поиск.'
 L.Total = 'Всего'
 
---databroker plugin tooltips
-L.TipShowBank = '<Shift-Левый клик> - открыть/закрыть банк.'
-L.TipShowInventory = '<Левый клик> - открыть/закрыть инвентарь.'
-L.TipShowOptions = '<Правый-клик> - настройки.'
+--itemcount tooltips
+L.TipCount1 = 'Надето: %d'
+L.TipCount2 = 'Сумки: %d'
+L.TipCount3 = 'Банк: %d'
+L.TipCount4 = 'Бездна: %d'
+L.TipDelimiter = '|'
+
+--databroker tooltips
+L.TipShowBank = '<Shift-Левый-Клик> - переключить ваш банк.'
+L.TipShowInventory = '<Левый-Клик> - переключить инвентарь.'
+L.TipShowOptions = '<Правый-Клик> - открыть меню опций.'

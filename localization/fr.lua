@@ -1,5 +1,5 @@
 --[[
-	Bagnon Localization file: French
+	Bagnon Localization: French
 --]]
 
 local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'frFR')

@@ -1,5 +1,5 @@
 --[[
-	Bagnon Localization Information: Brasilian Portuguese
+	Bagnon Localization: Brasilian Portuguese
 --]]
 
 local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'ptBR')

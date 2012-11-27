@@ -1,11 +1,5 @@
 ﻿--[[
-	THIS FILE IS ENCODED IN UTF-8
-
-	Bagnon Localization Information: Chinese Simplified
-		Credits: Diablohu, yleaf@cwdg(yaroot@gmail.com), 狂飙@cwdg(networm@qq.com), 天下牧@萨格拉斯
-
-	Last Update: 2012/08/16 by 天下牧@萨格拉斯
-
+	Bagnon Localization: Chinese Simplified
 --]]
 
 local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'zhCN')

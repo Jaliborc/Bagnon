@@ -1,6 +1,5 @@
 --[[
-	Bagnon Localization Information: English Language
-		This file must be present to have partial translations
+	Bagnon Localization: English
 --]]
 
 local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'enUS', true)

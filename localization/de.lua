@@ -1,7 +1,6 @@
 --[[
-	Bagnon Localization Information: German
+	Bagnon Localization: German
 --]]
-
 
 local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'deDE')
 if not L then return end
