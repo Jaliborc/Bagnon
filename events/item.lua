@@ -48,10 +48,6 @@ local function ToIndex(bag, slot)
 	return (bag < 0 and bag*100 - slot) or bag*100 + slot
 end
 
-local function GetBagSize(bag)
-	return (bag == KEYRING_CONTAINER and GetKeyRingSize()) or GetContainerNumSlots(bag)
-end
-
 
 --[[ Startup ]]--
 
@@ -130,7 +126,7 @@ function BagEvents:UpdateItem(bag, slot)
 end
 
 function BagEvents:UpdateItems(bag)
-	for slot = 1, GetBagSize(bag) do
+	for slot = 1, GetContainerNumSlots(bag) do
 		self:UpdateItem(bag, slot)
 	end
 end
@@ -152,7 +148,7 @@ function BagEvents:UpdateCooldown(bag, slot)
 end
 
 function BagEvents:UpdateCooldowns(bag)
-	for slot = 1, GetBagSize(bag) do
+	for slot = 1, GetContainerNumSlots(bag) do
 		self:UpdateCooldown(bag, slot)
 	end
 end
@@ -160,7 +156,7 @@ end
 --bag sizes
 function BagEvents:UpdateBagSize(bag)
 	local prevSize = slots[bag*100] or 0
-	local newSize = GetBagSize(bag) or 0
+	local newSize = GetContainerNumSlots(bag) or 0
 	slots[bag*100] = newSize
 
 	if prevSize > newSize then

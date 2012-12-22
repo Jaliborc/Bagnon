@@ -410,7 +410,6 @@ function SavedFrameSettings:GetDefaultInventorySettings()
 			[2] = false,
 			[3] = false,
 			[4] = false,
-			[KEYRING_CONTAINER] = true,
 		},
 
 		--frame
