@@ -1,3 +1,6 @@
+====== 5.1.1
+* Added support for cooking bags.
+
 ====== 5.1.0
 * Updated for patch 5.1: Landfall!
 * The realm money tooltip now displays class colors.

@@ -386,7 +386,7 @@ function Bag:PurchaseSlot()
 
 			hasMoneyFrame = 1,
 			hideOnEscape = 1, timeout = 0,
-			preferredIndex = 3
+			preferredIndex = STATICPOPUP_NUMDIALOGS
 		}
 	end
 
