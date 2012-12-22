@@ -7,24 +7,20 @@ local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local Cache = LibStub('LibItemCache-1.0')
 
 
---[[ Bag Slot Type ]]--
+--[[ Slot Type ]]--
 
---returns true if the given slot is the backpack
 function Bagnon:IsBackpack(slot)
 	return slot == BACKPACK_CONTAINER
 end
 
---returns true if the given bagSlot is an optional inventory bag slot
 function Bagnon:IsBackpackBag(bagSlot)
   return bagSlot > 0 and bagSlot < (NUM_BAG_SLOTS + 1)
 end
 
---returns true if the given slot is the bank container slot
 function Bagnon:IsBank(slot)
   return slot == BANK_CONTAINER
 end
 
---returns true if the given slot is an optional bank slot
 function Bagnon:IsBankBag(slot)
   return slot > NUM_BAG_SLOTS and slot < (NUM_BAG_SLOTS + NUM_BANKBAGSLOTS + 1)
 end
@@ -73,7 +69,8 @@ do
 		[0x0080] = 'engineer',
 		[0x0200] = 'gem',
 		[0x0400] = 'mine',
-	 	[0x8000] = 'tackle'
+	 	[0x8000] = 'tackle',
+	 	[0x10000] = 'cooking'
 	}
 
 	for v in ipairs(BAGNON_BAG_TYPES) do
