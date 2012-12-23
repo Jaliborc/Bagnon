@@ -114,18 +114,19 @@ function Addon:HideFrame(frameID)
 end
 
 function Addon:ToggleFrame(frameID)
-	if self:IsFrameEnabled(frameID) then
-		if not self:GetFrame(frameID) then
-			self:CreateFrame(frameID)
-		end
-
-		self.FrameSettings:Get(frameID):Toggle()
-		return true
+	if self:IsFrameShowm(frameID) then
+		return self:HideFrame(frameID)
+	else
+		return self:ShowFrame(frameID)
 	end
 end
 
 function Addon:IsFrameEnabled(frameID)
 	return self.Settings:IsFrameEnabled(frameID)
+end
+
+function Addon:IsFrameShown(frameID)
+	return self.FrameSettings:Get(frameID):IsShown()
 end
 
 function Addon:FrameControlsBag(frameID, bagSlot)
@@ -140,11 +141,27 @@ end
 --[[ Bag Buttons Hooks ]]--
 
 function Addon:HookBagClickEvents()
-	--backpack
-	hooksecurefunc('CloseBackpack', function()
-		self:HideFrame('inventory')
+	--inventory
+	local canHide = true
+	local onMerchantHide = MerchantFrame:GetScript('OnHide')
+
+	local hideInventory = function()
+		if canHide then
+			self:HideFrame('inventory')
+		end
+	end
+
+	MerchantFrame:SetScript('OnHide', function(...)
+		canHide = false
+		onMerchantHide(...)
+		canHide = true
 	end)
 
+	hooksecurefunc('CloseBackpack', hideInventory)
+	hooksecurefunc('CloseAllBags', hideInventory)
+
+
+	--backpack
 	local oOpenBackpack = OpenBackpack
 	OpenBackpack = function()
 		local shown = self:FrameControlsBag('inventory', BACKPACK_CONTAINER) and self:ShowFrame('inventory')
@@ -175,11 +192,6 @@ function Addon:HookBagClickEvents()
 	end
 
 	--all bags
-	--closing the game menu triggers this function, and can be done in combat
-	hooksecurefunc('CloseAllBags', function()
-		self:HideFrame('inventory')
-	end)
-
 	local oOpenAllBags = OpenAllBags
 	OpenAllBags = function(frame)
 		local opened = self:FrameControlsBag('inventory', BACKPACK_CONTAINER) and self:ShowFrame('inventory')
@@ -198,9 +210,9 @@ function Addon:HookBagClickEvents()
 		end
 	end
 
-	local function bag_checkIfInventoryShown(self)
-		if Addon:IsFrameEnabled('inventory') then
-			self:SetChecked(Addon.FrameSettings:Get('inventory'):IsShown())
+	local function bag_checkIfInventoryShown(button)
+		if self:IsFrameEnabled('inventory') then
+			button:SetChecked(self:IsFrameShown('inventory'))
 		end
 	end
 
@@ -246,7 +258,6 @@ function Addon:RegisterAutoDisplayEvents()
 	self:RegisterEvent('SOCKET_INFO_UPDATE')
 	self:RegisterEvent('AUCTION_HOUSE_SHOW')
 	self:RegisterEvent('AUCTION_HOUSE_CLOSED')
-	self:RegisterEvent('MERCHANT_SHOW')
 	self:RegisterEvent('MERCHANT_CLOSED')
 	self:RegisterEvent('TRADE_SHOW')
 	self:RegisterEvent('TRADE_CLOSED')
@@ -267,18 +278,18 @@ function Addon:RegisterAutoDisplayEvents()
 end
 
 function Addon:ShowFrameAtEvent(frameID, event)
-	if self:AutoDisplayingFrameOnEvent(frameID, event) then
+	if self:CanAutoDisplay(frameID, event) then
 		self:ShowFrame(frameID)
 	end
 end
 
 function Addon:HideFrameAtEvent(frameID, event)
-	if self:AutoDisplayingFrameOnEvent(frameID, event) then
+	if self:CanAutoDisplay(frameID, event) then
 		self:HideFrame(frameID)
 	end
 end
 
-function Addon:AutoDisplayingFrameOnEvent(frameID, event)
+function Addon:CanAutoDisplay(frameID, event)
 	return self.Settings:IsFrameShownAtEvent(frameID, event)
 end
 
@@ -304,7 +315,7 @@ function Addon:UNIT_ENTERED_VEHICLE(unit)
 	end
 end
 
---visiting the bank
+-- bank
 function Addon:BANK_OPENED()
 	if not self:ShowFrame('bank') then
 		self:ShowBlizzardBankFrame()
@@ -329,7 +340,7 @@ function Addon:SOCKET_INFO_UPDATE()
 	self:ShowFrameAtEvent('inventory', 'gems')
 end
 
---visiting the auction house
+-- auction house
 function Addon:AUCTION_HOUSE_SHOW()
 	self:ShowFrameAtEvent('inventory', 'ah')
 end
@@ -338,11 +349,7 @@ function Addon:AUCTION_HOUSE_CLOSED()
 	self:HideFrameAtEvent('inventory', 'ah')
 end
 
---visitng a vendor
-function Addon:MERCHANT_SHOW()
-	self:ShowFrameAtEvent('inventory', 'vendor')
-end
-
+-- vendor
 function Addon:MERCHANT_CLOSED()
 	self:HideFrameAtEvent('inventory', 'vendor')
 end
@@ -356,7 +363,7 @@ function Addon:TRADE_CLOSED()
 	self:HideFrameAtEvent('inventory', 'trade')
 end
 
---visiting the guild bank
+--guild bank
 function Addon:GUILDBANKFRAME_OPENED()
 	self:ShowFrameAtEvent('inventory', 'guildbank')
 end
