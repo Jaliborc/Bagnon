@@ -114,7 +114,7 @@ function Addon:HideFrame(frameID)
 end
 
 function Addon:ToggleFrame(frameID)
-	if self:IsFrameShowm(frameID) then
+	if self:IsFrameShown(frameID) then
 		return self:HideFrame(frameID)
 	else
 		return self:ShowFrame(frameID)

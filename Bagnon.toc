@@ -1,11 +1,11 @@
-## Interface: 50100
+## Interface: 50200
 ## Title: |cff20ff20Bagnon|r
 ## Author: Tuller & Jaliborc (João Cardoso)
 ## Notes: Single window displays for your inventory and bank
 ## SavedVariablesPerCharacter: BagnonFrameSettings
 ## SavedVariables: BagnonGlobalSettings
 
-## Version: 5.1.1
+## Version: 5.1.2
 ## OptionalDeps: LibStub, Ace3, LibItemSearch-1.0, LibItemCache-1.0, Unfit-1.0, BagBrother
 
 libs\libs.xml

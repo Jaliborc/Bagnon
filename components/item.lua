@@ -264,12 +264,10 @@ end
 
 --[[ Update Methods ]]--
 
-
--- Update the texture, lock status, and other information about an item
 function ItemSlot:Update()
-  if not self:IsVisible() then
-    return
-  end
+	if not self:IsVisible() then
+		return
+	end
 
 	local icon, count, locked, quality, readable, lootable, link = self:GetInfo()
 	self:SetItem(link)
