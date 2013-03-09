@@ -141,19 +141,7 @@ function ItemSlot:BAG_SEARCH_UPDATE(msg, frameID)
 	end
 end
 
-function ItemSlot:ITEM_HIGHLIGHT_QUALITY_UPDATE()
-	self:UpdateBorder()
-end
-
-function ItemSlot:ITEM_HIGHLIGHT_UNUSABLE_UPDATE()
-	self:UpdateBorder()
-end
-
-function ItemSlot:ITEM_HIGHLIGHT_QUEST_UPDATE()
-	self:UpdateBorder()
-end
-
-function ItemSlot:ITEM_HIGHLIGHT_OPACITY_UPDATE()
+function ItemSlot:ITEM_HIGHLIGHT_UPDATE()
 	self:UpdateBorder()
 end
 
@@ -360,7 +348,7 @@ function ItemSlot:SetBorderQuality(quality)
 	self.questBorder:Hide()
 	self.border:Hide()
 
-	if self:HighlightingQuestItems() then
+	if self:HighlightQuestItems() then
 		local isQuestItem, isQuestStarter = self:IsQuestItem()
 		if isQuestItem then
 			return self:SetBorderColor(1, .82, .2)
@@ -379,11 +367,13 @@ function ItemSlot:SetBorderQuality(quality)
 		end
 	end
 
-	if ItemSearch:InSet(item) then
-   		return self:SetBorderColor(1, .3, .5)
-   end
+	if self:HighlightSetItems() then
+		if ItemSearch:InSet(item) then
+   			return self:SetBorderColor(1, .3, .5)
+  		end
+  	end
 	
-	if self:HighlightingItemsByQuality() then
+	if self:HighlightItemsByQuality() then
 		if item and quality and quality > 1 then
 			self:SetBorderColor(GetItemQualityColor(quality))
 		end
@@ -537,22 +527,22 @@ function ItemSlot:GetInfo()
 end
 
 
---[[ Item Type Highlighting ]]--
+--[[ Item Type Highlight ]]--
 
 function ItemSlot:HighlightUnusableItems()
 	return Addon.Settings:HighlightUnusableItems()
 end
 
-function ItemSlot:HighlightingQuestItems()
-	return Addon.Settings:HighlightingQuestItems()
+function ItemSlot:HighlightQuestItems()
+	return Addon.Settings:HighlightQuestItems()
 end
 
-function ItemSlot:HighlightingSetItems()
-	return Addon.Settings:HighlightingSetItems()
+function ItemSlot:HighlightSetItems()
+	return Addon.Settings:HighlightSetItems()
 end
 
-function ItemSlot:HighlightingItemsByQuality()
-	return Addon.Settings:HighlightingItemsByQuality()
+function ItemSlot:HighlightItemsByQuality()
+	return Addon.Settings:HighlightItemsByQuality()
 end
 
 function ItemSlot:GetHighlightAlpha()

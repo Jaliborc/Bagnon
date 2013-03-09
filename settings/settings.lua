@@ -33,13 +33,13 @@ end
 
 --highlight items by quality
 function Settings:SetHighlightItemsByQuality(enable)
-	if self:HighlightingItemsByQuality() ~= enable then
+	if self:HighlightItemsByQuality() ~= enable then
 		self:GetDB().highlightItemsByQuality = enable
-		self:SendMessage('ITEM_HIGHLIGHT_QUALITY_UPDATE')
+		self:SendMessage('ITEM_HIGHLIGHT_UPDATE')
 	end
 end
 
-function Settings:HighlightingItemsByQuality()
+function Settings:HighlightItemsByQuality()
 	return self:GetDB().highlightItemsByQuality
 end
 
@@ -47,7 +47,7 @@ end
 function Settings:SetHighlightUnusableItems(enable)
 	if self:HighlightUnusableItems() ~= enable then
 		self:GetDB().highlightUnusableItems = enable
-		self:SendMessage('ITEM_HIGHLIGHT_UNUSABLE_UPDATE')
+		self:SendMessage('ITEM_HIGHLIGHT_UPDATE')
 	end
 end
 
@@ -57,25 +57,25 @@ end
 
 --highlight quest items
 function Settings:SetHighlightQuestItems(enable)
-	if self:HighlightingQuestItems() ~= enable then
+	if self:HighlightQuestItems() ~= enable then
 		self:GetDB().highlightQuestItems = enable
-		self:SendMessage('ITEM_HIGHLIGHT_QUEST_UPDATE')
+		self:SendMessage('ITEM_HIGHLIGHT_UPDATE')
 	end
 end
 
-function Settings:HighlightingQuestItems()
+function Settings:HighlightQuestItems()
 	return self:GetDB().highlightQuestItems
 end
 
 --highlight set items
 function Settings:SetHighlightSetItems(enable)
-	if self:HighlightingSetItems() ~= enable then
+	if self:HighlightSetItems() ~= enable then
 		self:GetDB().highlightSetItems = enable
-		self:SendMessage('ITEM_HIGHLIGHT_QUEST_UPDATE')
+		self:SendMessage('ITEM_HIGHLIGHT_UPDATE')
 	end
 end
 
-function Settings:HighlightingSetItems()
+function Settings:HighlightSetItems()
 	return self:GetDB().highlightSetItems
 end
 
@@ -84,7 +84,7 @@ function Settings:SetHighlightOpacity(value)
 	local value = math.max(math.min(value, 1), 0)
 	if self:GetHighlightOpacity() ~= value then
 		self:GetDB().highlightOpacity = value
-		self:SendMessage('ITEM_HIGHLIGHT_OPACITY_UPDATE', value)
+		self:SendMessage('ITEM_HIGHLIGHT_UPDATE', value)
 	end
 end
 
