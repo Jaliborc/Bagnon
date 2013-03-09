@@ -5,8 +5,8 @@
 ## SavedVariablesPerCharacter: BagnonFrameSettings
 ## SavedVariables: BagnonGlobalSettings
 
-## Version: 5.1.2
-## OptionalDeps: LibStub, Ace3, LibItemSearch-1.0, LibItemCache-1.0, Unfit-1.0, BagBrother
+## Version: 5.2.0
+## OptionalDeps: LibStub, Ace3, LibItemSearch-1.1, LibItemCache-1.0, Unfit-1.0, BagBrother
 
 libs\libs.xml
 localization\localization.xml

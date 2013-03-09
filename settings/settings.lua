@@ -67,6 +67,18 @@ function Settings:HighlightingQuestItems()
 	return self:GetDB().highlightQuestItems
 end
 
+--highlight set items
+function Settings:SetHighlightSetItems(enable)
+	if self:HighlightingSetItems() ~= enable then
+		self:GetDB().highlightSetItems = enable
+		self:SendMessage('ITEM_HIGHLIGHT_QUEST_UPDATE')
+	end
+end
+
+function Settings:HighlightingSetItems()
+	return self:GetDB().highlightSetItems
+end
+
 --highlight opacity
 function Settings:SetHighlightOpacity(value)
 	local value = math.max(math.min(value, 1), 0)

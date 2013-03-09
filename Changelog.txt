@@ -1,4 +1,4 @@
-===== 5.2.0
+===== 5.2
 * Updated for patch 5.2: The Thunder King
 
 ====== 5.1.3
@@ -442,4 +442,4 @@
 * Fixed bank frame closing
 * Fixed an error when hovering over a bank item when at the bank
 * Fixed an error when clicking on a databroker object with no click event
-* Added sounds when opening/closing framessssessess opening/closing framessssessesss opening/closing framessssessessssessessss
+* Added sounds when opening/closing framessssessess opening/closing framessssessesss opening/closing framessssessessssessessssss

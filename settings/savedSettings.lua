@@ -65,6 +65,7 @@ function SavedSettings:GetDefaultSettings()
 	self.defaults = self.defaults or {
 		highlightItemsByQuality = true,
 		highlightQuestItems = true,
+		highlightSetItems = true,
 		showEmptyItemSlotTexture = true,
 		lockFramePositions = false,
 		colorBagSlots = true,
@@ -127,10 +128,11 @@ function SavedSettings:CreateNewDB()
 end
 
 function SavedSettings:UpgradeDB()
-	local major, minor, bugfix = self:GetDBVersion():match('(%w+)%.(%w+)%.(%w+)')
+	local expansion, patch, release = self:GetDBVersion():match('(%d+)\.(%d+)\.(%d+)')
+	local version = tonumber(expansion) * 10000 + tonumber(patch) * 100 + tonumber(release)
 	
 	--do upgrade stuff
-	if tonumber(minor) <= 6 and tonumber(bugfix) <= 2 then
+	if version < 50000 then
 		local db = self.db
 		local autoDisplayEvents = self.db.autoDisplayEvents
 		if autoDisplayEvents then
