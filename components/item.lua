@@ -369,7 +369,7 @@ function ItemSlot:SetBorderQuality(quality)
 
 	if self:HighlightSetItems() then
 		if ItemSearch:InSet(item) then
-   			return self:SetBorderColor(0, 1, 1)
+   			return self:SetBorderColor(.1, 1, 1)
   		end
   	end
 	

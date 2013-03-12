@@ -1,6 +1,6 @@
-[submodule "libs/LibItemSearch-1.0"]
-	path = libs/LibItemSearch-1.0
-	url = git://github.com/Tuller/LibItemSearch-1.0.git
+[submodule "libs/LibItemSearch-1.1"]
+	path = libs/LibItemSearch-1.1
+	url = git://github.com/Jaliborc/LibItemSearch-1.1.git
 [submodule "libs/Unfit-1.0"]
 	path = libs/Unfit-1.0
 	url = git://github.com/Jaliborc/Unfit-1.0.git
