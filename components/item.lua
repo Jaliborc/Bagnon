@@ -141,10 +141,6 @@ function ItemSlot:BAG_SEARCH_UPDATE(msg, frameID)
 	end
 end
 
-function ItemSlot:ITEM_HIGHLIGHT_UPDATE()
-	self:UpdateBorder()
-end
-
 function ItemSlot:SHOW_EMPTY_ITEM_SLOT_TEXTURE_UPDATE()
 	self:Update()
 end
@@ -157,11 +153,15 @@ function ItemSlot:ITEM_SLOT_COLOR_UPDATE()
 	self:Update()
 end
 
-function ItemSlot:QUEST_ACCEPTED()
+function ItemSlot:QUEST_LOG_CHANGED()
 	self:UpdateBorder()
 end
 
-function ItemSlot:UNIT_QUEST_LOG_CHANGED()
+function ItemSlot:EQUIPMENT_SETS_CHANGED()
+	self:UpdateBorder()
+end
+
+function ItemSlot:ITEM_HIGHLIGHT_UPDATE()
 	self:UpdateBorder()
 end
 
@@ -369,7 +369,7 @@ function ItemSlot:SetBorderQuality(quality)
 
 	if self:HighlightSetItems() then
 		if ItemSearch:InSet(item) then
-   			return self:SetBorderColor(1, .3, .5)
+   			return self:SetBorderColor(0, 1, 1)
   		end
   	end
 	

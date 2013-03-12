@@ -209,7 +209,7 @@ end
 
 --[[ Events ]]--
 
-function BagEvents:PLAYER_LOGIN(...)
+function BagEvents:PLAYER_LOGIN()
 	self:RegisterEvent('BAG_UPDATE')
 	self:RegisterEvent('BAG_UPDATE_COOLDOWN')
 	self:RegisterEvent('PLAYERBANKSLOTS_CHANGED')
@@ -226,13 +226,13 @@ function BagEvents:BAG_UPDATE(event, bag)
 	self:UpdateItems(bag)
 end
 
-function BagEvents:PLAYERBANKSLOTS_CHANGED(...)
+function BagEvents:PLAYERBANKSLOTS_CHANGED()
 	self:UpdateBagTypes()
 	self:UpdateBagSizes()
 	self:UpdateItems(BANK_CONTAINER)
 end
 
-function BagEvents:BANKFRAME_OPENED(...)
+function BagEvents:BANKFRAME_OPENED()
 	self.atBank = true
 
 	if self.firstVisit then
@@ -246,12 +246,12 @@ function BagEvents:BANKFRAME_OPENED(...)
 	self:SendMessage('BANK_OPENED')
 end
 
-function BagEvents:BANKFRAME_CLOSED(...)
+function BagEvents:BANKFRAME_CLOSED()
 	self.atBank = false
 	self:SendMessage('BANK_CLOSED')
 end
 
-function BagEvents:BAG_UPDATE_COOLDOWN(...)
+function BagEvents:BAG_UPDATE_COOLDOWN()
 	self:UpdateCooldowns(BACKPACK_CONTAINER)
 		
 	for bag = 1, NUM_BAG_SLOTS do

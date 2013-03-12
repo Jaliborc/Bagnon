@@ -1,3 +1,7 @@
+====== 5.2.1
+* Added option to color items belonging to equipment sets. Packed with ItemRack and Wardrobe support!
+* Upgraded item search engine.* Updated italian translations.
+
 ===== 5.2
 * Updated for patch 5.2: The Thunder King
 
