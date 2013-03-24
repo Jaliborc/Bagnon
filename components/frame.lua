@@ -1,17 +1,18 @@
 --[[
 	frame.lua
-		A Bagnon frame widget
+		The base frame widget
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 local Frame = Bagnon:NewClass('Frame', 'Frame')
+Frame.OpenSound = 'igBackPackOpen'
+Frame.CloseSound = 'igBackPackClose'
 
 
 --[[ Constructor ]]--
 
-function Frame:New(frameID, title)
-	local f = self:Bind(CreateFrame('Frame', 'BagnonFrame' .. frameID, UIParent))
+function Frame:New(id)
+	local f = self:Bind(CreateFrame('Frame', 'BagnonFrame' .. id, UIParent))
 	f:SetClampedToScreen(true)
 	f:SetMovable(true)
 	f:EnableMouse(true)
@@ -25,10 +26,9 @@ function Frame:New(frameID, title)
 	  insets = {left = 4, right = 4, top = 4, bottom = 4}
 	}
 
+	f.frameID = id
 	f:SetScript('OnShow', f.OnShow)
 	f:SetScript('OnHide', f.OnHide)
-	f.frameID = frameID
-	f.title = title
 	f:Rescale()
 	f:UpdateEverything()
 
@@ -156,33 +156,19 @@ end
 ]]--
 
 function Frame:OnShow()
-	PlaySound('igBackPackOpen')
-
+	PlaySound(self.OpenSound)
 	self:UpdateEvents()
 	self:UpdateLook()
 end
 
 function Frame:OnHide()
-	PlaySound('igBackPackClose')
-
-	if self:IsBankFrame() then
-		self:CloseBankFrame()
-	end
-
+	PlaySound(self.CloseSound)
 	self:UpdateEvents()
 
-	--fix issue where a frame is hidden, but not via bagnon controlled methods (ie, close on escape)
+	-- fow when a frame is hidden not via bagnon
 	if self:IsFrameShown() then
 		self:HideFrame()
 	end
-end
-
-function Frame:CloseBankFrame()
-  CloseBankFrame() -- Will it bug out?
-end
-
-function Frame:IsBankFrame()
-	return self:GetFrameID() == 'bank'
 end
 
 
@@ -655,7 +641,7 @@ end
 --[[ title frame ]]--
 
 function Frame:CreateTitleFrame()
-	local f = Bagnon.TitleFrame:New(self:GetFrameID(), self.title, self)
+	local f = Bagnon.TitleFrame:New(self:GetFrameID(), self.Title, self)
 	self.titleFrame = f
 	return f
 end

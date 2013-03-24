@@ -11,7 +11,7 @@ local TitleFrame = Bagnon:NewClass('TitleFrame', 'Button')
 
 --[[ Constructor ]]--
 
-function TitleFrame:New(frameID, title, parent)
+function TitleFrame:New(id, title, parent)
 	local b = self:Bind(CreateFrame('Button', nil, parent))
 	b:SetToplevel(true)
 
@@ -29,7 +29,7 @@ function TitleFrame:New(frameID, title, parent)
 	b:SetScript('OnClick', b.OnClick)
 
 	b:SetTitleText(title)
-	b:SetFrameID(frameID)
+	b:SetFrameID(id)
 	b:UpdateEvents()
 
 	return b
@@ -136,12 +136,12 @@ function TitleFrame:GetFrameID()
 	return self.frameID
 end
 
-function TitleFrame:SetTitleText (title)
+function TitleFrame:SetTitleText(title)
 	self.title = title
 end
 
 function TitleFrame:GetTitleText()
-	return self.title or self:GetFrameID() == 'bank' and L.TitleBank or L.TitleBags
+	return self.title
 end
 
 
