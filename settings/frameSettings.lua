@@ -48,7 +48,7 @@ end
 --]]---------------------------------------------------------------------------
 
 function FrameSettings:SendMessage(msg, ...)
-	Bagnon.Callbacks:SendMessage(msg, self:GetID(), ...)
+	Bagnon:SendCallback(msg, self:GetID(), ...)
 end
 
 

@@ -1,14 +1,14 @@
 --[[
 	Classy.lua
-		Utility methods for constructing a Bagnon object class
+		Utility method for constructing object classes
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
+local _, Addon = ...
 
-function Bagnon:NewClass(name, type, parent)
+function Addon:NewClass(name, type, parent)
 	local class = CreateFrame(type)
 	class.mt = {__index = class}
-  class:Hide()
+  	class:Hide()
   
 	if parent then
 		class = setmetatable(class, {__index = parent})
@@ -20,21 +20,21 @@ function Bagnon:NewClass(name, type, parent)
 	end
 	
 	class.RegisterMessage = function(self, ...)
-		Bagnon.Callbacks:Listen(self, ...)
+		Bagnon.RegisterCallback(self, ...)
 	end
 	
 	class.SendMessage = function(self, ...)
-		Bagnon.Callbacks:SendMessage(...)
+		Bagnon:SendCallback(...)
 	end
 	
 	class.UnregisterMessage = function(self, ...)
-		Bagnon.Callbacks:Ignore(self, ...)
+		Bagnon.UnregisterCallback(self, ...)
 	end
 	
-	class.UnregisterAllMessages = function(self, ...)
-		Bagnon.Callbacks:IgnoreAll(self, ...)
+	class.UnregisterAllMessages = function(self)
+		Bagnon.UnregisterAllCallbacks(self)
 	end
 
-  self[name] = class
+	self[name] = class
 	return class
 end

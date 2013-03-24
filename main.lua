@@ -4,7 +4,10 @@
 --]]
 
 local ADDON, Addon = ...
-_G[ADDON] = LibStub('AceAddon-3.0'):NewAddon(Addon, ADDON, 'AceEvent-3.0', 'AceConsole-3.0')
+_G[ADDON] = Addon
+
+LibStub('AceAddon-3.0'):NewAddon(Addon, ADDON, 'AceEvent-3.0', 'AceConsole-3.0')
+Addon.SendCallback = LibStub('CallbackHandler-1.0'):New(Addon).Fire
 Addon.frames = {}
 
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
@@ -77,11 +80,11 @@ end
 
 --[[ Frames ]]--
 
-function Addon:CreateFrame(frameID)
-  self.Frame:New(frameID)
+function Addon:CreateFrame(id)
+ 	self[id:gsub('^.', id.upper) .. 'Frame']:New(id)
 end
 
-function Addon:GetFrame(frameID)
+function Addon:GetFrame(id)
 	for i, frame in pairs(self.frames) do
 		if frame:GetFrameID() == frameID then
 			return frame
@@ -95,13 +98,13 @@ function Addon:UpdateFrames()
 	end
 end
 
-function Addon:ShowFrame(frameID)
-	if self:IsFrameEnabled(frameID) then
-		if not self:GetFrame(frameID) then
-			self:CreateFrame(frameID)
+function Addon:ShowFrame(id)
+	if self:IsFrameEnabled(id) then
+		if not self:GetFrame(id) then
+			self:CreateFrame(id)
 		end
 
-		self.FrameSettings:Get(frameID):Show()
+		self.FrameSettings:Get(id):Show()
 		return true
 	end
 end
@@ -210,42 +213,14 @@ function Addon:HookBagClickEvents()
 		end
 	end
 
-	local function bag_checkIfInventoryShown(button)
+	local function checkIfInventoryShown(button)
 		if self:IsFrameEnabled('inventory') then
 			button:SetChecked(self:IsFrameShown('inventory'))
 		end
 	end
 
-	--handle checking/unchecking of the backpack buttons based on frame display
-	hooksecurefunc('BagSlotButton_UpdateChecked', bag_checkIfInventoryShown)
-	hooksecurefunc('BackpackButton_UpdateChecked', bag_checkIfInventoryShown)
-
-	self.Callbacks:Listen(self, 'FRAME_SHOW')
-	self.Callbacks:Listen(self, 'FRAME_HIDE')
-end
-
-
---[[ Frames Events ]]--
-
-function Addon:FRAME_SHOW(msg, frameID)
-	if frameID == 'inventory' and self:IsFrameEnabled('inventory') then
-		self:CheckBagButtons(true)
-	end
-end
-
-function Addon:FRAME_HIDE(msg, frameID)
-	if frameID == 'inventory' and self:IsFrameEnabled('inventory') then
-		self:CheckBagButtons(false)
-	end
-end
-
---check/uncheck the bag buttons
-function Addon:CheckBagButtons(checked)
-	_G['MainMenuBarBackpackButton']:SetChecked(checked)
-	_G["CharacterBag0Slot"]:SetChecked(checked)
-	_G["CharacterBag1Slot"]:SetChecked(checked)
-	_G["CharacterBag2Slot"]:SetChecked(checked)
-	_G["CharacterBag3Slot"]:SetChecked(checked)
+	hooksecurefunc('BagSlotButton_UpdateChecked', checkIfInventoryShown)
+	hooksecurefunc('BackpackButton_UpdateChecked', checkIfInventoryShown)
 end
 
 

@@ -3,9 +3,9 @@
 		Handles non specific frame settings
 --]]
 
+local _, Addon = ...
 local Settings = {}
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-Bagnon.Settings = Settings
+Addon.Settings = Settings
 
 
 --[[---------------------------------------------------------------------------
@@ -14,7 +14,7 @@ Bagnon.Settings = Settings
 
 
 function Settings:GetDB()
-	return Bagnon.SavedSettings:GetDB()
+	return Addon.SavedSettings:GetDB()
 end
 
 
@@ -23,7 +23,7 @@ end
 --]]---------------------------------------------------------------------------
 
 function Settings:SendMessage(msg, ...)
-	Bagnon.Callbacks:SendMessage(msg, ...)
+	Addon:SendCallback(msg, ...)
 end
 
 
@@ -183,13 +183,13 @@ end
 function Settings:SetShowFrameAtEvent(frameID, event, enable)
 	local enable = enable and true or false
 	if self:IsFrameShownAtEvent(frameID, event) ~= enable then
-		Bagnon.SavedSettings:SetShowFrameAtEvent(frameID, event, enable)
+		Addon.SavedSettings:SetShowFrameAtEvent(frameID, event, enable)
 		self:SendMessage('FRAME_DISPLAY_EVENT_UPDATE', frameID, event, self:IsFrameShownAtEvent(frameID, event))
 	end
 end
 
 function Settings:IsFrameShownAtEvent(frameID, event)
-	return Bagnon.SavedSettings:IsFrameShownAtEvent(frameID, event)
+	return Addon.SavedSettings:IsFrameShownAtEvent(frameID, event)
 end
 
 --bag disable
@@ -266,7 +266,7 @@ end
 -- opens the inventory and broadcasts the search message to item frames
 function Settings:FlashFind(name)
 	if self:IsFlashFindEnabled() then
-		Bagnon:ShowFrame('inventory')
+		Addon:ShowFrame('inventory')
 		self:SendMessage('FLASH_SEARCH_UPDATE', name)
 	end
 end
@@ -283,7 +283,7 @@ end)
 --fading
 function Settings:SetFading(enable)
 	self:GetDB().fading = enable and true or false
-	Bagnon:HookTooltips()
+	Addon:HookTooltips()
 end
 
 function Settings:IsFadingEnabled()
@@ -293,7 +293,7 @@ end
 --tip count
 function Settings:SetEnableTipCount(enable)
 	self:GetDB().enableTipCount = enable and true or false
-	Bagnon:HookTooltips()
+	Addon:HookTooltips()
 end
 
 function Settings:IsTipCountEnabled()
