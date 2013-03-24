@@ -129,11 +129,11 @@ end
 
 --event registration
 function Bag:RegisterItemSlotEvent(...)
-	Bagnon.BagEvents:Listen(self, ...)
+	Bagnon.BagEvents.Listen(self, ...)
 end
 
 function Bag:UnregisterAllItemSlotEvents(...)
-	Bagnon.BagEvents:IgnoreAll(self, ...)
+	Bagnon.BagEvents.IgnoreAll(self, ...)
 end
 
 

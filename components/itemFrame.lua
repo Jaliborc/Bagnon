@@ -156,15 +156,15 @@ function ItemFrame:HandleSpecificItemEvent(msg, bag, slot, ...)
 end
 
 function ItemFrame:RegisterItemEvent(...)
-	Bagnon.BagEvents:Listen(self, ...)
+	Bagnon.BagEvents.Listen(self, ...)
 end
 
 function ItemFrame:UnregisterItemEvent(...)
-	Bagnon.BagEvents:Ignore(self, ...)
+	Bagnon.BagEvents.Ignore(self, ...)
 end
 
 function ItemFrame:UnregisterAllItemEvents(...)
-	Bagnon.BagEvents:IgnoreAll(self, ...)
+	Bagnon.BagEvents.IgnoreAll(self, ...)
 end
 
 

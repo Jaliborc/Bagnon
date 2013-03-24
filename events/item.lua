@@ -34,8 +34,8 @@
 --]]
 
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local BagEvents = Bagnon.Ears:New()
+local BagEvents = {}
+BagEvents.SendMessage = LibStub('CallbackHandler-1.0'):New(BagEvents, 'Listen', 'Ignore', 'IgnoreAll').Fire
 Bagnon.BagEvents = BagEvents 
 
 

@@ -227,8 +227,8 @@ end
 --[[ Automatic Display ]]--
 
 function Addon:RegisterAutoDisplayEvents()
-	self.BagEvents:Listen(self, 'BANK_OPENED')
-	self.BagEvents:Listen(self, 'BANK_CLOSED')
+	self.BagEvents.Listen(self, 'BANK_OPENED')
+	self.BagEvents.Listen(self, 'BANK_CLOSED')
 	self:RegisterEvent('MAIL_CLOSED')
 	self:RegisterEvent('SOCKET_INFO_UPDATE')
 	self:RegisterEvent('AUCTION_HOUSE_SHOW')
