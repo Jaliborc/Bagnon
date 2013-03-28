@@ -1,3 +1,6 @@
+====== 5.2.2
+* Updated chinese translations.
+
 ====== 5.2.1
 * Added option to color items belonging to equipment sets. Packed with ItemRack and Wardrobe support!** Idea and initial prototype by Omee - Proudmoore (US).
 * Upgraded item search engine.* Updated italian translations.
