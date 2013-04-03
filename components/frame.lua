@@ -34,7 +34,6 @@ function Frame:New(id)
 	f:UpdateEverything()
 
 	tinsert(UISpecialFrames, f:GetName())
-	Addon.frames[id] = f
 	return f
 end
 

@@ -80,17 +80,17 @@ end
 
 --[[ Frames ]]--
 
-function Addon:CreateFrame(id)
- 	self[id:gsub('^.', id.upper) .. 'Frame']:New(id)
-end
-
-function Addon:GetFrame(id)
-	return self.frames[id]
-end
-
 function Addon:UpdateFrames()
 	for _,frame in pairs(self.frames) do
 		frame.itemFrame:UpdateEverything()
+	end
+end
+
+function Addon:ToggleFrame(id)
+	if self:IsFrameShown(id) then
+		return self:HideFrame(id)
+	else
+		return self:ShowFrame(id)
 	end
 end
 
@@ -105,35 +105,31 @@ function Addon:ShowFrame(id)
 	end
 end
 
-function Addon:HideFrame(frameID)
-	if self:IsFrameEnabled(frameID) then
-		self.FrameSettings:Get(frameID):Hide()
+function Addon:HideFrame(id)
+	if self:IsFrameEnabled(id) then
+		self.FrameSettings:Get(id):Hide()
 		return true
 	end
 end
 
-function Addon:ToggleFrame(frameID)
-	if self:IsFrameShown(frameID) then
-		return self:HideFrame(frameID)
-	else
-		return self:ShowFrame(frameID)
-	end
+function Addon:CreateFrame(id)
+ 	self.frames[id] = self[id:gsub('^.', id.upper) .. 'Frame']:New(id)
 end
 
-function Addon:IsFrameEnabled(frameID)
-	return self.Settings:IsFrameEnabled(frameID)
+function Addon:GetFrame(id)
+	return self.frames[id]
 end
 
-function Addon:IsFrameShown(frameID)
-	return self.FrameSettings:Get(frameID):IsShown()
+function Addon:IsFrameEnabled(id)
+	return self.Settings:IsFrameEnabled(id)
 end
 
-function Addon:FrameControlsBag(frameID, bagSlot)
-	return self.FrameSettings:Get(frameID):IsBagSlotShown(bagSlot) or (not self:IsBlizzardBagPassThroughEnabled())
+function Addon:IsFrameShown(id)
+	return self.FrameSettings:Get(id):IsShown()
 end
 
-function Addon:IsBlizzardBagPassThroughEnabled()
-	return self.Settings:IsBlizzardBagPassThroughEnabled()
+function Addon:FrameControlsBag(id, bag)
+	return self.FrameSettings:Get(id):IsBagSlotShown(bag) or (not self.Settings:IsBlizzardBagPassThroughEnabled())
 end
 
 
