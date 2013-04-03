@@ -85,11 +85,7 @@ function Addon:CreateFrame(id)
 end
 
 function Addon:GetFrame(id)
-	for i, frame in pairs(self.frames) do
-		if frame:GetFrameID() == frameID then
-			return frame
-		end
-	end
+	return self.frames[id]
 end
 
 function Addon:UpdateFrames()

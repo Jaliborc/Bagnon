@@ -3,8 +3,9 @@
 		The base frame widget
 --]]
 
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local Frame = Bagnon:NewClass('Frame', 'Frame')
+local ADDON, Addon = ...
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+local Frame = Addon:NewClass('Frame', 'Frame')
 Frame.OpenSound = 'igBackPackOpen'
 Frame.CloseSound = 'igBackPackClose'
 
@@ -33,7 +34,7 @@ function Frame:New(id)
 	f:UpdateEverything()
 
 	tinsert(UISpecialFrames, f:GetName())
-	tinsert(Bagnon.frames, f)
+	Addon.frames[id] = f
 	return f
 end
 
