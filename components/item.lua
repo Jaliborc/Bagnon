@@ -33,7 +33,6 @@ function ItemSlot:SetFrame(parent, bag, slot)
   self:SetID(slot)
 end
 
---constructs a brand new item slot
 function ItemSlot:Create()
 	local id = self:GetNextItemSlotID()
 	local item = self:Bind(self:GetBlizzardItemSlot(id) or self:ConstructNewItemSlot(id))
