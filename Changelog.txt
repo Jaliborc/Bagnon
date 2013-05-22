@@ -1,3 +1,12 @@
+====== 5.3.1
+* Fixed bug causing error message on rare login situations.
+
+===== 5.3
+* Updated for patch Escalation!
+
+====== 5.2.5
+* Fixed issue causing some cached item icons to not be properly displayed.
+
 ====== 5.2.4
 * Closing the bank window now properly releases the banker.
 
