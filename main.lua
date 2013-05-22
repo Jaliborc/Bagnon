@@ -19,11 +19,11 @@ BINDING_NAME_BAGNON_VAULT_TOGGLE = L.ToggleVault
 
 --[[ Startup ]]--
 
-function Addon:OnInitialize()
- 	self:AddSlashCommands()
+function Addon:OnEnable()
+	self:AddSlashCommands()
  	self:RegisterAutoDisplayEvents()
 	self:HookBagClickEvents()
- 	self:HookTooltips()
+	self:HookTooltips()
 
 	self:CreateFrameLoader(ADDON .. '_GuildBank', 'GuildBankFrame_LoadUI')
 	self:CreateFrameLoader(ADDON .. '_VoidStorage', 'VoidStorage_LoadUI')
