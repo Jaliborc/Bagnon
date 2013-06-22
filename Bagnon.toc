@@ -5,7 +5,7 @@
 ## SavedVariablesPerCharacter: BagnonFrameSettings
 ## SavedVariables: BagnonGlobalSettings
 
-## Version: 5.2.5
+## Version: 5.3
 ## OptionalDeps: BagBrother, ItemRack, Wardrobe
 
 libs\libs.xml

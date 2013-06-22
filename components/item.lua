@@ -9,7 +9,7 @@ ItemSlot.nextID = 0
 ItemSlot.unused = {}
 
 local Cache = LibStub('LibItemCache-1.0')
-local ItemSearch = LibStub('LibItemSearch-1.1')
+local ItemSearch = LibStub('LibItemSearch-1.2')
 local Unfit = LibStub('Unfit-1.0')
 
 

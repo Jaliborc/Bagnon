@@ -1,3 +1,6 @@
+====== 5.3.2
+* Now using LibItemSearch-1.2.
+
 ====== 5.3.1
 * Fixed bug causing error message on rare login situations.
 
@@ -465,4 +468,4 @@
 * Fixed bank frame closing
 * Fixed an error when hovering over a bank item when at the bank
 * Fixed an error when clicking on a databroker object with no click event
-* Added sounds when opening/closing framessssessess opening/closing framessssessesss opening/closing framessssessessssessessssss
+* Added sounds when opening/closing frames.ssessess opening/closing frames.
