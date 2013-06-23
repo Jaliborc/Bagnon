@@ -164,11 +164,6 @@ function ItemSlot:ITEM_HIGHLIGHT_UPDATE()
 	self:UpdateBorder()
 end
 
--- Flash search broadcast hook
-function ItemSlot:FLASH_SEARCH_UPDATE(msg, search)
-	self:FlashSearch(search)
-end
-
 function ItemSlot:HandleEvent(msg, ...)
 	local action = self[msg]
 	if action then
@@ -204,10 +199,7 @@ end
 
 function ItemSlot:OnClick(button)
 	if IsAltKeyDown() and button == 'LeftButton' then
-		local link = self:GetItem()
-		if link then
-			Addon.Settings:FlashFind(link:match('^|c%x+|Hitem.+|h%[(.*)%]'))
-		end
+		Addon.Settings:FlashFind(self:GetItem())
 	elseif GetNumVoidTransferDeposit() > 0 and button == 'RightButton' then
 		if self.canDeposit and self.depositSlot then
 			ClickVoidTransferDepositSlot(self.depositSlot, true)
@@ -431,23 +423,18 @@ end
 --[[ Search ]]--
 
 function ItemSlot:UpdateSearch()
-	local shouldFade = false
 	local search = self:GetItemSearch()
+	local matches = search == '' or ItemSearch:Matches(self:GetItem(), search)
 
-	if search and search ~= '' then
-		local link = self:GetItem()
-		shouldFade = not (link and ItemSearch:Matches(link, search))
-	end
-
-	if shouldFade then
-		self:SetAlpha(0.4)
-		SetItemButtonDesaturated(self, true)
-		self.border:Hide()
-	else
+	if matches then
 		self:SetAlpha(1)
 		self:UpdateLocked()
 		self:UpdateBorder()
 		self:UpdateSlotColor()
+	else	
+		self:SetAlpha(0.4)
+		SetItemButtonDesaturated(self, true)
+		self.border:Hide()
 	end
 end
 
@@ -466,16 +453,6 @@ end
 
 function ItemSlot:GetBagSearch()
 	return self:GetSettings():GetBagSearch()
-end
-
--- if the current item does match the sought name, flash it
-function ItemSlot:FlashSearch(search)
-	if search and search ~= '' then
-		local link = self:GetItem()
-		if ItemSearch:Matches(link, search) then
-			UIFrameFlash(self, 0.2, 0.3, 1.5, true, 0.0, 0.0 )
-		end
-	end
 end
 
 

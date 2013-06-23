@@ -240,7 +240,6 @@ function ItemFrame:RegisterGlobalItemEvents()
 	self:RegisterMessage('SHOW_EMPTY_ITEM_SLOT_TEXTURE_UPDATE', 'HandleGlobalItemEvent')
 	self:RegisterMessage('ITEM_SLOT_COLOR_UPDATE', 'HandleGlobalItemEvent')
 	self:RegisterMessage('ITEM_SLOT_COLOR_ENABLED_UPDATE', 'HandleGlobalItemEvent')
-	self:RegisterMessage('FLASH_SEARCH_UPDATE', 'HandleGlobalItemEvent')
 end
 
 

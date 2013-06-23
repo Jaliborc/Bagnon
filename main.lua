@@ -87,10 +87,12 @@ function Addon:UpdateFrames()
 end
 
 function Addon:ToggleFrame(id)
-	if self:IsFrameShown(id) then
-		return self:HideFrame(id)
-	else
-		return self:ShowFrame(id)
+	if self:IsFrameEnabled(id) then
+		if self:IsFrameShown(id) then
+			return self:HideFrame(id, true)
+		else
+			return self:ShowFrame(id)
+		end
 	end
 end
 
@@ -105,9 +107,9 @@ function Addon:ShowFrame(id)
 	end
 end
 
-function Addon:HideFrame(id)
+function Addon:HideFrame(id, force)
 	if self:IsFrameEnabled(id) then
-		self.FrameSettings:Get(id):Hide()
+		self.FrameSettings:Get(id):Hide(force)
 		return true
 	end
 end

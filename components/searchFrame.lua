@@ -3,9 +3,9 @@
 		A searcn frame widget
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local SearchFrame = Bagnon:NewClass('SearchFrame', 'EditBox')
+local ADDON, Addon = ...
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+local SearchFrame = Addon:NewClass('SearchFrame', 'EditBox')
 SearchFrame.backdrop = {
 	edgeFile = [[Interface\Tooltips\UI-Tooltip-Border]],
 	bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
@@ -71,15 +71,15 @@ end
 --[[ Frame Events ]]--
 
 function SearchFrame:OnShow()
-	self:UpdateEvents()
 	self:SetSearch(self:GetLastSearch())
+	self:UpdateText()
+	self:UpdateEvents()
 	self:HighlightText()
 	self:SetFocus()
 end
 
 function SearchFrame:OnHide()
 	self:UpdateEvents()
-	
 	self:ClearFocus()
 	self:SetSearch('')
 end
@@ -101,14 +101,12 @@ end
 
 function SearchFrame:UpdateEvents()
 	self:UnregisterAllMessages()
-
 	self:RegisterMessage('TEXT_SEARCH_ENABLE')
 	self:RegisterMessage('TEXT_SEARCH_DISABLE')
---[[	
+	
 	if self:IsVisible() then
 		self:RegisterMessage('TEXT_SEARCH_UPDATE')
 	end
---]]
 end
 
 function SearchFrame:UpdateShown()
@@ -144,19 +142,19 @@ end
 --[[ Frame Settings ]]--
 
 function SearchFrame:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
+	return Addon.FrameSettings:Get(self:GetFrameID())
 end
 
 function SearchFrame:SetSearch(search)
-	Bagnon.Settings:SetTextSearch(search)
+	Addon.Settings:SetTextSearch(search)
 end
 
 function SearchFrame:GetSearch()
-	return Bagnon.Settings:GetTextSearch()
+	return Addon.Settings:GetTextSearch()
 end
 
 function SearchFrame:GetLastSearch()
-	return Bagnon.Settings:GetLastTextSearch()
+	return Addon.Settings:GetLastTextSearch()
 end
 
 function SearchFrame:EnableSearch()

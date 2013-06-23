@@ -82,14 +82,6 @@ function FrameSettings:Hide(forceHide)
 	end
 end
 
-function FrameSettings:Toggle()
-	if self:IsShown() then
-		self:Hide(true)
-	else
-		self:Show()
-	end
-end
-
 function FrameSettings:IsShown()
 	return (self.shown or 0) > 0
 end
