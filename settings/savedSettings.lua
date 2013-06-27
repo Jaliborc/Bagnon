@@ -128,10 +128,9 @@ function SavedSettings:CreateNewDB()
 end
 
 function SavedSettings:UpgradeDB()
-	local expansion, patch, release = self:GetDBVersion():match('(%d+)\.(%d+)\.(%d+)')
-	local version = tonumber(expansion) * 10000 + tonumber(patch) * 100 + tonumber(release)
+	local expansion, patch, release = strsplit('.', self:GetDBVersion())
+	local version = tonumber(expansion) * 10000 + tonumber(patch or 0) * 100 + tonumber(release or 0)
 	
-	--do upgrade stuff
 	if version < 50000 then
 		local db = self.db
 		local autoDisplayEvents = self.db.autoDisplayEvents
@@ -143,7 +142,7 @@ function SavedSettings:UpgradeDB()
 	end
 
 	self:GetDB().version = self:GetAddOnVersion()
-	Bagnon:Print(string.format(L.Updated, self:GetDBVersion()))
+	Bagnon:Print(L.Updated:format(self:GetDBVersion()))
 end
 
 function SavedSettings:IsDBOutOfDate()

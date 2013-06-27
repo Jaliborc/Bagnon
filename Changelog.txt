@@ -1,7 +1,9 @@
-====== 5.3.2
-* Now using LibItemSearch-1.2.
+====== 5.3.3
+* Fixed issue with the settings version upgrade system.
 
-====== 5.3.1
+====== 5.3.2
+* Flash Find now behaves like standard text animation. Search bars reach accordingly.
+* Now using LibItemSearch-1.2.
 * Fixed bug causing error message on rare login situations.
 
 ===== 5.3
@@ -468,4 +470,4 @@
 * Fixed bank frame closing
 * Fixed an error when hovering over a bank item when at the bank
 * Fixed an error when clicking on a databroker object with no click event
-* Added sounds when opening/closing frames.ssessess opening/closing frames.
+* Added sounds when opening/closing frames.
