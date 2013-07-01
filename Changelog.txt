@@ -1,8 +1,14 @@
+====== 5.3.5
+* Making flash find togglable by alt click
+
+====== 5.3.4
+* Updated LibCustomSearch.
+
 ====== 5.3.3
 * Fixed issue with the settings version upgrade system.
 
 ====== 5.3.2
-* Flash Find now behaves like standard text animation. Search bars reach accordingly.
+* Flash Find now behaves like standard text search. Search bars react accordingly.
 * Now using LibItemSearch-1.2.
 * Fixed bug causing error message on rare login situations.
 

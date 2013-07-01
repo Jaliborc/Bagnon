@@ -255,13 +255,16 @@ function Settings:IsFlashFindEnabled()
 	return self:GetDB().enableFlashFind
 end
 
--- opens the inventory and broadcasts the search message to item frames
 function Settings:FlashFind(link)
 	local name = link and link:match('^|c%x+|Hitem.+|h%[(.*)%]')
 
 	if name and self:IsFlashFindEnabled() then
-		Addon:ShowFrame('inventory')
-		self:SetTextSearch(name)
+		if name ~= self:GetTextSearch() then
+			Addon:ShowFrame('inventory')
+			self:SetTextSearch(name)
+		else
+			self:SetTextSearch('')
+		end
 	end
 end
 
