@@ -3,8 +3,8 @@
 		An item slot container
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local ItemFrame = Bagnon:NewClass('ItemFrame', 'Frame')
+local _, Addon = ...
+local ItemFrame = Addon:NewClass('ItemFrame', 'Frame')
 local Cache = LibStub('LibItemCache-1.0')
 ItemFrame.ITEM_SIZE = 39
 ItemFrame.COLUMN_OFF = 0
@@ -156,15 +156,15 @@ function ItemFrame:HandleSpecificItemEvent(msg, bag, slot, ...)
 end
 
 function ItemFrame:RegisterItemEvent(...)
-	Bagnon.BagEvents.Listen(self, ...)
+	Addon.BagEvents.Listen(self, ...)
 end
 
 function ItemFrame:UnregisterItemEvent(...)
-	Bagnon.BagEvents.Ignore(self, ...)
+	Addon.BagEvents.Ignore(self, ...)
 end
 
 function ItemFrame:UnregisterAllItemEvents(...)
-	Bagnon.BagEvents.IgnoreAll(self, ...)
+	Addon.BagEvents.IgnoreAll(self, ...)
 end
 
 
@@ -235,6 +235,7 @@ function ItemFrame:RegisterGlobalItemEvents()
 	self:RegisterMessage('ITEM_FRAME_COLUMNS_UPDATE')
 	
 	self:RegisterMessage('TEXT_SEARCH_UPDATE', 'HandleGlobalItemEvent')
+	self:RegisterMessage('FLASH_SEARCH_UPDATE', 'HandleGlobalItemEvent')
 	self:RegisterMessage('BAG_SEARCH_UPDATE', 'HandleGlobalItemEvent')
 	self:RegisterMessage('ITEM_HIGHLIGHT_UPDATE', 'HandleGlobalItemEvent')
 	self:RegisterMessage('SHOW_EMPTY_ITEM_SLOT_TEXTURE_UPDATE', 'HandleGlobalItemEvent')
@@ -255,7 +256,7 @@ function ItemFrame:AddItemSlot(bag, slot)
 end
 
 function ItemFrame:NewItemSlot(bag, slot)
-	return Bagnon.ItemSlot:New(bag, slot, self:GetFrameID(), self)
+	return Addon.ItemSlot:New(bag, slot, self:GetFrameID(), self)
 end
 
 --removes any item slot associated with the given slotIndex
@@ -492,7 +493,7 @@ end
 
 --frame settings
 function ItemFrame:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
+	return Addon.FrameSettings:Get(self:GetFrameID())
 end
 
 --player info
@@ -510,7 +511,7 @@ function ItemFrame:HasBag(bag)
 end
 
 function ItemFrame:GetBagSize(bag)
-	return Bagnon:GetBagSize(self:GetPlayer(), bag)
+	return Addon:GetBagSize(self:GetPlayer(), bag)
 end
 
 function ItemFrame:IsBagShown(bag)
@@ -518,7 +519,7 @@ function ItemFrame:IsBagShown(bag)
 end
 
 function ItemFrame:IsBagSlotCached(bag)
-	return Bagnon:IsBagCached(self:GetPlayer(), bag)
+	return Addon:IsBagCached(self:GetPlayer(), bag)
 end
 
 function ItemFrame:GetVisibleBags()
@@ -527,7 +528,7 @@ end
 
 function ItemFrame:HasBankBags()
 	for _, bag in self:GetVisibleBags() do
-		if Bagnon:IsBank(bag) or Bagnon:IsBankBag(bag) then
+		if Addon:IsBank(bag) or Addon:IsBankBag(bag) then
 			return true
 		end
 	end

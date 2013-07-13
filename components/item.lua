@@ -45,12 +45,26 @@ function ItemSlot:Create()
 	border:SetTexture([[Interface\Buttons\UI-ActionButton-Border]])
 	border:SetBlendMode('ADD')
 	border:Hide()
+
+	--add flash find animation
+	local flash = item:CreateAnimationGroup()
+	for i = 1, 3 do
+		local fade = flash:CreateAnimation('Alpha')
+		fade:SetDuration(.2)
+		fade:SetChange(-.8)
+		fade:SetOrder(i * 2)
+
+		local fade = flash:CreateAnimation('Alpha')
+		fade:SetDuration(.3)
+		fade:SetChange(.8)
+		fade:SetOrder(i * 2 + 1)
+	end
 	
 	--hack, make sure the cooldown model stays visible
+	item.border, item.flash = border, flash
 	item.questBorder = _G[name .. 'IconQuestTexture']
 	item.cooldown = _G[name .. 'Cooldown']
 	item.UpdateTooltip = nil
-	item.border = border
 
 	--get rid of any registered frame events, and use our own
 	item:HookScript('OnClick', item.OnClick)
@@ -134,7 +148,15 @@ function ItemSlot:TEXT_SEARCH_UPDATE()
 	self:UpdateSearch()
 end
 
-function ItemSlot:BAG_SEARCH_UPDATE(msg, frameID)
+function ItemSlot:FLASH_SEARCH_UPDATE(event, item)
+	self.flash:Stop()
+
+	if item == self:GetItem() then
+		self.flash:Play()
+	end
+end
+
+function ItemSlot:BAG_SEARCH_UPDATE(event, frameID)
 	if self:GetFrameID() == frameID then
 		self:UpdateBagSearch()
 	end
