@@ -34,9 +34,10 @@
 --]]
 
 
+local _, Addon = ...
 local BagEvents = {}
 BagEvents.SendMessage = LibStub('CallbackHandler-1.0'):New(BagEvents, 'Listen', 'Ignore', 'IgnoreAll').Fire
-Bagnon.BagEvents = BagEvents 
+Addon.BagEvents = BagEvents 
 
 
 --[[ Locals ]]--
@@ -99,6 +100,7 @@ function BagEvents:RemoveItem(bag, slot)
 		for i in pairs(data) do
 			data[i] = nil
 		end
+
 		self:SendMessage('ITEM_SLOT_REMOVE', bag, slot, prevLink)
 	end
 end
