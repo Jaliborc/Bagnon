@@ -1,3 +1,5 @@
 libs/LibItemSearch-1.2/LibItemSearch-1.2.toc
 libs/LibItemSearch-1.2/README.markdown
-libs/LibItemCache-1.0/Tests
+
+libs/LibItemCache-1.0/Caches/BagBrotherTests.lua
+libs/LibItemCache-1.0/Tests.lua
