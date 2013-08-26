@@ -62,6 +62,7 @@ function ItemSlot:Create()
 	
 	--hack, make sure the cooldown model stays visible
 	item.border, item.flash = border, flash
+	item.newItemBorder = _G[name .. 'NewItemTexture']
 	item.questBorder = _G[name .. 'IconQuestTexture']
 	item.cooldown = _G[name .. 'Cooldown']
 	item.UpdateTooltip = nil
@@ -276,7 +277,6 @@ function ItemSlot:Update()
 	self:SetCount(count)
 	self:SetLocked(locked)
 	self:SetReadable(readable)
-	self:SetBorderQuality(quality)
 	self:UpdateCooldown()
 	self:UpdateSlotColor()
 	self:UpdateSearch()
@@ -287,7 +287,6 @@ function ItemSlot:Update()
 	end
 end
 
---item link
 function ItemSlot:SetItem(item)
 	self.item = item
 end
@@ -352,43 +351,38 @@ end
 --[[ Border Glow ]]--
 
 function ItemSlot:UpdateBorder()
-	self:SetBorderQuality(select(4, self:GetInfo()))
-end
-
-function ItemSlot:SetBorderQuality(quality)
+	local quality = select(4, self:GetInfo()) or 0
 	local item = self:GetItem()
+	self:HideBorders()
 
-	self.questBorder:Hide()
-	self.border:Hide()
-
-	if self:HighlightQuestItems() then
-		local isQuestItem, isQuestStarter = self:IsQuestItem()
-		if isQuestItem then
-			return self:SetBorderColor(1, .82, .2)
+	if item then
+		if self:IsNew() then
+			return self.newItemBorder:Show()
 		end
 
-		if isQuestStarter then
-			self.questBorder:SetTexture(TEXTURE_ITEM_QUEST_BANG)
-			self.questBorder:Show()
-			return
+		if self:HighlightQuestItems() then
+			local isQuestItem, isQuestStarter = self:IsQuestItem()
+			if isQuestItem then
+				return self:SetBorderColor(1, .82, .2)
+			end
+
+			if isQuestStarter then
+				self.questBorder:SetTexture(TEXTURE_ITEM_QUEST_BANG)
+				self.questBorder:Show()
+				return
+			end
 		end
-	end
-	
-	if self:HighlightUnusableItems() then
-		if Unfit:IsItemUnusable(item) then
+
+		if self:HighlightUnusableItems() and Unfit:IsItemUnusable(item) then
 			return self:SetBorderColor(RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b)
 		end
-	end
 
-	if self:HighlightSetItems() then
-		if ItemSearch:InSet(item) then
-   			return self:SetBorderColor(.1, 1, 1)
-  		end
-  	end
-	
-	if self:HighlightItemsByQuality() then
-		if item and quality and quality > 1 then
-			self:SetBorderColor(GetItemQualityColor(quality))
+		if self:HighlightSetItems() and ItemSearch:InSet(item) then
+	   		return self:SetBorderColor(.1, 1, 1)
+	  	end
+		
+		if self:HighlightItemsByQuality() and quality > 1 then
+			return self:SetBorderColor(GetItemQualityColor(quality))
 		end
 	end
 end
@@ -396,6 +390,12 @@ end
 function ItemSlot:SetBorderColor(r, g, b)
 	self.border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
 	self.border:Show()
+end
+
+function ItemSlot:HideBorders()
+	self.newItemBorder:Hide()
+	self.questBorder:Hide()
+	self.border:Hide()
 end
 
 
@@ -451,12 +451,12 @@ function ItemSlot:UpdateSearch()
 	if matches then
 		self:SetAlpha(1)
 		self:UpdateLocked()
-		self:UpdateBorder()
 		self:UpdateSlotColor()
+		self:UpdateBorder()
 	else	
-		self:SetAlpha(0.4)
 		SetItemButtonDesaturated(self, true)
-		self.border:Hide()
+		self:SetAlpha(0.4)
+		self:HideBorders()
 	end
 end
 
@@ -505,6 +505,11 @@ end
 
 function ItemSlot:IsSlot(bag, slot)
 	return self:GetBag() == bag and self:GetID() == slot
+end
+
+function ItemSlot:IsNew()
+	local bag, slot = self:GetBag(), self:GetID()
+	return C_NewItems and C_NewItems.IsNewItem(bag, slot) and IsBattlePayItem(bag, slot)
 end
 
 function ItemSlot:IsCached()
