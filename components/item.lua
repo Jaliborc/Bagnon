@@ -149,10 +149,10 @@ function ItemSlot:TEXT_SEARCH_UPDATE()
 	self:UpdateSearch()
 end
 
-function ItemSlot:FLASH_SEARCH_UPDATE(event, item)
+function ItemSlot:FLASH_SEARCH_UPDATE(event, search)
 	self.flash:Stop()
 
-	if item == self:GetItem() then
+	if ItemSearch:Matches(self:GetItem(), search) then
 		self.flash:Play()
 	end
 end
@@ -351,9 +351,9 @@ end
 --[[ Border Glow ]]--
 
 function ItemSlot:UpdateBorder()
-	local quality = select(4, self:GetInfo()) or 0
+	local _,_,_, quality = self:GetInfo()
 	local item = self:GetItem()
-	self:HideBorders()
+	self:HideBorder()
 
 	if item then
 		if self:IsNew() then
@@ -381,7 +381,7 @@ function ItemSlot:UpdateBorder()
 	   		return self:SetBorderColor(.1, 1, 1)
 	  	end
 		
-		if self:HighlightItemsByQuality() and quality > 1 then
+		if self:HighlightItemsByQuality() and quality and quality > 1 then
 			return self:SetBorderColor(GetItemQualityColor(quality))
 		end
 	end
@@ -392,7 +392,7 @@ function ItemSlot:SetBorderColor(r, g, b)
 	self.border:Show()
 end
 
-function ItemSlot:HideBorders()
+function ItemSlot:HideBorder()
 	self.newItemBorder:Hide()
 	self.questBorder:Hide()
 	self.border:Hide()
@@ -456,7 +456,7 @@ function ItemSlot:UpdateSearch()
 	else	
 		SetItemButtonDesaturated(self, true)
 		self:SetAlpha(0.4)
-		self:HideBorders()
+		self:HideBorder()
 	end
 end
 
@@ -509,7 +509,7 @@ end
 
 function ItemSlot:IsNew()
 	local bag, slot = self:GetBag(), self:GetID()
-	return C_NewItems and C_NewItems.IsNewItem(bag, slot) and IsBattlePayItem(bag, slot)
+	return C_NewItems.IsNewItem(bag, slot) and IsBattlePayItem(bag, slot)
 end
 
 function ItemSlot:IsCached()
@@ -518,11 +518,6 @@ end
 
 function ItemSlot:IsBank()
 	return Addon:IsBank(self:GetBag())
-end
-
-function ItemSlot:IsBankSlot()
-	local bag = self:GetBag()
-	return Addon:IsBank(bag) or Addon:IsBankBag(bag)
 end
 
 function ItemSlot:GetInfo()

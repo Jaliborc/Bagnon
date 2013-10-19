@@ -243,6 +243,10 @@ function Settings:GetLastTextSearch()
 end
 
 --flash find
+local function getItemName(link)
+	return link and link:match('^|c%x+|Hitem.+|h%[(.*)%]')
+end
+
 function Settings:SetEnableFlashFind(enable)
 	local enable = enable and true or false
 	if self:IsFlashFindEnabled() ~= enable then
@@ -257,14 +261,14 @@ end
 
 function Settings:FlashFind(link)
 	if link and self:IsFlashFindEnabled() then
-		self:SendMessage('FLASH_SEARCH_UPDATE', link)
+		self:SendMessage('FLASH_SEARCH_UPDATE', getItemName(link))
 	end
 end
 
 -- Function that is invoked when a chat link is clicked
 hooksecurefunc("SetItemRef", function(_, link, button)
 	if IsAltKeyDown() and button == "LeftButton" then
-		local name = link and link:match('^|c%x+|Hitem.+|h%[(.*)%]')
+		local name = getItemName(link)
 		if name then
 			Addon:ShowFrame('inventory')
 			Addon:GetFrame('inventory'):GetSettings():EnableTextSearch()

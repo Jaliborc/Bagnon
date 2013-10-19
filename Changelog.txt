@@ -1,8 +1,22 @@
+====== 5.4.3
+* Fixed issue causing caged pets quality to not always be properly identified.
+
+====== 5.4.2
+* Fixed issue causing flash find to not work on all items.
+
+====== 5.4.1
+* Fixed bug with guild bank and void storage.
+
+====== 5.4.0
+* Updated for Siege of Ogrimmar.
+* Added support for the new in-game store features.
+
 ====== 5.3.6
 * Hotfix of issue on upload system.
 
 ====== 5.3.5
-* Flash Find is back, behaving exacty as on previous patches! Yet, it now uses a different animation system, as the previous one could lead to taints in combat.* Alt-clicking an item link in the chat now automatically opens the inventory and searches for the selected item.
+* Flash Find is back, behaving exacty as on previous patches! Yet, it now uses a different animation system, as the previous one could lead to taints in combat.
+* Alt-clicking an item link in the chat now automatically opens the inventory and searches for the selected item.
 
 ====== 5.3.4
 * Updated LibCustomSearch.
