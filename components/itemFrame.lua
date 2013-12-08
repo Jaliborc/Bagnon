@@ -5,7 +5,7 @@
 
 local _, Addon = ...
 local ItemFrame = Addon:NewClass('ItemFrame', 'Frame')
-local Cache = LibStub('LibItemCache-1.0')
+local Cache = LibStub('LibItemCache-1.1')
 ItemFrame.ITEM_SIZE = 39
 ItemFrame.COLUMN_OFF = 0
 

@@ -717,7 +717,7 @@ function Frame:CreatePlayerSelector()
 end
 
 function Frame:HasPlayerSelector()
-	return LibStub('LibItemCache-1.0'):HasCache()
+	return LibStub('LibItemCache-1.1'):HasCache()
 end
 
 

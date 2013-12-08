@@ -46,8 +46,10 @@
 * Updated chinese translations.
 
 ====== 5.2.1
-* Added option to color items belonging to equipment sets. Packed with ItemRack and Wardrobe support!** Idea and initial prototype by Omee - Proudmoore (US).
-* Upgraded item search engine.* Updated italian translations.
+* Added option to color items belonging to equipment sets. Packed with ItemRack and Wardrobe support!
+** Idea and initial prototype by Omee - Proudmoore (US).
+* Upgraded item search engine.
+* Updated italian translations.
 
 ===== 5.2
 * Updated for patch 5.2: The Thunder King
@@ -86,7 +88,8 @@
 * Fixed bug causing guild money display to behave incorrectly for users with no withdraw limit.
 
 ====== 5.0.3
-* Fixed bug causing void storage purchase dialog to sometimes show up when vewing void storage offline.* Fixed error causing "Failed to load void storage items." message to show up.
+* Fixed bug causing void storage purchase dialog to sometimes show up when vewing void storage offline.
+* Fixed error causing "Failed to load void storage items." message to show up.
 * Fixed bug causing tooltips to now show for cached void storage items.
 
 ====== 5.0.2

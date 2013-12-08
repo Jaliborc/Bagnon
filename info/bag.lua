@@ -4,7 +4,7 @@
 --]]
 
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local Cache = LibStub('LibItemCache-1.0')
+local Cache = LibStub('LibItemCache-1.1')
 
 
 --[[ Slot Type ]]--

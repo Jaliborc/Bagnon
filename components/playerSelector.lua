@@ -6,7 +6,7 @@
 local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 local PlayerSelector = Bagnon:NewClass('PlayerSelector', 'Button')
-local ItemCache = LibStub('LibItemCache-1.0')
+local ItemCache = LibStub('LibItemCache-1.1')
 
 local SIZE = 20
 local TEXTURE_SIZE = 64 * (SIZE/36)

@@ -3,7 +3,7 @@
     A player selector dropdown
 --]]
 
-local Cache = LibStub('LibItemCache-1.0')
+local Cache = LibStub('LibItemCache-1.1')
 if not Cache:HasCache() then
   return
 end

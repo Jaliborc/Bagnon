@@ -12,7 +12,7 @@ local CLASS_COLOR = '|cff%02x%02x%02x'
 local HEARTHSTONE = tostring(HEARTHSTONE_ITEM_ID)
 local TOTAL = SILVER:format(L.Total)
 
-local ItemCache = LibStub('LibItemCache-1.0')
+local ItemCache = LibStub('LibItemCache-1.1')
 local ItemText, ItemCount, Enabled, Hooked = {}, {}
 
 
