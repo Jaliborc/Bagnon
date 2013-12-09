@@ -1,3 +1,10 @@
+====== 5.4.5 (beta)
+* Removed unecessary test files.
+
+====== 5.4.4 (beta)
+* Now supports connected realms!
+* Fixed some issues when using operators with the text search.
+
 ====== 5.4.3
 * Fixed issue causing caged pets quality to not always be properly identified.
 

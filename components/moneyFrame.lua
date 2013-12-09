@@ -62,7 +62,7 @@ function MoneyFrame:OnClick()
 end
 
 function MoneyFrame:OnEnter()
-	if not ItemCache:HasCache() then
+	if not Cache:HasCache() then
     	return
   	end
 
