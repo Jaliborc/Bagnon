@@ -1,3 +1,6 @@
+====== 5.4.7 (beta)
+* Solved several bugs in the Interface Options.
+
 ====== 5.4.6 (beta)
 * Solved bug with money frame.
 
