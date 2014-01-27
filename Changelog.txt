@@ -1,3 +1,10 @@
+====== 5.4.9
+* Solved issue affecting some clients with specific system settings.
+
+====== 5.4.8
+* Solved bug with the layer slider in the Frame Options.
+* Solved bugs with connected realms support.
+
 ====== 5.4.7 (beta)
 * Solved several bugs in the Interface Options.
 
