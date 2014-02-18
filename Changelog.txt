@@ -1,3 +1,6 @@
+====== 5.4.11 (beta)
+* Guild Bank bugfixes
+
 ====== 5.4.10 (beta)
 * Added experimental offline Guild Bank support!
 

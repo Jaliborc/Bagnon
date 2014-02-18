@@ -484,3 +484,6 @@ function SavedFrameSettings:GetDefaultBankSettings()
 	SavedFrameSettings.bankDefaults = defaults
 	return defaults
 end
+
+SavedFrameSettings.GetDefaultGuildBankSettings = SavedFrameSettings.GetDefaultInventorySettings
+SavedFrameSettings.GetDefaultVaultSettings = SavedFrameSettings.GetDefaultInventorySettings
