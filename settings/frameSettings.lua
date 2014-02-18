@@ -502,3 +502,7 @@ end
 function FrameSettings:GetPlayerFilter()
 	return self.playerFilter or UnitName('player')
 end
+
+function FrameSettings:GetGuild()
+	return LibStub('LibItemCache-1.1'):GetGuild(self:GetPlayerFilter())
+end

@@ -9,12 +9,13 @@ local Bag = Bagnon:NewClass('Bag', 'CheckButton')
 
 Bag.SIZE = 32
 Bag.TEXTURE_SIZE = 64 * (Bag.SIZE/36)
+Bag.count = 0
 
 
 --[[ Constructor ]]--
 
 function Bag:New(slotID, frameID, parent)
-	local bag = Bag:CreateBag(slotID, parent)
+	local bag = self:Create(slotID, parent)
 	bag:SetFrameID(frameID)
 
 	bag:SetScript('OnEnter', bag.OnEnter)
@@ -29,8 +30,8 @@ function Bag:New(slotID, frameID, parent)
 	return bag
 end
 
-function Bag:CreateBag(slotID, parent)
-	local bag = self:Bind(CreateFrame('CheckButton', 'BagnonBag' .. self:GetNextBagSlotID(), parent))
+function Bag:Create(slotID, parent)
+	local bag = self:Bind(CreateFrame('CheckButton', 'BagnonBag' .. self:NextID(), parent))
 	bag:SetSize(self.SIZE, self.SIZE)
 	bag:SetID(slotID)
 
@@ -77,13 +78,10 @@ function Bag:CreateBag(slotID, parent)
 	return bag
 end
 
-do
-	local id = 0
-	function Bag:GetNextBagSlotID()
-		local nextID = id + 1
-		id = nextID
-		return nextID
-	end
+function Bag:NextID()
+	local id = self.count + 1
+	self.count = id
+	return id
 end
 
 

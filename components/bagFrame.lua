@@ -3,9 +3,10 @@
 		A container object for bags
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
+local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
 local BagFrame = Bagnon:NewClass('BagFrame', 'Frame')
+BagFrame.Button = Addon.Bag
 
 
 --[[ Constructor ]]--
@@ -26,9 +27,8 @@ end
 
 function BagFrame:CreateBagSlots()
 	local bags = {}
-
-	for i, slotID in self:GetBagSlots() do
-		bags[i] = Bagnon.Bag:New(slotID, self:GetFrameID(), self)
+	for i, slot in self:GetBagSlots() do
+		bags[i] = self.Button:New(slot, self:GetFrameID(), self)
 	end
 
 	self.bags = bags

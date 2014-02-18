@@ -1,3 +1,6 @@
+====== 5.4.10 (beta)
+* Added experimental offline Guild Bank support!
+
 ====== 5.4.9
 * Solved issue affecting some clients with specific system settings.
 

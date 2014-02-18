@@ -3,9 +3,9 @@
 		A bag toggle widget
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
+local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local BagToggle = Bagnon:NewClass('BagToggle', 'CheckButton')
+local BagToggle = Addon:NewClass('BagToggle', 'CheckButton')
 local Dropdown = CreateFrame('Frame', 'BagnonBagToggleDropdown', nil, 'UIDropDownMenuTemplate')
 
 local SIZE = 20
@@ -79,27 +79,33 @@ end
 function BagToggle:OnClick(button)
 	if button == 'LeftButton' then
 		self:GetSettings():ToggleBagFrame()
-	elseif select(5, GetAddOnInfo('Bagnon_VoidStorage')) then
-		
-		-- yes, harcoded for now
-		EasyMenu({
-			{
-				text = self:GetFrameID() == 'inventory' and L.Bank or INVENTORY_TOOLTIP,
-				notCheckable = 1,
-				func = function()
-					self:OpenOther()
-				end
-			},
-			{
-				text = VOID_STORAGE,
-				notCheckable = 1,
-				func = function()
-					self:OpenVault()
-				end
-			}
-		}, Dropdown, self, 0, 0, 'MENU')
 	else
-		self:OpenOther()
+		local menu = {}
+		local function addLine(id, name, addon)
+			if id ~= self:GetFrameID() and (not addon or select(5, GetAddOnInfo(addon))) then
+				tinsert(menu, {
+					text = name,
+					notCheckable = 1,
+					func = function()
+						self:OpenFrame(id, addon)
+					end
+				})
+			end
+		end
+
+		addLine('inventory', INVENTORY_TOOLTIP)
+		addLine('bank', L.Bank)
+		addLine('voidstorage', VOID_STORAGE, 'Bagnon_VoidStorage')
+
+		if self:GetSettings():GetGuild() then
+			addLine('guildbank', GUILD_BANK, 'Bagnon_GuildBank')
+		end
+		
+		if #menu > 1 then
+			EasyMenu(menu, Dropdown, self, 0, 0, 'MENU')
+		else
+			self:OpenFrame(self:GetFrameID() == 'inventory' and 'bank' or 'inventory')
+		end
 	end
 end
 
@@ -129,20 +135,11 @@ end
 
 --[[ Open Frames ]]--
 
-function BagToggle:OpenVault()
-	if LoadAddOn('Bagnon_VoidStorage') then
-		self:OpenFrame('voidstorage')
+function BagToggle:OpenFrame(id, addon)
+	if not addon or LoadAddOn(addon) then
+		Bagnon.FrameSettings:Get(id):SetPlayerFilter(self:GetSettings():GetPlayerFilter())
+		Addon:ToggleFrame(id)
 	end
-end
-
-function BagToggle:OpenOther()
-	self:OpenFrame(self:GetFrameID() == 'inventory' and 'bank' or 'inventory')
-end
-
-function BagToggle:OpenFrame(frame)
-	--local frameSettings = Bagnon.FrameSettings:Get(frame)
-	--frameSettings:SetPlayerFilter(self:GetSettings():GetPlayerFilter())
-	Bagnon:ToggleFrame(frame)
 end
 
 
@@ -165,7 +162,6 @@ function BagToggle:UpdateTooltip()
 	end
 	
 	GameTooltip:SetText(L.TipBags)
-
 	if self:IsBagFrameShown() then
 		GameTooltip:AddLine(L.TipHideBags, 1,1,1)
 	else

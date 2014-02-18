@@ -403,7 +403,6 @@ function SavedFrameSettings:GetDefaultInventorySettings()
 	local defaults = SavedFrameSettings.invDefaults or {
 		--bag settings
 		availableBags = {BACKPACK_CONTAINER, 1, 2, 3, 4},
-	
 		hiddenBags = {			
 			[BACKPACK_CONTAINER] = false,
 			[1] = false,
@@ -426,6 +425,7 @@ function SavedFrameSettings:GetDefaultInventorySettings()
 		itemFrameColumns = 8,
 		itemFrameSpacing = 2,
 		bagBreak = false,
+		reverseSlotOrder = false,
 
 		--optional components
 		hasMoneyFrame = true,
@@ -433,12 +433,7 @@ function SavedFrameSettings:GetDefaultInventorySettings()
 		hasDBOFrame = true,
 		hasSearchToggle = true,
 		hasOptionsToggle = true,
-
-		--dbo display object
 		dataBrokerObject = 'BagnonLauncher',
-		
-		--slot ordering
-		reverseSlotOrder = false,
 	}
 
 	SavedFrameSettings.invDefaults = defaults
@@ -475,6 +470,7 @@ function SavedFrameSettings:GetDefaultBankSettings()
 		itemFrameColumns = 10,
 		itemFrameSpacing = 2,
 		bagBreak = false,
+		reverseSlotOrder = false,
 
 		--optional components
 		hasMoneyFrame = true,
@@ -482,21 +478,9 @@ function SavedFrameSettings:GetDefaultBankSettings()
 		hasDBOFrame = true,
 		hasSearchToggle = true,
 		hasOptionsToggle = true,
-
-		--dbo display object
 		dataBrokerObject = 'BagnonLauncher',
-		
-		--slot ordering
-		reverseSlotOrder = false,
 	}
+	
 	SavedFrameSettings.bankDefaults = defaults
 	return defaults
-end
-
-function SavedFrameSettings:GetDefaultGuildBankSettings()
-	return self:GetDefaultInventorySettings()
-end
-
-function SavedFrameSettings:GetDefaultVaultSettings()
-	return self:GetDefaultInventorySettings()
 end
