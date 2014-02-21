@@ -126,6 +126,6 @@ function Addon:HookTooltips()
 end
 
 function Addon:GetPlayerColor(player)
-	local class = ItemCache:GetPlayerInfo(player)
+	local class = ItemCache:GetPlayerInfo(player) or 'PRIEST'
 	return (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class]
 end

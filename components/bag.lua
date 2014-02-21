@@ -14,9 +14,9 @@ Bag.count = 0
 
 --[[ Constructor ]]--
 
-function Bag:New(slotID, frameID, parent)
-	local bag = self:Create(slotID, parent)
-	bag:SetFrameID(frameID)
+function Bag:New(id, frame, parent)
+	local bag = self:Create(parent)
+	bag:SetTarget(frame, id)
 
 	bag:SetScript('OnEnter', bag.OnEnter)
 	bag:SetScript('OnLeave', bag.OnLeave)
@@ -30,10 +30,9 @@ function Bag:New(slotID, frameID, parent)
 	return bag
 end
 
-function Bag:Create(slotID, parent)
+function Bag:Create(parent)
 	local bag = self:Bind(CreateFrame('CheckButton', 'BagnonBag' .. self:NextID(), parent))
 	bag:SetSize(self.SIZE, self.SIZE)
-	bag:SetID(slotID)
 
 	local name = bag:GetName()
 	local icon = bag:CreateTexture(name .. 'IconTexture', 'BORDER')
@@ -181,7 +180,7 @@ end
 
 do
 	local function updateToggle(self) 
-		if frameID == self:GetFrameID() and slot == self:GetID() then
+		if frameID == self:GetFrameID() and slot == self:GetSlot() then
 			self:UpdateToggle()
 		end
 	end
@@ -395,7 +394,7 @@ end
 
 --item viewing
 function Bag:ToggleSlot()
-	self:GetSettings():ToggleBagSlot(self:GetID())
+	self:GetSettings():ToggleBagSlot(self:GetSlot())
 end
 
 function Bag:UpdateToggle()
@@ -403,7 +402,7 @@ function Bag:UpdateToggle()
 end
 
 function Bag:IsSlotShown()
-	return self:CanToggleSlot() and self:GetSettings():IsBagSlotShown(self:GetID())
+	return self:CanToggleSlot() and self:GetSettings():IsBagSlotShown(self:GetSlot())
 end
 
 function Bag:CanToggleSlot()
@@ -415,11 +414,11 @@ end
 
 --searching
 function Bag:SetSearch()
-	self:GetSettings():SetBagSearch(self:GetID())
+	self:GetSettings():SetBagSearch(self:GetSlot())
 end
 
 function Bag:ClearSearch()
-	if self:GetSearch() == self:GetID() then
+	if self:GetSearch() == self:GetSlot() then
 		self:GetSettings():SetBagSearch(false)
 	end
 end
@@ -432,19 +431,19 @@ end
 --[[ Bag Type Functions ]]--
 
 function Bag:IsBackpack()
-	return Bagnon:IsBackpack(self:GetID())
+	return Bagnon:IsBackpack(self:GetSlot())
 end
 
 function Bag:IsBackpackBag()
-  return Bagnon:IsBackpackBag(self:GetID())
+  return Bagnon:IsBackpackBag(self:GetSlot())
 end
 
 function Bag:IsBank()
-	return Bagnon:IsBank(self:GetID())
+	return Bagnon:IsBank(self:GetSlot())
 end
 
 function Bag:IsBankBagSlot()
-	return Bagnon:IsBankBag(self:GetID())
+	return Bagnon:IsBankBag(self:GetSlot())
 end
 
 function Bag:IsCustomSlot()
@@ -455,38 +454,43 @@ end
 --[[ Bag Info Functions ]]--
 
 function Bag:GetInfo()
-  return Bagnon:GetBagInfo(self:GetPlayer(), self:GetID())
+  return Bagnon:GetBagInfo(self:GetPlayer(), self:GetSlot())
 end
 
 function Bag:GetInventorySlot()
-  return Bagnon:BagToInventorySlot(self:GetPlayer(), self:GetID())
+  return Bagnon:BagToInventorySlot(self:GetPlayer(), self:GetSlot())
 end
 
 
 --[[ Bag State Functions ]]--
 
 function Bag:IsPurchasable()
-	return Bagnon:IsBagPurchasable(self:GetPlayer(), self:GetID())
+	return Bagnon:IsBagPurchasable(self:GetPlayer(), self:GetSlot())
 end
 
 function Bag:IsLocked()
-	return Bagnon:IsBagLocked(self:GetPlayer(), self:GetID())
+	return Bagnon:IsBagLocked(self:GetPlayer(), self:GetSlot())
 end
 
 function Bag:IsCached()
-  return Bagnon:IsBagCached(self:GetPlayer(), self:GetID())
+  return Bagnon:IsBagCached(self:GetPlayer(), self:GetSlot())
 end
 
 function Bag:GetPlayer()
 	return self:GetSettings():GetPlayerFilter()
 end
 
+function Bag:GetSlot()
+	return self:GetID()
+end
+
 
 --[[ Usual Acessor Functions ]]--
 
-function Bag:SetFrameID(frameID)
-	if self:GetFrameID() ~= frameID then
-		self.frameID = frameID
+function Bag:SetTarget(frame, id)
+	if self:GetFrameID() ~= frame or self:GetID() ~= id then
+		self.frameID = frame
+		self:SetID(id)
 		self:UpdateEverything()
 	end
 end

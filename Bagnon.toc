@@ -6,7 +6,7 @@
 ## SavedVariables: BagnonGlobalSettings
 
 ## OptionalDeps: BagBrother, ItemRack, Wardrobe, WoWUnit
-## Version: 5.4.10
+## Version: 5.4.11
 
 libs\libs.xml
 localization\localization.xml

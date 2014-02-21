@@ -504,5 +504,5 @@ function FrameSettings:GetPlayerFilter()
 end
 
 function FrameSettings:GetGuild()
-	return LibStub('LibItemCache-1.1'):GetGuild(self:GetPlayerFilter())
+	return LibStub('LibItemCache-1.1'):GetPlayerGuild(self:GetPlayerFilter())
 end
