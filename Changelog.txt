@@ -1,3 +1,16 @@
+====== 5.4.15
+* Fixed issue causing errors when opening the guild bank for the first time.
+
+====== 5.4.14
+* Hopefully solved tainting issues when opening the inventory for the first time in combat.
+
+====== 5.4.13 (beta)
+* Now can change guild bank tabs while in offline mode.
+* Guild bank items now show tooltips in offline mode.
+
+====== 5.4.12 (beta)
+* Many offline guild bank issues solved.
+
 ====== 5.4.11 (beta)
 * Guild Bank bugfixes.
 

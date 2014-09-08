@@ -17,3 +17,6 @@
 [submodule "libs/LibDataBroker-1.1"]
 	path = libs/LibDataBroker-1.1
 	url = git://github.com/tekkub/libdatabroker-1-1.git
+[submodule "libs/AddonList-1.0"]
+	path = libs/AddonList-1.0
+	url = https://jaliborc@github.com/Jaliborc/AddonList-1.0.git

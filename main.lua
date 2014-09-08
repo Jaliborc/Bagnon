@@ -25,6 +25,7 @@ function Addon:OnEnable()
 	self:HookBagClickEvents()
 	self:HookTooltips()
 
+	self:CreateFrame('inventory')
 	self:CreateFrameLoader(ADDON .. '_GuildBank', 'GuildBankFrame_LoadUI')
 	self:CreateFrameLoader(ADDON .. '_VoidStorage', 'VoidStorage_LoadUI')
 	self:CreateOptionsLoader()
@@ -40,8 +41,7 @@ function Addon:CreateOptionsLoader()
 end
 
 function Addon:CreateFrameLoader (addon, method)
-	local name, title, notes, enabled, loadable = GetAddOnInfo(addon)
-	if enabled and loadable then
+	if LibStub('AddonList-1.0'):IsEnabled(addon) then
 		_G[method] = function()
 			LoadAddOn(addon)
 		end
@@ -55,6 +55,7 @@ function Addon:CreateLDBLauncher()
 	LDB:NewDataObject(ADDON .. 'Launcher', {
 		type = 'launcher',
 		icon = [[Interface\Icons\INV_Misc_Bag_07]],
+		text = ADDON,
 
 		OnClick = function(_, button)
 			if button == 'LeftButton' then
@@ -98,10 +99,7 @@ end
 
 function Addon:ShowFrame(id)
 	if self:IsFrameEnabled(id) then
-		if not self:GetFrame(id) then
-			self:CreateFrame(id)
-		end
-
+		self:CreateFrame(id)
 		self.FrameSettings:Get(id):Show()
 		return true
 	end
@@ -115,7 +113,9 @@ function Addon:HideFrame(id, force)
 end
 
 function Addon:CreateFrame(id)
- 	self.frames[id] = self[id:gsub('^.', id.upper) .. 'Frame']:New(id)
+	if self:IsFrameEnabled(id) then
+ 		self.frames[id] = self.frames[id] or self[id:gsub('^.', id.upper) .. 'Frame']:New(id)
+ 	end
 end
 
 function Addon:GetFrame(id)

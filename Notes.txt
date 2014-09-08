@@ -1,0 +1,23 @@
+function sortBank()
+	PlaySound('UI_BagSorting_01')
+	SortBankBags()
+	SortReagentBankBags()
+end
+
+function sortBags()
+	PlaySound('UI_BagSorting_01')
+	SortBags()
+end
+
+SetItemSearch(text)
+local _, _, _, _, _, _, _, isFiltered = GetContainerItemInfo(bag, slot)
+
+for flag = LE_BAG_FILTER_FLAG_EQUIPMENT, NUM_LE_BAG_FILTER_FLAGS do
+	if flag ~= LE_BAG_FILTER_FLAG_JUNK then
+		if bag > NUM_BAG_SLOTS then
+			SetBankBagSlotFlag(bag - NUM_BAG_SLOTS, flag, enabled)
+		else
+			SetBagSlotFlag(bag, flag, enabled)
+		end
+	end
+end

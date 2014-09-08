@@ -822,8 +822,7 @@ function Frame:PlaceOptionsToggle()
 end
 
 function Frame:HasOptionsToggle()
-	local name, title, notes, enabled = GetAddOnInfo('Bagnon_Config')
-	return enabled and self:GetSettings():HasOptionsToggle()
+	return LibStub('AddonList-1.0'):IsEnabled('Bagnon_Config') and self:GetSettings():HasOptionsToggle()
 end
 
 function Frame:HasLogs()

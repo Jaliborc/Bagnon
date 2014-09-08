@@ -60,14 +60,10 @@ function ItemSlot:Create()
 		fade:SetOrder(i * 2 + 1)
 	end
 	
-	--hack, make sure the cooldown model stays visible
-	item.border, item.flash = border, flash
-	item.newItemBorder = _G[name .. 'NewItemTexture']
-	item.questBorder = _G[name .. 'IconQuestTexture']
-	item.cooldown = _G[name .. 'Cooldown']
 	item.UpdateTooltip = nil
-
-	--get rid of any registered frame events, and use our own
+	item.Border, item.Flash = border, flash
+	item.QuestBorder = _G[name .. 'IconQuestTexture']
+	item.Cooldown = _G[name .. 'Cooldown']
 	item:HookScript('OnClick', item.OnClick)
 	item:SetScript('PreClick', item.OnPreClick)
 	item:HookScript('OnDragStart', item.OnDragStart)
@@ -150,10 +146,10 @@ function ItemSlot:TEXT_SEARCH_UPDATE()
 end
 
 function ItemSlot:FLASH_SEARCH_UPDATE(event, search)
-	self.flash:Stop()
+	self.Flash:Stop()
 
 	if ItemSearch:Matches(self:GetItem(), search) then
-		self.flash:Play()
+		self.Flash:Play()
 	end
 end
 
@@ -247,11 +243,10 @@ function ItemSlot:OnEnter()
 		dummySlot:SetParent(self)
 		dummySlot:SetAllPoints(self)
 		dummySlot:Show()
-		
 	elseif self:GetItem() then
 		self:AnchorTooltip()
 		self:ShowTooltip()
-
+		self:UpdateBorder()
 	else
 		self:OnLeave()
 	end
@@ -357,7 +352,18 @@ function ItemSlot:UpdateBorder()
 
 	if item then
 		if self:IsNew() then
-			return self.newItemBorder:Show()
+			if not self.flashAnim:IsPlaying() then
+				self.flashAnim:Play()
+				self.newitemglowAnim:Play()
+			end
+
+			if self:IsPaid() then
+				return self.BattlepayItemTexture:Show()
+			else
+				self.NewItemTexture:SetAtlas(quality and NEW_ITEM_ATLAS_BY_QUALITY[quality] or 'bags-glow-white')
+				self.NewItemTexture:Show()
+				return
+			end
 		end
 
 		if self:HighlightQuestItems() then
@@ -367,8 +373,8 @@ function ItemSlot:UpdateBorder()
 			end
 
 			if isQuestStarter then
-				self.questBorder:SetTexture(TEXTURE_ITEM_QUEST_BANG)
-				self.questBorder:Show()
+				self.QuestBorder:SetTexture(TEXTURE_ITEM_QUEST_BANG)
+				self.QuestBorder:Show()
 				return
 			end
 		end
@@ -377,25 +383,22 @@ function ItemSlot:UpdateBorder()
 			return self:SetBorderColor(RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b)
 		end
 
-		if self:HighlightSetItems() and ItemSearch:InSet(item) then
-	   		return self:SetBorderColor(.1, 1, 1)
-	  	end
-		
 		if self:HighlightItemsByQuality() and quality and quality > 1 then
-			return self:SetBorderColor(GetItemQualityColor(quality))
+			self:SetBorderColor(GetItemQualityColor(quality))
 		end
 	end
 end
 
 function ItemSlot:SetBorderColor(r, g, b)
-	self.border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
-	self.border:Show()
+	self.Border:SetVertexColor(r, g, b, self:GetHighlightAlpha())
+	self.Border:Show()
 end
 
 function ItemSlot:HideBorder()
-	self.newItemBorder:Hide()
-	self.questBorder:Hide()
-	self.border:Hide()
+	self.QuestBorder:Hide()
+	self.Border:Hide()
+	self.NewItemTexture:Hide()
+	self.BattlepayItemTexture:Hide()
 end
 
 
@@ -405,7 +408,7 @@ function ItemSlot:UpdateCooldown()
 	if self:GetItem() and (not self:IsCached()) then
 		ContainerFrame_UpdateCooldown(self:GetBag(), self)
 	else
-		CooldownFrame_SetTimer(self.cooldown, 0, 0, 0)
+		CooldownFrame_SetTimer(self.Cooldown, 0, 0, 0)
 		SetItemButtonTextureVertexColor(self, 1, 1, 1)
 	end
 end
@@ -508,8 +511,11 @@ function ItemSlot:IsSlot(bag, slot)
 end
 
 function ItemSlot:IsNew()
-	local bag, slot = self:GetBag(), self:GetID()
-	return C_NewItems.IsNewItem(bag, slot) and IsBattlePayItem(bag, slot)
+	return C_NewItems.IsNewItem(self:GetBag(), self:GetID())
+end
+
+function ItemSlot:IsPaid()
+	return IsBattlePayItem(self:GetBag(), self:GetID())
 end
 
 function ItemSlot:IsCached()
