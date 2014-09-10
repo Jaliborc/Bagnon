@@ -1,3 +1,7 @@
+====== 6.0.0 (beta)
+* Updated for Warlords of Draenor
+* Now flashes new items, much alike Diablo 3 style
+
 ====== 5.4.15
 * Fixed issue causing errors when opening the guild bank for the first time.
 
