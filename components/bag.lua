@@ -32,9 +32,8 @@ end
 
 function Bag:Create(parent)
 	local bag = self:Bind(CreateFrame('CheckButton', 'BagnonBag' .. self:NextID(), parent))
-	bag:SetSize(self.SIZE, self.SIZE)
-
 	local name = bag:GetName()
+
 	local icon = bag:CreateTexture(name .. 'IconTexture', 'BORDER')
 	icon:SetAllPoints(bag)
 
@@ -48,29 +47,25 @@ function Bag:Create(parent)
 	nt:SetWidth(self.TEXTURE_SIZE)
 	nt:SetHeight(self.TEXTURE_SIZE)
 	nt:SetPoint('CENTER', 0, -1)
-	bag:SetNormalTexture(nt)
 
 	local pt = bag:CreateTexture()
 	pt:SetTexture([[Interface\Buttons\UI-Quickslot-Depress]])
 	pt:SetAllPoints(bag)
-	bag:SetPushedTexture(pt)
 
 	local ht = bag:CreateTexture()
 	ht:SetTexture([[Interface\Buttons\ButtonHilight-Square]])
 	ht:SetAllPoints(bag)
-	bag:SetHighlightTexture(ht)
 
 	local ct = bag:CreateTexture()
 	ct:SetTexture([[Interface\Buttons\CheckButtonHilight]])
 	ct:SetAllPoints(bag)
 	ct:SetBlendMode('ADD')
+
+	bag:SetSize(self.SIZE, self.SIZE)
+	bag:SetNormalTexture(nt)
+	bag:SetPushedTexture(pt)
 	bag:SetCheckedTexture(ct)
-
-	if bag:IsBackpack() or bag:IsBank() then
-		SetItemButtonTexture(bag, [[Interface\Buttons\Button-Backpack-Up]])
-		SetItemButtonTextureVertexColor(bag, 1, 1, 1)
-	end
-
+	bag:SetHighlightTexture(ht)
 	bag:RegisterForClicks('anyUp')
 	bag:RegisterForDrag('LeftButton')
 
@@ -115,11 +110,13 @@ function Bag:UpdateEvents()
 			else
 				self:RegisterEvent('GET_ITEM_INFO_RECEIVED')
 			end
-		end
 
-		if self:IsBankBagSlot() then
-			self:RegisterItemSlotEvent('BANK_OPENED')
-			self:RegisterItemSlotEvent('BANK_CLOSED')
+			if self:IsBankBagSlot() then
+				self:RegisterItemSlotEvent('BANK_OPENED')
+				self:RegisterItemSlotEvent('BANK_CLOSED')
+			end
+		elseif self:IsReagents() then
+			self:RegisterEvent('REAGENTBANK_PURCHASED')
 		end
 	end
 end
@@ -148,7 +145,7 @@ end
 
 function Bag:BAG_UPDATE(event, bag)
 	self:UpdateLock()
-	self:UpdateSlotInfo()
+	self:UpdateCustomIcon()
   	self:UpdateToggle()
 end
 
@@ -159,13 +156,13 @@ function Bag:PLAYER_UPDATE(msg, frameID, player)
 end
 
 function Bag:GET_ITEM_INFO_RECEIVED()
-	self:UpdateSlotInfo()
+	self:UpdateCustomIcon()
 end
 
 do
 	local function updateSlot(self)
 		self:UpdateLock()
-		self:UpdateSlotInfo()
+		self:UpdateCustomIcon()
 	end
 	
 	Bag.PLAYERBANKSLOTS_UPDATED = updateSlot
@@ -247,14 +244,20 @@ end
 function Bag:UpdateTooltip()
 	GameTooltip:ClearLines()
 
-	if self:IsBackpack() then
-		GameTooltip:SetText(BACKPACK_TOOLTIP, 1, 1, 1)
+	if self:IsPurchasable() then
+		GameTooltip:SetText(BANK_BAG_PURCHASE, 1, 1, 1)
+		GameTooltip:AddLine(L.TipPurchaseBag)
+		SetTooltipMoney(GameTooltip, self:GetCost())
+	elseif self:IsBackpack() then
+		GameTooltip:SetText(BACKPACK_TOOLTIP, 1,1,1)
 	elseif self:IsBank() then
-		GameTooltip:SetText(L.TipBank, 1, 1, 1)
+		GameTooltip:SetText(L.TipBank, 1,1,1)
+	elseif self:IsReagents() then
+		GameTooltip:SetText(REAGENT_BANK, 1,1,1)
 	elseif self:IsCached() then
 		self:UpdateCachedBagTooltip()
 	else
-		self:UpdateBagTooltip()
+		GameTooltip:SetText(EQUIP_CONTAINER, 1, 1, 1)
 	end
 
 	if self:CanToggleSlot() then
@@ -276,18 +279,6 @@ function Bag:UpdateCachedBagTooltip()
 	end
 end
 
-function Bag:UpdateBagTooltip()
-	if not GameTooltip:SetInventoryItem('player', self:GetInventorySlot()) then
-		if self:IsPurchasable() then
-			GameTooltip:SetText(BANK_BAG_PURCHASE, 1, 1, 1)
-			GameTooltip:AddLine(L.TipPurchaseBag)
-			SetTooltipMoney(GameTooltip, GetBankSlotCost(GetNumBankSlots()))
-		else
-			GameTooltip:SetText(EQUIP_CONTAINER, 1, 1, 1)
-		end
-	end
-end
-
 
 --[[ Display Updating ]]--
 
@@ -298,19 +289,26 @@ end
 
 function Bag:Update()
 	if not self:IsVisible() then
-    return
-  end
+    	return
+  	end
+
+  	if self:IsBackpack() or self:IsBank() then
+		self:SetIcon('Interface/Buttons/Button-Backpack-Up')
+	elseif self:IsReagents() then
+		self:SetIcon('Interface/Icons/Achievement_GuildPerk_BountifulBags')
+	else
+		self:UpdateCustomIcon()
+	end
 
 	self:UpdateLock()
-	self:UpdateSlotInfo()
 	self:UpdateCursor()
 	self:UpdateToggle()
 end
 
 function Bag:UpdateLock()
 	if self:IsCustomSlot() then
-    SetItemButtonDesaturated(self, self:IsLocked())
-  end
+    	SetItemButtonDesaturated(self, self:IsLocked())
+ 	end
 end
 
 function Bag:UpdateCursor()
@@ -325,43 +323,32 @@ function Bag:UpdateCursor()
 	end
 end
 
-function Bag:UpdateSlotInfo()
-	if not self:IsCustomSlot() then
-    return
-  end
+function Bag:UpdateCustomIcon()
+	if self:IsCustomSlot() then
+		local link, count, texture = self:GetInfo()
+		local color = self:IsPurchasable() and 0.1 or 1
 
-	local link, count, texture = self:GetInfo()
-	if link then
-		SetItemButtonTexture(self, texture or GetItemIcon(link))
-		SetItemButtonTextureVertexColor(self, 1, 1, 1)
-	else
-		SetItemButtonTexture(self, [[Interface\PaperDoll\UI-PaperDoll-Slot-Bag]])
-
-		--color red if the bag can be purchased
-		if self:IsPurchasable() then
-			SetItemButtonTextureVertexColor(self, 1, 0.1, 0.1)
-		else
-			SetItemButtonTextureVertexColor(self, 1, 1, 1)
-		end
+		self:SetIcon(texture or link and GetItemIcon(link) or 'Interface/PaperDoll/UI-PaperDoll-Slot-Bag')
+		self:SetCount(count)
+	  	self.link = link
 	end
+end
 
-	self:SetCount(count)
-  	self.link = link
+function Bag:SetIcon(icon)
+	local color = self:IsPurchasable() and .1 or 1
+
+	SetItemButtonTexture(self, icon)
+	SetItemButtonTextureVertexColor(self, 1, color, color)
 end
 
 function Bag:SetCount(count)
 	local text = _G[self:GetName() .. 'Count']
 	local count = count or 0
 
-	if count > 1 then
-		if count > 999 then
-			text:SetFormattedText('%.1fk', count/1000)
-		else
-			text:SetText(count)
-		end
-		text:Show()
+	if count > 999 then
+		text:SetFormattedText('%.1fk', count/1000)
 	else
-		text:Hide()
+		text:SetText(count > 1 and count or '')
 	end
 end
 
@@ -370,25 +357,30 @@ end
 
 --show the purchase slot dialog
 function Bag:PurchaseSlot()
-	if not StaticPopupDialogs['CONFIRM_BUY_BANK_SLOT_BAGNON'] then
-		StaticPopupDialogs['CONFIRM_BUY_BANK_SLOT_BAGNON'] = {
-			text = CONFIRM_BUY_BANK_SLOT,
-			button1 = YES,
-			button2 = NO,
-			OnAccept = PurchaseSlot,
+	PlaySound('igMainMenuOption')
 
-			OnShow = function(self)
-				MoneyFrame_Update(self:GetName() .. 'MoneyFrame', GetBankSlotCost(GetNumBankSlots()))
-			end,
+	if self:IsReagents() then
+		StaticPopup_Show('CONFIRM_BUY_REAGENTBANK_TAB')
+	else
+		if not StaticPopupDialogs['CONFIRM_BUY_BANK_SLOT_BAGNON'] then
+			StaticPopupDialogs['CONFIRM_BUY_BANK_SLOT_BAGNON'] = {
+				text = CONFIRM_BUY_BANK_SLOT,
+				button1 = YES,
+				button2 = NO,
+				OnAccept = PurchaseSlot,
 
-			hasMoneyFrame = 1,
-			hideOnEscape = 1, timeout = 0,
-			preferredIndex = STATICPOPUP_NUMDIALOGS
-		}
+				OnShow = function(self)
+					MoneyFrame_Update(self:GetName() .. 'MoneyFrame', GetBankSlotCost(GetNumBankSlots()))
+				end,
+
+				hasMoneyFrame = 1,
+				hideOnEscape = 1, timeout = 0,
+				preferredIndex = STATICPOPUP_NUMDIALOGS
+			}
+		end
+
+		StaticPopup_Show('CONFIRM_BUY_BANK_SLOT_BAGNON')
 	end
-
-  	PlaySound('igMainMenuOption')
-	StaticPopup_Show('CONFIRM_BUY_BANK_SLOT_BAGNON')
 end
 
 
@@ -407,7 +399,7 @@ end
 
 function Bag:CanToggleSlot()
 	if Bagnon.Settings:CanDisableBags() then
-		return self:IsBank() or self:IsBackpack() or (self:IsCustomSlot() and self.link)
+		return self:IsBackpack() or self:IsBank() or not self:IsPurchasable()
 	end
 end
 
@@ -442,6 +434,11 @@ function Bag:IsBank()
 	return Bagnon:IsBank(self:GetSlot())
 end
 
+function Bag:IsReagents()
+	return Bagnon:IsReagents(self:GetSlot())
+end
+
+
 function Bag:IsBankBagSlot()
 	return Bagnon:IsBankBag(self:GetSlot())
 end
@@ -454,18 +451,23 @@ end
 --[[ Bag Info Functions ]]--
 
 function Bag:GetInfo()
-  return Bagnon:GetBagInfo(self:GetPlayer(), self:GetSlot())
+	return Bagnon:GetBagInfo(self:GetPlayer(), self:GetSlot())
 end
 
 function Bag:GetInventorySlot()
-  return Bagnon:BagToInventorySlot(self:GetPlayer(), self:GetSlot())
+	return Bagnon:BagToInventorySlot(self:GetPlayer(), self:GetSlot())
+end
+
+function Bag:GetCost()
+	return self:IsReagents() and GetReagentBankCost() or GetBankSlotCost(GetNumBankSlots())
 end
 
 
 --[[ Bag State Functions ]]--
 
 function Bag:IsPurchasable()
-	return Bagnon:IsBagPurchasable(self:GetPlayer(), self:GetSlot())
+	return self:IsBankBagSlot() and Bagnon:IsBagPurchasable(self:GetPlayer(), self:GetSlot())
+		or self:IsReagents() and not IsReagentBankUnlocked()
 end
 
 function Bag:IsLocked()

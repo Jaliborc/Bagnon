@@ -18,7 +18,11 @@ function Bagnon:IsBackpackBag(bagSlot)
 end
 
 function Bagnon:IsBank(slot)
-  return slot == BANK_CONTAINER
+  return slot == BANK_CONTAINER 
+end
+
+function Bagnon:IsReagents(slot)
+	return slot == REAGENTBANK_CONTAINER
 end
 
 function Bagnon:IsBankBag(slot)
@@ -48,8 +52,12 @@ function Bagnon:IsBagCached(...)
   return select(6, self:GetBagInfo(...))
 end
 
-function Bagnon:GetBagSize(...)
-  return select(5, self:GetBagInfo(...))
+function Bagnon:GetBagSize(player, bag)
+	if not self:IsReagents(bag) or IsReagentBankUnlocked() then
+  		return select(5, self:GetBagInfo(player, bag))
+  	else
+  		return 0
+  	end
 end
 
 function Bagnon:BagToInventorySlot(...)
@@ -89,10 +97,12 @@ end
 function Bagnon:GetBagFamily(player, bag)
 	if self:IsBank(bag) or self:IsBackpack(bag) then
 		return 0
-	end
-	
-	local link = self:GetBagInfo(player, bag)
-	if link then
-		return GetItemFamily(link)
+	elseif self:IsReagents(bag) then
+		return 0x10000
+	else
+		local link = self:GetBagInfo(player, bag)
+		if link then
+			return GetItemFamily(link)
+		end
 	end
 end

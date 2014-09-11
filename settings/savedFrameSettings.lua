@@ -444,9 +444,10 @@ end
 function SavedFrameSettings:GetDefaultBankSettings()
 	local defaults = SavedFrameSettings.bankDefaults or {
 		--bag settings
-		availableBags = {BANK_CONTAINER, 5, 6, 7, 8, 9, 10, 11},
+		availableBags = {BANK_CONTAINER, 5, 6, 7, 8, 9, 10, 11, REAGENTBANK_CONTAINER},
 		hiddenBags = {
 			[BANK_CONTAINER] = false,
+			[REAGENTBANK_CONTAINER] = false,
 			[5] = false,
 			[6] = false,
 			[7] = false,
@@ -467,7 +468,7 @@ function SavedFrameSettings:GetDefaultBankSettings()
 		frameLayer = 'HIGH',
 
 		--itemFrame
-		itemFrameColumns = 10,
+		itemFrameColumns = 16,
 		itemFrameSpacing = 2,
 		bagBreak = false,
 		reverseSlotOrder = false,
