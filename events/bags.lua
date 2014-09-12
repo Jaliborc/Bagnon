@@ -105,6 +105,12 @@ function BagEvents:RemoveItem(bag, slot)
 	end
 end
 
+function BagEvents:UpdateItems(bag)
+	for slot = 1, GetContainerNumSlots(bag) do
+		self:UpdateItem(bag, slot)
+	end
+end
+
 function BagEvents:UpdateItem(bag, slot)
 	local data = slots[ToIndex(bag, slot)]
 
@@ -124,12 +130,6 @@ function BagEvents:UpdateItem(bag, slot)
 
 			self:SendMessage('ITEM_SLOT_UPDATE', bag, slot, link, count, locked, onCooldown)
 		end
-	end
-end
-
-function BagEvents:UpdateItems(bag)
-	for slot = 1, GetContainerNumSlots(bag) do
-		self:UpdateItem(bag, slot)
 	end
 end
 
@@ -208,13 +208,13 @@ function BagEvents:UpdateBagTypes()
 end
 
 
-
 --[[ Events ]]--
 
 function BagEvents:PLAYER_LOGIN()
 	self:RegisterEvent('BAG_UPDATE')
 	self:RegisterEvent('BAG_UPDATE_COOLDOWN')
 	self:RegisterEvent('PLAYERBANKSLOTS_CHANGED')
+	self:RegisterEvent('PLAYERREAGENTBANKSLOTS_CHANGED')
 	self:RegisterEvent('BANKFRAME_OPENED')
 	self:RegisterEvent('BANKFRAME_CLOSED')
 
@@ -234,6 +234,10 @@ function BagEvents:PLAYERBANKSLOTS_CHANGED()
 	self:UpdateItems(BANK_CONTAINER)
 end
 
+function BagEvents:PLAYERREAGENTBANKSLOTS_CHANGED()
+	self:UpdateItems(REAGENTBANK_CONTAINER)
+end
+
 function BagEvents:BANKFRAME_OPENED()
 	self.atBank = true
 
@@ -241,6 +245,7 @@ function BagEvents:BANKFRAME_OPENED()
 		self.firstVisit = nil
 
 		self:UpdateBagSize(BANK_CONTAINER)
+		self:UpdateBagSize(REAGENTBANK_CONTAINER)
 		self:UpdateBagTypes()
 		self:UpdateBagSizes()
 	end
