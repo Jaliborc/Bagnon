@@ -1,6 +1,8 @@
 ====== 6.0.0 (beta)
-* Updated for Warlords of Draenor
-* Now flashes new items, much alike Diablo 3 style
+* Updated for Warlords of Draenor.
+* Now supports the new reagent bank, which appears as a new bag in the bank window.
+** To deposit all reagents, click on the reagent bank icon.
+* Now flashes new items, much alike Diablo 3 style.
 
 ====== 5.4.15
 * Fixed issue causing errors when opening the guild bank for the first time.

@@ -3,9 +3,9 @@
 		A searcn toggle widget
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local SearchToggle = Bagnon:NewClass('SearchToggle', 'CheckButton')
+local ADDON, Addon = ...
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+local SearchToggle = Addon:NewClass('SearchToggle', 'CheckButton')
 
 local SIZE = 20
 local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
@@ -145,7 +145,7 @@ function SearchToggle:GetFrameID()
 end
 
 function SearchToggle:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
+	return Addon.FrameSettings:Get(self:GetFrameID())
 end
 
 function SearchToggle:ToggleSearch()

@@ -4,10 +4,6 @@
 	<Script file="bagToggle.lua"/>
 	<Script file="brokerDisplay.lua"/>
 
-	<Script file="frame.lua"/>
-	<Script file="bank.lua"/>
-	<Script file="inventory.lua"/>
-
 	<Script file="item.lua"/>
 	<Script file="itemFrame.lua"/>
 	<Script file="moneyFrame.lua"/>
@@ -17,6 +13,11 @@
 	<Script file="searchFrame.lua"/>
 	<Script file="searchToggle.lua"/>
 	<Script file="titleFrame.lua"/>
+	<Script file="depositReagent.lua"/>
+
+	<Script file="frame.lua"/>
+	<Script file="bank.lua"/>
+	<Script file="inventory.lua"/>
 	
   	<Script file="tooltips.lua"/>
 </Ui>

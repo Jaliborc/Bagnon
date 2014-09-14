@@ -8,12 +8,12 @@ local Frame = Addon:NewClass('InventoryFrame', 'Frame', Addon.Frame)
 Frame.Title = LibStub('AceLocale-3.0'):GetLocale(ADDON).TitleBags
 
 function Frame:OnShow()
-	Bagnon.Frame.OnShow(self)
+	Addon.Frame.OnShow(self)
 	self:CheckBagButtons(true)
 end
 
 function Frame:OnHide()
-	Bagnon.Frame.OnHide(self)
+	Addon.Frame.OnHide(self)
 	self:CheckBagButtons(false)
 end
 

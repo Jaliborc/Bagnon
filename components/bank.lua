@@ -9,5 +9,5 @@ Frame.Title = LibStub('AceLocale-3.0'):GetLocale(ADDON).TitleBank
 
 function Frame:OnHide()
 	CloseBankFrame()
-	Bagnon.Frame.OnHide(self)
+	Addon.Frame.OnHide(self)
 end

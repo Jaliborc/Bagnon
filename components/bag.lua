@@ -197,7 +197,7 @@ function Bag:OnHide()
 	self:UpdateEvents()
 end
 
-function Bag:OnClick()
+function Bag:OnClick(button)
 	if self:IsPurchasable() then
 		self:PurchaseSlot()
 	elseif CursorHasItem() and not self:IsCached() then
@@ -205,6 +205,12 @@ function Bag:OnClick()
 			PutItemInBackpack()
 		else
 			PutItemInBag(self:GetInventorySlot())
+		end
+	elseif self:IsReagents() then
+		if self:CanToggleSlot() and button == 'LeftButton' then
+			self:ToggleSlot()
+		else
+			DepositReagentBank()
 		end
 	elseif self:CanToggleSlot() then
 		self:ToggleSlot()
@@ -244,6 +250,7 @@ end
 function Bag:UpdateTooltip()
 	GameTooltip:ClearLines()
 
+	-- title
 	if self:IsPurchasable() then
 		GameTooltip:SetText(BANK_BAG_PURCHASE, 1, 1, 1)
 		GameTooltip:AddLine(L.TipPurchaseBag)
@@ -260,7 +267,15 @@ function Bag:UpdateTooltip()
 		GameTooltip:SetText(EQUIP_CONTAINER, 1, 1, 1)
 	end
 
-	if self:CanToggleSlot() then
+	-- instructions
+	if self:IsReagents() then
+		if self:CanToggleSlot() then
+			GameTooltip:AddLine(self:IsSlotShown() and L.TipHideReagent or L.TipShowReagent)
+			GameTooltip:AddLine(L.TipDepositRightReagent)
+		else
+			GameTooltip:AddLine(L.TipDepositReagent)
+		end
+	elseif self:CanToggleSlot() then
 		GameTooltip:AddLine(self:IsSlotShown() and L.TipHideBag or L.TipShowBag)
 	end
 
