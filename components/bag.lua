@@ -261,8 +261,10 @@ function Bag:UpdateTooltip()
 		GameTooltip:SetText(L.TipBank, 1,1,1)
 	elseif self:IsReagents() then
 		GameTooltip:SetText(REAGENT_BANK, 1,1,1)
-	elseif self:IsCached() then
-		self:UpdateCachedBagTooltip()
+	elseif self.link then
+		GameTooltip:SetHyperlink(self.link)
+	elseif self:IsBankBagSlot() then
+		GameTooltip:SetText(BANK_BAG, 1, 1, 1)
 	else
 		GameTooltip:SetText(EQUIP_CONTAINER, 1, 1, 1)
 	end
@@ -280,18 +282,6 @@ function Bag:UpdateTooltip()
 	end
 
 	GameTooltip:Show()
-end
-
-function Bag:UpdateCachedBagTooltip()
-	if self.link then
-		GameTooltip:SetHyperlink(self.link)
-	elseif self:IsPurchasable() then
-		GameTooltip:SetText(BANK_BAG_PURCHASE, 1, 1, 1)
-	elseif self:IsBankBagSlot() then
-		GameTooltip:SetText(BANK_BAG, 1, 1, 1)
-	else
-		GameTooltip:SetText(EQUIP_CONTAINER, 1, 1, 1)
-	end
 end
 
 

@@ -5,15 +5,16 @@
 
 local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
-local DepositReagent = Addon:NewClass('DepositReagent', 'CheckButton')
+local SortButton = Addon:NewClass('SortButton', 'CheckButton')
 
 local SIZE = 20
 local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
+local FIRST_FLAG, LAST_FLAG = LE_BAG_FILTER_FLAG_IGNORE_CLEANUP, NUM_LE_BAG_FILTER_FLAGS
 
 
 --[[ Constructor ]]--
 
-function DepositReagent:New(frameID, parent)
+function SortButton:New(parent)
 	local b = self:Bind(CreateFrame('CheckButton', nil, parent))
 	b:RegisterForClicks('anyUp')
 	b:SetSize(SIZE, SIZE)
@@ -34,20 +35,14 @@ function DepositReagent:New(frameID, parent)
 	ht:SetAllPoints(b)
 	b:SetHighlightTexture(ht)
 
-	local ct = b:CreateTexture()
-	ct:SetTexture([[Interface\Buttons\CheckButtonHilight]])
-	ct:SetAllPoints(b)
-	ct:SetBlendMode('ADD')
-	b:SetCheckedTexture(ct)
-
 	local icon = b:CreateTexture()
-	icon:SetAllPoints(b)
 	icon:SetTexture([[Interface\Icons\ACHIEVEMENT_GUILDPERK_QUICK AND DEAD]])
+	icon:SetAllPoints(b)
+	--icon:SetAtlas('bags-button-autosort-up')
 
 	b:SetScript('OnClick', b.OnClick)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
-	b:SetFrameID(frameID)
 
 	return b
 end
@@ -55,11 +50,42 @@ end
 
 --[[ Frame Events ]]--
 
-function DepositReagent:OnClick()
-	DepositReagentBank()
+function SortButton:OnClick()
+	local frameID = self:GetParent():GetFrameID()
+
+	-- Override blizz settings
+	SetSortBagsRightToLeft(true)
+	SetBackpackAutosortDisabled(false)
+	SetBankAutosortDisabled(false)
+
+	for i, slot in Addon.FrameSettings:Get(frameID):GetBagSlots() do
+		if slot > NUM_BAG_SLOTS then
+			slot = slot - NUM_BAG_SLOTS
+
+			for flag = FIRST_FLAG, LAST_FLAG do
+				if GetBankBagSlotFlag(slot, flag) then
+					SetBankBagSlotFlag(slot, flag, false)
+				end
+			end
+		elseif slot > 0 then
+			for flag = FIRST_FLAG, LAST_FLAG do
+				if GetBagSlotFlag(slot, flag) then
+					SetBagSlotFlag(slot, flag, false)
+				end
+			end
+		end
+	end
+
+	-- Sort
+	if frameID == 'bank' then
+		SortReagentBankBags()
+		SortBankBags()
+	else
+		SortBags()
+	end
 end
 
-function DepositReagent:OnEnter()
+function SortButton:OnEnter()
 	if self:GetRight() > (GetScreenWidth() / 2) then
 		GameTooltip:SetOwner(self, 'ANCHOR_LEFT')
 	else
@@ -69,19 +95,8 @@ function DepositReagent:OnEnter()
 	GameTooltip:SetText(L.TipSortItems)
 end
 
-function DepositReagent:OnLeave()
+function SortButton:OnLeave()
 	if GameTooltip:IsOwned(self) then
 		GameTooltip:Hide()
 	end
-end
-
-
---[[ Usual Acessor Functions ]]--
-
-function DepositReagent:SetFrameID(frameID)
-	self.frameID = frameID
-end
-
-function DepositReagent:GetFrameID()
-	return self.frameID
 end

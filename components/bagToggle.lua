@@ -82,7 +82,7 @@ function BagToggle:OnClick(button)
 	else
 		local menu = {}
 		local function addLine(id, name, addon)
-			if id ~= self:GetFrameID() and (not addon or LibStub('AddonList-1.0'):IsEnabled(addon)) then
+			if id ~= self:GetFrameID() and (not addon or GetAddOnEnableState(UnitName('player'), addon) >= 2) then
 				tinsert(menu, {
 					text = name,
 					notCheckable = 1,

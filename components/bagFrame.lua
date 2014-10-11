@@ -11,14 +11,12 @@ BagFrame.Button = Addon.Bag
 
 --[[ Constructor ]]--
 
-function BagFrame:New(frameID, parent)
+function BagFrame:New(parent)
 	local f = self:Bind(CreateFrame('Frame', nil, parent))
 	f:Hide()
 
 	f:SetScript('OnShow', f.OnShow)
 	f:SetScript('OnHide', f.OnHide)
-
-	f:SetFrameID(frameID)
 	f:CreateBagSlots()
 	f:UpdateEvents()
 
@@ -105,32 +103,10 @@ function BagFrame:Layout()
 end
 
 
---[[ Properties ]]--
-
-function BagFrame:SetFrameID(frameID)
-	if self:GetFrameID() ~= frameID then
-		self.frameID = frameID
-		self:UpdateShown()
-	end
-end
-
-function BagFrame:GetFrameID()
-	return self.frameID
-end
+--[[ Frame Settings ]]--
 
 function BagFrame:GetBags()
 	return ipairs(self.bags)
-end
-
-
---[[ Frame Settings ]]--
-
-function BagFrame:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
-end
-
-function BagFrame:IsBagFrameShown()
-	return self:GetSettings():IsBagFrameShown()
 end
 
 function BagFrame:GetSpacing()
@@ -141,6 +117,18 @@ function BagFrame:GetPadding()
 	return 0
 end
 
+function BagFrame:IsBagFrameShown()
+	return self:GetSettings():IsBagFrameShown()
+end
+
 function BagFrame:GetBagSlots()
 	return self:GetSettings():GetBagSlots()
+end
+
+function BagFrame:GetSettings()
+	return Bagnon.FrameSettings:Get(self:GetFrameID())
+end
+
+function BagFrame:GetFrameID()
+	return self:GetParent():GetFrameID()
 end

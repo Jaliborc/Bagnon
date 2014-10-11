@@ -434,10 +434,6 @@ function Frame:PlaceMenuButtons()
 	if self:HasBagFrame() and self:HasBagToggle() then
 		tinsert(menuButtons, self:GetBagToggle())
 	end
-
-	--if self:HasSortButton() then
-	--	tinsert(menuButtons, self:GetSortButton())
-	--end
 	
 	for i, toggle in ipairs(self:GetSpecialButtons()) do
 		tinsert(menuButtons, toggle)
@@ -638,14 +634,14 @@ function Frame:GetSpecialButtons()
 end
 
 function Frame:CreateSpecialButtons()
-	return {}
+	return {Addon.SortButton:New(self)}
 end
 
 
 --[[ bag frame ]]--
 
 function Frame:CreateBagFrame()
-	local f =  self.BagFrame:New(self:GetFrameID(), self)
+	local f =  self.BagFrame:New(self)
 	self.bagFrame = f
 	return f
 end
@@ -829,7 +825,7 @@ function Frame:PlaceOptionsToggle()
 end
 
 function Frame:HasOptionsToggle()
-	return LibStub('AddonList-1.0'):IsEnabled(ADDON .. '_Config') and self:GetSettings():HasOptionsToggle()
+	return GetAddOnEnableState(UnitName('player'), ADDON .. '_Config') >= 2 and self:GetSettings():HasOptionsToggle()
 end
 
 

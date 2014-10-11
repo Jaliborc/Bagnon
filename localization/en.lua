@@ -48,6 +48,7 @@ L.TipShowBags = '<Left-Click> to show the bags display.'
 L.TipShowMenu = '<Right-Click> to configure this window.'
 L.TipShowSearch = 'Click to search'
 L.TipShowFrameConfig = 'Click to configure this window'
+L.TipSortItems = 'Click to clean up bags.'
 L.TipDoubleClickSearch = '<Alt-Drag> to move.\n<Right-Click> to configure.\n<Double-Click> to search.'
 L.Total = 'Total'
 
