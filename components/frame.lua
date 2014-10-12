@@ -66,6 +66,7 @@ function Frame:UpdateEvents()
 		self:RegisterMessage('DATABROKER_FRAME_ENABLE_UPDATE')
 		self:RegisterMessage('SEARCH_TOGGLE_ENABLE_UPDATE')
 		self:RegisterMessage('OPTIONS_TOGGLE_ENABLE_UPDATE')
+		self:RegisterMessage('SORT_ENABLE_UPDATE')
 	end
 end
 

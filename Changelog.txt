@@ -1,3 +1,15 @@
+====== 6.0.1 (beta)
+* Item Sorting:
+** The long awaited feature is finally here! Now there is a new button at the inventory and bank windows where you can click to automatically sort your items.
+** The button can be disabled at the interface options. But why would you?
+* Reagent Bank:
+** You can now right-click on the new sort button do deposit all reagents.
+** Now properly displays whether the reagent bank has been unlocked when offline browsing.
+* Void Storage:
+** Now supports the new void tab!
+** Fixed several issues with the withdraw and deposit interfaces.
+
+
 ====== 6.0.0 (beta)
 * Updated for Warlords of Draenor.
 * Now supports the new reagent bank, which appears as a new bag in the bank window.

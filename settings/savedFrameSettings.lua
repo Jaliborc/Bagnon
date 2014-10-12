@@ -291,7 +291,7 @@ function SavedFrameSettings:HasSearchToggle()
 	return self:GetDB().hasSearchToggle
 end
 
-function SavedFrameSettings:SetSortEnabled(enable)
+function SavedFrameSettings:EnableSortButton(enable)
 	self:GetDB().hasSortButton = enable or false
 end
 

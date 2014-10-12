@@ -3,9 +3,10 @@
 		A options frame toggle widget
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local OptionsToggle = Bagnon:NewClass('OptionsToggle', 'Button')
+local ADDON, Addon = ...
+local Addon = LibStub('AceAddon-3.0'):GetAddon(ADDON)
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+local OptionsToggle = Addon:NewClass('OptionsToggle', 'Button')
 
 local SIZE = 20
 local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
@@ -52,8 +53,9 @@ end
 --[[ Frame Events ]]--
 
 function OptionsToggle:OnClick()
-	if LoadAddOn('Bagnon_Config') then
-		Bagnon.FrameOptions:ShowFrame(self:GetFrameID())
+	if LoadAddOn(ADDON .. '_Config') then
+		Addon.FrameOptions:ShowFrame(self:GetFrameID())
+		Addon.FrameOptions:ShowFrame(self:GetFrameID())
 	end
 end
 

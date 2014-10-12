@@ -229,11 +229,11 @@ function FrameSettings:HasDBOFrame()
 end
 
 --search toggle
-function FrameSettings:SetSortEnabled(enable)
+function FrameSettings:EnableSortButton(enable)
 	enable = enable and true or false
 
 	if self:HasSortButton() ~= enable then
-		self:GetDB():SetSortEnabled(enable)
+		self:GetDB():EnableSortButton(enable)
 		self:SendMessage('SORT_ENABLE_UPDATE', self:HasSortButton())
 	end
 end
