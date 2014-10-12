@@ -145,7 +145,8 @@ do
 		'MONEY_FRAME_ENABLE_UPDATE',
 		'DATABROKER_FRAME_ENABLE_UPDATE',
 		'SEARCH_TOGGLE_ENABLE_UPDATE',
-		'OPTIONS_TOGGLE_ENABLE_UPDATE'
+		'OPTIONS_TOGGLE_ENABLE_UPDATE',
+		'SORT_ENABLE_UPDATE'
 	}
 	
 	for _, msg in ipairs(messages) do
@@ -430,18 +431,10 @@ function Frame:PlaceMenuButtons()
 	if self:HasPlayerSelector() then
 		tinsert(menuButtons, self:GetPlayerSelector())
 	end
-
-	if self:HasBagFrame() and self:HasBagToggle() then
-		tinsert(menuButtons, self:GetBagToggle())
-	end
-	
-	for i, toggle in ipairs(self:GetSpecialButtons()) do
-		tinsert(menuButtons, toggle)
-	end
+	self:GetSpecificButtons(menuButtons)
 
 	if self:HasSearchToggle() then
-		local toggle = self:GetSearchToggle() or self:CreateSearchToggle()
-		tinsert(menuButtons, toggle)
+		tinsert(menuButtons, self:GetSearchToggle() or self:CreateSearchToggle())
 	end
 
 	--position them
@@ -550,10 +543,17 @@ function Frame:HasSearchToggle()
 end
 
 
---[[ bag toggle ]]--
+--[[ specific buttons ]]--
 
-function Frame:GetBagToggle()
-	return self.bagToggle or self:CreateBagToggle()
+function Frame:GetSpecificButtons(list)
+	if self:HasBagFrame() then
+		tinsert(list, self.bagToggle or self:CreateBagToggle())
+	end
+
+	if self:HasSortButton() then
+		tinsert(list, self.sortButton or self:CreateSortButton())
+	end
+
 end
 
 function Frame:CreateBagToggle()
@@ -562,10 +562,12 @@ function Frame:CreateBagToggle()
 	return toggle
 end
 
---this exists purely so that it can be overridden by guildBank
-function Frame:HasBagToggle()
-	return true
+function Frame:CreateSortButton()
+	local button = Addon.SortButton:New(self)
+	self.sortButton = button
+	return button
 end
+
 
 
 --[[ title frame ]]--
@@ -624,20 +626,6 @@ function Frame:HasPlayerSelector()
 end
 
 
---[[ special buttons ]]--
-
-function Frame:GetSpecialButtons()
-	if not self.specialButtons then
-		self.specialButtons = self:CreateSpecialButtons()
-	end
-	return self.specialButtons
-end
-
-function Frame:CreateSpecialButtons()
-	return {Addon.SortButton:New(self)}
-end
-
-
 --[[ bag frame ]]--
 
 function Frame:CreateBagFrame()
@@ -652,6 +640,10 @@ end
 
 function Frame:HasBagFrame()
 	return self:GetSettings():HasBagFrame()
+end
+
+function Frame:HasSortButton()
+	return self:GetSettings():HasSortButton()
 end
 
 function Frame:IsBagFrameShown()

@@ -1,11 +1,12 @@
 --[[
 	bag.lua
-		A bag button object for Bagnon
+		A bag button object
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local Bag = Bagnon:NewClass('Bag', 'CheckButton')
+local ADDON, Addon = ...
+local Addon = LibStub('AceAddon-3.0'):GetAddon(ADDON)
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+local Bag = Addon:NewClass('Bag', 'CheckButton')
 
 Bag.SIZE = 32
 Bag.TEXTURE_SIZE = 64 * (Bag.SIZE/36)
@@ -31,7 +32,7 @@ function Bag:New(id, frame, parent)
 end
 
 function Bag:Create(parent)
-	local bag = self:Bind(CreateFrame('CheckButton', 'BagnonBag' .. self:NextID(), parent))
+	local bag = self:Bind(CreateFrame('CheckButton', ADDON .. 'Bag' .. self:NextID(), parent))
 	local name = bag:GetName()
 
 	local icon = bag:CreateTexture(name .. 'IconTexture', 'BORDER')
@@ -97,10 +98,9 @@ function Bag:UpdateEvents()
 		self:RegisterMessage('BAG_SLOT_SHOW')
 		self:RegisterMessage('BAG_SLOT_HIDE')
 		self:RegisterMessage('BAG_DISABLE_UPDATE')
+		self:RegisterMessage('PLAYER_UPDATE')
 
 		if self:IsCustomSlot() then
-			self:RegisterMessage('PLAYER_UPDATE')
-
 			if not self:IsCached() then
 				self:RegisterEvent('ITEM_LOCK_CHANGED')
 				self:RegisterEvent('CURSOR_UPDATE')
@@ -123,11 +123,11 @@ end
 
 --event registration
 function Bag:RegisterItemSlotEvent(...)
-	Bagnon.BagEvents.Listen(self, ...)
+	Addon.BagEvents.Listen(self, ...)
 end
 
 function Bag:UnregisterAllItemSlotEvents(...)
-	Bagnon.BagEvents.IgnoreAll(self, ...)
+	Addon.BagEvents.IgnoreAll(self, ...)
 end
 
 
@@ -206,12 +206,6 @@ function Bag:OnClick(button)
 		else
 			PutItemInBag(self:GetInventorySlot())
 		end
-	elseif self:IsReagents() then
-		if self:CanToggleSlot() and button == 'LeftButton' then
-			self:ToggleSlot()
-		else
-			DepositReagentBank()
-		end
 	elseif self:CanToggleSlot() then
 		self:ToggleSlot()
 	end
@@ -270,14 +264,7 @@ function Bag:UpdateTooltip()
 	end
 
 	-- instructions
-	if self:IsReagents() then
-		if self:CanToggleSlot() then
-			GameTooltip:AddLine(self:IsSlotShown() and L.TipHideReagent or L.TipShowReagent)
-			GameTooltip:AddLine(L.TipDepositRightReagent)
-		else
-			GameTooltip:AddLine(L.TipDepositReagent)
-		end
-	elseif self:CanToggleSlot() then
+	if self:CanToggleSlot() then
 		GameTooltip:AddLine(self:IsSlotShown() and L.TipHideBag or L.TipShowBag)
 	end
 
@@ -367,24 +354,22 @@ function Bag:PurchaseSlot()
 	if self:IsReagents() then
 		StaticPopup_Show('CONFIRM_BUY_REAGENTBANK_TAB')
 	else
-		if not StaticPopupDialogs['CONFIRM_BUY_BANK_SLOT_BAGNON'] then
-			StaticPopupDialogs['CONFIRM_BUY_BANK_SLOT_BAGNON'] = {
+		if not StaticPopupDialogs['CONFIRM_BUY_BANK_SLOT_' .. ADDON] then
+			StaticPopupDialogs['CONFIRM_BUY_BANK_SLOT_' .. ADDON] = {
 				text = CONFIRM_BUY_BANK_SLOT,
 				button1 = YES,
 				button2 = NO,
 				OnAccept = PurchaseSlot,
-
 				OnShow = function(self)
-					MoneyFrame_Update(self:GetName() .. 'MoneyFrame', GetBankSlotCost(GetNumBankSlots()))
+					MoneyFrame_Update(self.moneyFrame, GetBankSlotCost(GetNumBankSlots()))
 				end,
-
 				hasMoneyFrame = 1,
 				hideOnEscape = 1, timeout = 0,
 				preferredIndex = STATICPOPUP_NUMDIALOGS
 			}
 		end
 
-		StaticPopup_Show('CONFIRM_BUY_BANK_SLOT_BAGNON')
+		StaticPopup_Show('CONFIRM_BUY_BANK_SLOT_' .. ADDON)
 	end
 end
 
@@ -403,7 +388,7 @@ function Bag:IsSlotShown()
 end
 
 function Bag:CanToggleSlot()
-	if Bagnon.Settings:CanDisableBags() then
+	if Addon.Settings:CanDisableBags() then
 		return self:IsBackpack() or self:IsBank() or not self:IsPurchasable()
 	end
 end
@@ -428,24 +413,24 @@ end
 --[[ Bag Type Functions ]]--
 
 function Bag:IsBackpack()
-	return Bagnon:IsBackpack(self:GetSlot())
+	return Addon:IsBackpack(self:GetSlot())
 end
 
 function Bag:IsBackpackBag()
-  return Bagnon:IsBackpackBag(self:GetSlot())
+  return Addon:IsBackpackBag(self:GetSlot())
 end
 
 function Bag:IsBank()
-	return Bagnon:IsBank(self:GetSlot())
+	return Addon:IsBank(self:GetSlot())
 end
 
 function Bag:IsReagents()
-	return Bagnon:IsReagents(self:GetSlot())
+	return Addon:IsReagents(self:GetSlot())
 end
 
 
 function Bag:IsBankBagSlot()
-	return Bagnon:IsBankBag(self:GetSlot())
+	return Addon:IsBankBag(self:GetSlot())
 end
 
 function Bag:IsCustomSlot()
@@ -456,11 +441,11 @@ end
 --[[ Bag Info Functions ]]--
 
 function Bag:GetInfo()
-	return Bagnon:GetBagInfo(self:GetPlayer(), self:GetSlot())
+	return Addon:GetBagInfo(self:GetPlayer(), self:GetSlot())
 end
 
 function Bag:GetInventorySlot()
-	return Bagnon:BagToInventorySlot(self:GetPlayer(), self:GetSlot())
+	return Addon:BagToInventorySlot(self:GetPlayer(), self:GetSlot())
 end
 
 function Bag:GetCost()
@@ -471,16 +456,17 @@ end
 --[[ Bag State Functions ]]--
 
 function Bag:IsPurchasable()
-	return self:IsBankBagSlot() and Bagnon:IsBagPurchasable(self:GetPlayer(), self:GetSlot())
-		or self:IsReagents() and not IsReagentBankUnlocked()
+	if not self:IsCached() then
+		return self:IsBankBagSlot() and (self:GetSlot() - NUM_BAG_SLOTS) > GetNumBankSlots() or self:IsReagents() and not IsReagentBankUnlocked()
+	end
 end
 
 function Bag:IsLocked()
-	return Bagnon:IsBagLocked(self:GetPlayer(), self:GetSlot())
+	return Addon:IsBagLocked(self:GetPlayer(), self:GetSlot())
 end
 
 function Bag:IsCached()
-  return Bagnon:IsBagCached(self:GetPlayer(), self:GetSlot())
+  return Addon:IsBagCached(self:GetPlayer(), self:GetSlot())
 end
 
 function Bag:GetPlayer()
@@ -507,5 +493,5 @@ function Bag:GetFrameID()
 end
 
 function Bag:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
+	return Addon.FrameSettings:Get(self:GetFrameID())
 end

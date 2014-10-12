@@ -36,9 +36,8 @@ function SortButton:New(parent)
 	b:SetHighlightTexture(ht)
 
 	local icon = b:CreateTexture()
-	icon:SetTexture([[Interface\Icons\ACHIEVEMENT_GUILDPERK_QUICK AND DEAD]])
+	icon:SetTexture([[Interface\Icons\Achievement_GuildPerk_Quick and Dead]])
 	icon:SetAllPoints(b)
-	--icon:SetAtlas('bags-button-autosort-up')
 
 	b:SetScript('OnClick', b.OnClick)
 	b:SetScript('OnEnter', b.OnEnter)
@@ -50,7 +49,7 @@ end
 
 --[[ Frame Events ]]--
 
-function SortButton:OnClick()
+function SortButton:OnClick(button)
 	local frameID = self:GetParent():GetFrameID()
 
 	-- Override blizz settings
@@ -78,21 +77,30 @@ function SortButton:OnClick()
 
 	-- Sort
 	if frameID == 'bank' then
-		SortReagentBankBags()
-		SortBankBags()
+		if button == 'RightButton' then
+			DepositReagentBank()
+		else
+			SortReagentBankBags()
+			SortBankBags()
+		end
 	else
 		SortBags()
 	end
 end
 
 function SortButton:OnEnter()
-	if self:GetRight() > (GetScreenWidth() / 2) then
-		GameTooltip:SetOwner(self, 'ANCHOR_LEFT')
-	else
-		GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
-	end
+	GameTooltip:SetOwner(self, self:GetRight() > (GetScreenWidth() / 2) and 'ANCHOR_LEFT' or 'ANCHOR_RIGHT')
 	
-	GameTooltip:SetText(L.TipSortItems)
+	local frameID = self:GetParent():GetFrameID()
+	if frameID == 'bank' then
+		GameTooltip:SetText(L.TipManageBank)
+		GameTooltip:AddLine(L.TipCleanBank, 1,1,1)
+		GameTooltip:AddLine(L.TipDepositReagents, 1,1,1)
+	else
+		GameTooltip:SetText(L.TipCleanBags)
+	end
+
+	GameTooltip:Show()
 end
 
 function SortButton:OnLeave()

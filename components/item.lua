@@ -25,6 +25,7 @@ function ItemSlot:New(bag, slot, frameID, parent)
 	else
 		item:Show()
 	end
+
 	return item
 end
 

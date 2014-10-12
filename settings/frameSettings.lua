@@ -214,7 +214,7 @@ function FrameSettings:HasMoneyFrame()
 	return self:GetDB():HasMoneyFrame()
 end
 
---returns true if the frame has a databroker object frame, and false otherwise
+--databroker frame
 function FrameSettings:SetHasDBOFrame(enable)
 	local enable = enable and true or false
 
@@ -226,6 +226,20 @@ end
 
 function FrameSettings:HasDBOFrame()
 	return self:GetDB():HasDBOFrame()
+end
+
+--search toggle
+function FrameSettings:SetSortEnabled(enable)
+	enable = enable and true or false
+
+	if self:HasSortButton() ~= enable then
+		self:GetDB():SetSortEnabled(enable)
+		self:SendMessage('SORT_ENABLE_UPDATE', self:HasSortButton())
+	end
+end
+
+function FrameSettings:HasSortButton()
+	return self:GetDB():HasSortButton()
 end
 
 --returns true if the search frame TOGGLE is shown, and false otherwise

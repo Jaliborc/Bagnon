@@ -291,6 +291,14 @@ function SavedFrameSettings:HasSearchToggle()
 	return self:GetDB().hasSearchToggle
 end
 
+function SavedFrameSettings:SetSortEnabled(enable)
+	self:GetDB().hasSortButton = enable or false
+end
+
+function SavedFrameSettings:HasSortButton()
+	return self:GetDB().hasSortButton
+end
+
 function SavedFrameSettings:SetHasOptionsToggle(enable)
 	self:GetDB().hasOptionsToggle = enable or false
 end
@@ -433,6 +441,7 @@ function SavedFrameSettings:GetDefaultInventorySettings()
 		hasDBOFrame = true,
 		hasSearchToggle = true,
 		hasOptionsToggle = true,
+		hasSortButton = true,
 		dataBrokerObject = 'BagnonLauncher',
 	}
 
@@ -479,6 +488,7 @@ function SavedFrameSettings:GetDefaultBankSettings()
 		hasDBOFrame = true,
 		hasSearchToggle = true,
 		hasOptionsToggle = true,
+		hasSortButton = true,
 		dataBrokerObject = 'BagnonLauncher',
 	}
 	
