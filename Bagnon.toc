@@ -14,7 +14,6 @@ main.lua
 
 core\core.xml
 events\events.xml
-info\info.xml
 
 settings\settings.xml
 components\components.xml

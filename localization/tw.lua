@@ -26,7 +26,6 @@ L.CmdShowVersion = '顯示目前版本'
 --frame text
 L.TitleBags = '%s的背包'
 L.TitleBank = '%s的銀行'
-L.Bank = '銀行'
 
 
 --tooltips
@@ -39,7 +38,7 @@ L.TipHideBag = '點擊隱藏背包。'
 L.TipHideBags = '<左鍵點擊>隱藏背包顯示。'
 L.TipHideSearch = '點擊隱藏搜尋介面。'
 L.TipInventoryToggle = '<右鍵點擊>切換背包。'
-L.TipPurchaseBag = '點擊購買銀行槽。'
+L.PurchaseBag = '點擊購買銀行槽。'
 L.TipShowBag = '點擊顯示背包。'
 L.TipShowBags = '<左鍵點擊>顯示背包顯示。'
 L.TipShowMenu = '<右鍵點擊>設定視窗。'

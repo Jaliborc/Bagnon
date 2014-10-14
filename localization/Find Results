@@ -1,0 +1,80 @@
+Searching 467 files for "TipPurchaseBag"
+
+/Users/jaliborc/Applications/World of Warcraft/Beta/Interface/AddOns/Bagnon/components/bag.lua:
+  287  	if self:IsPurchasable() then
+  288  		GameTooltip:SetText(BANK_BAG_PURCHASE, 1, 1, 1)
+  289: 		GameTooltip:AddLine(L.TipPurchaseBag)
+  290  		SetTooltipMoney(GameTooltip, self:GetCost())
+  291  	elseif self:IsBackpack() then
+
+/Users/jaliborc/Applications/World of Warcraft/Beta/Interface/AddOns/Bagnon/localization/cn.lua:
+   39  L.TipHideSearch = '隐藏搜索界面'
+   40  L.TipFrameToggle = '<右键点击> 显示其他窗口'
+   41: L.TipPurchaseBag = '购买银行空位'
+   42  L.TipShowBag = '显示包裹'
+   43  L.TipShowBags = '显示背包'
+
+/Users/jaliborc/Applications/World of Warcraft/Beta/Interface/AddOns/Bagnon/localization/de.lua:
+   40  L.TipHideSearch = '<Klicken> um das Suchfenster zu verstecken.'
+   41  L.TipInventoryToggle = '<Rechts-Klick> um das Inventar umzuschalten.'
+   42: L.TipPurchaseBag = '<Klicken> um das Bankfach zu kaufen.'
+   43  L.TipShowBag = '<Klicken> um diese Tasche anzuzeigen.'
+   44  L.TipShowBags = '<Klicken> um das Taschenfenster anzuzeigen.'
+
+/Users/jaliborc/Applications/World of Warcraft/Beta/Interface/AddOns/Bagnon/localization/en.lua:
+   41  L.TipHideSearch = 'Click to hide the search box.'
+   42  L.TipManageBank = 'Manage Bank'
+   43: L.TipPurchaseBag = 'Click to purchase this bank slot.'
+   44  L.TipShowBag = 'Click to show this bag.'
+   45  L.TipShowBags = '<Left-Click> to show the bags display.'
+
+/Users/jaliborc/Applications/World of Warcraft/Beta/Interface/AddOns/Bagnon/localization/es.lua:
+   39  L.TipHideSearch = 'Clic para ocultar el campo de búsqueda.'
+   40  L.TipInventoryToggle = '<Clic derecho> para abrir la mochila.'
+   41: L.TipPurchaseBag = 'Clic para comprar una ranura en el banco.'
+   42  L.TipShowBag = 'Clic para mostrar la bolsa.'
+   43  L.TipShowBags = '<Clic izquierda> para mostrar las bolsas.'
+
+/Users/jaliborc/Applications/World of Warcraft/Beta/Interface/AddOns/Bagnon/localization/fr.lua:
+   39  L.TipHideSearch = 'Cliquez pour cacher le champ de recherche.'
+   40  L.TipFrameToggle = '<Clic Droit> pour afficher d\'autres fenêtres.'
+   41: L.TipPurchaseBag = 'Cliquez pour acheter cet emplacement de sac.'
+   42  L.TipShowBag = 'Cliquez pour afficher ce sac.'
+   43  L.TipShowBags = '<Clic Gauche> pour afficher la fenêtre de vos sacs.'
+
+/Users/jaliborc/Applications/World of Warcraft/Beta/Interface/AddOns/Bagnon/localization/it.lua:
+   38  L.TipHideSearch = 'Clic per nascondere la barra di ricerca.'
+   39  L.TipFrameToggle = '<Clic-Destro> per visualizzare altre finestre.'
+   40: L.TipPurchaseBag = 'Clic per acquistare questo scomparto per sacche.'
+   41  L.TipShowBag = 'Clic per visualizzare questa sacca.'
+   42  L.TipShowBags = '<Clic-Sinistro> per attivare la visualizzazione delle sacche.'
+
+/Users/jaliborc/Applications/World of Warcraft/Beta/Interface/AddOns/Bagnon/localization/pt.lua:
+   39  L.TipHideSearch = 'Clique para esconder o campo de pesquisa.'
+   40  L.TipInventoryToggle = '<Clique Direito> para abrir a mochila.'
+   41: L.TipPurchaseBag = 'Clique para comprar uma ranhura no banco.'
+   42  L.TipShowBag = 'Clique para mostrar o bag.'
+   43  L.TipShowBags = '<Clique Esquerdo> para mostrar os sacos.'
+
+/Users/jaliborc/Applications/World of Warcraft/Beta/Interface/AddOns/Bagnon/localization/ru.lua:
+   39  L.TipHideSearch = '<Клик> - скрыть область поиска.'
+   40  L.TipFrameToggle = '<Правый-клик> - переключить другие окна.'
+   41: L.TipPurchaseBag = '<Клик> - купить банковскую ячейку.'
+   42  L.TipShowBag = '<Клик> - показать эту сумку.'
+   43  L.TipShowBags = '<Левый-клик> - показать область сумок.'
+
+/Users/jaliborc/Applications/World of Warcraft/Beta/Interface/AddOns/Bagnon/localization/tw.lua:
+   39  L.TipHideSearch = '點擊隱藏搜尋介面。'
+   40  L.TipInventoryToggle = '<右鍵點擊>切換背包。'
+   41: L.TipPurchaseBag = '點擊購買銀行槽。'
+   42  L.TipShowBag = '點擊顯示背包。'
+   43  L.TipShowBags = '<左鍵點擊>顯示背包顯示。'
+
+/Users/Jaliborc/Applications/World of Warcraft/Beta/Interface/AddOns/Combuctor/components/bag.lua:
+  216  	if self:IsPurchasable() then
+  217  		GameTooltip:SetText(BANK_BAG_PURCHASE, 1, 1, 1)
+  218: 		GameTooltip:AddLine(L.TipPurchaseBag)
+  219  		SetTooltipMoney(GameTooltip, self:GetCost())
+  220  	elseif self:IsBackpack() then
+
+11 matches across 11 files

@@ -27,7 +27,6 @@ L.CmdShowVersion = 'Zeigt die aktuelle Version an'
 --frame text
 L.TitleBags = '%s\'s Inventar'
 L.TitleBank = '%s\'s Bank'
-L.Bank = 'Bank'
 
 
 --tooltips
@@ -40,7 +39,7 @@ L.TipHideBag = '<Klicken> um diese Tasche zu verstecken.'
 L.TipHideBags = '<Klicken> um die Taschenanzeige zu verstecken.'
 L.TipHideSearch = '<Klicken> um das Suchfenster zu verstecken.'
 L.TipInventoryToggle = '<Rechts-Klick> um das Inventar umzuschalten.'
-L.TipPurchaseBag = '<Klicken> um das Bankfach zu kaufen.'
+L.PurchaseBag = '<Klicken> um das Bankfach zu kaufen.'
 L.TipShowBag = '<Klicken> um diese Tasche anzuzeigen.'
 L.TipShowBags = '<Klicken> um das Taschenfenster anzuzeigen.'
 L.TipShowMenu = '<Rechtsklick> um das Fenster zu konfigurieren.'

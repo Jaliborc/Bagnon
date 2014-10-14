@@ -27,7 +27,6 @@ L.CmdShowVersion = 'Affiche la version actuelle'
 --frame text
 L.TitleBags = 'Inventaire de %s'
 L.TitleBank = 'Banque de %s'
-L.Bank = 'Banque'
 
 
 --tooltips
@@ -39,7 +38,7 @@ L.TipHideBag = 'Cliquez pour cacher ce sac.'
 L.TipHideBags = '<Clic Gauche> pour cacher l\'affichage des sac.'
 L.TipHideSearch = 'Cliquez pour cacher le champ de recherche.'
 L.TipFrameToggle = '<Clic Droit> pour afficher d\'autres fenêtres.'
-L.TipPurchaseBag = 'Cliquez pour acheter cet emplacement de sac.'
+L.PurchaseBag = 'Cliquez pour acheter cet emplacement de sac.'
 L.TipShowBag = 'Cliquez pour afficher ce sac.'
 L.TipShowBags = '<Clic Gauche> pour afficher la fenêtre de vos sacs.'
 L.TipShowMenu = '<Clic Droit> pour configurer cette fenêtre.'

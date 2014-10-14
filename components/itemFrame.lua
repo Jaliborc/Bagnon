@@ -246,20 +246,16 @@ end
 
 --[[ Item Slot Management ]]--
 
---if an item is not assigned to the given slotIndex, then add an item
 function ItemFrame:AddItemSlot(bag, slot)
 	if self:IsBagShown(bag) and not self:GetItemSlot(bag, slot) then
-		local itemSlot = self:NewItemSlot(bag, slot)
+		local itemSlot = Addon.ItemSlot:New()
+		itemSlot:Set(self, bag, slot)
+
 		self.itemSlots[self:GetSlotIndex(bag, slot)] = itemSlot
 		self:RequestLayout()
 	end
 end
 
-function ItemFrame:NewItemSlot(bag, slot)
-	return Addon.ItemSlot:New(bag, slot, self:GetFrameID(), self)
-end
-
---removes any item slot associated with the given slotIndex
 function ItemFrame:RemoveItemSlot(bag, slot)
 	local itemSlot = self:GetItemSlot(bag, slot)
 	if itemSlot then
@@ -276,7 +272,6 @@ function ItemFrame:UpdateItemSlot(bag, slot)
 	end
 end
 
---returns the item slot assigned to the given slotIndex
 function ItemFrame:GetItemSlot(bag, slot)
 	return self.itemSlots[self:GetSlotIndex(bag, slot)]
 end
@@ -285,7 +280,6 @@ function ItemFrame:GetAllItemSlots()
 	return pairs(self.itemSlots)
 end
 
---takes a bag and a slot, and returns an array index
 function ItemFrame:GetSlotIndex(bag, slot)
 	if bag < 0 then
 		return bag * 100 - slot
@@ -293,7 +287,6 @@ function ItemFrame:GetSlotIndex(bag, slot)
 	return bag * 100 + slot
 end
 
---remove all item slots from the frame
 function ItemFrame:AddAllItemSlotsForBag(bag)
 	for slot = 1, self:GetBagSize(bag) do
 		self:AddItemSlot(bag, slot)
@@ -312,10 +305,6 @@ function ItemFrame:UpdateAllItemSlotsForBag(bag)
 	end
 end
 
---remove all unused item slots from the frame
---add all missing slots to the frame
---update all existing slots on the frame
---if slots have been added or removed, then request a layout update
 function ItemFrame:ReloadAllItemSlots()
 	local changed = false
 

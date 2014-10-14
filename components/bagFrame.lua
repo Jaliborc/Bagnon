@@ -26,7 +26,7 @@ end
 function BagFrame:CreateBagSlots()
 	local bags = {}
 	for i, slot in self:GetBagSlots() do
-		bags[i] = self.Button:New(slot, self:GetFrameID(), self)
+		bags[i] = self.Button:New(self, slot)
 	end
 
 	self.bags = bags

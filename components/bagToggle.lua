@@ -94,7 +94,7 @@ function BagToggle:OnClick(button)
 		end
 
 		addLine('inventory', INVENTORY_TOOLTIP)
-		addLine('bank', L.Bank)
+		addLine('bank', BANK)
 		addLine('voidstorage', VOID_STORAGE, 'Bagnon_VoidStorage')
 
 		if self:GetSettings():GetGuild() then

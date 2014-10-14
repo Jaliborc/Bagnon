@@ -26,7 +26,6 @@ L.CmdShowVersion = 'Mostra a versão atual'
 --frame text
 L.TitleBags = 'Mochila de %s'
 L.TitleBank = 'Banco de %s'
-L.Bank = 'Banco'
 
 
 --tooltips
@@ -39,7 +38,7 @@ L.TipHideBag = 'Clique para esconder o saco.'
 L.TipHideBags = '<Clique Esquerdo> para esconder os sacos.'
 L.TipHideSearch = 'Clique para esconder o campo de pesquisa.'
 L.TipInventoryToggle = '<Clique Direito> para abrir a mochila.'
-L.TipPurchaseBag = 'Clique para comprar uma ranhura no banco.'
+L.PurchaseBag = 'Clique para comprar uma ranhura no banco.'
 L.TipShowBag = 'Clique para mostrar o bag.'
 L.TipShowBags = '<Clique Esquerdo> para mostrar os sacos.'
 L.TipShowMenu = '<Clique Esquerdo> para configurar esta janela.'

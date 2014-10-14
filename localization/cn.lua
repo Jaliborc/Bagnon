@@ -27,7 +27,6 @@ L.CmdShowVersion = '显示当前版本'
 --frame text
 L.TitleBags = '%s的背包'
 L.TitleBank = '%s的银行'
-L.Bank = '银行'
 
 
 --tooltips
@@ -39,7 +38,7 @@ L.TipHideBag = '隐藏包裹'
 L.TipHideBags = '隐藏背包'
 L.TipHideSearch = '隐藏搜索界面'
 L.TipFrameToggle = '<右键点击> 显示其他窗口'
-L.TipPurchaseBag = '购买银行空位'
+L.PurchaseBag = '购买银行空位'
 L.TipShowBag = '显示包裹'
 L.TipShowBags = '显示背包'
 L.TipShowMenu = '右击打开设置菜单'

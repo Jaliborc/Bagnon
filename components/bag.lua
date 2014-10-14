@@ -10,31 +10,15 @@ local Bag = Addon:NewClass('Bag', 'CheckButton')
 
 Bag.SIZE = 32
 Bag.TEXTURE_SIZE = 64 * (Bag.SIZE/36)
-Bag.count = 0
+Bag.GetSlot = Bag.GetID
 
 
 --[[ Constructor ]]--
 
-function Bag:New(id, frame, parent)
-	local bag = self:Create(parent)
-	bag:SetTarget(frame, id)
-
-	bag:SetScript('OnEnter', bag.OnEnter)
-	bag:SetScript('OnLeave', bag.OnLeave)
-	bag:SetScript('OnClick', bag.OnClick)
-	bag:SetScript('OnDragStart', bag.OnDrag)
-	bag:SetScript('OnReceiveDrag', bag.OnClick)
-	bag:SetScript('OnEvent', bag.OnEvent)
-	bag:SetScript('OnShow', bag.OnShow)
-	bag:SetScript('OnHide', bag.OnHide)
-
-	return bag
-end
-
-function Bag:Create(parent)
-	local bag = self:Bind(CreateFrame('CheckButton', ADDON .. 'Bag' .. self:NextID(), parent))
+function Bag:New(parent, id)
+	local bag = self:Bind(CreateFrame('CheckButton', ADDON .. 'Bag' .. id, parent))
 	local name = bag:GetName()
-
+	
 	local icon = bag:CreateTexture(name .. 'IconTexture', 'BORDER')
 	icon:SetAllPoints(bag)
 
@@ -62,21 +46,25 @@ function Bag:Create(parent)
 	ct:SetAllPoints(bag)
 	ct:SetBlendMode('ADD')
 
-	bag:SetSize(self.SIZE, self.SIZE)
+	bag:SetID(id)
 	bag:SetNormalTexture(nt)
 	bag:SetPushedTexture(pt)
 	bag:SetCheckedTexture(ct)
 	bag:SetHighlightTexture(ht)
 	bag:RegisterForClicks('anyUp')
 	bag:RegisterForDrag('LeftButton')
+	bag:SetSize(self.SIZE, self.SIZE)
+
+	bag:SetScript('OnEnter', bag.OnEnter)
+	bag:SetScript('OnLeave', bag.OnLeave)
+	bag:SetScript('OnClick', bag.OnClick)
+	bag:SetScript('OnDragStart', bag.OnDrag)
+	bag:SetScript('OnReceiveDrag', bag.OnClick)
+	bag:SetScript('OnEvent', bag.OnEvent)
+	bag:SetScript('OnShow', bag.OnShow)
+	bag:SetScript('OnHide', bag.OnHide)
 
 	return bag
-end
-
-function Bag:NextID()
-	local id = self.count + 1
-	self.count = id
-	return id
 end
 
 
@@ -102,18 +90,18 @@ function Bag:UpdateEvents()
 
 		if self:IsCustomSlot() then
 			if not self:IsCached() then
+				self:RegisterEvent('PLAYERBANKSLOTS_UPDATED')
 				self:RegisterEvent('ITEM_LOCK_CHANGED')
 				self:RegisterEvent('CURSOR_UPDATE')
 				self:RegisterEvent('BAG_UPDATE')
-				self:RegisterEvent('PLAYERBANKSLOTS_UPDATED')
-				self:RegisterEvent('PLAYERBANKBAGSLOTS_UPDATED')
 			else
 				self:RegisterEvent('GET_ITEM_INFO_RECEIVED')
 			end
 
-			if self:IsBankBagSlot() then
+			if self:IsBankBag() then
 				self:RegisterItemSlotEvent('BANK_OPENED')
 				self:RegisterItemSlotEvent('BANK_CLOSED')
+				self:RegisterEvent('PLAYERBANKBAGSLOTS_UPDATED')
 			end
 		elseif self:IsReagents() then
 			self:RegisterEvent('REAGENTBANK_PURCHASED')
@@ -121,7 +109,6 @@ function Bag:UpdateEvents()
 	end
 end
 
---event registration
 function Bag:RegisterItemSlotEvent(...)
 	Addon.BagEvents.Listen(self, ...)
 end
@@ -199,15 +186,15 @@ end
 
 function Bag:OnClick(button)
 	if self:IsPurchasable() then
-		self:PurchaseSlot()
+		self:Purchase()
 	elseif CursorHasItem() and not self:IsCached() then
 		if self:IsBackpack() then
 			PutItemInBackpack()
 		else
 			PutItemInBag(self:GetInventorySlot())
 		end
-	elseif self:CanToggleSlot() then
-		self:ToggleSlot()
+	elseif self:CanToggle() then
+		self:Toggle()
 	end
 
 	self:UpdateToggle()
@@ -239,40 +226,7 @@ function Bag:OnLeave()
 end
 
 
---[[ Tooltip Methods ]]--
-
-function Bag:UpdateTooltip()
-	GameTooltip:ClearLines()
-
-	-- title
-	if self:IsPurchasable() then
-		GameTooltip:SetText(BANK_BAG_PURCHASE, 1, 1, 1)
-		GameTooltip:AddLine(L.TipPurchaseBag)
-		SetTooltipMoney(GameTooltip, self:GetCost())
-	elseif self:IsBackpack() then
-		GameTooltip:SetText(BACKPACK_TOOLTIP, 1,1,1)
-	elseif self:IsBank() then
-		GameTooltip:SetText(L.TipBank, 1,1,1)
-	elseif self:IsReagents() then
-		GameTooltip:SetText(REAGENT_BANK, 1,1,1)
-	elseif self.link then
-		GameTooltip:SetHyperlink(self.link)
-	elseif self:IsBankBagSlot() then
-		GameTooltip:SetText(BANK_BAG, 1, 1, 1)
-	else
-		GameTooltip:SetText(EQUIP_CONTAINER, 1, 1, 1)
-	end
-
-	-- instructions
-	if self:CanToggleSlot() then
-		GameTooltip:AddLine(self:IsSlotShown() and L.TipHideBag or L.TipShowBag)
-	end
-
-	GameTooltip:Show()
-end
-
-
---[[ Display Updating ]]--
+--[[ Update ]]--
 
 function Bag:UpdateEverything()
 	self:UpdateEvents()
@@ -326,6 +280,36 @@ function Bag:UpdateCustomIcon()
 	end
 end
 
+function Bag:UpdateTooltip()
+	GameTooltip:ClearLines()
+
+	-- title
+	if self:IsPurchasable() then
+		GameTooltip:SetText(self:IsReagents() and REAGENT_BANK or BANK_BAG_PURCHASE, 1, 1, 1)
+		GameTooltip:AddLine(L.PurchaseBag)
+		SetTooltipMoney(GameTooltip, self:GetCost())
+	elseif self:IsBackpack() then
+		GameTooltip:SetText(BACKPACK_TOOLTIP, 1,1,1)
+	elseif self:IsBank() then
+		GameTooltip:SetText(BANK, 1,1,1)
+	elseif self:IsReagents() then
+		GameTooltip:SetText(REAGENT_BANK, 1,1,1)
+	elseif self.link then
+		GameTooltip:SetHyperlink(self.link)
+	elseif self:IsBankBag() then
+		GameTooltip:SetText(BANK_BAG, 1, 1, 1)
+	else
+		GameTooltip:SetText(EQUIP_CONTAINER, 1, 1, 1)
+	end
+
+	-- instructions
+	if self:CanToggle() then
+		GameTooltip:AddLine(self:IsToggled() and L.TipHideBag or L.TipShowBag)
+	end
+
+	GameTooltip:Show()
+end
+
 function Bag:SetIcon(icon)
 	local color = self:IsPurchasable() and .1 or 1
 
@@ -345,10 +329,9 @@ function Bag:SetCount(count)
 end
 
 
---[[ Bag Slot Actions ]]--
+--[[ Actions ]]--
 
---show the purchase slot dialog
-function Bag:PurchaseSlot()
+function Bag:Purchase()
 	PlaySound('igMainMenuOption')
 
 	if self:IsReagents() then
@@ -359,7 +342,7 @@ function Bag:PurchaseSlot()
 				text = CONFIRM_BUY_BANK_SLOT,
 				button1 = YES,
 				button2 = NO,
-				OnAccept = PurchaseSlot,
+				OnAccept = Purchase,
 				OnShow = function(self)
 					MoneyFrame_Update(self.moneyFrame, GetBankSlotCost(GetNumBankSlots()))
 				end,
@@ -373,24 +356,22 @@ function Bag:PurchaseSlot()
 	end
 end
 
-
---item viewing
-function Bag:ToggleSlot()
+function Bag:Toggle()
 	self:GetSettings():ToggleBagSlot(self:GetSlot())
 end
 
 function Bag:UpdateToggle()
-	self:SetChecked(self:IsSlotShown())
+	self:SetChecked(self:IsToggled())
 end
 
-function Bag:IsSlotShown()
-	return self:CanToggleSlot() and self:GetSettings():IsBagSlotShown(self:GetSlot())
-end
-
-function Bag:CanToggleSlot()
+function Bag:CanToggle()
 	if Addon.Settings:CanDisableBags() then
 		return self:IsBackpack() or self:IsBank() or not self:IsPurchasable()
 	end
+end
+
+function Bag:IsToggled()
+	return self:CanToggle() and self:GetSettings():IsBagSlotShown(self:GetSlot())
 end
 
 
@@ -410,7 +391,7 @@ function Bag:GetSearch()
 end
 
 
---[[ Bag Type Functions ]]--
+--[[ Bag Type ]]--
 
 function Bag:IsBackpack()
 	return Addon:IsBackpack(self:GetSlot())
@@ -429,16 +410,16 @@ function Bag:IsReagents()
 end
 
 
-function Bag:IsBankBagSlot()
+function Bag:IsBankBag()
 	return Addon:IsBankBag(self:GetSlot())
 end
 
 function Bag:IsCustomSlot()
-	return self:IsBackpackBag() or self:IsBankBagSlot()
+	return self:IsBackpackBag() or self:IsBankBag()
 end
 
 
---[[ Bag Info Functions ]]--
+--[[ Info ]]--
 
 function Bag:GetInfo()
 	return Addon:GetBagInfo(self:GetPlayer(), self:GetSlot())
@@ -452,12 +433,9 @@ function Bag:GetCost()
 	return self:IsReagents() and GetReagentBankCost() or GetBankSlotCost(GetNumBankSlots())
 end
 
-
---[[ Bag State Functions ]]--
-
 function Bag:IsPurchasable()
 	if not self:IsCached() then
-		return self:IsBankBagSlot() and (self:GetSlot() - NUM_BAG_SLOTS) > GetNumBankSlots() or self:IsReagents() and not IsReagentBankUnlocked()
+		return self:IsBankBag() and (self:GetSlot() - NUM_BAG_SLOTS) > GetNumBankSlots() or self:IsReagents() and not IsReagentBankUnlocked()
 	end
 end
 
@@ -466,32 +444,17 @@ function Bag:IsLocked()
 end
 
 function Bag:IsCached()
-  return Addon:IsBagCached(self:GetPlayer(), self:GetSlot())
+ 	return Addon:IsBagCached(self:GetPlayer(), self:GetSlot())
 end
 
 function Bag:GetPlayer()
 	return self:GetSettings():GetPlayerFilter()
 end
 
-function Bag:GetSlot()
-	return self:GetID()
-end
-
-
---[[ Usual Acessor Functions ]]--
-
-function Bag:SetTarget(frame, id)
-	if self:GetFrameID() ~= frame or self:GetID() ~= id then
-		self.frameID = frame
-		self:SetID(id)
-		self:UpdateEverything()
-	end
+function Bag:GetSettings()
+	return Addon.FrameSettings:Get(self:GetFrameID())
 end
 
 function Bag:GetFrameID()
-	return self.frameID
-end
-
-function Bag:GetSettings()
-	return Addon.FrameSettings:Get(self:GetFrameID())
+	return self:GetParent():GetFrameID()
 end

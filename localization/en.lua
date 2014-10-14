@@ -26,12 +26,10 @@ L.CmdShowVersion = 'Prints the current verison'
 --frame text
 L.TitleBags = '%s\'s Inventory'
 L.TitleBank = '%s\'s Bank'
-L.Bank = 'Bank'
 
 
 --tooltips
 L.TipBags = 'Bags'
-L.TipBank = 'Bank'
 L.TipChangePlayer = 'Click to view another character\'s items'
 L.TipCleanBags = 'Click to clean up bags.'
 L.TipCleanBank = '<Left-Click> to to clean up bank.'
@@ -42,7 +40,7 @@ L.TipHideBag = 'Click to hide this bag.'
 L.TipHideBags = '<Left-Click> to hide the bags display.'
 L.TipHideSearch = 'Click to hide the search box.'
 L.TipManageBank = 'Manage Bank'
-L.TipPurchaseBag = 'Click to purchase this bank slot.'
+L.PurchaseBag = 'Click to purchase this bank slot.'
 L.TipShowBag = 'Click to show this bag.'
 L.TipShowBags = '<Left-Click> to show the bags display.'
 L.TipShowMenu = '<Right-Click> to configure this window.'

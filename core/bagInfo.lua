@@ -4,7 +4,6 @@
 --]]
 
 local ADDON, Addon = ...
-local Addon = LibStub('AceAddon-3.0'):GetAddon(ADDON)
 local Cache = LibStub('LibItemCache-1.1')
 
 
