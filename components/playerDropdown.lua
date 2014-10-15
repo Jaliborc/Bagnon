@@ -3,6 +3,7 @@
     A player selector dropdown
 --]]
 
+local ADDON, Addon = ...
 local Cache = LibStub('LibItemCache-1.1')
 if not Cache:HasCache() then
   return
@@ -12,7 +13,7 @@ local currentFrame
 local dropdown
 local info = {}
 
-local function CharSelect_OnClick(self, player, delete)
+local function OnClick(self, player, delete)
   if delete then
     -- set to current player if deleted is selected
     if player == currentFrame:GetPlayer() then
@@ -30,9 +31,8 @@ local function CharSelect_OnClick(self, player, delete)
   end
 end
 
---adds a checkable item to a dropdown menu
-local function AddItem(text, checkable, checked, hasArrow, level, arg1, arg2)
-  info.func = CharSelect_OnClick
+local function AddButton(text, checkable, checked, hasArrow, level, arg1, arg2)
+  info.func = OnClick
 	info.text = text
 	info.value = text
 	info.hasArrow = hasArrow
@@ -44,30 +44,29 @@ local function AddItem(text, checkable, checked, hasArrow, level, arg1, arg2)
 end
 
 --populate the list, add a delete button to all characters that aren't the current player
-local function CharSelect_Initialize(self, level)
+local function UpdateDropdown(self, level)
 	if level == 2 then
-		AddItem(REMOVE, nil, nil, nil, level, UIDROPDOWNMENU_MENU_VALUE, true)
+		AddButton(REMOVE, nil, nil, nil, level, UIDROPDOWNMENU_MENU_VALUE, true)
   else
     local selected = currentFrame:GetPlayer()
 
     for i, player in Cache:IteratePlayers() do
-      AddItem(player, true, player == selected, Cache:IsPlayerCached(player), level, player)
+      AddButton(player, true, player == selected, Cache:IsPlayerCached(player), level, player)
     end
 	end
 end
 
-local function CharSelect_Create()
+local function Startup()
 	dropdown = CreateFrame("Frame", "BagnonPlayerDropdown", UIParent, "UIDropDownMenuTemplate")
 	dropdown:SetID(1)
-	UIDropDownMenu_Initialize(dropdown, CharSelect_Initialize, "MENU")
+	UIDropDownMenu_Initialize(dropdown, UpdateDropdown, "MENU")
 	return dropdown
 end
 
 
 --[[ Usable Function ]]--
 
---show the character select list at the given location
-function Bagnon:TogglePlayerDropdown(anchor, offX, offY)
- 	currentFrame = anchor
-	ToggleDropDownMenu(1, nil, dropdown or CharSelect_Create(), anchor, offX, offY)
+function Addon:TogglePlayerDropdown(anchor, offX, offY)
+  currentFrame = anchor
+  ToggleDropDownMenu(1, nil, dropdown or Startup(), anchor, offX, offY)
 end

@@ -1,5 +1,11 @@
+====== 6.0.4
+* Fixed errors with player listing.
+
+====== 6.0.3
+* Tagging release version.
+
 ====== 6.0.2 (beta)
-* Money frame cannot be disabld in void storage (needed for transfering)
+* Money frame cannot be disabled in void storage (needed for transfering)
 
 ====== 6.0.1 (beta)
 * Item Sorting:
