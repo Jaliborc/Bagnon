@@ -554,7 +554,6 @@ function Frame:GetSpecificButtons(list)
 	if self:HasSortButton() then
 		tinsert(list, self.sortButton or self:CreateSortButton())
 	end
-
 end
 
 function Frame:CreateBagToggle()

@@ -24,7 +24,7 @@ function ItemFrame:New(frameID, parent, kind)
 	local f = self:Bind(CreateFrame('Frame', nil, parent))
 
 	f.kind = kind
-	f.itemSlots = {}
+	f.slots = {}
 	f.throttledUpdater = CreateFrame('Frame', nil, f)
 	f.throttledUpdater:SetScript('OnUpdate', throttledUpdater_OnUpdate)
 	
@@ -135,6 +135,7 @@ do
 	ItemFrame.ITEM_FRAME_SPACING_UPDATE = LayoutEvent
 	ItemFrame.ITEM_FRAME_COLUMNS_UPDATE = LayoutEvent
 	ItemFrame.ITEM_FRAME_BAG_BREAK_UPDATE = LayoutEvent
+	ItemFrame.REAGENTBANK_PURCHASED = ItemFrame.UpdateEverything
 end
 
 
@@ -215,6 +216,7 @@ function ItemFrame:UpdateEvents()
 			if self:HasBankBags() then
 				self:RegisterItemEvent('BANK_OPENED')
 				self:RegisterItemEvent('BANK_CLOSED')
+				self:RegisterEvent('REAGENTBANK_PURCHASED')
 			end
 		else
 			self:RegisterEvent('GET_ITEM_INFO_RECEIVED')
@@ -248,10 +250,10 @@ end
 
 function ItemFrame:AddItemSlot(bag, slot)
 	if self:IsBagShown(bag) and not self:GetItemSlot(bag, slot) then
-		local itemSlot = Addon.ItemSlot:New()
-		itemSlot:Set(self, bag, slot)
+		local button = Addon.ItemSlot:New()
+		button:Set(self, bag, slot)
 
-		self.itemSlots[self:GetSlotIndex(bag, slot)] = itemSlot
+		self.slots[self:GetSlotIndex(bag, slot)] = button
 		self:RequestLayout()
 	end
 end
@@ -260,7 +262,7 @@ function ItemFrame:RemoveItemSlot(bag, slot)
 	local itemSlot = self:GetItemSlot(bag, slot)
 	if itemSlot then
 		itemSlot:Free()
-		self.itemSlots[self:GetSlotIndex(bag, slot)] = nil
+		self.slots[self:GetSlotIndex(bag, slot)] = nil
 		self:RequestLayout()
 	end
 end
@@ -273,11 +275,11 @@ function ItemFrame:UpdateItemSlot(bag, slot)
 end
 
 function ItemFrame:GetItemSlot(bag, slot)
-	return self.itemSlots[self:GetSlotIndex(bag, slot)]
+	return self.slots[self:GetSlotIndex(bag, slot)]
 end
 
 function ItemFrame:GetAllItemSlots()
-	return pairs(self.itemSlots)
+	return pairs(self.slots)
 end
 
 function ItemFrame:GetSlotIndex(bag, slot)
@@ -306,32 +308,24 @@ function ItemFrame:UpdateAllItemSlotsForBag(bag)
 end
 
 function ItemFrame:ReloadAllItemSlots()
-	local changed = false
-
-	local itemSlots = self.itemSlots
-	for i, itemSlot in pairs(itemSlots) do
-		local used = self:IsBagShown(itemSlot:GetBag()) and (itemSlot:GetID() <= self:GetBagSize(itemSlot:GetBag()))
+	for i, button in pairs(self.slots) do
+		local used = self:IsBagShown(button:GetBag()) and (button:GetID() <= self:GetBagSize(button:GetBag()))
 		if not used then
-			itemSlot:Free()
-			itemSlots[i] = nil
-			changed = true
+			button:Free()
+			self.slots[i] = nil
+			self:RequestLayout()
 		end
 	end
 
 	for _, bag in self:GetVisibleBags() do
 		for slot = 1, self:GetBagSize(bag) do
-			local itemSlot = self:GetItemSlot(bag, slot)
-			if not itemSlot then
+			local button = self:GetItemSlot(bag, slot)
+			if not button then
 				self:AddItemSlot(bag, slot)
-				changed = true
 			else
-				itemSlot:Update()
+				button:Update()
 			end
 		end
-	end
-
-	if changed then
-		self:RequestLayout()
 	end
 end
 
@@ -340,7 +334,7 @@ end
 
 function ItemFrame:Layout()
 	self.needsLayout = nil
-	
+
 	if self.HasRowLayout then
 		self:Layout_NoBag()
 	elseif self:IsBagBreakEnabled() then
@@ -350,7 +344,6 @@ function ItemFrame:Layout()
 	end
 end
 
---arranges itemSlots on the itemFrame, and adjusts size to fit
 function ItemFrame:Layout_Default()
 	local columns = self:NumColumns()
 	local spacing = self:GetSpacing()
@@ -358,7 +351,12 @@ function ItemFrame:Layout_Default()
 
 	local i = 0
 	for _, bag in self:GetVisibleBags() do
-		for slot = 1, self:GetBagSize(bag) do
+		local first, last, step = 1, self:GetBagSize(bag), 1
+		if self:GetSettings():IsSlotOrderReversed() then
+			first, last, step = last, 1, -1
+		end
+
+		for slot = first, last, step do
 			local itemSlot = self:GetItemSlot(bag, slot)
 			if itemSlot then
 				i = i + 1
@@ -375,8 +373,6 @@ function ItemFrame:Layout_Default()
 	self:SetSize(width, height)
 end
 
-
--- groups items in bags, much alike text in paragraphs
 function ItemFrame:Layout_BagBreak()
 	local columns = self:NumColumns()
 	local spacing = self:GetSpacing()
@@ -414,8 +410,6 @@ function ItemFrame:Layout_BagBreak()
 	self:SetSize(width, height)
 end
 
-
--- for use on non-bag frames (ex: guilBank). Items go down a column or a row.
 function ItemFrame:Layout_NoBag()
 	local numSlots = self:GetNumSlots()
 	if numSlots == 0 then
@@ -432,17 +426,17 @@ function ItemFrame:Layout_NoBag()
 	local itemSize = self.ITEM_SIZE + spacing
 
 	local a, b = 0, 0
-	for i, itemSlot in self:GetAllItemSlots() do
+	for i, slot in self:GetAllItemSlots() do
 		if a == limit then
 			a = 0
 			b = b + 1
 		end
 	
-		itemSlot:ClearAllPoints()
+		slot:ClearAllPoints()
 		if useRows then
-			itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', itemSize * a, -itemSize * b)
+			slot:SetPoint('TOPLEFT', self, 'TOPLEFT', itemSize * a, -itemSize * b)
 		else
-			itemSlot:SetPoint('TOPLEFT', self, 'TOPLEFT', itemSize * b, -itemSize * a)
+			slot:SetPoint('TOPLEFT', self, 'TOPLEFT', itemSize * b, -itemSize * a)
 		end
 		
 		a = a + 1

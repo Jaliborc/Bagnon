@@ -16,7 +16,7 @@ Bag.GetSlot = Bag.GetID
 --[[ Constructor ]]--
 
 function Bag:New(parent, id)
-	local bag = self:Bind(CreateFrame('CheckButton', ADDON .. 'Bag' .. id, parent))
+	local bag = self:Bind(CreateFrame('CheckButton', ADDON .. self.Name .. id, parent))
 	local name = bag:GetName()
 	
 	local icon = bag:CreateTexture(name .. 'IconTexture', 'BORDER')
@@ -342,7 +342,7 @@ function Bag:Purchase()
 				text = CONFIRM_BUY_BANK_SLOT,
 				button1 = YES,
 				button2 = NO,
-				OnAccept = Purchase,
+				OnAccept = PurchaseSlot,
 				OnShow = function(self)
 					MoneyFrame_Update(self.moneyFrame, GetBankSlotCost(GetNumBankSlots()))
 				end,

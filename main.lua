@@ -83,7 +83,9 @@ end
 
 function Addon:UpdateFrames()
 	for _,frame in pairs(self.frames) do
-		frame.itemFrame:UpdateEverything()
+		if frame:IsShown() then
+			frame.itemFrame:UpdateEverything()
+		end
 	end
 end
 

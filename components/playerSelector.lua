@@ -3,15 +3,12 @@
 		A player selector button
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local PlayerSelector = Bagnon:NewClass('PlayerSelector', 'Button')
-local ItemCache = LibStub('LibItemCache-1.1')
+local ADDON, Addon = ...
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+local PlayerSelector = Addon:NewClass('PlayerSelector', 'Button')
 
 local SIZE = 20
 local TEXTURE_SIZE = 64 * (SIZE/36)
-local ALTERNATIVE_ICONS = [[Interface\CharacterFrame\TEMPORARYPORTRAIT-%s-%s]]
-local ICONS = [[Interface\Icons\Achievement_Character_%s_%s]]
 
 
 --[[ Constructor ]]--
@@ -81,29 +78,13 @@ end
 --[[ Update Methods ]]--
 
 function PlayerSelector:ShowPlayerSelector()
-	if ItemCache:HasCache() then
-		Bagnon:TogglePlayerDropdown(self, -4, -2)
+	if LibStub('LibItemCache-1.1'):HasCache() then
+		Addon:TogglePlayerDropdown(self, -4, -2)
 	end
 end
 
 function PlayerSelector:UpdateIcon()
-	local _, race, sex = ItemCache:GetPlayerInfo(self:GetPlayer())
-	if not race then
-		return
-	else
-		sex = sex == 3 and 'Female' or 'Male'
- 	end
-
-	if race ~= 'Worgen' and race ~= 'Goblin' and race ~= "Pandaren" then
-		if race == 'Scourge' then
-			race = 'Undead'
-		end
-
-		self.icon:SetTexture( ICONS:format(race, sex) )
-	else
-		-- temporary portraits until the holiday achievements bring the cata races in
-		self.icon:SetTexture( ALTERNATIVE_ICONS:format(sex, race) )
-	end
+	self.icon:SetTexture(Addon:GetPlayerIcon(self:GetPlayer()))
 end
 
 function PlayerSelector:UpdateTooltip()

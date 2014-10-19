@@ -48,6 +48,7 @@ L.TipShowSearch = 'Click to search'
 L.TipShowFrameConfig = 'Click to configure this window'
 L.TipDoubleClickSearch = '<Alt-Drag> to move.\n<Right-Click> to configure.\n<Double-Click> to search.'
 L.Total = 'Total'
+L.ConfirmSort = 'Are you sure you want to clean up this bags?'
 
 --itemcount tooltips
 L.TipCount1 = 'Equipped: %d'

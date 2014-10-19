@@ -4,9 +4,9 @@
 --]]
 
 local ADDON, Addon = ...
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local BagToggle = Addon:NewClass('BagToggle', 'CheckButton')
-local Dropdown = CreateFrame('Frame', 'BagnonBagToggleDropdown', nil, 'UIDropDownMenuTemplate')
+local Dropdown = CreateFrame('Frame', ADDON .. 'BagToggleDropdown', nil, 'UIDropDownMenuTemplate')
 
 local SIZE = 20
 local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
@@ -95,10 +95,10 @@ function BagToggle:OnClick(button)
 
 		addLine('inventory', INVENTORY_TOOLTIP)
 		addLine('bank', BANK)
-		addLine('voidstorage', VOID_STORAGE, 'Bagnon_VoidStorage')
+		addLine('voidstorage', VOID_STORAGE, ADDON .. '_VoidStorage')
 
 		if self:GetSettings():GetGuild() then
-			addLine('guildbank', GUILD_BANK, 'Bagnon_GuildBank')
+			addLine('guildbank', GUILD_BANK, ADDON .. '_GuildBank')
 		end
 		
 		if #menu > 1 then
@@ -137,7 +137,7 @@ end
 
 function BagToggle:OpenFrame(id, addon)
 	if not addon or LoadAddOn(addon) then
-		Bagnon.FrameSettings:Get(id):SetPlayerFilter(self:GetSettings():GetPlayerFilter())
+		Addon.FrameSettings:Get(id):SetPlayerFilter(self:GetSettings():GetPlayerFilter())
 		Addon:ToggleFrame(id)
 	end
 end
@@ -190,7 +190,7 @@ end
 --[[ Settings ]]--
 
 function BagToggle:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
+	return Addon.FrameSettings:Get(self:GetFrameID())
 end
 
 function BagToggle:IsBagFrameShown()

@@ -1,4 +1,34 @@
+====== 6.0.10
+* Reagents now take priority in going to the reagent bank before other bag slots when depositing.
+* Fixed issue that could be fired when configuring other addons.
+* Now the player dropdown list displays class colors and race icons. This should make it much easier to find players in long lists.
+
+====== 6.0.9
+* Now new item glow flashes for a limited period of time.
+** It remains with a bolder glow than regular items until the bag is closed or the item moused over.
+* Now only characters from the same faction as yours will be displayed in the character list.
+** You must login again in your characters so that BagBrother can learn their factions!
+
+====== 6.0.8
+* Reverse slot ordering option is now working properly.
+** Tip: you can use this option if you prefer to sort items to the bottom of the window instead of the top.
+* To avoid sorting bags by accident, now auto sort displays a confirmation dialog before sorting.
+
+====== 6.0.7
+* Items are no longer marked as new after the bag is closed.
+* Made items in void storage movable.
+* Tooltips now properly display in the void storage.
+* Items in the bank reagents slot are now properly accounted on item tooltips.
+
+====== 6.0.6
+* Fixed guild bank issues, including long-standing log frame problems.
+
+====== 6.0.5
+* Fixed issue with Bagnon Facade
+
 ====== 6.0.4
+* Fixed bug causing tooltips not to appear on the reagents bank slot.
+* Fixed issue preventing bank slots from being purchased.
 * Fixed errors with player listing.
 
 ====== 6.0.3

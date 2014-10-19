@@ -43,6 +43,18 @@ function Settings:HighlightItemsByQuality()
 	return self:GetDB().highlightItemsByQuality
 end
 
+--highlight new items
+function Settings:SetHighlightNewItems(enable)
+	if self:HighlightNewItems() ~= enable then
+		self:GetDB().highlightNewItems = enable
+		self:SendMessage('ITEM_HIGHLIGHT_UPDATE')
+	end
+end
+
+function Settings:HighlightNewItems()
+	return self:GetDB().highlightNewItems
+end
+
 --highlight unusable items
 function Settings:SetHighlightUnusableItems(enable)
 	if self:HighlightUnusableItems() ~= enable then

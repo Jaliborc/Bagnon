@@ -50,8 +50,28 @@ end
 --[[ Frame Events ]]--
 
 function SortButton:OnClick(button)
-	local frameID = self:GetParent():GetFrameID()
+	if button == 'RightButton' then
+		return DepositReagentBank()
+	end
 
+	local dialog = 'CONFIRM_SORT_' .. ADDON
+	local frameID = self:GetParent().frameID
+
+	if not StaticPopupDialogs[dialog] then
+		StaticPopupDialogs[dialog] = {
+				button1 = YES,
+				button2 = NO,
+				OnAccept = SortButton.OnAccept,
+				hideOnEscape = 1, timeout = 0,
+				preferredIndex = STATICPOPUP_NUMDIALOGS
+			}
+	end
+
+	StaticPopupDialogs[dialog].text = L.ConfirmSort
+	StaticPopup_Show(dialog, nil, nil, frameID)
+end
+
+function SortButton:OnAccept(frameID)
 	-- Override blizz settings
 	SetSortBagsRightToLeft(true)
 	SetBackpackAutosortDisabled(false)
@@ -77,12 +97,8 @@ function SortButton:OnClick(button)
 
 	-- Sort
 	if frameID == 'bank' then
-		if button == 'RightButton' then
-			DepositReagentBank()
-		else
-			SortReagentBankBags()
-			SortBankBags()
-		end
+		SortReagentBankBags()
+		SortBankBags()
 	else
 		SortBags()
 	end
@@ -91,7 +107,7 @@ end
 function SortButton:OnEnter()
 	GameTooltip:SetOwner(self, self:GetRight() > (GetScreenWidth() / 2) and 'ANCHOR_LEFT' or 'ANCHOR_RIGHT')
 	
-	local frameID = self:GetParent():GetFrameID()
+	local frameID = self:GetParent().frameID
 	if frameID == 'bank' then
 		GameTooltip:SetText(L.TipManageBank)
 		GameTooltip:AddLine(L.TipCleanBank, 1,1,1)

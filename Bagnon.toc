@@ -6,14 +6,12 @@
 ## SavedVariables: BagnonGlobalSettings
 
 ## OptionalDeps: BagBrother, ItemRack, Wardrobe, WoWUnit
-## Version: 6.0.2
+## Version: 6.0.9
 
 libs\libs.xml
 localization\localization.xml
 main.lua
 
-core\core.xml
-events\events.xml
-
+api\api.xml
 settings\settings.xml
 components\components.xml

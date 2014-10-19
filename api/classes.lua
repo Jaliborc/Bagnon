@@ -1,5 +1,5 @@
 --[[
-	Classy.lua
+	Classes.lua
 		Utility method for constructing object classes
 --]]
 
@@ -8,6 +8,7 @@ local _, Addon = ...
 function Addon:NewClass(name, type, parent)
 	local class = CreateFrame(type)
 	class.mt = {__index = class}
+	class.Name = name
   	class:Hide()
   
 	if parent then
