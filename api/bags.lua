@@ -1,5 +1,5 @@
 --[[
-	bag.lua
+	bags.lua
 		Generic methods for accessing bag slot information
 --]]
 

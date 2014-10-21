@@ -1,3 +1,13 @@
+====== 6.0.11
+* Now supports all the Blizzard item sorting features, such as:
+** Ignoring bags for auto sort.
+** Setting bags to a specific type of loot.
+* The sort confirmation dialog was removed.
+** To avoid unwanted sorts, the bank frame now performs a bulk deposit on left click, and a sort on right click.
+** You may also set bags to be ignored for sorting.
+* Bags now display the number of empy slots available.
+* More minor bugfixes.
+
 ====== 6.0.10
 * Reagents now take priority in going to the reagent bank before other bag slots when depositing.
 * Fixed issue that could be fired when configuring other addons.

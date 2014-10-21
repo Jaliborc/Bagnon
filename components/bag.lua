@@ -17,17 +17,23 @@ Bag.GetSlot = Bag.GetID
 
 function Bag:New(parent, id)
 	local bag = self:Bind(CreateFrame('CheckButton', ADDON .. self.Name .. id, parent))
-	local name = bag:GetName()
 	
-	local icon = bag:CreateTexture(name .. 'IconTexture', 'BORDER')
+	local icon = bag:CreateTexture(bag:GetName() .. 'IconTexture', 'BORDER')
 	icon:SetAllPoints(bag)
 
-	local count = bag:CreateFontString(name .. 'Count', 'OVERLAY')
-	count:SetFontObject('NumberFontNormalSmall')
+	local count = bag:CreateFontString(nil, 'OVERLAY')
+	count:SetFontObject('NumberFontNormal')
+	count:SetPoint('BOTTOM', 2, 3)
 	count:SetJustifyH('RIGHT')
-	count:SetPoint('BOTTOMRIGHT', -2, 2)
 
-	local nt = bag:CreateTexture(name .. 'NormalTexture')
+	local filter = CreateFrame('Frame', nil, bag)
+	filter:SetPoint('TOPRIGHT', 4, 4)
+	filter:SetSize(20, 20)
+
+	local filterIcon = filter:CreateTexture()
+	filterIcon:SetAllPoints()
+
+	local nt = bag:CreateTexture()
 	nt:SetTexture([[Interface\Buttons\UI-Quickslot2]])
 	nt:SetWidth(self.TEXTURE_SIZE)
 	nt:SetHeight(self.TEXTURE_SIZE)
@@ -35,16 +41,16 @@ function Bag:New(parent, id)
 
 	local pt = bag:CreateTexture()
 	pt:SetTexture([[Interface\Buttons\UI-Quickslot-Depress]])
-	pt:SetAllPoints(bag)
+	pt:SetAllPoints()
 
 	local ht = bag:CreateTexture()
 	ht:SetTexture([[Interface\Buttons\ButtonHilight-Square]])
-	ht:SetAllPoints(bag)
+	ht:SetAllPoints()
 
 	local ct = bag:CreateTexture()
 	ct:SetTexture([[Interface\Buttons\CheckButtonHilight]])
-	ct:SetAllPoints(bag)
 	ct:SetBlendMode('ADD')
+	ct:SetAllPoints()
 
 	bag:SetID(id)
 	bag:SetNormalTexture(nt)
@@ -54,6 +60,8 @@ function Bag:New(parent, id)
 	bag:RegisterForClicks('anyUp')
 	bag:RegisterForDrag('LeftButton')
 	bag:SetSize(self.SIZE, self.SIZE)
+	bag.Count, bag.FilterIcon = count, filter
+	bag.FilterIcon.Icon = filterIcon
 
 	bag:SetScript('OnEnter', bag.OnEnter)
 	bag:SetScript('OnLeave', bag.OnLeave)
@@ -87,13 +95,13 @@ function Bag:UpdateEvents()
 		self:RegisterMessage('BAG_SLOT_HIDE')
 		self:RegisterMessage('BAG_DISABLE_UPDATE')
 		self:RegisterMessage('PLAYER_UPDATE')
+		self:RegisterEvent('BAG_UPDATE')
 
 		if self:IsCustomSlot() then
 			if not self:IsCached() then
 				self:RegisterEvent('PLAYERBANKSLOTS_UPDATED')
 				self:RegisterEvent('ITEM_LOCK_CHANGED')
 				self:RegisterEvent('CURSOR_UPDATE')
-				self:RegisterEvent('BAG_UPDATE')
 			else
 				self:RegisterEvent('GET_ITEM_INFO_RECEIVED')
 			end
@@ -132,7 +140,7 @@ end
 
 function Bag:BAG_UPDATE(event, bag)
 	self:UpdateLock()
-	self:UpdateCustomIcon()
+	self:UpdateSlot()
   	self:UpdateToggle()
 end
 
@@ -143,13 +151,13 @@ function Bag:PLAYER_UPDATE(msg, frameID, player)
 end
 
 function Bag:GET_ITEM_INFO_RECEIVED()
-	self:UpdateCustomIcon()
+	self:UpdateSlot()
 end
 
 do
 	local function updateSlot(self)
 		self:UpdateLock()
-		self:UpdateCustomIcon()
+		self:UpdateSlot()
 	end
 	
 	Bag.PLAYERBANKSLOTS_UPDATED = updateSlot
@@ -185,16 +193,24 @@ function Bag:OnHide()
 end
 
 function Bag:OnClick(button)
-	if self:IsPurchasable() then
-		self:Purchase()
-	elseif CursorHasItem() and not self:IsCached() then
-		if self:IsBackpack() then
-			PutItemInBackpack()
-		else
-			PutItemInBag(self:GetInventorySlot())
+	if button == 'RightButton' then
+		if not self:IsCached() and not self:IsReagents() and not self:IsPurchasable() then
+			ContainerFrame1FilterDropDown:SetParent(self)
+			PlaySound('igMainMenuOptionCheckBoxOn')
+			ToggleDropDownMenu(1, nil, ContainerFrame1FilterDropDown, self, 0, 0)
 		end
-	elseif self:CanToggle() then
-		self:Toggle()
+	else
+		if self:IsPurchasable() then
+			self:Purchase()
+		elseif CursorHasItem() and not self:IsCached() then
+			if self:IsBackpack() then
+				PutItemInBackpack()
+			else
+				PutItemInBag(self:GetInventorySlot())
+			end
+		elseif self:CanToggle() then
+			self:Toggle()
+		end
 	end
 
 	self:UpdateToggle()
@@ -242,13 +258,33 @@ function Bag:Update()
 		self:SetIcon('Interface/Buttons/Button-Backpack-Up')
 	elseif self:IsReagents() then
 		self:SetIcon('Interface/Icons/Achievement_GuildPerk_BountifulBags')
-	else
-		self:UpdateCustomIcon()
 	end
 
+	for i = LE_BAG_FILTER_FLAG_EQUIPMENT, NUM_LE_BAG_FILTER_FLAGS do
+		local id = self:GetSlot()
+		local active = id > NUM_BAG_SLOTS and GetBankBagSlotFlag(id - NUM_BAG_SLOTS, i) or GetBagSlotFlag(id, i)
+
+		if active then
+			self.FilterIcon.Icon:SetAtlas(BAG_FILTER_ICONS[i])
+		end
+	end
+
+	self.FilterIcon:SetShown(not self:IsCached())
+	self:UpdateSlot()
 	self:UpdateLock()
 	self:UpdateCursor()
 	self:UpdateToggle()
+end
+
+function Bag:UpdateSlot()
+	local link, count, texture = self:GetInfo()
+
+	if self:IsCustomSlot() then
+		self:SetIcon(texture or link and GetItemIcon(link) or 'Interface/PaperDoll/UI-PaperDoll-Slot-Bag')
+	  	self.link = link
+	end
+
+	self.Count:SetText(not self:IsPurchasable() and count > 0 and count)
 end
 
 function Bag:UpdateLock()
@@ -259,24 +295,13 @@ end
 
 function Bag:UpdateCursor()
 	if not self:IsCustomSlot() then
-      return
-  end
+     	return
+  	end
 
 	if CursorCanGoInSlot(self:GetInventorySlot()) then
 		self:LockHighlight()
 	else
 		self:UnlockHighlight()
-	end
-end
-
-function Bag:UpdateCustomIcon()
-	if self:IsCustomSlot() then
-		local link, count, texture = self:GetInfo()
-		local color = self:IsPurchasable() and 0.1 or 1
-
-		self:SetIcon(texture or link and GetItemIcon(link) or 'Interface/PaperDoll/UI-PaperDoll-Slot-Bag')
-		self:SetCount(count)
-	  	self.link = link
 	end
 end
 
@@ -310,22 +335,14 @@ function Bag:UpdateTooltip()
 	GameTooltip:Show()
 end
 
+
+--[[ Display ]]--
+
 function Bag:SetIcon(icon)
 	local color = self:IsPurchasable() and .1 or 1
 
 	SetItemButtonTexture(self, icon)
 	SetItemButtonTextureVertexColor(self, 1, color, color)
-end
-
-function Bag:SetCount(count)
-	local text = _G[self:GetName() .. 'Count']
-	local count = count or 0
-
-	if count > 999 then
-		text:SetFormattedText('%.1fk', count/1000)
-	else
-		text:SetText(count > 1 and count or '')
-	end
 end
 
 
@@ -374,8 +391,6 @@ function Bag:IsToggled()
 	return self:CanToggle() and self:GetSettings():IsBagSlotShown(self:GetSlot())
 end
 
-
---searching
 function Bag:SetSearch()
 	self:GetSettings():SetBagSearch(self:GetSlot())
 end
@@ -408,7 +423,6 @@ end
 function Bag:IsReagents()
 	return Addon:IsReagents(self:GetSlot())
 end
-
 
 function Bag:IsBankBag()
 	return Addon:IsBankBag(self:GetSlot())

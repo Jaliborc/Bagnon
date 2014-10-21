@@ -568,11 +568,13 @@ function ItemSlot:GetInfo()
 end
 
 function ItemSlot:GetPlayer()
-	return self:GetParent():GetParent():GetPlayer()
+	local parent = self:GetParent()
+	return parent and parent:GetParent():GetPlayer()
 end
 
 function ItemSlot:GetFrameID()
-	return self:GetParent():GetParent().frameID
+	local parent = self:GetParent()
+	return parent and parent:GetParent().frameID
 end
 
 

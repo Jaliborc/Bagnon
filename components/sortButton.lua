@@ -50,56 +50,18 @@ end
 --[[ Frame Events ]]--
 
 function SortButton:OnClick(button)
+	local isBank = self:GetParent().frameID == 'bank'
+
 	if button == 'RightButton' then
-		return DepositReagentBank()
-	end
-
-	local dialog = 'CONFIRM_SORT_' .. ADDON
-	local frameID = self:GetParent().frameID
-
-	if not StaticPopupDialogs[dialog] then
-		StaticPopupDialogs[dialog] = {
-				button1 = YES,
-				button2 = NO,
-				OnAccept = SortButton.OnAccept,
-				hideOnEscape = 1, timeout = 0,
-				preferredIndex = STATICPOPUP_NUMDIALOGS
-			}
-	end
-
-	StaticPopupDialogs[dialog].text = L.ConfirmSort
-	StaticPopup_Show(dialog, nil, nil, frameID)
-end
-
-function SortButton:OnAccept(frameID)
-	-- Override blizz settings
-	SetSortBagsRightToLeft(true)
-	SetBackpackAutosortDisabled(false)
-	SetBankAutosortDisabled(false)
-
-	for i, slot in Addon.FrameSettings:Get(frameID):GetBagSlots() do
-		if slot > NUM_BAG_SLOTS then
-			slot = slot - NUM_BAG_SLOTS
-
-			for flag = FIRST_FLAG, LAST_FLAG do
-				if GetBankBagSlotFlag(slot, flag) then
-					SetBankBagSlotFlag(slot, flag, false)
-				end
-			end
-		elseif slot > 0 then
-			for flag = FIRST_FLAG, LAST_FLAG do
-				if GetBagSlotFlag(slot, flag) then
-					SetBagSlotFlag(slot, flag, false)
-				end
-			end
+		if isBank then
+			SetSortBagsRightToLeft(true)
+			SortReagentBankBags()
+			SortBankBags()
 		end
-	end
-
-	-- Sort
-	if frameID == 'bank' then
-		SortReagentBankBags()
-		SortBankBags()
+	elseif isBank then
+		DepositReagentBank()
 	else
+		SetSortBagsRightToLeft(true)
 		SortBags()
 	end
 end
@@ -110,8 +72,8 @@ function SortButton:OnEnter()
 	local frameID = self:GetParent().frameID
 	if frameID == 'bank' then
 		GameTooltip:SetText(L.TipManageBank)
-		GameTooltip:AddLine(L.TipCleanBank, 1,1,1)
 		GameTooltip:AddLine(L.TipDepositReagents, 1,1,1)
+		GameTooltip:AddLine(L.TipCleanBank, 1,1,1)
 	else
 		GameTooltip:SetText(L.TipCleanBags)
 	end
