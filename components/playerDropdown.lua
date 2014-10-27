@@ -59,7 +59,7 @@ end
 
 --[[ Public Methods ]]--
 
-function Addon:TogglePlayerDropdown(anchor, offX, offY)
-  CurrentFrame = anchor
+function Addon:TogglePlayerDropdown(anchor, frame, offX, offY)
+  CurrentFrame = frame
   ToggleDropDownMenu(1, nil, Dropdown or Startup(), anchor, offX, offY)
 end

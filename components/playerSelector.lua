@@ -79,7 +79,7 @@ end
 
 function PlayerSelector:ShowPlayerSelector()
 	if LibStub('LibItemCache-1.1'):HasCache() then
-		Addon:TogglePlayerDropdown(self, -4, -2)
+		Addon:TogglePlayerDropdown(self, self, -4, -2)
 	end
 end
 
