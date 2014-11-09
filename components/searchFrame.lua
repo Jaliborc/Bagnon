@@ -120,7 +120,10 @@ function SearchFrame:UpdateShown()
 end
 
 function SearchFrame:UpdateText()
-	self:SetText(self:GetSearch())
+	local text = self:GetSearch()
+	if text ~= self:GetText() then -- required for asian locales
+		self:SetText(text)
+	end
 end
 
 

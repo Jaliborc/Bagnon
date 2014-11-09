@@ -1,3 +1,14 @@
+====== 6.0.14
+* Fixed issue preventing character data from being deleted.
+* Fixed issue preventing proper searches in Korean clients and possibly other localizations.
+* The player dropdown list now displays all your connected realm characters.
+** The new class and race introduced in 6.0.10 should help to keep the list manageable for players with many characters.
+** Tooltips still only display players from the same faction (to keep tooltip sizes manageable) as only BOA accounts are sharable between these characters.
+* Fixed issue preventing some servers to be visible in others.
+
+====== 6.0.13
+* Fixed issue causing guild bank tabs sometimes to stay invisible.
+
 ====== 6.0.12
 * Guild bank hotfix.
 

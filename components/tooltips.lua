@@ -49,7 +49,7 @@ local function AddOwners(tooltip, link)
 	local players = 0
 	local total = 0
 	
-	for i, player in ItemCache:IteratePlayers() do
+	for i, player in ItemCache:IterateAlliedPlayers() do
 		local color = Addon:GetPlayerColorString(player)
 		local countText = ItemText[player][id]
 		local count = ItemCount[player][id]
@@ -102,7 +102,7 @@ end
 function Addon:HookTooltips()
 	if ItemCache:HasCache() and self.Settings:IsTipCountEnabled() then
 		if not Hooked then
-			for i, player in ItemCache:IteratePlayers() do
+			for i, player in ItemCache:IterateAlliedPlayers() do
 				ItemCount[player] = {}
 				ItemText[player] = {}
 			end

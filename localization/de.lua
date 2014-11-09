@@ -30,8 +30,8 @@ L.TitleBank = '%s\'s Bank'
 
 
 --tooltips
-L.TipBags = 'Taschen'
-L.TipBank = 'Bank'
+L.TitleBags = 'Inventar von %s'
+L.TitleBank = 'Bank von %s'
 L.TipBankToggle = '<Rechts-Klick> um die Bank umzuschalten.'
 L.TipChangePlayer = '<Klicken> um die Gegenst\195\164nde anderer Charaktere anzuzeigen.'
 L.TipGoldOnRealm = 'Auf %s gesamt'
@@ -47,6 +47,12 @@ L.TipShowSearch = '<Klicken> zum Suchen.'
 L.TipShowFrameConfig = '<Klick> um dieses Fenster zu konfigurieren.'
 L.TipDoubleClickSearch = '<Alt-Ziehen> zum Verschieben.\n<Rechtsklick> zum Konfigurieren.\n<Doppelklick> zum Suchen.'
 L.Total = 'Gesamt'
+L.TipCleanBags = '<Klicken> um die Taschen aufräumen.'
+L.TipCleanBank = '<Rechtsklicken> um die Bank aufzuräumen.'
+L.TipDepositReagents = '<Linksklicken> um alle Reagenzien einzulagern.'
+L.TipFrameToggle = '<Rechtsclick> um andere Fenster umzuschalten.'
+L.TipManageBank = 'Bank verwalten'
+L.TipCount4 = 'Leerenlager: %d'
 
 --itemcount tooltips
 L.TipCount1 = 'Angelegt: %d'
