@@ -226,8 +226,6 @@ function ItemSlot:OnModifiedClick(...)
 end
 
 function ItemSlot:OnEnter()
-	ResetCursor()
-
 	if self:IsCached() then
 		local dummy = self:GetDummySlot()
 		dummy:SetParent(self)
@@ -282,11 +280,11 @@ function ItemSlot:Update()
 end
 
 function ItemSlot:SetItem(item)
-	self.item = item
+	self.hasItem = item		-- CursorUpdate
 end
 
 function ItemSlot:GetItem()
-	return self.item
+	return self.hasItem
 end
 
 
@@ -621,6 +619,7 @@ function ItemSlot:CreateDummySlot()
 		end
 		
 		parent:LockHighlight()
+		CursorUpdate(parent)
 	end
 
 	local function Slot_OnLeave(self)

@@ -260,16 +260,10 @@ function Bag:Update()
 		self:SetIcon('Interface/Icons/Achievement_GuildPerk_BountifulBags')
 	end
 
-	for i = LE_BAG_FILTER_FLAG_EQUIPMENT, NUM_LE_BAG_FILTER_FLAGS do
-		local id = self:GetSlot()
-		local active = id > NUM_BAG_SLOTS and GetBankBagSlotFlag(id - NUM_BAG_SLOTS, i) or GetBagSlotFlag(id, i)
+	local filterIndex = self:GetFilterIndex()
 
-		if active then
-			self.FilterIcon.Icon:SetAtlas(BAG_FILTER_ICONS[i])
-		end
-	end
-
-	self.FilterIcon:SetShown(not self:IsCached())
+	self.FilterIcon.Icon:SetAtlas(BAG_FILTER_ICONS[filterIndex])
+	self.FilterIcon:SetShown(filterIndex and not self:IsCached())
 	self:UpdateSlot()
 	self:UpdateLock()
 	self:UpdateCursor()
@@ -471,4 +465,16 @@ end
 
 function Bag:GetFrameID()
 	return self:GetParent():GetFrameID()
+end
+
+function Bag:GetFilterIndex()
+	local id = self:GetSlot()
+
+	for i = LE_BAG_FILTER_FLAG_EQUIPMENT, NUM_LE_BAG_FILTER_FLAGS do
+		local active = id > NUM_BAG_SLOTS and GetBankBagSlotFlag(id - NUM_BAG_SLOTS, i) or GetBagSlotFlag(id, i)
+
+		if active then
+			return i
+		end
+	end
 end
