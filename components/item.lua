@@ -53,9 +53,9 @@ function ItemSlot:Create()
 	item.newitemglowAnim:SetLooping('NONE')
 	item.QuestBorder = _G[name .. 'IconQuestTexture']
 	item.Cooldown = _G[name .. 'Cooldown']
-	item:HookScript('OnClick', item.OnClick)
 	item:SetScript('PreClick', item.OnPreClick)
 	item:HookScript('OnDragStart', item.OnDragStart)
+	item:HookScript('OnClick', item.OnClick)
 	item:SetScript('OnEnter', item.OnEnter)
 	item:SetScript('OnLeave', item.OnLeave)
 	item:SetScript('OnShow', item.OnShow)
@@ -191,7 +191,7 @@ end
 
 function ItemSlot:OnPreClick(button)
 	if button == 'RightButton' then 
-		if Addon.BagEvents.atBank and IsReagentBankUnlocked() then
+		if Addon.BagEvents.atBank and IsReagentBankUnlocked() and GetContainerNumFreeSlots(REAGENTBANK_CONTAINER) > 0 and ItemSearch:TooltipPhrase(self:GetItem(), PROFESSIONS_USED_IN_COOKING) then
 			return UseContainerItem(self:GetBag(), self:GetID(), nil, true)
 		end
 
@@ -280,7 +280,7 @@ function ItemSlot:Update()
 end
 
 function ItemSlot:SetItem(item)
-	self.hasItem = item		-- CursorUpdate
+	self.hasItem = item -- CursorUpdate
 end
 
 function ItemSlot:GetItem()
@@ -348,10 +348,11 @@ function ItemSlot:UpdateBorder()
 	self:HideBorder()
 
 	if item then
-		local _, isQuestStarter = self:IsQuestItem()
+		local isQuestItem, isQuestStarter = self:IsQuestItem()
 		if isQuestStarter then
 			self.QuestBorder:SetTexture(TEXTURE_ITEM_QUEST_BANG)
 			self.QuestBorder:Show()
+			return
 		end
 
 		if self:HighlightNewItems() and self:IsNew() then
@@ -370,7 +371,7 @@ function ItemSlot:UpdateBorder()
 			end
 		end
 
-		if self:HighlightQuestItems() and self:IsQuestItem() then
+		if self:HighlightQuestItems() and isQuestItem then
 			return self:SetBorderColor(1, .82, .2)
 		end
 

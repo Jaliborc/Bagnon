@@ -5,10 +5,6 @@
 
 local ADDON, Addon = ...
 local Cache = LibStub('LibItemCache-1.1')
-if not Cache:HasCache() then
-  return
-end
-
 local CurrentFrame
 local Dropdown
 
@@ -54,8 +50,10 @@ end
 
 local function Startup()
 	Dropdown = CreateFrame('Frame', 'BagnonPlayerDropdown', UIParent, 'UIDropDownMenuTemplate')
-	Dropdown:SetID(1)
-	UIDropDownMenu_Initialize(Dropdown, UpdateDropdown, "MENU")
+    Dropdown.initialize = UpdateDropdown
+    Dropdown.displayMode = 'MENU'
+    Dropdown:SetID(1)
+    
 	return Dropdown
 end
 
@@ -63,6 +61,8 @@ end
 --[[ Public Methods ]]--
 
 function Addon:TogglePlayerDropdown(anchor, frame, offX, offY)
-    CurrentFrame = frame
-    ToggleDropDownMenu(1, nil, Dropdown or Startup(), anchor, offX, offY)
+    if Cache:HasCache() then
+        CurrentFrame = frame
+        ToggleDropDownMenu(1, nil, Dropdown or Startup(), anchor, offX, offY)
+    end
 end

@@ -78,9 +78,7 @@ end
 --[[ Update Methods ]]--
 
 function PlayerSelector:ShowPlayerSelector()
-	if LibStub('LibItemCache-1.1'):HasCache() then
-		Addon:TogglePlayerDropdown(self, self, -4, -2)
-	end
+	Addon:TogglePlayerDropdown(self, self, -4, -2)
 end
 
 function PlayerSelector:UpdateIcon()

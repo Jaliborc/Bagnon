@@ -1,3 +1,9 @@
+====== 6.0.15
+* Fixed issues with item coloring (ex: highlight item sets not working properly).
+* No longer displays warning messages when depositing non-reagents in the bank or when the reagent bank is full.
+* No longer causes cursor flickering at vendors.
+* Small changes to prevent tainting issues and extremely rare loading error occurrences.
+
 ====== 6.0.14
 * Fixed issue preventing character data from being deleted.
 * Fixed issue preventing proper searches in Korean clients and possibly other localizations.
