@@ -350,6 +350,12 @@ function ItemSlot:UpdateBorder()
 	self:HideBorder()
 
 	if item then
+		local _, isQuestStarter = self:IsQuestItem()
+		if isQuestStarter then
+			self.QuestBorder:SetTexture(TEXTURE_ITEM_QUEST_BANG)
+			self.QuestBorder:Show()
+		end
+
 		if self:HighlightNewItems() and self:IsNew() then
 			if not self.flashAnim:IsPlaying() then
 				self.flashAnim:Play()
@@ -366,18 +372,13 @@ function ItemSlot:UpdateBorder()
 			end
 		end
 
-		if self:HighlightQuestItems() then
-			local isQuestItem, isQuestStarter = self:IsQuestItem()
-			if isQuestItem then
-				return self:SetBorderColor(1, .82, .2)
-			end
-
-			if isQuestStarter then
-				self.QuestBorder:SetTexture(TEXTURE_ITEM_QUEST_BANG)
-				self.QuestBorder:Show()
-				return
-			end
+		if self:HighlightQuestItems() and self:IsQuestItem() then
+			return self:SetBorderColor(1, .82, .2)
 		end
+
+		if self:HighlightSetItems() and ItemSearch:InSet(item) then
+	   		return self:SetBorderColor(.1, 1, 1)
+	  	end
 
 		if self:HighlightUnusableItems() and Unfit:IsItemUnusable(item) then
 			return self:SetBorderColor(RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b)
