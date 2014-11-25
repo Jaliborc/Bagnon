@@ -190,6 +190,17 @@ function Addon:HookBagClickEvents()
 		end
 	end
 
+	local oOpenBag = OpenBag
+	OpenBag = function(bagSlot)
+		local frameID = self:IsBankBag(bagSlot) and 'bank' or 'inventory'
+		local toggled = self:FrameControlsBag(frameID, bagSlot) and self:ShowFrame(frameID)
+
+		if not toggled then
+			oOpenBag(bagSlot)
+		end
+	end
+
+
 	--all bags
 	local oOpenAllBags = OpenAllBags
 	OpenAllBags = function(frame)
