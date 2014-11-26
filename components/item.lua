@@ -190,7 +190,7 @@ function ItemSlot:OnDragStart()
 end
 
 function ItemSlot:OnPreClick(button)
-	if button == 'RightButton' then 
+	if not IsModifiedClick() and button == 'RightButton' then
 		if Addon.BagEvents.atBank and IsReagentBankUnlocked() and GetContainerNumFreeSlots(REAGENTBANK_CONTAINER) > 0 and ItemSearch:TooltipPhrase(self:GetItem(), PROFESSIONS_USED_IN_COOKING) then
 			return UseContainerItem(self:GetBag(), self:GetID(), nil, true)
 		end
@@ -402,7 +402,7 @@ function ItemSlot:HideBorder()
 end
 
 
---[[ Misk ]]--
+--[[ Cooldown ]]--
 
 function ItemSlot:UpdateCooldown()
 	if self:GetItem() and (not self:IsCached()) then
@@ -552,7 +552,7 @@ function ItemSlot:GetBag()
 end
 
 function ItemSlot:IsNew()
-	return C_NewItems.IsNewItem(self:GetBag(), self:GetID())
+	return self:GetBag() and C_NewItems.IsNewItem(self:GetBag(), self:GetID())
 end
 
 function ItemSlot:IsPaid()
