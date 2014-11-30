@@ -15,4 +15,4 @@
 	url = git://github.com/tekkub/libdatabroker-1-1.git
 [submodule "common"]
 	path = common
-	url = git://github.com/tullamods/Wildpants
+	url = git://github.com/tullamods/Wildpants.git
