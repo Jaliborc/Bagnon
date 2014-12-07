@@ -1,19 +1,18 @@
---[[
-	Bagnon Localization: Italian
---]]
+--[[Bagnon Localization - Italian]]
 
-local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'itIT', true)
+local L = LibStub('AceLocale-3.0'):NewLocale('Bagnon', 'itIT')
+if not L then return end
 
 --keybinding text
-L.ToggleBags = 'Attiva Inventario'
-L.ToggleBank = 'Attiva Banca'
-L.ToggleVault = 'Attiva Banca Eterea'
+L.ToggleBags = "Attiva l'Inventario"
+L.ToggleBank = 'Attiva la Banca'
+L.ToggleVault = 'Attiva la Banca Eterea'
 
 
 --system messages
-L.NewUser = 'Trovato nuovo utente, caricati valori prederifniti'
-L.Updated = 'Aggiornato alla versione v%s'
-L.UpdatedIncompatible = 'Aggiornamento da una versione incompatibile, caricati valori prederifniti'
+L.NewUser = 'Trovato un nuovo utente. Le impostazioni predefinite sono state caricate.'
+L.Updated = 'Aggiornato alla v%s'
+L.UpdatedIncompatible = 'Aggiornato da una versione incompatibile. Caricati valori predefiniti.'
 
 
 --slash commands
@@ -29,31 +28,34 @@ L.TitleBank = 'Banca di %s'
 
 
 --tooltips
-L.TipBags = 'Sacche'
-L.TipBank = 'Banca'
-L.TipChangePlayer = "Clicca per vedere gli oggetti di un'altro personaggio."
-L.TipGoldOnRealm = 'Totale di %s'
-L.TipHideBag = 'Clicca per nascondere questa sacca.'
-L.TipHideBags = '<Clic-Sinistro> per nascondere la visualizzazione delle sacche.'
-L.TipHideSearch = 'Clic per nascondere la barra di ricerca.'
-L.TipFrameToggle = '<Clic-Destro> per visualizzare altre finestre.'
-L.PurchaseBag = 'Clic per acquistare questo scomparto per sacche.'
-L.TipShowBag = 'Clic per visualizzare questa sacca.'
-L.TipShowBags = '<Clic-Sinistro> per attivare la visualizzazione delle sacche.'
-L.TipShowMenu = '<Clic-Destro> per configurare questa finestra.'
-L.TipShowSearch = 'Clic per ricercare.'
-L.TipShowFrameConfig = 'Clic per configurare questa finestra.'
-L.TipDoubleClickSearch = '<Alt+Trascina> per muovere.\n<Clic-Destro> per configurare.\n<Doppio-Clic> per ricercare.'
-L.Total = 'Totale'
+L.TipBags = 'Borse'
+L.TipChangePlayer = 'Clicca per vedere gli oggetti di un altro personaggio.'
+L.TipCleanBags = 'Clicca per mettere in ordine le borse.'
+L.TipCleanBank = '<Clic Destro> per mettere in ordine la Banca.'
+L.TipDepositReagents = '<Clic Sinistro> per depositare tutti i reagenti.'
+L.TipFrameToggle = "<Clic Destro> per attivare un'altra finestra."
+L.TipGoldOnRealm = 'Totali di %s'
+L.TipHideBag = 'Clicca per nascondere questa borsa.'
+L.TipHideBags = '<Clic Sinistro> per nascondere il riquadro delle borse.'
+L.TipHideSearch = 'Clicca per nascondere la barra di ricerca.'
+L.TipManageBank = 'Gestisci Banca'
+L.PurchaseBag = 'Clicca per comprare questo spazio di Banca.'
+L.TipShowBag = 'Clicca per mostrare questa borsa.'
+L.TipShowBags = '<Clic Sinistro> per mostrare il riquadro delle borse.'
+L.TipShowMenu = '<Clic Destro> per configurare questa finestra.'
+L.TipShowSearch = 'Clicca per cercare.'
+L.TipShowFrameConfig = 'Clicca per configurare questa finestra.'
+L.TipDoubleClickSearch = '<Alt e trascina> per muovere.\n<Clic Destro> per configurare.\n<Doppio clic> per cercare.'
+L.Total = 'Totali'
 
 --itemcount tooltips
-L.TipCount1 = 'Equippaggiati: %d'
-L.TipCount2 = 'Sacche: %d'
+L.TipCount1 = 'Equipaggiati: %d'
+L.TipCount2 = 'Borse: %d'
 L.TipCount3 = 'Banca: %d'
 L.TipCount4 = 'Banca Eterea: %d'
 L.TipDelimiter = '|'
 
 --databroker tooltips
-L.TipShowBank = '<Shift+Clic-Sinistro> per visualizzare la tua banca.'
-L.TipShowInventory = '<Clic-Sinistro> per visualizzare il tuo inventario.'
-L.TipShowOptions = '<Clic-Destro> per aprire il menù delle opzioni.'
+L.TipShowBank = '<Shift+Clic Sinistro> per mostrare la Banca.'
+L.TipShowInventory = '<Clic Sinistro> per mostrare il tuo Inventario.'
+L.TipShowOptions = '<Clic Destro> per mostrare le opzioni del menù.'
