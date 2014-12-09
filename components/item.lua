@@ -112,7 +112,7 @@ function ItemSlot:ITEM_SLOT_UPDATE()
 end
 
 function ItemSlot:ITEM_LOCK_CHANGED()
-	self:UpdateLocked()
+	self:UpdateLock()
 end
 
 function ItemSlot:ITEM_SLOT_UPDATE_COOLDOWN()
@@ -331,7 +331,7 @@ function ItemSlot:SetLocked(locked)
 	SetItemButtonDesaturated(self, locked)
 end
 
-function ItemSlot:UpdateLocked()
+function ItemSlot:UpdateLock()
 	self:SetLocked(self:IsLocked())
 end
 

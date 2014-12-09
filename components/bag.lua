@@ -376,7 +376,7 @@ function Bag:UpdateToggle()
 end
 
 function Bag:CanToggle()
-	if Addon.Settings:CanDisableBags() then
+	if Addon.sets.canDisableBags then
 		return self:IsBackpack() or self:IsBank() or not self:IsPurchasable()
 	end
 end

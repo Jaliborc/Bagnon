@@ -7,7 +7,7 @@ local ADDON, Addon = ...
 _G[ADDON] = Addon
 
 LibStub('AceAddon-3.0'):NewAddon(Addon, ADDON, 'AceEvent-3.0', 'AceConsole-3.0')
-Addon.SendCallback = LibStub('CallbackHandler-1.0'):New(Addon).Fire
+Addon.SendMessage = LibStub('CallbackHandler-1.0', 'RegisterMessage', 'UnregisterMessage', 'UnregisterAllMessages'):New(Addon).Fire
 Addon.frames = {}
 
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
