@@ -9,9 +9,10 @@
 ## Version: 6.0.16
 
 libs\libs.xml
-localization\localization.xml
-main.lua
 
-api\api.xml
-settings\settings.xml
+common\localization\localization.xml
+common\core\core.xml
+common\components\components.xml
+
 components\components.xml
+main.lua
