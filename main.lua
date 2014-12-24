@@ -20,6 +20,7 @@ BINDING_NAME_BAGNON_VAULT_TOGGLE = L.ToggleVault
 --[[ Startup ]]--
 
 function Addon:OnEnable()
+	self:StartupSettings()
 	self:AddSlashCommands()
 	self:HookBagClickEvents()
 	self:HookTooltips()
@@ -119,20 +120,17 @@ function Addon:CreateFrame(id)
  	end
 end
 
-function Addon:GetFrame(id)
-	return self.frames[id]
+function Addon:IsFrameShown(id)
+	local frame = self:GetFrame(id)
+	return frame and frame:IsShown()
 end
 
 function Addon:IsFrameEnabled(id)
-	return self.Settings:IsFrameEnabled(id)
+	return not self.sets.frames[id].disabled
 end
 
-function Addon:IsFrameShown(id)
-	return self.FrameSettings:Get(id):IsShown()
-end
-
-function Addon:FrameControlsBag(id, bag)
-	return self.FrameSettings:Get(id):IsBagSlotShown(bag) or (not self.Settings:IsBlizzardBagPassThroughEnabled())
+function Addon:GetFrame(id)
+	return self.frames[id]
 end
 
 
@@ -162,40 +160,32 @@ function Addon:HookBagClickEvents()
 	--backpack
 	local oOpenBackpack = OpenBackpack
 	OpenBackpack = function()
-		local shown = self:FrameControlsBag('inventory', BACKPACK_CONTAINER) and self:ShowFrame('inventory')
-
-		if not shown then
+		if not self:ShowFrame('inventory') then
 			oOpenBackpack()
 		end
 	end
 
 	local oToggleBackpack = ToggleBackpack
 	ToggleBackpack = function()
-		local toggled = self:FrameControlsBag('inventory', BACKPACK_CONTAINER) and self:ToggleFrame('inventory')
-
-		if not toggled then
+		if not self:ToggleFrame('inventory') then
 			oToggleBackpack()
 		end
 	end
 
 	--single bag
 	local oToggleBag = ToggleBag
-	ToggleBag = function(bagSlot)
-		local frameID = self:IsBankBag(bagSlot) and 'bank' or 'inventory'
-		local toggled = self:FrameControlsBag(frameID, bagSlot) and self:ToggleFrame(frameID)
-
-		if not toggled then
-			oToggleBag(bagSlot)
+	ToggleBag = function(bag)
+		local frame = self:IsBankBag(bag) and 'bank' or 'inventory'
+		if not self:ToggleFrame(frame) then
+			oToggleBag(bag)
 		end
 	end
 
 	local oOpenBag = OpenBag
-	OpenBag = function(bagSlot)
-		local frameID = self:IsBankBag(bagSlot) and 'bank' or 'inventory'
-		local toggled = self:FrameControlsBag(frameID, bagSlot) and self:ShowFrame(frameID)
-
-		if not toggled then
-			oOpenBag(bagSlot)
+	OpenBag = function(bag)
+		local frame = self:IsBankBag(bag) and 'bank' or 'inventory'
+		if not self:ShowFrame(frame) then
+			oOpenBag(bag)
 		end
 	end
 
@@ -203,8 +193,7 @@ function Addon:HookBagClickEvents()
 	--all bags
 	local oOpenAllBags = OpenAllBags
 	OpenAllBags = function(frame)
-		local opened = self:FrameControlsBag('inventory', BACKPACK_CONTAINER) and self:ShowFrame('inventory')
-		if not opened then
+		if not self:ShowFrame('inventory') then
 			oOpenAllBags(frame)
 		end
 	end
@@ -212,8 +201,7 @@ function Addon:HookBagClickEvents()
 	if ToggleAllBags then
 		local oToggleAllBags = ToggleAllBags
 		ToggleAllBags = function()
-			local toggled = self:FrameControlsBag('inventory', BACKPACK_CONTAINER) and self:ToggleFrame('inventory')
-			if not toggled then
+			if not self:ToggleFrame('inventory') then
 				oToggleAllBags()
 			end
 		end
@@ -245,7 +233,7 @@ function Addon:HandleSlashCommand(cmd)
 	elseif cmd == 'bags' or cmd == 'inventory' then
 		self:ToggleFrame('inventory')
 	elseif cmd == 'version' then
-		self:PrintVersion()
+		self:Print(GetAddOnMetadata(ADDON, 'Version'))
 	elseif cmd == '?' or cmd == 'help' then
 		self:PrintHelp()
 	else
@@ -253,10 +241,6 @@ function Addon:HandleSlashCommand(cmd)
 			self:PrintHelp()
 		end
 	end
-end
-
-function Addon:PrintVersion()
-	self:Print(self.SavedSettings:GetDBVersion())
 end
 
 function Addon:PrintHelp()

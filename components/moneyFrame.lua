@@ -3,9 +3,9 @@
 		A money frame object
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local MoneyFrame = Bagnon:NewClass('MoneyFrame', 'Frame')
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
+local ADDON, Addon = ...
+local MoneyFrame = Addon:NewClass('MoneyFrame', 'Frame')
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local Cache = LibStub('LibItemCache-1.1')
 
 
@@ -80,7 +80,7 @@ function MoneyFrame:OnEnter()
 	for i, player in Cache:IteratePlayers() do
 		local money = Cache:GetPlayerMoney(player)
 		if money > 0 then
-			local color = Bagnon:GetPlayerColor(player)
+			local color = Addon:GetPlayerColor(player)
 			local coins = self:GetCoinsText(money)
 
 			GameTooltip:AddDoubleLine(player, coins, color.r, color.g, color.b, 1,1,1)
@@ -117,33 +117,11 @@ function MoneyFrame:UpdateEvents()
 end
 
 
---[[ Properties ]]--
-
-function MoneyFrame:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
-end
-
-function MoneyFrame:GetPlayer()
-	return self:GetSettings():GetPlayerFilter()
-end
-
-function MoneyFrame:SetFrameID(frameID)
-	if self:GetFrameID() ~= frameID then
-		self.frameID = frameID
-		self:UpdateEverything()
-	end
-end
-
-function MoneyFrame:GetFrameID()
-	return self.frameID
-end
+--[[ Getters ]]--
 
 function MoneyFrame:GetMoney()
 	return Cache:GetPlayerMoney(self:GetPlayer())
 end
-
-
---[[ Methods ]]--
 
 function MoneyFrame:GetCoinsText(money)
 	local gold, silver, copper = self:GetCoins(money)

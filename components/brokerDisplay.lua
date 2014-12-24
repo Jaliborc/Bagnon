@@ -3,8 +3,8 @@
 		A databroker display object
 --]]
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local BrokerDisplay = Bagnon:NewClass('BrokerDisplay', 'Button')
+local ADDON, Addon = ...
+local BrokerDisplay = Addon:NewClass('BrokerDisplay', 'Button')
 local ICON_SIZE = 18
 
 
@@ -356,22 +356,4 @@ do
 
 		return ipairs(objects)
 	end
-end
-
-
---[[ Properties ]]--
-
-function BrokerDisplay:SetFrameID(frameID)
-	if self:GetFrameID() ~= frameID then
-		self.frameID = frameID
-		self:UpdateEverything()
-	end
-end
-
-function BrokerDisplay:GetFrameID()
-	return self.frameID
-end
-
-function BrokerDisplay:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
 end

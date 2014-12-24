@@ -4,9 +4,9 @@
 --]]
 
 
-local Bagnon = LibStub('AceAddon-3.0'):GetAddon('Bagnon')
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local TitleFrame = Bagnon:NewClass('TitleFrame', 'Button')
+local ADDON, Addon = ...
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+local TitleFrame = Addon:NewClass('TitleFrame', 'Button')
 
 
 --[[ Constructor ]]--
@@ -72,8 +72,8 @@ end
 
 function TitleFrame:OnClick(button)
 	if button == 'RightButton' then
-		if LoadAddOn('Bagnon_Config') then
-			Bagnon.FrameOptions:ShowFrame(self:GetFrameID())
+		if LoadAddOn(ADDON .. '_Config') then
+			Addon.FrameOptions:ShowFrame(self:GetFrameID())
 		end
 	end
 end
@@ -148,7 +148,7 @@ end
 --[[ Frame Settings ]]--
 
 function TitleFrame:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
+	return Addon.FrameSettings:Get(self:GetFrameID())
 end
 
 function TitleFrame:GetPlayer()

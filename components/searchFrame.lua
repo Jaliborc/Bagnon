@@ -6,6 +6,7 @@
 local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local SearchFrame = Addon:NewClass('SearchFrame', 'EditBox')
+
 SearchFrame.backdrop = {
 	edgeFile = [[Interface\Tooltips\UI-Tooltip-Border]],
 	bgFile = [[Interface\ChatFrame\ChatFrameBackground]],

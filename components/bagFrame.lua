@@ -4,8 +4,8 @@
 --]]
 
 local ADDON, Addon = ...
-local L = LibStub('AceLocale-3.0'):GetLocale('Bagnon')
-local BagFrame = Bagnon:NewClass('BagFrame', 'Frame')
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+local BagFrame = Addon:NewClass('BagFrame', 'Frame')
 BagFrame.Button = Addon.Bag
 
 
@@ -126,7 +126,7 @@ function BagFrame:GetBagSlots()
 end
 
 function BagFrame:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
+	return Addon.FrameSettings:Get(self:GetFrameID())
 end
 
 function BagFrame:GetFrameID()

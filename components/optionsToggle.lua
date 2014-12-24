@@ -4,7 +4,6 @@
 --]]
 
 local ADDON, Addon = ...
-local Addon = LibStub('AceAddon-3.0'):GetAddon(ADDON)
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local OptionsToggle = Addon:NewClass('OptionsToggle', 'Button')
 
