@@ -14,7 +14,7 @@ local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
 
 --[[ Constructor ]]--
 
-function BagToggle:New(frameID, parent)
+function BagToggle:New(parent)
 	local b = self:Bind(CreateFrame('CheckButton', nil, parent))
 	b:SetWidth(SIZE)
 	b:SetHeight(SIZE)
@@ -52,8 +52,7 @@ function BagToggle:New(frameID, parent)
 	b:SetScript('OnLeave', b.OnLeave)
 	b:SetScript('OnShow', b.OnShow)
 	b:SetScript('OnHide', b.OnHide)
-
-	b:SetFrameID(frameID)
+	b:Update()
 
 	return b
 end
@@ -115,7 +114,17 @@ function BagToggle:OnEnter()
 	else
 		GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
 	end
-	self:UpdateTooltip()
+
+	GameTooltip:SetText(L.TipBags)
+
+	if self:IsBagFrameShown() then
+		GameTooltip:AddLine(L.TipHideBags, 1,1,1)
+	else
+		GameTooltip:AddLine(L.TipShowBags, 1,1,1)
+	end
+	
+	GameTooltip:AddLine(L.TipFrameToggle, 1,1,1)
+	GameTooltip:Show()
 end
 
 function BagToggle:OnLeave()
@@ -133,7 +142,7 @@ function BagToggle:OnHide()
 end
 
 
---[[ Open Frames ]]--
+--[[ API ]]--
 
 function BagToggle:OpenFrame(id, addon)
 	if not addon or LoadAddOn(addon) then
@@ -141,9 +150,6 @@ function BagToggle:OpenFrame(id, addon)
 		Addon:ToggleFrame(id)
 	end
 end
-
-
---[[ Update Methods ]]--
 
 function BagToggle:Update()
 	self:SetChecked(self:IsBagFrameShown())
@@ -156,43 +162,6 @@ function BagToggle:UpdateEvents()
 	end
 end
 
-function BagToggle:UpdateTooltip()
-	if not GameTooltip:IsOwned(self) then
-		return
-	end
-	
-	GameTooltip:SetText(L.TipBags)
-	if self:IsBagFrameShown() then
-		GameTooltip:AddLine(L.TipHideBags, 1,1,1)
-	else
-		GameTooltip:AddLine(L.TipShowBags, 1,1,1)
-	end
-	
-	GameTooltip:AddLine(L.TipFrameToggle, 1,1,1)
-	GameTooltip:Show()
-end
-
-
---[[ Properties ]]--
-
-function BagToggle:SetFrameID(frameID)
-	if self:GetFrameID() ~= frameID then
-		self.frameID = frameID
-		self:Update()
-	end
-end
-
-function BagToggle:GetFrameID()
-	return self.frameID
-end
-
-
---[[ Settings ]]--
-
-function BagToggle:GetSettings()
-	return Addon.FrameSettings:Get(self:GetFrameID())
-end
-
 function BagToggle:IsBagFrameShown()
-	return self:GetSettings():IsBagFrameShown()
+	return self:GetSettings().bagFrameShown
 end

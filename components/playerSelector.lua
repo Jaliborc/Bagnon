@@ -13,7 +13,7 @@ local TEXTURE_SIZE = 64 * (SIZE/36)
 
 --[[ Constructor ]]--
 
-function PlayerSelector:New(frameID, parent)
+function PlayerSelector:New(parent)
 	local b = self:Bind(CreateFrame('Button', nil, parent))
 	b:SetWidth(SIZE)
 	b:SetHeight(SIZE)
@@ -42,21 +42,16 @@ function PlayerSelector:New(frameID, parent)
 	b:SetScript('OnClick', b.OnClick)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
-	b:SetScript('OnShow', b.OnShow)
-	b:SetFrameID(frameID)
+	b:Update()
 
 	return b
 end
 
 
---[[ Frame Events ]]--
-
-function PlayerSelector:OnShow()
-	self:UpdateIcon()
-end
+--[[ Events ]]--
 
 function PlayerSelector:OnClick()
-	self:ShowPlayerSelector()
+	Addon:TogglePlayerDropdown(self, self, -4, -2)
 end
 
 function PlayerSelector:OnEnter()
@@ -65,7 +60,8 @@ function PlayerSelector:OnEnter()
 	else
 		GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
 	end
-	self:UpdateTooltip()
+
+	GameTooltip:SetText(L.TipChangePlayer)
 end
 
 function PlayerSelector:OnLeave()
@@ -75,42 +71,13 @@ function PlayerSelector:OnLeave()
 end
 
 
---[[ Update Methods ]]--
+--[[ Update ]]--
 
-function PlayerSelector:ShowPlayerSelector()
-	Addon:TogglePlayerDropdown(self, self, -4, -2)
-end
-
-function PlayerSelector:UpdateIcon()
+function PlayerSelector:Update()
 	self.icon:SetTexture(Addon:GetPlayerIcon(self:GetPlayer()))
-end
-
-function PlayerSelector:UpdateTooltip()
-	GameTooltip:SetText(L.TipChangePlayer)
-end
-
-
---[[ Properties ]]--
-
-function PlayerSelector:SetFrameID(frameID)
-	if self:GetFrameID() ~= frameID then
-		self.frameID = frameID
-	end
-end
-
-function PlayerSelector:GetFrameID()
-	return self.frameID
-end
-
-function PlayerSelector:GetSettings()
-	return Bagnon.FrameSettings:Get(self:GetFrameID())
 end
 
 function PlayerSelector:SetPlayer(player)
 	self:GetSettings():SetPlayerFilter(player)
-	self:UpdateIcon()
-end
-
-function PlayerSelector:GetPlayer()
-	return self:GetSettings():GetPlayerFilter()
+	self:Update()
 end

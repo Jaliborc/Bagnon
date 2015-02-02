@@ -31,162 +31,63 @@ function Frame:New(id)
 	}
 
 	f.frameID = id
+	f.shownCount = 0
+	f:SetScale(f:GetFrameScale())
 	f:SetScript('OnShow', f.OnShow)
 	f:SetScript('OnHide', f.OnHide)
-	f:Rescale()
-	f:UpdateEverything()
+	f:Update()
 
 	tinsert(UISpecialFrames, f:GetName())
 	return f
 end
 
 
---[[ Frame Messages ]]--
+--[[ Visibility ]]--
 
-function Frame:UpdateEvents()
-	self:UnregisterAllMessages()
-	self:RegisterMessage('FRAME_SHOW')
-
-	if self:IsVisible() then
-		self:RegisterMessage('FRAME_HIDE')
-		self:RegisterMessage('FRAME_LAYER_UPDATE')
-		self:RegisterMessage('FRAME_MOVE_START')
-		self:RegisterMessage('FRAME_MOVE_STOP')
-		self:RegisterMessage('FRAME_POSITION_UPDATE')
-		self:RegisterMessage('FRAME_OPACITY_UPDATE')
-		self:RegisterMessage('FRAME_COLOR_UPDATE')
-		self:RegisterMessage('FRAME_BORDER_COLOR_UPDATE')
-		self:RegisterMessage('FRAME_SCALE_UPDATE')
-		self:RegisterMessage('BAG_FRAME_UPDATE_SHOWN')
-		self:RegisterMessage('BAG_FRAME_UPDATE_LAYOUT')
-		self:RegisterMessage('ITEM_FRAME_SIZE_CHANGE')
-
-		self:RegisterMessage('BAG_FRAME_ENABLE_UPDATE')
-		self:RegisterMessage('MONEY_FRAME_ENABLE_UPDATE')
-		self:RegisterMessage('DATABROKER_FRAME_ENABLE_UPDATE')
-		self:RegisterMessage('SEARCH_TOGGLE_ENABLE_UPDATE')
-		self:RegisterMessage('OPTIONS_TOGGLE_ENABLE_UPDATE')
-		self:RegisterMessage('SORT_ENABLE_UPDATE')
-	end
-end
-
-function Frame:FRAME_SHOW(msg, frameID)
-	if self:GetFrameID() == frameID then
-		self:FadeInFrame(self, self:GetFrameOpacity())
-	end
-end
-
-function Frame:FRAME_HIDE(msg, frameID)
-	if self:GetFrameID() == frameID then
+function Frame:UpdateShown()
+	if self:IsFrameShown() then
+		self:Show()
+	else
 		self:Hide()
 	end
 end
 
-function Frame:FRAME_MOVE_START(msg, frameID)
-	if self:GetFrameID() == frameID then
-		self:StartMoving()
+function Frame:ShowFrame()
+	self.shownCount = self.shownCount + 1
+	self:Show()
+end
+
+function Frame:HideFrame(force) -- if a frame was manually opened, then it should only be closable manually
+	self.shownCount = self.shownCount - 1
+
+	if force or self.shownCount <= 0 then
+		self.shownCount = 0
+		self:Hide()
 	end
 end
 
-function Frame:FRAME_MOVE_STOP (msg, frameID)
-	if self:GetFrameID() == frameID then
-		self:StopMovingOrSizing()
-		self:SavePosition()
-	end
+function Frame:IsFrameShown()
+	return self.shownCount > 0
 end
-
-function Frame:FRAME_POSITION_UPDATE (msg, frameID)
-	if self:GetFrameID() == frameID then
-		self:UpdatePosition()
-	end
-end
-
-function Frame:FRAME_SCALE_UPDATE (msg, frameID, scale)
-	if self:GetFrameID() == frameID then
-		self:UpdateScale()
-	end
-end
-
-function Frame:FRAME_OPACITY_UPDATE (msg, frameID, opacity)
-	if self:GetFrameID() == frameID then
-		self:UpdateOpacity()
-	end
-end
-
-function Frame:FRAME_COLOR_UPDATE (msg, frameID, r, g, b, a)
-	if self:GetFrameID() == frameID then
-		self:UpdateBackdrop()
-	end
-end
-
-function Frame:FRAME_BORDER_COLOR_UPDATE (msg, frameID, r, g, b, a)
-	if self:GetFrameID() == frameID then
-		self:UpdateBackdropBorder()
-	end
-end
-
-function Frame:FRAME_LAYER_UPDATE(msg, frameID, layer)
-	if self:GetFrameID() == frameID then
-		self:SetFrameLayer(layer)
-	end
-end
-
-do
-	local function LayoutMessage (self, msg, frameID)
-		if self:GetFrameID() == frameID then
-			self:Layout()
-		end
-	end
-
-	local messages = {
-		'BAG_FRAME_UPDATE_LAYOUT',
-		'BAG_FRAME_UPDATE_SHOWN',
-		'ITEM_FRAME_SIZE_CHANGE',
-		'BAG_FRAME_ENABLE_UPDATE',
-		'MONEY_FRAME_ENABLE_UPDATE',
-		'DATABROKER_FRAME_ENABLE_UPDATE',
-		'SEARCH_TOGGLE_ENABLE_UPDATE',
-		'OPTIONS_TOGGLE_ENABLE_UPDATE',
-		'SORT_ENABLE_UPDATE'
-	}
-	
-	for _, msg in ipairs(messages) do
-		Frame[msg] = LayoutMessage
-	end
-end
-
-
---[[
-  Frame Events
-]]--
 
 function Frame:OnShow()
 	PlaySound(self.OpenSound)
-	self:UpdateEvents()
-	self:UpdateLook()
+	self:Update()
 end
 
 function Frame:OnHide()
 	PlaySound(self.CloseSound)
-	self:UpdateEvents()
 
-	-- fow when a frame is hidden not via bagnon
-	if self:IsFrameShown() then
+	if self:IsFrameShown() then -- for when a frame is hidden not via bagnon
 		self:HideFrame()
+		self.player = nil -- reset player
 	end
 end
 
 
---[[
-  Update Methods
-]]--
+--[[ Update ]]--
 
-function Frame:UpdateEverything()
-	self:UpdateEvents()
-	self:UpdateLook()
-end
-
-function Frame:UpdateLook()
+function Frame:Update()
 	if not self:IsVisible() then
 		return
 	end
@@ -202,64 +103,30 @@ function Frame:UpdateLook()
 end
 
 
---[[
-	Frame Scale
---]]
-
---alter the frame's cale, but maintain the same relative position of the frame
-function Frame:UpdateScale()
+-- scale
+function Frame:UpdateScale() -- maintain the same relative position of the frame
 	local oldScale = self:GetScale()
 	local newScale = self:GetFrameScale()
 
 	if oldScale ~= newScale then
-		local point, x, y = self:GetFramePosition()
+		local point, x, y = self:GetPosition()
 		local ratio = newScale / oldScale
 
 		self:SetScale(newScale)
-		self:GetSettings():SetPosition(point, x/ratio, y/ratio)
+		self:SetPosition(point, x/ratio, y/ratio)
 	end
 end
 
 function Frame:GetFrameScale()
-	return self:GetSettings():GetScale()
-end
-
---rescale frame without altering position, needed when loading settins
-function Frame:Rescale()
-	self:SetScale(self:GetFrameScale())
+	return self:GetProfile().scale
 end
 
 
---[[
-	Frame Opacity
---]]
-
-function Frame:UpdateOpacity()
-	self:SetAlpha(self:GetFrameOpacity())
+-- position
+function Frame:UpdatePosition()
+	self:ClearAllPoints()
+	self:SetPoint(self:GetPosition())
 end
-
-function Frame:GetFrameOpacity()
-	return self:GetSettings():GetOpacity()
-end
-
-function Frame:FadeInFrame(frame, alpha)
-	if Addon.Settings:IsFadingEnabled() then
-		UIFrameFadeIn(frame, 0.2, 0, alpha or 1)
-	end
-	
-	frame:Show()
-end
-
-function Frame:FadeOutFrame(frame)
-	if frame then
-		frame:Hide()
-	end
-end
-
-
---[[
-	Frame Position
---]]
 
 function Frame:SavePosition()
 	local x, y = self:GetCenter()
@@ -286,68 +153,67 @@ function Frame:SavePosition()
 			yPoint = 'BOTTOM'
 		end
 
-		self:GetSettings():SetPosition(yPoint..xPoint, x, y)
+		self:SetPosition(yPoint..xPoint, x, y)
 	end
 end
 
-function Frame:UpdatePosition()
-	self:ClearAllPoints()
-	self:SetPoint(self:GetFramePosition())
+function Frame:SetPosition(point, x, y)
+	local sets = self:GetProfile()
+	sets.x, sets.y = x, y
+	sets.point = point
 end
 
-function Frame:GetFramePosition()
-	return self:GetSettings():GetPosition()
+function Frame:GetPosition()
+	local sets = self:GetProfile()
+	return sets.point, sets.x, sets.y
 end
 
 
---[[
-	Frame Color
---]]
+-- opacity
+function Frame:UpdateOpacity()
+	self:SetAlpha(self:GetOpacity())
+end
 
---background
+function Frame:GetOpacity()
+	return self:GetSettings().alpha
+end
+
+function Frame:FadeInFrame(frame, alpha)
+	if Addon.sets.fading then
+		UIFrameFadeIn(frame, 0.2, 0, alpha or 1)
+	end
+	
+	frame:Show()
+end
+
+function Frame:FadeOutFrame(frame)
+	if frame then
+		frame:Hide()
+	end
+end
+
+
+-- colors
 function Frame:UpdateBackdrop()
 	self:SetBackdropColor(self:GetFrameBackdropColor())
 end
 
 function Frame:GetFrameBackdropColor()
-	return self:GetSettings():GetColor()
+	local color = self:GetSettings().color
+	return color[1], color[2], color[3], color[4]
 end
 
---border
 function Frame:UpdateBackdropBorder()
 	self:SetBackdropBorderColor(self:GetFrameBackdropBorderColor())
 end
 
 function Frame:GetFrameBackdropBorderColor()
-	return self:GetSettings():GetBorderColor()
+	local color = self:GetSettings().borderColor
+	return color[1], color[2], color[3], color[4]
 end
 
 
---[[
-	Frame Visibility
---]]
-
-function Frame:UpdateShown()
-	if self:IsFrameShown() then
-		self:Show()
-	else
-		self:Hide()
-	end
-end
-
-function Frame:IsFrameShown()
-	return self:GetSettings():IsShown()
-end
-
-function Frame:HideFrame()
-	self:GetSettings():Hide()
-end
-
-
---[[
-	Frame Layer/Strata
---]]
-
+-- layer
 function Frame:UpdateFrameLayer()
 	self:SetFrameLayer(self:GetFrameLayer())
 end
@@ -371,11 +237,11 @@ function Frame:SetFrameLayer(layer)
 end
 
 function Frame:GetFrameLayer()
-	return self:GetSettings():GetLayer()
+	return self:GetSettings().layer
 end
 
 
---[[ Layout Methods ]]--
+--[[ Layout ]]--
 
 function Frame:Layout()
 	if not self:IsVisible() then
@@ -415,9 +281,6 @@ function Frame:Layout()
 	self:SetHeight(height)
 end
 
-
---[[ Menu Button Placement ]]--
-
 function Frame:PlaceMenuButtons()
 	local menuButtons = self.menuButtons or {}
 	self.menuButtons = menuButtons
@@ -430,12 +293,12 @@ function Frame:PlaceMenuButtons()
 
 	--initiate new
 	if self:HasPlayerSelector() then
-		tinsert(menuButtons, self:GetPlayerSelector())
+		tinsert(menuButtons, self.playerSelector or self:CreatePlayerSelector())
 	end
 	self:GetSpecificButtons(menuButtons)
 
 	if self:HasSearchToggle() then
-		tinsert(menuButtons, self:GetSearchToggle() or self:CreateSearchToggle())
+		tinsert(menuButtons, self.searchToggle or self:CreateSearchToggle())
 	end
 
 	--position them
@@ -457,33 +320,10 @@ function Frame:PlaceMenuButtons()
 	return 0, 0
 end
 
-function Frame:GetMenuButtons()
-	if not self.menuButtons then
-		self:PlaceMenuButtons()
-	end
-	return self.menuButtons
-end
 
-
---[[ close button ]]--
-
-local function CloseButton_OnClick(self)
-	self:GetParent():GetSettings():Hide(true) --force hide the frame
-end
-
-function Frame:CreateCloseButton()
-	local b = CreateFrame('Button', self:GetName() .. 'CloseButton', self, 'UIPanelCloseButton')
-	b:SetScript('OnClick', CloseButton_OnClick)
-	self.closeButton = b
-	return b
-end
-
-function Frame:GetCloseButton()
-	return self.closeButton
-end
-
+-- close button
 function Frame:PlaceCloseButton()
-	local b = self:GetCloseButton() or self:CreateCloseButton()
+	local b = self.closeButton or self:CreateCloseButton()
 	b:ClearAllPoints()
 	b:SetPoint('TOPRIGHT', -2, -2)
 	b:Show()
@@ -491,22 +331,18 @@ function Frame:PlaceCloseButton()
 	return 20, 20 --make the same size as the other menu buttons
 end
 
-
---[[ search frame ]]--
-
-function Frame:CreateSearchFrame()
-	local f = Addon.SearchFrame:New(self:GetFrameID(), self)
-	self.searchFrame = f
-	return f
+function Frame:CreateCloseButton()
+	local b = CreateFrame('Button', self:GetName() .. 'CloseButton', self, 'UIPanelCloseButton')
+	b:SetScript('OnClick', function() self:HideFrame(true) end)
+	self.closeButton = b
+	return b
 end
 
-function Frame:GetSearchFrame()
-	return self.searchFrame
-end
 
+-- search frame
 function Frame:PlaceSearchFrame()
-	local menuButtons = self:GetMenuButtons()
-	local frame = self:GetSearchFrame() or self:CreateSearchFrame()
+	local menuButtons = self.menuButtons
+	local frame = self.searchFrame or self:CreateSearchFrame()
 	frame:ClearAllPoints()
 
 	if #menuButtons > 0 then
@@ -516,9 +352,9 @@ function Frame:PlaceSearchFrame()
 	end
 
 	if self:HasOptionsToggle() then
-		frame:SetPoint('RIGHT', self:GetOptionsToggle(), 'LEFT', -2, 0)
+		frame:SetPoint('RIGHT', self.optionsToggle, 'LEFT', -2, 0)
 	else
-		frame:SetPoint('RIGHT', self:GetCloseButton(), 'LEFT', -2, 0)
+		frame:SetPoint('RIGHT', self.closeButton, 'LEFT', -2, 0)
 	end
 
 	frame:SetHeight(28)
@@ -526,26 +362,26 @@ function Frame:PlaceSearchFrame()
 	return frame:GetWidth(), frame:GetHeight()
 end
 
+function Frame:CreateSearchFrame()
+	local f = Addon.SearchFrame:New(self)
+	self.searchFrame = f
+	return f
+end
 
---[[ search toggle ]]--
 
+-- search toggle
 function Frame:CreateSearchToggle()
-	local toggle =  Addon.SearchToggle:New(self:GetFrameID(), self)
+	local toggle = Addon.SearchToggle:New(self)
 	self.searchToggle = toggle
 	return toggle
 end
 
-function Frame:GetSearchToggle()
-	return self.searchToggle
-end
-
 function Frame:HasSearchToggle()
-	return self:GetSettings():HasSearchToggle()
+	return self:GetSettings().search
 end
 
 
---[[ specific buttons ]]--
-
+-- specific buttons
 function Frame:GetSpecificButtons(list)
 	if self:HasBagFrame() then
 		tinsert(list, self.bagToggle or self:CreateBagToggle())
@@ -556,8 +392,16 @@ function Frame:GetSpecificButtons(list)
 	end
 end
 
+function Frame:HasBagFrame()
+	return self:GetSettings().bagFrame
+end
+
+function Frame:HasSortButton()
+	return self:GetSettings().sort
+end
+
 function Frame:CreateBagToggle()
-	local toggle = Addon.BagToggle:New(self:GetFrameID(), self)
+	local toggle = Addon.BagToggle:New(self)
 	self.bagToggle = toggle
 	return toggle
 end
@@ -569,22 +413,43 @@ function Frame:CreateSortButton()
 end
 
 
-
---[[ title frame ]]--
-
-function Frame:GetTitleFrame()
-	return self.titleFrame or self:CreateTitleFrame()
-end
-
-function Frame:CreateTitleFrame()
-	local f = Addon.TitleFrame:New(self:GetFrameID(), self.Title, self)
-	self.titleFrame = f
+-- bag frame
+function Frame:CreateBagFrame()
+	local f =  self.BagFrame:New(self)
+	self.bagFrame = f
 	return f
 end
 
+function Frame:IsBagFrameShown()
+	return self:GetSettings().bagFrameShown
+end
+
+function Frame:PlaceBagFrame()
+	if self:HasBagFrame() and self:IsBagFrameShown() then
+		local frame = self.bagFrame or self:CreateBagFrame()
+		frame:ClearAllPoints()
+		frame:Show()
+
+		local menuButtons = self.menuButtons
+		if #menuButtons > 0 then
+			frame:SetPoint('TOPLEFT', menuButtons[1], 'BOTTOMLEFT', 0, -4)
+		else
+			frame:SetPoint('TOPLEFT', self.titleFrame, 'BOTTOMLEFT', 0, -4)
+		end
+
+		return frame:GetWidth(), frame:GetHeight() + 4
+	elseif self.bagFrame then
+		self.bagFrame:Hide()
+	end
+
+	return 0, 0
+end 
+
+
+-- title frame
 function Frame:PlaceTitleFrame()
-	local menuButtons = self:GetMenuButtons()
-	local frame = self:GetTitleFrame()
+	local frame = self.titleFrame or self:CreateTitleFrame()
+	local menuButtons = self.menuButtons
 	local w, h = 0, 0
 
 	frame:ClearAllPoints()
@@ -599,112 +464,47 @@ function Frame:PlaceTitleFrame()
 	end
 
 	if self:HasOptionsToggle() then
-		frame:SetPoint('RIGHT', self:GetOptionsToggle(), 'LEFT', -4, 0)
+		frame:SetPoint('RIGHT', self.optionsToggle, 'LEFT', -4, 0)
 	else
-		frame:SetPoint('RIGHT', self:GetCloseButton(), 'LEFT', -4, 0)
+		frame:SetPoint('RIGHT', self.closeButton, 'LEFT', -4, 0)
 	end
 	frame:SetHeight(20)
 
 	return w, h
 end
 
-
---[[ player selector ]]--
-
-function Frame:GetPlayerSelector()
-	return self.playerSelector or self:CreatePlayerSelector()
-end
-
-function Frame:CreatePlayerSelector()
-	local f = Addon.PlayerSelector:New(self:GetFrameID(), self)
-	self.playerSelector = f
+function Frame:CreateTitleFrame()
+	local f = Addon.TitleFrame:New(self.Title, self)
+	self.titleFrame = f
 	return f
 end
 
+
+-- player selector
 function Frame:HasPlayerSelector()
 	return LibStub('LibItemCache-1.1'):HasCache()
 end
 
-
---[[ bag frame ]]--
-
-function Frame:CreateBagFrame()
-	local f =  self.BagFrame:New(self)
-	self.bagFrame = f
+function Frame:CreatePlayerSelector()
+	local f = Addon.PlayerSelector:New(self)
+	self.playerSelector = f
 	return f
 end
 
-function Frame:GetBagFrame()
-	return self.bagFrame
-end
 
-function Frame:HasBagFrame()
-	return self:GetSettings():HasBagFrame()
-end
-
-function Frame:HasSortButton()
-	return self:GetSettings():HasSortButton()
-end
-
-function Frame:IsBagFrameShown()
-	return self:GetSettings():IsBagFrameShown()
-end
-
-function Frame:PlaceBagFrame()
-	if self:HasBagFrame() then
-		--the bag frame has to be created here to respond to events
-		local frame = self:GetBagFrame() or self:CreateBagFrame()
-		if self:IsBagFrameShown() then
-			frame:ClearAllPoints()
-
-			local menuButtons = self:GetMenuButtons()
-			if #menuButtons > 0 then
-				frame:SetPoint('TOPLEFT', menuButtons[1], 'BOTTOMLEFT', 0, -4)
-			else
-				frame:SetPoint('TOPLEFT', self:GetTitleFrame(), 'BOTTOMLEFT', 0, -4)
-			end
-
-			frame:Show()
-
-			return frame:GetWidth(), frame:GetHeight() + 4
-		else
-			frame:Hide()
-			return 0, 0
-		end
-	end
-
-	local frame = self:GetBagFrame()
-	if frame then
-		frame:Hide()
-	end
-	return 0, 0
-end
-
-
---[[ item frame ]]--
-
-function Frame:CreateItemFrame()
-	local f = self.ItemFrame:New(self:GetFrameID(), self)
-	self.itemFrame = f
-	return f
-end
-
-function Frame:GetItemFrame()
-	return self.itemFrame
-end
-
+-- item frame
 function Frame:PlaceItemFrame()
-	local frame = self:GetItemFrame() or self:CreateItemFrame()
+	local frame = self.itemFrame or self:CreateItemFrame()
 	frame:ClearAllPoints()
 
 	if self:HasBagFrame() and self:IsBagFrameShown() then
-		frame:SetPoint('TOPLEFT', self:GetBagFrame(), 'BOTTOMLEFT', 0, -4)
+		frame:SetPoint('TOPLEFT', self.bagFrame, 'BOTTOMLEFT', 0, -4)
 	else
-		local menuButtons = self:GetMenuButtons()
+		local menuButtons = self.menuButtons
 		if #menuButtons > 0 then
 			frame:SetPoint('TOPLEFT', menuButtons[1], 'BOTTOMLEFT', 0, -4)
 		else
-			frame:SetPoint('TOPLEFT', self:GetTitleFrame(), 'BOTTOMLEFT', 0, -4)
+			frame:SetPoint('TOPLEFT', self.titleFrame, 'BOTTOMLEFT', 0, -4)
 		end
 	end
 
@@ -712,87 +512,74 @@ function Frame:PlaceItemFrame()
 	return frame:GetWidth() - 2, frame:GetHeight()
 end
 
-
---[[ money frame ]]--
-
-function Frame:CreateMoneyFrame()
-	local f = self.MoneyFrame:New(self:GetFrameID(), self)
-	self.moneyFrame = f
+function Frame:CreateItemFrame()
+	local f = self.ItemFrame:New(self)
+	self.itemFrame = f
 	return f
 end
 
-function Frame:GetMoneyFrame()
-	return self.moneyFrame
-end
 
+-- money frame
 function Frame:HasMoneyFrame()
-	return self:GetSettings():HasMoneyFrame()
+	return self:GetSettings().money
 end
 
 function Frame:PlaceMoneyFrame()
 	if self:HasMoneyFrame() then
-		local frame = self:GetMoneyFrame() or self:CreateMoneyFrame()
+		local frame = self.moneyFrame or self:CreateMoneyFrame()
 		frame:ClearAllPoints()
 		frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -(frame.ICON_SIZE or 0) - (frame.ICON_OFF or 0), 4)
 		frame:Show()
-		return frame:GetSize()
-	end
 
-	local frame = self:GetMoneyFrame()
-	if frame then
-		frame:Hide()
+		return frame:GetSize()
+	elseif self.moneyFrame then
+		self.moneyFrame:Hide()
 	end
 	return 0, 0
 end
 
-
-
---[[ libdatabroker display ]]--
-
-function Frame:GetBrokerDisplay()
-	return self.brokerDisplay
-end
-
-function Frame:CreateBrokerDisplay()
-	local f = Addon.BrokerDisplay:New(1, self:GetFrameID(), self)
-	self.brokerDisplay = f
+function Frame:CreateMoneyFrame()
+	local f = self.MoneyFrame:New(self)
+	self.moneyFrame = f
 	return f
 end
 
+
+
+-- databroker display
 function Frame:HasBrokerDisplay()
-	return self:GetSettings():HasDBOFrame()
+	return self:GetSettings().broker
 end
 
 function Frame:PlaceBrokerDisplayFrame()
 	if self:HasBrokerDisplay() then
-		local frame = self:GetBrokerDisplay() or self:CreateBrokerDisplay()
+		local frame = self.brokerDisplay or self:CreateBrokerDisplay()
 		frame:ClearAllPoints()
 		frame:SetPoint('BOTTOMLEFT', self, 'BOTTOMLEFT', 8, 10)
 
 		if self:HasMoneyFrame() then
-			frame:SetPoint('RIGHT', self:GetMoneyFrame(), 'LEFT', -4, 10)
+			frame:SetPoint('RIGHT', self.moneyFrame, 'LEFT', -4, 10)
 		else
 			frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -8, 10)
 		end
 
 		frame:Show()
 		return frame:GetWidth(), 24
+	elseif self.brokerDisplay then
+		self.brokerDisplay:Hide()
 	end
 
-	local frame = self:GetBrokerDisplay()
-	if frame then
-		frame:Hide()
-	end
 	return 0, 0
 end
 
-
---[[ options toggle ]]--
-
-function Frame:GetOptionsToggle()
-	return self.optionsToggle
+function Frame:CreateBrokerDisplay()
+	local f = Addon.BrokerDisplay:New(1, self)
+	self.brokerDisplay = f
+	return f
 end
 
+
+-- options toggle
 function Frame:CreateOptionsToggle()
 	local f = Addon.OptionsToggle:New(self:GetFrameID(), self)
 	self.optionsToggle = f
@@ -801,32 +588,38 @@ end
 
 function Frame:PlaceOptionsToggle()
 	if self:HasOptionsToggle() then
-		local toggle = self:GetOptionsToggle() or self:CreateOptionsToggle()
+		local toggle = self.optionsToggle or self:CreateOptionsToggle()
 		toggle:ClearAllPoints()
 		toggle:SetPoint('TOPRIGHT', self, 'TOPRIGHT', -32, -8)
 		toggle:Show()
 
 		return toggle:GetWidth(), toggle:GetHeight()
+	elseif self.optionsToggle then
+		self.optionsToggle:Hide()
 	end
 
-	local toggle = self:GetOptionsToggle()
-	if toggle then
-		toggle:Hide()
-	end
-	return 0, 0
+	return 0,0
 end
 
 function Frame:HasOptionsToggle()
-	return GetAddOnEnableState(UnitName('player'), ADDON .. '_Config') >= 2 and self:GetSettings():HasOptionsToggle()
+	return GetAddOnEnableState(UnitName('player'), ADDON .. '_Config') >= 2 and self:GetSettings().optionsToggle
 end
 
 
---[[ Usual Acessor Functions ]]--
+--[[ Acessor Functions ]]--
+
+function Frame:GetSettings()
+	return Addon.sets.frames[self.frameID]
+end
+
+function Frame:GetProfile()
+	return Addon:GetProfile(self.player)[self.frameID]
+end
+
+function Frame:GetPlayer()
+	return self.player or UnitName('player')
+end
 
 function Frame:GetFrameID()
 	return self.frameID
-end
-
-function Frame:GetSettings()
-	return Addon.FrameSettings:Get(self:GetFrameID())
 end

@@ -7,7 +7,6 @@ local ADDON, Addon = ...
 _G[ADDON] = Addon
 
 LibStub('AceAddon-3.0'):NewAddon(Addon, ADDON, 'AceEvent-3.0', 'AceConsole-3.0')
-Addon.SendMessage = LibStub('CallbackHandler-1.0', 'RegisterMessage', 'UnregisterMessage', 'UnregisterAllMessages'):New(Addon).Fire
 Addon.frames = {}
 
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
@@ -102,14 +101,14 @@ end
 function Addon:ShowFrame(id)
 	if self:IsFrameEnabled(id) then
 		self:CreateFrame(id)
-		self.FrameSettings:Get(id):Show()
+		self:GetFrame(id):ShowFrame()
 		return true
 	end
 end
 
 function Addon:HideFrame(id, force)
 	if self:IsFrameEnabled(id) then
-		self.FrameSettings:Get(id):Hide(force)
+		self:GetFrame(id):HideFrame(force)
 		return true
 	end
 end
@@ -122,7 +121,7 @@ end
 
 function Addon:IsFrameShown(id)
 	local frame = self:GetFrame(id)
-	return frame and frame:IsShown()
+	return frame and frame:IsFrameShown()
 end
 
 function Addon:IsFrameEnabled(id)

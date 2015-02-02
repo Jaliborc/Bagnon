@@ -10,22 +10,18 @@ local ICON_SIZE = 18
 
 --[[ Constructor ]]--
 
-function BrokerDisplay:New(id, frameID, parent)
+function BrokerDisplay:New(id, parent)
 	local obj = self:Bind(CreateFrame('Button', nil, parent))
 	obj:RegisterForClicks('anyUp')
 	obj:SetID(id)
 
 	obj.left = obj:CreateLeftButton()
 	obj.left:SetPoint('LEFT')
-
 	obj.right = obj:CreateRightButton()
 	obj.right:SetPoint('RIGHT')
-
 	obj.icon = obj:AddIcon()
 	obj.icon:SetPoint('LEFT', obj.left, 'RIGHT')
-
 	obj.text = obj:AddText()
-
 
 	obj:SetScript('OnShow', obj.OnShow)
 	obj:SetScript('OnHide', obj.OnHide)
@@ -34,7 +30,6 @@ function BrokerDisplay:New(id, frameID, parent)
 	obj:SetScript('OnClick', obj.OnClick)
 	obj:SetScript('OnMouseWheel', obj.OnMouseWheel)
 
-	obj:SetFrameID(frameID)
 	obj:SetHeight(13)
 	obj:EnableMouseWheel(true)
 	obj:UpdateInsets()
@@ -269,8 +264,8 @@ end
 
 --[[ Display Object Updating ]]--
 
-function BrokerDisplay:SetObject(objectName)
-	self:GetSettings():SetBrokerDisplayObject(objectName)
+function BrokerDisplay:SetObject(name)
+	self:GetProfile().brokerPlugin = name
 end
 
 function BrokerDisplay:GetObject()
@@ -278,11 +273,10 @@ function BrokerDisplay:GetObject()
 	if LDB then
 		return LDB:GetDataObjectByName(self:GetObjectName())
 	end
-	return nil
 end
 
 function BrokerDisplay:GetObjectName()
-	return self:GetSettings():GetBrokerDisplayObject()
+	return self:GetProfile().brokerPlugin
 end
 
 function BrokerDisplay:SetNextObject()

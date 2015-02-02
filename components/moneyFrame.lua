@@ -11,9 +11,8 @@ local Cache = LibStub('LibItemCache-1.1')
 
 --[[ Constructor ]]--
 
-function MoneyFrame:New(frameID, parent)
+function MoneyFrame:New(parent)
 	local f = self:Bind(CreateFrame('Button', parent:GetName() .. 'MoneyFrame', parent, 'SmallMoneyFrameTemplate'))
-	f:SetFrameID(frameID)
 	f:SetHeight(24)
 	
 	local click = CreateFrame('Button', f:GetName() .. 'Click', f)

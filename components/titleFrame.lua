@@ -11,10 +11,10 @@ local TitleFrame = Addon:NewClass('TitleFrame', 'Button')
 
 --[[ Constructor ]]--
 
-function TitleFrame:New(id, title, parent)
+function TitleFrame:New(title, parent)
 	local b = self:Bind(CreateFrame('Button', nil, parent))
-	b:SetToplevel(true)
 
+	b:SetToplevel(true)
 	b:SetNormalFontObject('GameFontNormalLeft')
 	b:SetHighlightFontObject('GameFontHighlightLeft')
 	b:RegisterForClicks('anyUp')
@@ -27,10 +27,8 @@ function TitleFrame:New(id, title, parent)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
 	b:SetScript('OnClick', b.OnClick)
-
-	b:SetTitleText(title)
-	b:SetFrameID(id)
-	b:UpdateEvents()
+	b.title = title
+	b:Update()
 
 	return b
 end
@@ -38,7 +36,7 @@ end
 
 --[[ Messages ]]--
 
-function TitleFrame:PLAYER_UPDATE(msg, frameID, player)
+function TitleFrame:PLAYER_UPDATE(msg, frameID)
 	if frameID == self:GetFrameID() then
 		self:UpdateText()
 	end
@@ -48,22 +46,21 @@ end
 --[[ Frame Events ]]--
 
 function TitleFrame:OnShow()
-	self:UpdateText()
-	self:UpdateEvents()
+	self:Update()
 end
 
 function TitleFrame:OnHide()
-	self:StopMovingFrame()
+	self:OnMouseUp()
 end
 
 function TitleFrame:OnMouseDown()
 	if self:IsFrameMovable() or IsAltKeyDown() then
-		self:StartMovingFrame()
+		self:GetParent():StartMoving()
 	end
 end
 
 function TitleFrame:OnMouseUp()
-	self:StopMovingFrame()
+	self:GetParent():StopMovingOrSizing()
 end
 
 function TitleFrame:OnDoubleClick()
@@ -84,7 +81,9 @@ function TitleFrame:OnEnter()
 	else
 		GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
 	end
-	self:UpdateTooltip()
+
+	GameTooltip:SetText(L.TipDoubleClickSearch)
+	GameTooltip:Show()
 end
 
 function TitleFrame:OnLeave()
@@ -94,19 +93,11 @@ function TitleFrame:OnLeave()
 end
 
 
---[[ Update Methods ]]--
+--[[ API ]]--
 
-function TitleFrame:UpdateText()
-	self:SetFormattedText(self:GetTitleText(), self:GetPlayer())
+function TitleFrame:Update()
+	self:SetFormattedText(self.title, self:GetPlayer())
 	self:GetFontString():SetAllPoints(self)
-end
-
-function TitleFrame:UpdateTooltip()
-	GameTooltip:SetText(L.TipDoubleClickSearch)
-	GameTooltip:Show()
-end
-
-function TitleFrame:UpdateEvents()
 	self:UnregisterAllMessages()
 
 	if self:IsVisible() then
@@ -114,49 +105,8 @@ function TitleFrame:UpdateEvents()
 	end
 end
 
-function TitleFrame:StartMovingFrame()
-	self:SendMessage('FRAME_MOVE_START', self:GetFrameID())
-end
-
-function TitleFrame:StopMovingFrame()
-	self:SendMessage('FRAME_MOVE_STOP', self:GetFrameID())
-end
-
-
---[[ Properties ]]--
-
-function TitleFrame:SetFrameID (frameID)
-	if self:GetFrameID() ~= frameID then
-		self.frameID = frameID
-		self:UpdateText()
-	end
-end
-
-function TitleFrame:GetFrameID()
-	return self.frameID
-end
-
-function TitleFrame:SetTitleText(title)
-	self.title = title
-end
-
-function TitleFrame:GetTitleText()
-	return self.title
-end
-
-
---[[ Frame Settings ]]--
-
-function TitleFrame:GetSettings()
-	return Addon.FrameSettings:Get(self:GetFrameID())
-end
-
-function TitleFrame:GetPlayer()
-	return self:GetSettings():GetPlayerFilter()
-end
-
 function TitleFrame:IsFrameMovable()
-	return self:GetSettings():IsMovable()
+	return self:GetSettings().movable
 end
 
 function TitleFrame:ToggleSearchFrame()

@@ -13,7 +13,7 @@ local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
 
 --[[ Constructor ]]--
 
-function SearchToggle:New(frameID, parent)
+function SearchToggle:New(parent)
 	local b = self:Bind(CreateFrame('CheckButton', nil, parent))
 	b:RegisterForClicks('anyUp')
 	b:SetSize(SIZE, SIZE)
@@ -50,40 +50,14 @@ function SearchToggle:New(frameID, parent)
 	b:SetScript('OnShow', b.OnShow)
 	b:SetScript('OnHide', b.OnHide)
 
-	b:SetFrameID(frameID)
-
 	return b
 end
 
 
---[[ Messages ]]--
-
-function SearchToggle:TEXT_SEARCH_ENABLE(msg, frameID)
-	if frameID == self:GetFrameID() then
-		self:Update()
-	end
-end
-
-function SearchToggle:TEXT_SEARCH_DISABLE(msg, frameID)
-	if frameID == self:GetFrameID() then
-		self:Update()
-	end
-end
-
-
---[[ Frame Events ]]--
-
-function SearchToggle:OnShow()
-	self:UpdateEvents()
-	self:Update()
-end
-
-function SearchToggle:OnHide()
-	self:UpdateEvents()
-end
+--[[ Events ]]--
 
 function SearchToggle:OnClick()
-	self:ToggleSearch()
+	self:GetParent().searchFrame:SetShown(self:GetChecked())
 end
 
 function SearchToggle:OnEnter()
@@ -92,66 +66,16 @@ function SearchToggle:OnEnter()
 	else
 		GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
 	end
-	self:UpdateTooltip()
-end
-
-function SearchToggle:OnLeave()
-	if GameTooltip:IsOwned(self) then
-		GameTooltip:Hide()
-	end
-end
-
-
---[[ Update Methods ]]--
-
-function SearchToggle:Update()
-	if self:IsVisible() then
-		self:SetChecked(self:IsSearchEnabled())
-	end
-end
-
-function SearchToggle:UpdateEvents()
-	self:UnregisterAllMessages()
 	
-	if self:IsVisible() then
-		self:RegisterMessage('TEXT_SEARCH_ENABLE')
-		self:RegisterMessage('TEXT_SEARCH_DISABLE')
-	end
-end
-
-function SearchToggle:UpdateTooltip()
-	if not GameTooltip:IsOwned(self) then return end
-
-	if self:IsSearchEnabled() then
+	if self:GetChecked() then
 		GameTooltip:SetText(L.TipHideSearch)
 	else
 		GameTooltip:SetText(L.TipShowSearch)
 	end
 end
 
-
---[[ Properties ]]--
-
-function SearchToggle:SetFrameID(frameID)
-	if self:GetFrameID() ~= frameID then
-		self.frameID = frameID
-		self:UpdateEvents()
-		self:Update()
+function SearchToggle:OnLeave()
+	if GameTooltip:IsOwned(self) then
+		GameTooltip:Hide()
 	end
-end
-
-function SearchToggle:GetFrameID()
-	return self.frameID
-end
-
-function SearchToggle:GetSettings()
-	return Addon.FrameSettings:Get(self:GetFrameID())
-end
-
-function SearchToggle:ToggleSearch()
-	self:GetSettings():ToggleTextSearch()
-end
-
-function SearchToggle:IsSearchEnabled()
-	return self:GetSettings():IsTextSearchEnabled()
 end
