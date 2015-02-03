@@ -50,10 +50,6 @@ end
 
 --[[ Events ]]--
 
-function SearchFrame:TEXT_SEARCH_UPDATE()
-	self:UpdateText()
-end
-
 function SearchFrame:OnShow()
 	SearchFrame:SetSearch(SearchFrame:GetLastSearch())
 	self:UpdateText()
@@ -98,7 +94,7 @@ function SearchFrame:UpdateVisibility()
 	self:UnregisterAllMessages()
 	
 	if self:IsVisible() then
-		self:RegisterMessage('TEXT_SEARCH_UPDATE')
+		self:RegisterMessage('TEXT_SEARCH_UPDATE', 'UpdateText')
 	end
 end
 
