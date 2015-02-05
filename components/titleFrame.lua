@@ -19,8 +19,8 @@ function TitleFrame:New(title, parent)
 	b:SetHighlightFontObject('GameFontHighlightLeft')
 	b:RegisterForClicks('anyUp')
 
-	b:SetScript('OnShow', b.OnShow)
-	b:SetScript('OnHide', b.OnHide)
+	b:SetScript('OnShow', b.Update)
+	b:SetScript('OnHide', b.OnMouseUp)
 	b:SetScript('OnMouseDown', b.OnMouseDown)
 	b:SetScript('OnMouseUp', b.OnMouseUp)
 	b:SetScript('OnDoubleClick', b.OnDoubleClick)
@@ -34,24 +34,7 @@ function TitleFrame:New(title, parent)
 end
 
 
---[[ Messages ]]--
-
-function TitleFrame:PLAYER_UPDATE(msg, frameID)
-	if frameID == self:GetFrameID() then
-		self:UpdateText()
-	end
-end
-
-
---[[ Frame Events ]]--
-
-function TitleFrame:OnShow()
-	self:Update()
-end
-
-function TitleFrame:OnHide()
-	self:OnMouseUp()
-end
+--[[ Interaction ]]--
 
 function TitleFrame:OnMouseDown()
 	if self:IsFrameMovable() or IsAltKeyDown() then
@@ -65,7 +48,7 @@ function TitleFrame:OnMouseUp()
 end
 
 function TitleFrame:OnDoubleClick()
-	self:ToggleSearchFrame()
+	self:GetParent().searchFrame:SetShown(self:GetChecked())
 end
 
 function TitleFrame:OnClick(button)
@@ -102,14 +85,10 @@ function TitleFrame:Update()
 	self:UnregisterMessages()
 
 	if self:IsVisible() then
-		self:RegisterMessage('PLAYER_UPDATE')
+		self:RegisterMessage('PLAYER_CHANGED', 'Update')
 	end
 end
 
 function TitleFrame:IsFrameMovable()
 	return self:GetSettings().movable
-end
-
-function TitleFrame:ToggleSearchFrame()
-	self:GetSettings():ToggleTextSearch()
 end

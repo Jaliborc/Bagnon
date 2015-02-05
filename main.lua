@@ -81,9 +81,13 @@ end
 function Addon:UpdateFrames()
 	for _,frame in pairs(self.frames) do
 		if frame:IsShown() then
-			frame:UpdateEverything()
+			frame:Update()
 		end
 	end
+end
+
+function Addon:AreBasicFramesEnabled()
+	return self:IsFrameEnabled('inventory') and self:IsFrameEnabled('bank')
 end
 
 function Addon:ToggleFrame(id)

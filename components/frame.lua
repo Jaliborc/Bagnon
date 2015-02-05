@@ -35,7 +35,6 @@ function Frame:New(id)
 	f:SetScale(f:GetFrameScale())
 	f:SetScript('OnShow', f.OnShow)
 	f:SetScript('OnHide', f.OnHide)
-	f:Update()
 
 	tinsert(UISpecialFrames, f:GetName())
 	return f
@@ -415,7 +414,7 @@ end
 
 -- bag frame
 function Frame:CreateBagFrame()
-	local f =  self.BagFrame:New(self)
+	local f =  self.BagFrame:New(self, 'LEFT', 36, 0)
 	self.bagFrame = f
 	return f
 end
@@ -514,7 +513,8 @@ end
 
 function Frame:CreateItemFrame()
 	local f = self.ItemFrame:New(self)
-	f:SetScript('OnSizeChanged', function() self:Layout() end)
+	f.OnLayout = function() self:Layout() end
+	
 	self.itemFrame = f
 	return f
 end
@@ -582,7 +582,7 @@ end
 
 -- options toggle
 function Frame:CreateOptionsToggle()
-	local f = Addon.OptionsToggle:New(self:GetFrameID(), self)
+	local f = Addon.OptionsToggle:New(self)
 	self.optionsToggle = f
 	return f
 end
@@ -603,7 +603,7 @@ function Frame:PlaceOptionsToggle()
 end
 
 function Frame:HasOptionsToggle()
-	return GetAddOnEnableState(UnitName('player'), ADDON .. '_Config') >= 2 and self:GetSettings().optionsToggle
+	return GetAddOnEnableState(UnitName('player'), ADDON .. '_Config') >= 2 and self:GetSettings().options
 end
 
 

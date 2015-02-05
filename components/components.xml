@@ -1,5 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="bagFrame.lua"/>
 	<Script file="bagToggle.lua"/>
 	<Script file="brokerDisplay.lua"/>
 

@@ -96,9 +96,7 @@ function MoneyFrame:RegisterEvents()
 end
 
 function MoneyFrame:Update()
-	if self:IsVisible() then
-		MoneyFrame_Update(self:GetName(), self:GetMoney())
-	end
+	MoneyFrame_Update(self:GetName(), self:GetMoney())
 end
 
 

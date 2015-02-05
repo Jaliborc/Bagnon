@@ -47,7 +47,7 @@ function SortButton:New(parent)
 end
 
 
---[[ Frame Events ]]--
+--[[ Interaction ]]--
 
 function SortButton:OnClick(button)
 	local isBank = self:GetParent().frameID == 'bank'

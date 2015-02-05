@@ -51,7 +51,7 @@ end
 --[[ Events ]]--
 
 function SearchFrame:OnShow()
-	SearchFrame:SetSearch(SearchFrame:GetLastSearch())
+	self:SetSearch(self:GetLastSearch())
 	self:UpdateText()
 	self:UpdateVisibility()
 	self:HighlightText()
@@ -61,11 +61,11 @@ end
 function SearchFrame:OnHide()
 	self:UpdateVisibility()
 	self:ClearFocus()
-	SearchFrame:SetSearch('')
+	self:SetSearch('')
 end
 
 function SearchFrame:OnTextChanged()
-	SearchFrame:SetSearch(self:GetText())
+	self:SetSearch(self:GetText())
 end
 
 function SearchFrame:OnEscapePressed()
@@ -94,12 +94,12 @@ function SearchFrame:UpdateVisibility()
 	self:UnregisterMessages()
 	
 	if self:IsVisible() then
-		self:RegisterMessage('TEXT_SEARCH_UPDATE', 'UpdateText')
+		self:RegisterMessage('SEARCH_UPDATE', 'UpdateText')
 	end
 end
 
 function SearchFrame:UpdateText()
-	local text = SearchFrame:GetSearch()
+	local text = self:GetSearch()
 	if text ~= self:GetText() then -- required for asian locales
 		self:SetText(text)
 	end
@@ -109,15 +109,15 @@ end
 --[[ Static ]]--
 
 function SearchFrame:SetSearch(search)
-	self.lastSearch = search ~= '' and search or self:GetSearch()
-	self.search = search
-	self:SendMessage('TEXT_SEARCH_UPDATE', search)
+	Addon.lastSearch = search ~= '' and search or self:GetSearch()
+	Addon.search = search
+	Addon:SendMessage('SEARCH_UPDATE', search)
 end
 
 function SearchFrame:GetSearch()
-	return self.search or ''
+	return Addon.search or ''
 end
 
 function SearchFrame:GetLastSearch()
-	return self.lastSearch or ''
+	return Addon.lastSearch or ''
 end

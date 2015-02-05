@@ -48,10 +48,10 @@ function PlayerSelector:New(parent)
 end
 
 
---[[ Events ]]--
+--[[ Interaction ]]--
 
 function PlayerSelector:OnClick()
-	Addon:TogglePlayerDropdown(self, self, -4, -2)
+	Addon:TogglePlayerDropdown(self, -4, -2)
 end
 
 function PlayerSelector:OnEnter()
@@ -75,9 +75,4 @@ end
 
 function PlayerSelector:Update()
 	self.icon:SetTexture(Addon:GetPlayerIcon(self:GetPlayer()))
-end
-
-function PlayerSelector:SetPlayer(player)
-	self:GetSettings():SetPlayerFilter(player)
-	self:Update()
 end
