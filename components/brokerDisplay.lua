@@ -32,7 +32,7 @@ function BrokerDisplay:New(id, parent)
 
 	obj:SetHeight(13)
 	obj:EnableMouseWheel(true)
-	obj:UpdateInsets()
+	obj:UpdateEverything()
 
 	return obj
 end
@@ -103,16 +103,6 @@ function BrokerDisplay:LibDataBroker_AttributeChanged(msg, name, attr, value, da
 			self:UpdateIcon()
 		elseif attr == 'text' then
 			self:UpdateText()
-		end
-	end
-end
-
-function BrokerDisplay:DATABROKER_OBJECT_UPDATE(msg, frameID, objectName)
-	if self:GetFrameID() == frameID then
-		self:UpdateDisplay()
-
-		if GameTooltip:IsOwned(self) then
-			self:OnEnter()
 		end
 	end
 end
@@ -194,11 +184,6 @@ function BrokerDisplay:UpdateEvents()
 			LDB.RegisterCallback(self, 'LibDataBroker_AttributeChanged')
 		end
 	end
-
-	self:UnregisterAllMessages()
-	if self:IsVisible() then
-		self:RegisterMessage('DATABROKER_OBJECT_UPDATE')
-	end
 end
 
 function BrokerDisplay:UpdateDisplay()
@@ -266,6 +251,11 @@ end
 
 function BrokerDisplay:SetObject(name)
 	self:GetProfile().brokerPlugin = name
+	self:UpdateDisplay()
+
+	if GameTooltip:IsOwned(self) then
+		self:OnEnter()
+	end
 end
 
 function BrokerDisplay:GetObject()
@@ -276,7 +266,7 @@ function BrokerDisplay:GetObject()
 end
 
 function BrokerDisplay:GetObjectName()
-	return self:GetProfile().brokerPlugin
+	return self:GetProfile().brokerObject
 end
 
 function BrokerDisplay:SetNextObject()

@@ -421,7 +421,7 @@ function Frame:CreateBagFrame()
 end
 
 function Frame:IsBagFrameShown()
-	return self:GetSettings().bagFrameShown
+	return self:GetSettings().showBags
 end
 
 function Frame:PlaceBagFrame()
@@ -514,6 +514,7 @@ end
 
 function Frame:CreateItemFrame()
 	local f = self.ItemFrame:New(self)
+	f:SetScript('OnSizeChanged', function() self:Layout() end)
 	self.itemFrame = f
 	return f
 end

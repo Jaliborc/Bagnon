@@ -61,6 +61,7 @@ end
 
 function TitleFrame:OnMouseUp()
 	self:GetParent():StopMovingOrSizing()
+	self:GetParent():SavePosition()
 end
 
 function TitleFrame:OnDoubleClick()
@@ -98,7 +99,7 @@ end
 function TitleFrame:Update()
 	self:SetFormattedText(self.title, self:GetPlayer())
 	self:GetFontString():SetAllPoints(self)
-	self:UnregisterAllMessages()
+	self:UnregisterMessages()
 
 	if self:IsVisible() then
 		self:RegisterMessage('PLAYER_UPDATE')

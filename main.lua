@@ -5,8 +5,6 @@
 
 local ADDON, Addon = ...
 _G[ADDON] = Addon
-
-LibStub('AceAddon-3.0'):NewAddon(Addon, ADDON, 'AceEvent-3.0', 'AceConsole-3.0')
 Addon.frames = {}
 
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
@@ -244,7 +242,7 @@ end
 
 function Addon:PrintHelp()
 	local function PrintCmd(cmd, desc)
-		print(string.format(' - |cFF33FF99%s|r: %s', cmd, desc))
+		print(format(' - |cFF33FF99%s|r: %s', cmd, desc))
 	end
 
 	self:Print(L.Commands)
@@ -252,7 +250,6 @@ function Addon:PrintHelp()
 	PrintCmd('bank', L.CmdShowBank)
 	PrintCmd('version', L.CmdShowVersion)
 end
-
 function Addon:ShowOptions()
 	if LoadAddOn(ADDON .. '_Config') then
 		InterfaceOptionsFrame_OpenToCategory(self.GeneralOptions)

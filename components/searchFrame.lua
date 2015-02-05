@@ -91,7 +91,7 @@ end
 
 function SearchFrame:UpdateVisibility()
 	self:GetParent().searchToggle:SetChecked(self:IsShown())
-	self:UnregisterAllMessages()
+	self:UnregisterMessages()
 	
 	if self:IsVisible() then
 		self:RegisterMessage('TEXT_SEARCH_UPDATE', 'UpdateText')

@@ -50,34 +50,21 @@ function BagToggle:New(parent)
 	b:SetScript('OnClick', b.OnClick)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
-	b:SetScript('OnShow', b.OnShow)
-	b:SetScript('OnHide', b.OnHide)
+	b:SetScript('OnShow', b.Update)
+	b:SetScript('OnHide', b.Update)
 	b:Update()
 
 	return b
 end
 
 
---[[ Messages ]]--
-
-function BagToggle:FRAME_BAGS_SHOW(msg, frameID)
-	if frameID == self:GetFrameID() then
-		self:Update()
-	end
-end
-
-function BagToggle:FRAME_BAGS_HIDE(msg, frameID)
-	if frameID == self:GetFrameID() then
-		self:Update()
-	end
-end
-
-
---[[ Frame Events ]]--
+--[[ Events ]]--
 
 function BagToggle:OnClick(button)
 	if button == 'LeftButton' then
-		self:GetSettings():ToggleBagFrame()
+		local sets = self:GetSettings()
+		sets.showBags = not sets.showBags or nil
+		self:GetFrame():Layout()
 	else
 		local menu = {}
 		local function addLine(id, name, addon)
@@ -131,16 +118,6 @@ function BagToggle:OnLeave()
 	GameTooltip:Hide()
 end
 
-function BagToggle:OnShow()
-	self:UpdateEvents()
-	self:Update()
-end
-
-function BagToggle:OnHide()
-	self:UpdateEvents()
-	self:Update()
-end
-
 
 --[[ API ]]--
 
@@ -153,13 +130,6 @@ end
 
 function BagToggle:Update()
 	self:SetChecked(self:IsBagFrameShown())
-end
-
-function BagToggle:UpdateEvents()
-	if self:IsVisible() then
-		self:RegisterMessage('FRAME_BAGS_SHOW')
-		self:RegisterMessage('FRAME_BAGS_HIDE')
-	end
 end
 
 function BagToggle:IsBagFrameShown()

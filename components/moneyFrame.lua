@@ -24,24 +24,17 @@ function MoneyFrame:New(parent)
 	click:SetScript('OnEnter', function() f:OnEnter() end)
 	click:SetScript('OnLeave', function() f:OnLeave() end)
 
-	f:SetScript('OnShow', f.UpdateEverything)
-	f:SetScript('OnHide', f.UpdateEvents)
-	f:SetScript('OnEvent', f.UpdateValue)
+	f:SetScript('OnShow', f.RegisterEvents)
+	f:SetScript('OnHide', f.UnregisterEvents)
+	f:SetScript('OnEvent', nil)
+	f:UnregisterAllEvents()
+	f:RegisterEvents()
 
 	return f
 end
 
 
---[[ Events ]]--
-
-function MoneyFrame:PLAYER_UPDATE(msg, frameID, player)
-	if self:GetFrameID() == frameID then
-		self:UpdateValue()
-	end
-end
-
-
---[[ Frame Events ]]--
+--[[ Interaction ]]--
 
 function MoneyFrame:OnClick()
 	local name = self:GetName()
@@ -94,29 +87,22 @@ function MoneyFrame:OnLeave()
 end
 
 
---[[ Update Methods ]]--
+--[[ Update ]]--
 
-function MoneyFrame:UpdateEverything()
-	self:UpdateEvents()
-	self:UpdateValue()
+function MoneyFrame:RegisterEvents()
+	self:RegisterEvent('PLAYER_MONEY', self.Update)
+	self:RegisterMessage('PLAYER_CHANGED', self.Update)
+	self:Update()
 end
 
-function MoneyFrame:UpdateValue()
+function MoneyFrame:Update()
 	if self:IsVisible() then
 		MoneyFrame_Update(self:GetName(), self:GetMoney())
 	end
 end
 
-function MoneyFrame:UpdateEvents()
-	self:UnregisterAllMessages()
 
-	if self:IsVisible() then
-		self:RegisterMessage('PLAYER_UPDATE')
-	end
-end
-
-
---[[ Getters ]]--
+--[[ API ]]--
 
 function MoneyFrame:GetMoney()
 	return Cache:GetPlayerMoney(self:GetPlayer())
