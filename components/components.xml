@@ -1,14 +1,15 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="bagToggle.lua"/>
-	<Script file="brokerDisplay.lua"/>
-
-	<Script file="moneyFrame.lua"/>
 	<Script file="optionsToggle.lua"/>
 	<Script file="playerSelector.lua"/>
+	<Script file="sortButton.lua"/>
+
 	<Script file="searchFrame.lua"/>
 	<Script file="searchToggle.lua"/>
 	<Script file="titleFrame.lua"/>
-	<Script file="sortButton.lua"/>
+
+	<Script file="brokerDisplay.lua"/>
+	<Script file="moneyFrame.lua"/>
 
 	<Script file="frame.lua"/>
 	<Script file="bank.lua"/>
