@@ -71,11 +71,13 @@ end
 
 function Frame:OnShow()
 	PlaySound(self.OpenSound)
+	self:RegisterMessage('UPDATE_ALL', 'Update')
 	self:Update()
 end
 
 function Frame:OnHide()
 	PlaySound(self.CloseSound)
+	self:UnregisterMessages()
 
 	if self:IsFrameShown() then -- for when a frame is hidden not via bagnon
 		self:HideFrame()
@@ -87,18 +89,17 @@ end
 --[[ Update ]]--
 
 function Frame:Update()
-	if not self:IsVisible() then
-		return
-	end
-
-	self:UpdatePosition()
-	self:UpdateScale()
-	self:UpdateOpacity()
-	self:UpdateBackdrop()
-	self:UpdateBackdropBorder()
 	self:UpdateShown()
-	self:UpdateFrameLayer()
-	self:Layout()
+
+	if self:IsVisible() then
+		self:UpdatePosition()
+		self:UpdateScale()
+		self:UpdateOpacity()
+		self:UpdateBackdrop()
+		self:UpdateBackdropBorder()
+		self:UpdateFrameLayer()
+		self:Layout()
+	end
 end
 
 
@@ -117,7 +118,7 @@ function Frame:UpdateScale() -- maintain the same relative position of the frame
 end
 
 function Frame:GetFrameScale()
-	return self:GetProfile().scale
+	return self:GetSettings().scale
 end
 
 
@@ -260,10 +261,7 @@ function Frame:Layout()
 	local w, h = self:PlaceBagFrame()
 	width = max(w, width)
 	height = height + h
-
-	local w, h = self:PlaceItemFrame()
-	width = max(w, width)
-	height = height + h
+	self:PlaceItemFrame()
 
 	--place bottom menu frames
 	local w, h = self:PlaceMoneyFrame()
@@ -276,8 +274,13 @@ function Frame:Layout()
 	end
 
 	--adjust size
-	self:SetWidth(max(width, 156) + 16)
-	self:SetHeight(height)
+	self.width, self.height = max(width, 156), height
+	self:UpdateSize()
+end
+
+function Frame:UpdateSize()
+	self:SetWidth(max(self.width, self.itemFrame:GetWidth() - 2) + 16)
+	self:SetHeight(self.height + self.itemFrame:GetHeight())
 end
 
 function Frame:PlaceMenuButtons()
@@ -495,6 +498,7 @@ end
 function Frame:PlaceItemFrame()
 	local frame = self.itemFrame or self:CreateItemFrame()
 	frame:ClearAllPoints()
+	frame:Show()
 
 	if self:HasBagFrame() and self:IsBagFrameShown() then
 		frame:SetPoint('TOPLEFT', self.bagFrame, 'BOTTOMLEFT', 0, -4)
@@ -506,14 +510,11 @@ function Frame:PlaceItemFrame()
 			frame:SetPoint('TOPLEFT', self.titleFrame, 'BOTTOMLEFT', 0, -4)
 		end
 	end
-
-	frame:Show()
-	return frame:GetWidth() - 2, frame:GetHeight()
 end
 
 function Frame:CreateItemFrame()
 	local f = self.ItemFrame:New(self)
-	f.OnLayout = function() self:Layout() end
+	f.OnLayout = function() self:UpdateSize() end
 	
 	self.itemFrame = f
 	return f
@@ -544,7 +545,6 @@ function Frame:CreateMoneyFrame()
 	self.moneyFrame = f
 	return f
 end
-
 
 
 -- databroker display

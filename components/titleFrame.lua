@@ -90,5 +90,5 @@ function TitleFrame:Update()
 end
 
 function TitleFrame:IsFrameMovable()
-	return self:GetSettings().movable
+	return not Addon.sets.locked
 end

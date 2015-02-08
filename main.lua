@@ -79,11 +79,7 @@ end
 --[[ Frames ]]--
 
 function Addon:UpdateFrames()
-	for _,frame in pairs(self.frames) do
-		if frame:IsShown() then
-			frame:Update()
-		end
-	end
+	self:SendMessage('UPDATE_ALL')
 end
 
 function Addon:AreBasicFramesEnabled()
