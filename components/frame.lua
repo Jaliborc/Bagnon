@@ -513,7 +513,7 @@ function Frame:PlaceItemFrame()
 end
 
 function Frame:CreateItemFrame()
-	local f = self.ItemFrame:New(self)
+	local f = self.ItemFrame:New(self, true)
 	f.OnLayout = function() self:UpdateSize() end
 	
 	self.itemFrame = f

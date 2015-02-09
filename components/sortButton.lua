@@ -57,11 +57,11 @@ function SortButton:OnClick(button)
 			DepositReagentBank()
 		end
 	elseif isBank then
-		SetSortBagsRightToLeft(true)
+		--SetSortBagsRightToLeft(false)
 		SortReagentBankBags()
 		SortBankBags()
 	else
-		SetSortBagsRightToLeft(true)
+		--SetSortBagsRightToLeft(false)
 		SortBags()
 	end
 end

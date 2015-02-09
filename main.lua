@@ -252,7 +252,7 @@ function Addon:PrintHelp()
 end
 function Addon:ShowOptions()
 	if LoadAddOn(ADDON .. '_Config') then
-		InterfaceOptionsFrame_OpenToCategory(self.GeneralOptions)
+		Addon.GeneralOptions:Open()
 		return true
 	end
 end

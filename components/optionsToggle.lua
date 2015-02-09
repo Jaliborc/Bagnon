@@ -52,7 +52,8 @@ end
 
 function OptionsToggle:OnClick()
 	if LoadAddOn(ADDON .. '_Config') then
-		--Addon.FrameOptions:ShowFrame(self:GetFrameID())
+		Addon.FrameOptions.framID = self:GetFrameID()
+		Addon.FrameOptions:Open()
 	end
 end
 
