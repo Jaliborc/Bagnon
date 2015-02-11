@@ -90,8 +90,7 @@ end
 --[[ Update ]]--
 
 function MoneyFrame:RegisterEvents()
-	self:RegisterEvent('PLAYER_MONEY', self.Update)
-	self:RegisterMessage('PLAYER_CHANGED', self.Update)
+	self:RegisterEvent('PLAYER_MONEY', 'Update')
 	self:Update()
 end
 

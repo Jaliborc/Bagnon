@@ -81,7 +81,7 @@ function Frame:OnHide()
 
 	if self:IsFrameShown() then -- for when a frame is hidden not via bagnon
 		self:HideFrame()
-		self.player = nil -- reset player
+		self:SetPlayer(nil)
 	end
 end
 
@@ -158,13 +158,13 @@ function Frame:SavePosition()
 end
 
 function Frame:SetPosition(point, x, y)
-	local sets = self:GetProfile()
+	local sets = Addon:GetProfile()[self.frameID]
 	sets.x, sets.y = x, y
 	sets.point = point
 end
 
 function Frame:GetPosition()
-	local sets = self:GetProfile()
+	local sets = Addon:GetProfile()[self.frameID]
 	return sets.point, sets.x, sets.y
 end
 
@@ -607,7 +607,7 @@ function Frame:HasOptionsToggle()
 end
 
 
---[[ Acessor Functions ]]--
+--[[ Settings ]]--
 
 function Frame:GetSettings()
 	return Addon.sets.frames[self.frameID]
@@ -617,10 +617,24 @@ function Frame:GetProfile()
 	return Addon:GetProfile(self.player)[self.frameID]
 end
 
-function Frame:GetPlayer()
-	return self.player or UnitName('player')
-end
-
 function Frame:GetFrameID()
 	return self.frameID
+end
+
+
+--[[ Players ]]--
+
+function Frame:SetPlayer(player)
+	self.player = player
+	self.playerSelector:Update()
+	self.titleFrame:Update()
+	self.itemFrame:RegisterEvents()
+
+	if self.bagFrame then
+		self.bagFrame:Update()
+	end
+end
+
+function Frame:GetPlayer()
+	return self.player or UnitName('player')
 end

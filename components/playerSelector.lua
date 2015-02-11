@@ -51,7 +51,7 @@ end
 --[[ Interaction ]]--
 
 function PlayerSelector:OnClick()
-	Addon:TogglePlayerDropdown(self, -4, -2)
+	Addon:TogglePlayerDropdown(self, self:GetFrame(), -4, -2)
 end
 
 function PlayerSelector:OnEnter()

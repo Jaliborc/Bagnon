@@ -98,8 +98,7 @@ end
 
 function Addon:ShowFrame(id)
 	if self:IsFrameEnabled(id) then
-		self:CreateFrame(id)
-		self:GetFrame(id):ShowFrame()
+		self:CreateFrame(id):ShowFrame()
 		return true
 	end
 end
@@ -115,6 +114,7 @@ function Addon:CreateFrame(id)
 	if self:IsFrameEnabled(id) then
  		self.frames[id] = self.frames[id] or self[id:gsub('^.', id.upper) .. 'Frame']:New(id)
  	end
+ 	return self.frames[id]
 end
 
 function Addon:IsFrameShown(id)
@@ -123,11 +123,15 @@ function Addon:IsFrameShown(id)
 end
 
 function Addon:IsFrameEnabled(id)
-	return not self.sets.frames[id].disabled
+	return self.sets.frames[id].enabled
 end
 
 function Addon:GetFrame(id)
 	return self.frames[id]
+end
+
+function Addon:IterateFrames()
+	return pairs(self.frames)
 end
 
 

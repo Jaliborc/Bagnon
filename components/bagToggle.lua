@@ -51,7 +51,6 @@ function BagToggle:New(parent)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
 	b:SetScript('OnShow', b.Update)
-	b:SetScript('OnHide', b.Update)
 	b:Update()
 
 	return b
@@ -83,9 +82,9 @@ function BagToggle:OnClick(button)
 		addLine('bank', BANK)
 		addLine('voidstorage', VOID_STORAGE, ADDON .. '_VoidStorage')
 
-		if self:GetSettings():GetGuild() then
-			addLine('guildbank', GUILD_BANK, ADDON .. '_GuildBank')
-		end
+		--if self:GetSettings():GetGuild() then
+		--	addLine('guildbank', GUILD_BANK, ADDON .. '_GuildBank')
+		--end
 		
 		if #menu > 1 then
 			EasyMenu(menu, Dropdown, self, 0, 0, 'MENU')
@@ -123,8 +122,9 @@ end
 
 function BagToggle:OpenFrame(id, addon)
 	if not addon or LoadAddOn(addon) then
-		Addon.FrameSettings:Get(id):SetPlayerFilter(self:GetSettings():GetPlayerFilter())
-		Addon:ToggleFrame(id)
+		local frame = Addon:CreateFrame(id)
+		frame.player = self:GetPlayer()
+		frame:ShowFrame()
 	end
 end
 
@@ -133,5 +133,5 @@ function BagToggle:Update()
 end
 
 function BagToggle:IsBagFrameShown()
-	return self:GetSettings().bagFrameShown
+	return self:GetSettings().showBags
 end

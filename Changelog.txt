@@ -2,6 +2,7 @@
 * Complete rewrite:
 ** While Bagnon might look the same, the great majority of the code has been written from scratch.
 ** These changes should provide better performance and make future development and debugging much faster.
+** "Script ran for too Long" errors should become much less frequent.
 ** This also increases the amount of code shared between Bagnon and Combuctor, allowing for updates to be easly ported between both addons.
 ** Note that there might be bugs on features that were previously working. This will be handled during the next days, as bug reports are received.
 * The option menus have been redesigned.

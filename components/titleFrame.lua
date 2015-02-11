@@ -19,7 +19,6 @@ function TitleFrame:New(title, parent)
 	b:SetHighlightFontObject('GameFontHighlightLeft')
 	b:RegisterForClicks('anyUp')
 
-	b:SetScript('OnShow', b.Update)
 	b:SetScript('OnHide', b.OnMouseUp)
 	b:SetScript('OnMouseDown', b.OnMouseDown)
 	b:SetScript('OnMouseUp', b.OnMouseUp)
@@ -82,11 +81,6 @@ end
 function TitleFrame:Update()
 	self:SetFormattedText(self.title, self:GetPlayer())
 	self:GetFontString():SetAllPoints(self)
-	self:UnregisterMessages()
-
-	if self:IsVisible() then
-		self:RegisterMessage('PLAYER_CHANGED', 'Update')
-	end
 end
 
 function TitleFrame:IsFrameMovable()
