@@ -82,7 +82,7 @@ function BagToggle:OnClick(button)
 		addLine('bank', BANK)
 		addLine('voidstorage', VOID_STORAGE, ADDON .. '_VoidStorage')
 
-		if LibStub('LibItemCache-1.1'):GetPlayerGuild(self:GetPlayer()) then
+		if Addon.Cache:GetPlayerGuild(self:GetPlayer()) then
 			addLine('guild', GUILD_BANK, ADDON .. '_GuildBank')
 		end
 		

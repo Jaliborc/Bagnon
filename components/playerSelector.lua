@@ -42,6 +42,8 @@ function PlayerSelector:New(parent)
 	b:SetScript('OnClick', b.OnClick)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
+
+	b:RegisterMessage(b:GetFrameID() .. '_PLAYER_CHANGED', 'Update')
 	b:Update()
 
 	return b

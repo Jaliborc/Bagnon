@@ -615,22 +615,12 @@ function Frame:GetProfile()
 	return Addon:GetProfile(self.player)[self.frameID]
 end
 
-function Frame:GetFrameID()
-	return self.frameID
-end
-
 
 --[[ Players ]]--
 
 function Frame:SetPlayer(player)
 	self.player = player
-	--self.playerSelector:Update()
-	self.titleFrame:Update()
-	self.itemFrame:RegisterEvents()
-
-	if self.bagFrame then
-		self.bagFrame:Update()
-	end
+	self:SendMessage(self.frameID .. '_PLAYER_CHANGED')
 end
 
 function Frame:GetPlayer()

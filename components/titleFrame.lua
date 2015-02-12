@@ -27,6 +27,8 @@ function TitleFrame:New(title, parent)
 	b:SetScript('OnLeave', b.OnLeave)
 	b:SetScript('OnClick', b.OnClick)
 	b.title = title
+
+	b:RegisterMessage(b:GetFrameID() .. '_PLAYER_CHANGED', 'Update')
 	b:Update()
 
 	return b
