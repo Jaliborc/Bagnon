@@ -18,9 +18,10 @@ BINDING_NAME_BAGNON_VAULT_TOGGLE = L.ToggleVault
 
 function Addon:OnEnable()
 	self:StartupSettings()
-	self:AddSlashCommands()
+	self:StartupEvents()
 	self:HookBagClickEvents()
 	self:HookTooltips()
+	self:AddSlashCommands()
 
 	self:CreateFrame('inventory')
 	self:CreateFrameLoader(ADDON .. '_GuildBank', 'GuildBankFrame_LoadUI')
@@ -37,7 +38,7 @@ function Addon:CreateOptionsLoader()
 	end)
 end
 
-function Addon:CreateFrameLoader (addon, method)
+function Addon:CreateFrameLoader(addon, method)
 	if GetAddOnEnableState(UnitName('player'), addon) >= 2 then
 		_G[method] = function()
 			LoadAddOn(addon)
@@ -80,6 +81,7 @@ end
 
 function Addon:UpdateFrames()
 	self:SendMessage('UPDATE_ALL')
+	self:UpdateEvents()
 end
 
 function Addon:AreBasicFramesEnabled()
@@ -132,6 +134,80 @@ end
 
 function Addon:IterateFrames()
 	return pairs(self.frames)
+end
+
+
+--[[ Auto Display ]]--
+
+function Addon:StartupEvents()
+	CharacterFrame:HookScript('OnShow', function()
+		if self.sets.displayPlayer then
+			self:ShowFrame('inventory')
+		end
+	end)
+
+	CharacterFrame:HookScript('OnHide', function()
+		if self.sets.displayPlayer then
+			self:HideFrame('inventory')
+		end
+	end)
+
+	self:UpdateEvents()
+end
+
+function Addon:UpdateEvents()
+	self:UnregisterEvents()
+	self:RegisterEvent('BANKFRAME_CLOSED')
+	self:RegisterMessage('BANK_OPENED')
+
+	self:RegisterDisplayEvents('displayAuction', 'AUCTION_HOUSE_SHOW', 'AUCTION_HOUSE_CLOSED')
+	self:RegisterDisplayEvents('displayGuild', 'GUILDBANKFRAME_OPENED', 'TRADE_SKILL_CLOSE')
+	self:RegisterDisplayEvents('displayTrade', 'TRADE_SHOW', 'TRADE_CLOSED')
+	self:RegisterDisplayEvents('displayGems', 'SOCKET_INFO_UPDATE')
+	self:RegisterDisplayEvents('displayCraft', 'TRADE_SKILL_SHOW', 'GUILDBANKFRAME_CLOSED')
+
+	self:RegisterDisplayEvents('closeCombat', nil, 'PLAYER_REGEN_DISABLED')
+	self:RegisterDisplayEvents('closeVehicle', nil, 'UNIT_ENTERED_VEHICLE')
+	self:RegisterDisplayEvents('closeVendor', nil, 'MERCHANT_CLOSED')
+
+	if not self.sets.displayMail then
+		self:RegisterEvent('MAIL_SHOW', 'HideFrame', 'inventory') -- reverse default behaviour
+	end
+
+	if self:IsFrameEnabled('bank') then
+		BankFrame:UnregisterAllEvents()
+	else
+		BankFrame:RegisterEvent('BANKFRAME_OPENED')
+		BankFrame:RegisterEvent('BANKFRAME_CLOSED')
+	end
+end
+
+function Addon:RegisterDisplayEvents(setting, showEvent, hideEvent)
+	if self.sets[setting] then
+		if showEvent then
+			self:RegisterEvent(showEvent, 'ShowFrame', 'inventory')
+		end
+
+		if hideEvent then
+			self:RegisterEvent(hideEvent, 'HideFrame', 'inventory')
+		end
+	end
+end
+
+function Addon:BANK_OPENED()
+	self:ShowFrame('bank')
+
+	if self.sets.displayBank then
+		self:ShowFrame('inventory')
+	end
+end
+
+function Addon:BANKFRAME_CLOSED()
+	self:HideFrame('bank')
+
+	if self.sets.displayBank then
+		self:HideFrame('inventory')
+	end
 end
 
 

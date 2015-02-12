@@ -82,9 +82,9 @@ function BagToggle:OnClick(button)
 		addLine('bank', BANK)
 		addLine('voidstorage', VOID_STORAGE, ADDON .. '_VoidStorage')
 
-		--if self:GetSettings():GetGuild() then
-		--	addLine('guildbank', GUILD_BANK, ADDON .. '_GuildBank')
-		--end
+		if LibStub('LibItemCache-1.1'):GetPlayerGuild(self:GetPlayer()) then
+			addLine('guild', GUILD_BANK, ADDON .. '_GuildBank')
+		end
 		
 		if #menu > 1 then
 			EasyMenu(menu, Dropdown, self, 0, 0, 'MENU')

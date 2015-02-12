@@ -17,9 +17,13 @@ Frame.MoneyFrame = Addon.MoneyFrame
 
 function Frame:New(id)
 	local f = self:Bind(CreateFrame('Frame', ADDON .. 'Frame' .. id, UIParent))
+	f.profile = Addon.profile[id]
+	f.shownCount = 0
+	f.frameID = id
+
 	f:SetClampedToScreen(true)
-	f:SetMovable(true)
 	f:EnableMouse(true)
+	f:SetMovable(true)
 	f:Hide()
 
 	f:SetBackdrop{
@@ -30,8 +34,6 @@ function Frame:New(id)
 	  insets = {left = 4, right = 4, top = 4, bottom = 4}
 	}
 
-	f.frameID = id
-	f.shownCount = 0
 	f:SetScale(f:GetFrameScale())
 	f:SetScript('OnShow', f.OnShow)
 	f:SetScript('OnHide', f.OnHide)
@@ -158,14 +160,12 @@ function Frame:SavePosition()
 end
 
 function Frame:SetPosition(point, x, y)
-	local sets = Addon:GetProfile()[self.frameID]
-	sets.x, sets.y = x, y
-	sets.point = point
+	self.profile.x, self.profile.y = x, y
+	self.profile.point = point
 end
 
 function Frame:GetPosition()
-	local sets = Addon:GetProfile()[self.frameID]
-	return sets.point, sets.x, sets.y
+	return self.profile.point, self.profile.x, self.profile.y
 end
 
 
@@ -514,8 +514,6 @@ end
 
 function Frame:CreateItemFrame()
 	local f = self.ItemFrame:New(self, true)
-	f.OnLayout = function() self:UpdateSize() end
-	
 	self.itemFrame = f
 	return f
 end
@@ -626,7 +624,7 @@ end
 
 function Frame:SetPlayer(player)
 	self.player = player
-	self.playerSelector:Update()
+	--self.playerSelector:Update()
 	self.titleFrame:Update()
 	self.itemFrame:RegisterEvents()
 
