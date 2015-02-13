@@ -15,7 +15,7 @@
 	url = git://github.com/tekkub/libdatabroker-1-1.git
 [submodule "common"]
 	path = common
-	url = git://github.com/tullamods/Wildpants.git
+	url = https://jaliborc@github.com/tullamods/Wildpants.git
 [submodule "libs/Sushi-3.0"]
 	path = libs/Sushi-3.0
 	url = https://jaliborc@github.com/Jaliborc/Sushi-3.0.git
