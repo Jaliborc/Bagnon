@@ -80,7 +80,7 @@ function BagToggle:OnClick(button)
 
 		addLine('inventory', INVENTORY_TOOLTIP)
 		addLine('bank', BANK)
-		addLine('voidstorage', VOID_STORAGE, ADDON .. '_VoidStorage')
+		addLine('vault', VOID_STORAGE, ADDON .. '_VoidStorage')
 
 		if Addon.Cache:GetPlayerGuild(self:GetPlayer()) then
 			addLine('guild', GUILD_BANK, ADDON .. '_GuildBank')

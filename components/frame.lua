@@ -6,11 +6,13 @@
 local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local Frame = Addon:NewClass('Frame', 'Frame')
-Frame.OpenSound = 'igBackPackOpen'
-Frame.CloseSound = 'igBackPackClose'
 Frame.ItemFrame = Addon.ItemFrame
 Frame.BagFrame = Addon.BagFrame
 Frame.MoneyFrame = Addon.MoneyFrame
+
+Frame.OpenSound = 'igBackPackOpen'
+Frame.CloseSound = 'igBackPackClose'
+Frame.BrokerSpacing = 2
 
 
 --[[ Constructor ]]--
@@ -496,24 +498,17 @@ end
 
 -- item frame
 function Frame:PlaceItemFrame()
-	local frame = self.itemFrame or self:CreateItemFrame()
-	frame:ClearAllPoints()
-	frame:Show()
+	local anchor = self:HasBagFrame() and self:IsBagFrameShown() and self.bagFrame
+					or #self.menuButtons > 0 and self.menuButtons[1]
+					or self.titleFrame
 
-	if self:HasBagFrame() and self:IsBagFrameShown() then
-		frame:SetPoint('TOPLEFT', self.bagFrame, 'BOTTOMLEFT', 0, -4)
-	else
-		local menuButtons = self.menuButtons
-		if #menuButtons > 0 then
-			frame:SetPoint('TOPLEFT', menuButtons[1], 'BOTTOMLEFT', 0, -4)
-		else
-			frame:SetPoint('TOPLEFT', self.titleFrame, 'BOTTOMLEFT', 0, -4)
-		end
-	end
+	local frame = self.itemFrame or self:CreateItemFrame()
+	frame:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', 0, -4)
+	frame:Show()
 end
 
 function Frame:CreateItemFrame()
-	local f = self.ItemFrame:New(self, true)
+	local f = self.ItemFrame:New(self, self.Bags)
 	self.itemFrame = f
 	return f
 end
@@ -552,14 +547,15 @@ end
 
 function Frame:PlaceBrokerDisplayFrame()
 	if self:HasBrokerDisplay() then
+		local x, x2, y = 4 * self.BrokerSpacing, 2 * self.BrokerSpacing, 5 * self.BrokerSpacing
 		local frame = self.brokerDisplay or self:CreateBrokerDisplay()
 		frame:ClearAllPoints()
-		frame:SetPoint('BOTTOMLEFT', self, 'BOTTOMLEFT', 8, 10)
+		frame:SetPoint('BOTTOMLEFT', self, 'BOTTOMLEFT', x, y)
 
 		if self:HasMoneyFrame() then
-			frame:SetPoint('RIGHT', self.moneyFrame, 'LEFT', -4, 10)
+			frame:SetPoint('RIGHT', self.moneyFrame, 'LEFT', -x2, y)
 		else
-			frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -8, 10)
+			frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -x, y)
 		end
 
 		frame:Show()
@@ -605,7 +601,7 @@ function Frame:HasOptionsToggle()
 end
 
 
---[[ Settings ]]--
+--[[ Shared ]]--
 
 function Frame:GetSettings()
 	return Addon.sets.frames[self.frameID]
@@ -613,6 +609,10 @@ end
 
 function Frame:GetProfile()
 	return Addon:GetProfile(self.player)[self.frameID]
+end
+
+function Frame:IsCached()
+	return Addon:IsBagCached(self.player, self.Bags[1])
 end
 
 

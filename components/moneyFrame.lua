@@ -4,9 +4,8 @@
 --]]
 
 local ADDON, Addon = ...
-local MoneyFrame = Addon:NewClass('MoneyFrame', 'Frame')
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
-local Cache = LibStub('LibItemCache-1.1')
+local MoneyFrame = Addon:NewClass('MoneyFrame', 'Frame')
 
 
 --[[ Constructor ]]--
@@ -54,14 +53,14 @@ function MoneyFrame:OnClick()
 end
 
 function MoneyFrame:OnEnter()
-	if not Cache:HasCache() then
+	if not Addon.Cache:HasCache() then
     	return
   	end
 
 	-- Total
 	local total = 0
-	for i, player in Cache:IteratePlayers() do
-		total = total + Cache:GetPlayerMoney(player)
+	for i, player in Addon.Cache:IteratePlayers() do
+		total = total + Addon.Cache:GetPlayerMoney(player)
 	end
 
 	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOM')
@@ -69,8 +68,8 @@ function MoneyFrame:OnEnter()
 	GameTooltip:AddLine(' ')
 	
 	-- Each player
-	for i, player in Cache:IteratePlayers() do
-		local money = Cache:GetPlayerMoney(player)
+	for i, player in Addon.Cache:IteratePlayers() do
+		local money = Addon.Cache:GetPlayerMoney(player)
 		if money > 0 then
 			local color = Addon:GetPlayerColor(player)
 			local coins = self:GetCoinsText(money)
@@ -102,7 +101,7 @@ end
 --[[ API ]]--
 
 function MoneyFrame:GetMoney()
-	return Cache:GetPlayerMoney(self:GetPlayer())
+	return Addon.Cache:GetPlayerMoney(self:GetPlayer())
 end
 
 function MoneyFrame:GetCoinsText(money)

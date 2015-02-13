@@ -7,7 +7,6 @@ local ADDON, Addon = ...
 local BrokerDisplay = Addon:NewClass('BrokerDisplay', 'Button')
 local ICON_SIZE = 18
 
-
 --[[ Constructor ]]--
 
 function BrokerDisplay:New(id, parent)
@@ -39,8 +38,7 @@ end
 
 function BrokerDisplay:AddIcon()
 	local texture = self:CreateTexture(nil, 'OVERLAY')
-	texture:SetWidth(ICON_SIZE)
-	texture:SetHeight(ICON_SIZE)
+	texture:SetSize(ICON_SIZE, ICON_SIZE)
 
 	return texture
 end
@@ -74,8 +72,7 @@ end
 
 function BrokerDisplay:CreateRightButton()
 	local b = CreateFrame('Button', nil, self)
-	b:SetWidth(ICON_SIZE)
-	b:SetHeight(ICON_SIZE)
+	b:SetSize(ICON_SIZE, ICON_SIZE)
 
 	b:SetNormalFontObject('GameFontNormal')
 	b:SetHighlightFontObject('GameFontHighlight')
