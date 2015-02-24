@@ -2,11 +2,10 @@
 ## Title: |cff20ff20Bagnon|r
 ## Author: Tuller & Jaliborc (João Cardoso)
 ## Notes: Single window displays for your inventory and bank
-## SavedVariablesPerCharacter: BagnonFrameSettings
-## SavedVariables: BagnonGlobalSettings
+## SavedVariables: Bagnon_Sets
 
 ## OptionalDeps: BagBrother, ItemRack, Wardrobe, WoWUnit
-## Version: 6.0.16
+## Version: 6.0.20
 
 libs\libs.xml
 

@@ -1,4 +1,5 @@
 ====== 6.0.20 (beta)
+* This is an experimental version. Use at your own risk. If you find a bug and report it, **please indicate that you are using this version**.
 * Complete rewrite:
 ** While Bagnon might look the same, the great majority of the code has been written from scratch.
 ** These changes should provide better performance and make future development and debugging much faster.
@@ -8,6 +9,7 @@
 * The option menus have been redesigned.
 * When offline viewing other character items, frames will now layout the items according to the corresponding character settings.
 * Now typing "follower" will browse for follower items on english clients.
+* The "use blizzard frames for disabled bags" feature has not been reimplemented in this version. It should be reimplemeted next version.
 
 ====== 6.0.19
 * Swaped behaviour of sort button on bank.

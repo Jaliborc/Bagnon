@@ -49,7 +49,7 @@ function TitleFrame:OnMouseUp()
 end
 
 function TitleFrame:OnDoubleClick()
-	self:GetParent().searchFrame:SetShown(self:GetChecked())
+	self:GetParent().searchFrame:SetShown(true)
 end
 
 function TitleFrame:OnClick(button)
