@@ -4,6 +4,7 @@
 --]]
 
 local ADDON, Addon = ...
+local LDB = LibStub:GetLibrary('LibDataBroker-1.1', true)
 local BrokerDisplay = Addon:NewClass('BrokerDisplay', 'Button')
 local ICON_SIZE = 18
 
@@ -173,13 +174,11 @@ function BrokerDisplay:UpdateEverything()
 end
 
 function BrokerDisplay:UpdateEvents()
-	local LDB = LibStub:GetLibrary('LibDataBroker-1.1', true)
-	if LDB then
-		LDB.UnregisterAllCallbacks(self)
-		if self:IsVisible() then
-			LDB.RegisterCallback(self, 'LibDataBroker_DataObjectCreated')
-			LDB.RegisterCallback(self, 'LibDataBroker_AttributeChanged')
-		end
+	LDB.UnregisterAllCallbacks(self)
+
+	if self:IsVisible() then
+		LDB.RegisterCallback(self, 'LibDataBroker_DataObjectCreated')
+		LDB.RegisterCallback(self, 'LibDataBroker_AttributeChanged')
 	end
 end
 
@@ -193,7 +192,7 @@ function BrokerDisplay:UpdateText()
 	local text
 
 	if obj then
-		text = obj.text or ''
+		text = obj.text or obj.label or ''
 	else
 		text = 'Select Databroker Plugin'
 	end
@@ -246,8 +245,33 @@ end
 
 --[[ Display Object Updating ]]--
 
+
+function BrokerDisplay:SetNextObject()
+	local objects = self:GetAvailableObjects()
+	local current = self:GetObjectName()
+
+	for i, object in ipairs(objects) do
+		if current == object then
+			self:SetObject(objects[(i % #objects) + 1])
+			return
+		end
+	end
+end
+
+function BrokerDisplay:SetPreviousObject()
+	local objects = self:GetAvailableObjects()
+	local current = self:GetObjectName()
+
+	for i, object in ipairs(objects) do
+		if current == object then
+			self:SetObject(objects[i == 1 and #objects or i - 1])
+			return
+		end
+	end
+end
+
 function BrokerDisplay:SetObject(name)
-	self:GetProfile().brokerPlugin = name
+	self:GetProfile().brokerObject = name
 	self:UpdateDisplay()
 
 	if GameTooltip:IsOwned(self) then
@@ -256,85 +280,24 @@ function BrokerDisplay:SetObject(name)
 end
 
 function BrokerDisplay:GetObject()
-	local LDB = LibStub:GetLibrary('LibDataBroker-1.1', true)
-	if LDB then
-		return LDB:GetDataObjectByName(self:GetObjectName())
-	end
+	return LDB:GetDataObjectByName(self:GetObjectName())
 end
 
 function BrokerDisplay:GetObjectName()
 	return self:GetProfile().brokerObject
 end
 
-function BrokerDisplay:SetNextObject()
-	local LDB = LibStub:GetLibrary('LibDataBroker-1.1', true)
-	if not LDB then return end
-
-	local currObjName = self:GetObjectName()
-	local prevObjName = nil
-
-	for i, nextObjName in self:GetAvailableObjects() do
-		if currObjName == prevObjName then
-			self:SetObject(nextObjName)
-			return
-		end
-		prevObjName = nextObjName
-	end
-
-	for i, nextObjName in self:GetAvailableObjects() do
-		if currObjName == prevObjName then
-			self:SetObject(nextObjName)
-			return
-		end
-		prevObjName = nextObjName
-	end
-
-	self:SetObject(prevObjName)
-end
-
-function BrokerDisplay:SetPreviousObject()
-	local LDB = LibStub:GetLibrary('LibDataBroker-1.1', true)
-	if not LDB then return end
-
-	local currObjName = self:GetObjectName()
-	local prevObjName = nil
-
-	for i, nextObjName in self:GetAvailableObjects() do
-		if prevObjName and (currObjName == nextObjName) then
-			self:SetObject(prevObjName)
-			return
-		end
-		prevObjName = nextObjName
-	end
-
-	for i, nextObjName in self:GetAvailableObjects() do
-		if prevObjName and (currObjName == nextObjName) then
-			self:SetObject(prevObjName)
-			return
-		end
-		prevObjName = nextObjName
-	end
-
-	self:SetObject(prevObjName)
-end
-
 do
 	local objects = {}
+
 	function BrokerDisplay:GetAvailableObjects()
-		if next(objects) ~= nil then
-			for k, v in pairs(objects) do
-				objects[k] = nil
-			end
-		end
+		wipe(objects)
 
-		local LDB = LibStub:GetLibrary('LibDataBroker-1.1', true)
-		if LDB then
-			for name, obj in LDB:DataObjectIterator() do
-				table.insert(objects, name)
-			end
+		for name, obj in LDB:DataObjectIterator() do
+			tinsert(objects, name)
 		end
-		table.sort(objects)
+		sort(objects)
 
-		return ipairs(objects)
+		return objects
 	end
 end
