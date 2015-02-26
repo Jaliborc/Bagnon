@@ -8,6 +8,7 @@
 	<Script file="searchToggle.lua"/>
 	<Script file="titleFrame.lua"/>
 
+	<Script file="brokerPlugin.lua"/>
 	<Script file="brokerDisplay.lua"/>
 	<Script file="moneyFrame.lua"/>
 

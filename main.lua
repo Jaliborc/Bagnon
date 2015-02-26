@@ -1,6 +1,6 @@
 --[[
 	main.lua
-		The bagnon driver thingy
+		The bagnon main file. Does magic.
 --]]
 
 local ADDON, Addon = ...
@@ -27,7 +27,6 @@ function Addon:OnEnable()
 	self:CreateFrameLoader(ADDON .. '_GuildBank', 'GuildBankFrame_LoadUI')
 	self:CreateFrameLoader(ADDON .. '_VoidStorage', 'VoidStorage_LoadUI')
 	self:CreateOptionsLoader()
-	self:CreateLDBLauncher()
 end
 
 function Addon:CreateOptionsLoader()
@@ -44,36 +43,6 @@ function Addon:CreateFrameLoader(addon, method)
 			LoadAddOn(addon)
 		end
 	end
-end
-
-function Addon:CreateLDBLauncher()
-	local LDB = LibStub:GetLibrary('LibDataBroker-1.1', true)
-	if not LDB then return end
-
-	LDB:NewDataObject(ADDON .. 'Launcher', {
-		type = 'launcher',
-		icon = [[Interface\Icons\INV_Misc_Bag_07]],
-		text = ADDON,
-
-		OnClick = function(_, button)
-			if button == 'LeftButton' then
-				if IsShiftKeyDown() then
-					Addon:ToggleFrame('bank')
-				else
-					Addon:ToggleFrame('inventory')
-				end
-			elseif button == 'RightButton' then
-				Addon:ShowOptions()
-			end
-		end,
-
-		OnTooltipShow = function(tooltip)
-			tooltip:AddLine(ADDON)
-			tooltip:AddLine(L.TipShowInventory, 1, 1, 1)
-			tooltip:AddLine(L.TipShowBank, 1, 1, 1)
-			tooltip:AddLine(L.TipShowOptions, 1, 1, 1)
-		end,
-	})
 end
 
 
@@ -161,10 +130,10 @@ function Addon:UpdateEvents()
 	self:RegisterMessage('BANK_OPENED')
 
 	self:RegisterDisplayEvents('displayAuction', 'AUCTION_HOUSE_SHOW', 'AUCTION_HOUSE_CLOSED')
-	self:RegisterDisplayEvents('displayGuild', 'GUILDBANKFRAME_OPENED', 'TRADE_SKILL_CLOSE')
+	self:RegisterDisplayEvents('displayGuild', 'GUILDBANKFRAME_OPENED', 'GUILDBANKFRAME_CLOSED')
 	self:RegisterDisplayEvents('displayTrade', 'TRADE_SHOW', 'TRADE_CLOSED')
 	self:RegisterDisplayEvents('displayGems', 'SOCKET_INFO_UPDATE')
-	self:RegisterDisplayEvents('displayCraft', 'TRADE_SKILL_SHOW', 'GUILDBANKFRAME_CLOSED')
+	self:RegisterDisplayEvents('displayCraft', 'TRADE_SKILL_SHOW', 'TRADE_SKILL_CLOSE')
 
 	self:RegisterDisplayEvents('closeCombat', nil, 'PLAYER_REGEN_DISABLED')
 	self:RegisterDisplayEvents('closeVehicle', nil, 'UNIT_ENTERED_VEHICLE')
@@ -205,7 +174,7 @@ end
 function Addon:BANKFRAME_CLOSED()
 	self:HideFrame('bank')
 
-	if self.sets.displayBank then
+	if self.sets.closeBank then
 		self:HideFrame('inventory')
 	end
 end

@@ -53,10 +53,9 @@ function TitleFrame:OnDoubleClick()
 end
 
 function TitleFrame:OnClick(button)
-	if button == 'RightButton' then
-		if LoadAddOn(ADDON .. '_Config') then
-			Addon.FrameOptions:ShowFrame(self:GetFrameID())
-		end
+	if button == 'RightButton' and LoadAddOn(ADDON .. '_Config') then
+		Addon.FrameOptions.frameID = self:GetFrameID()
+		Addon.FrameOptions:Open()
 	end
 end
 
