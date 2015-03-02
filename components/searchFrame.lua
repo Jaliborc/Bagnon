@@ -90,11 +90,15 @@ function SearchFrame:SetShown(shown)
 end
 
 function SearchFrame:UpdateVisibility()
-	self:GetParent().searchToggle:SetChecked(self:IsShown())
-	self:UnregisterMessages()
+	local toggle = self:GetParent().searchToggle
+	if toggle then
+		toggle:SetChecked(self:IsShown())
+	end
 	
 	if self:IsVisible() then
 		self:RegisterMessage('SEARCH_UPDATE', 'UpdateText')
+	else
+		self:UnregisterMessages()
 	end
 end
 
