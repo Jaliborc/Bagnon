@@ -12,6 +12,7 @@ BINDING_HEADER_BAGNON = ADDON
 BINDING_NAME_BAGNON_TOGGLE = L.ToggleBags
 BINDING_NAME_BAGNON_BANK_TOGGLE = L.ToggleBank
 BINDING_NAME_BAGNON_VAULT_TOGGLE = L.ToggleVault
+BINDING_NAME_BAGNON_GUILD_TOGGLE = L.ToggleGuild
 
 
 --[[ Startup ]]--
@@ -46,6 +47,25 @@ function Addon:CreateFrameLoader(addon, method)
 end
 
 
+--[[ Bags ]]--
+
+function Addon:ToggleBag(frame, bag)
+	if self:ControlsBag(frame, bag) then
+		return self:ToggleFrame(frame)
+	end
+end
+
+function Addon:ShowBag(frame, bag)
+	if self:ControlsBag(frame, bag) then
+		return self:ShowFrame(frame)
+	end
+end
+
+function Addon:ControlsBag(frame, bag)
+	return not Addon.sets.useBlizzard or self:IsFrameEnabled(frame) and not self.profile[frame].hiddenBags[bag]
+end
+
+
 --[[ Frames ]]--
 
 function Addon:UpdateFrames()
@@ -58,27 +78,27 @@ function Addon:AreBasicFramesEnabled()
 end
 
 function Addon:ToggleFrame(id)
-	if self:IsFrameEnabled(id) then
-		if self:IsFrameShown(id) then
-			return self:HideFrame(id, true)
-		else
-			return self:ShowFrame(id)
-		end
+	if self:IsFrameShown(id) then
+		return self:HideFrame(id, true)
+	else
+		return self:ShowFrame(id)
 	end
 end
 
 function Addon:ShowFrame(id)
-	if self:IsFrameEnabled(id) then
-		self:CreateFrame(id):ShowFrame()
-		return true
+	local frame = self:CreateFrame(id)
+	if frame then
+		frame:ShowFrame()
 	end
+	return frame
 end
 
 function Addon:HideFrame(id, force)
-	if self:IsFrameEnabled(id) then
-		self:GetFrame(id):HideFrame(force)
-		return true
+	local frame = self:GetFrame(id)
+	if frame then
+		frame:HideFrame(force)
 	end
+	return frame
 end
 
 function Addon:CreateFrame(id)
@@ -183,7 +203,7 @@ end
 --[[ Bag Buttons Hooks ]]--
 
 function Addon:HookBagClickEvents()
-	--inventory
+	-- inventory
 	local canHide = true
 	local onMerchantHide = MerchantFrame:GetScript('OnHide')
 
@@ -202,27 +222,26 @@ function Addon:HookBagClickEvents()
 	hooksecurefunc('CloseBackpack', hideInventory)
 	hooksecurefunc('CloseAllBags', hideInventory)
 
-
-	--backpack
-	local oOpenBackpack = OpenBackpack
-	OpenBackpack = function()
-		if not self:ShowFrame('inventory') then
-			oOpenBackpack()
-		end
-	end
-
+	-- backpack
 	local oToggleBackpack = ToggleBackpack
 	ToggleBackpack = function()
-		if not self:ToggleFrame('inventory') then
+		if not self:ToggleBag('inventory', BACKPACK_CONTAINER) then
 			oToggleBackpack()
 		end
 	end
 
-	--single bag
+	local oOpenBackpack = OpenBackpack
+	OpenBackpack = function()
+		if not self:ShowBag('inventory', BACKPACK_CONTAINER) then
+			oOpenBackpack()
+		end
+	end
+
+	-- single bag
 	local oToggleBag = ToggleBag
 	ToggleBag = function(bag)
 		local frame = self:IsBankBag(bag) and 'bank' or 'inventory'
-		if not self:ToggleFrame(frame) then
+		if not self:ToggleBag(frame, bag) then
 			oToggleBag(bag)
 		end
 	end
@@ -230,13 +249,12 @@ function Addon:HookBagClickEvents()
 	local oOpenBag = OpenBag
 	OpenBag = function(bag)
 		local frame = self:IsBankBag(bag) and 'bank' or 'inventory'
-		if not self:ShowFrame(frame) then
+		if not self:ShowBag(frame, bag) then
 			oOpenBag(bag)
 		end
 	end
 
-
-	--all bags
+	-- all bags
 	local oOpenAllBags = OpenAllBags
 	OpenAllBags = function(frame)
 		if not self:ShowFrame('inventory') then
@@ -278,6 +296,10 @@ function Addon:HandleSlashCommand(cmd)
 		self:ToggleFrame('bank')
 	elseif cmd == 'bags' or cmd == 'inventory' then
 		self:ToggleFrame('inventory')
+	elseif cmd == 'guild' and LoadAddOn('Bagnon_GuildBaank')then
+		self:ToggleFrame('guild')
+	elseif cmd == 'vault' and LoadAddOn('Bagnon_VoidStorage') then
+		self:ToggleFrame('vault')
 	elseif cmd == 'version' then
 		self:Print(GetAddOnMetadata(ADDON, 'Version'))
 	elseif cmd == '?' or cmd == 'help' then
@@ -297,6 +319,8 @@ function Addon:PrintHelp()
 	self:Print(L.Commands)
 	PrintCmd('bags', L.CmdShowInventory)
 	PrintCmd('bank', L.CmdShowBank)
+	PrintCmd('guild', L.CmdShowGuild)
+	PrintCmd('vault', L.CmdShowVault)
 	PrintCmd('version', L.CmdShowVersion)
 end
 function Addon:ShowOptions()

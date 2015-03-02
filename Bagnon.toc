@@ -1,11 +1,11 @@
-## Interface: 60000
+## Interface: 60100
 ## Title: |cff20ff20Bagnon|r
 ## Author: Tuller & Jaliborc (João Cardoso)
 ## Notes: Single window displays for your inventory and bank
 ## SavedVariables: Bagnon_Sets
 
 ## OptionalDeps: BagBrother, ItemRack, Wardrobe, WoWUnit
-## Version: 6.0.21
+## Version: 6.1.0
 
 libs\libs.xml
 

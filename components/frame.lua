@@ -23,6 +23,7 @@ function Frame:New(id)
 	f.shownCount = 0
 	f.frameID = id
 
+	f:SetToplevel(true)
 	f:SetClampedToScreen(true)
 	f:EnableMouse(true)
 	f:SetMovable(true)
@@ -215,31 +216,13 @@ function Frame:GetFrameBackdropBorderColor()
 end
 
 
--- layer
+-- strata
 function Frame:UpdateFrameLayer()
-	self:SetFrameLayer(self:GetFrameLayer())
-end
-
-function Frame:SetFrameLayer(layer)
-	local topLevel, strata = true
-
-	if layer == 'TOPLEVEL' then
-		strata = 'HIGH'
-	elseif layer == 'MEDIUMLOW' then
-		strata = 'LOW'
-	elseif layer == 'MEDIUMHIGH' then
-		strata = 'MEDIUM'
-	else
-		strata = layer
-		topLevel = false
-	end
-
-	self:SetFrameStrata(strata)
-	self:SetToplevel(topLevel)
+	self:SetFrameStrata(self:GetFrameLayer())
 end
 
 function Frame:GetFrameLayer()
-	return self:GetSettings().layer
+	return self:GetSettings().strata
 end
 
 

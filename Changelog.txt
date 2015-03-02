@@ -1,8 +1,15 @@
+====== 6.1.1
+* Added option to change frames strata.
+* Guildbank and voidstorage are now properly shown in row order.
+* Blizzard frames for disabled bags option is now functional.
+* Added keybindings and slashcommands for all windows.
+
 ====== 6.1.0 (beta)
 * This is an experimental version. Use at your own risk. If you find a bug and report it, **please indicate that you are using this version**.
 * More major bugfixes.
 * Added option to have the reagent bank separated from the normal bank bags.
 * Bagnon databroker plugin now displays number of free slots in inventory.
+* You may now set the transparency of the frames background and borders.
 
 ====== 6.0.21 (beta)
 * This is an experimental version. Use at your own risk. If you find a bug and report it, **please indicate that you are using this version**.
