@@ -1,10 +1,24 @@
+====== 6.1.4
+* Fixed issue with the "Display Blizzard Bags" feature.
+* Last version appears to be a success. Applied same process to Vault and Guild Bank.
+* Fixed an interference issue between Bank, Guild Bank and Vault frames.
+* Display options that have no effect in specific frames are no longer displayed.
+
+====== 6.1.3
+* Attempt to fix the "unresponsive bank" issue that affects some users.
+
+====== 6.1.2
+* Fixed issue with guild bank repostioning.
+* Fixed issue with slot color.
+
 ====== 6.1.1
 * Added option to change frames strata.
 * Guildbank and voidstorage are now properly shown in row order.
 * Blizzard frames for disabled bags option is now functional.
 * Added keybindings and slashcommands for all windows.
+* Multiple bugfixes.
 
-====== 6.1.0 (beta)
+===== 6.1.0 (beta)
 * This is an experimental version. Use at your own risk. If you find a bug and report it, **please indicate that you are using this version**.
 * More major bugfixes.
 * Added option to have the reagent bank separated from the normal bank bags.

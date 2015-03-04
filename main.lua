@@ -184,6 +184,7 @@ function Addon:RegisterDisplayEvents(setting, showEvent, hideEvent)
 end
 
 function Addon:BANK_OPENED()
+	self.Cache.AtBank = true
 	self:ShowFrame('bank')
 
 	if self.sets.displayBank then
@@ -192,6 +193,7 @@ function Addon:BANK_OPENED()
 end
 
 function Addon:BANKFRAME_CLOSED()
+	self.Cache.AtBank = nil
 	self:HideFrame('bank')
 
 	if self.sets.closeBank then
