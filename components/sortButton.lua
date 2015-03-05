@@ -54,14 +54,12 @@ function SortButton:OnClick(button)
 
 	if button == 'RightButton' then
 		if isBank then
-			DepositReagentBank()
+			SortReagentBankBags()
+			SortBankBags()
 		end
 	elseif isBank then
-		--SetSortBagsRightToLeft(false)
-		SortReagentBankBags()
-		SortBankBags()
+		DepositReagentBank()
 	else
-		--SetSortBagsRightToLeft(false)
 		SortBags()
 	end
 end
@@ -72,8 +70,8 @@ function SortButton:OnEnter()
 	local frameID = self:GetParent().frameID
 	if frameID == 'bank' then
 		GameTooltip:SetText(L.TipManageBank)
-		GameTooltip:AddLine(L.TipCleanBank, 1,1,1)
 		GameTooltip:AddLine(L.TipDepositReagents, 1,1,1)
+		GameTooltip:AddLine(L.TipCleanBank, 1,1,1)
 	else
 		GameTooltip:SetText(L.TipCleanBags)
 	end

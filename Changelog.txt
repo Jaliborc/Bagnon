@@ -1,3 +1,11 @@
+====== 6.1.5
+* Void Storage:
+** Fixed issue affecting some users that caused the frame to require being open twice to appear.
+** Fixed issue causing frame to appear empty on first appearance.
+** Fixed issue preventing control click items to preview them.
+* Flipped clean up button behaviour back to what it was before patch 6.1.
+* Updated chinese locales.
+
 ====== 6.1.4
 * Fixed issue with the "Display Blizzard Bags" feature.
 * Last version appears to be a success. Applied same process to Vault and Guild Bank.

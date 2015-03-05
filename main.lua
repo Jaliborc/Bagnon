@@ -25,9 +25,20 @@ function Addon:OnEnable()
 	self:AddSlashCommands()
 
 	self:CreateFrame('inventory')
-	self:CreateFrameLoader(ADDON .. '_GuildBank', 'GuildBankFrame_LoadUI')
-	self:CreateFrameLoader(ADDON .. '_VoidStorage', 'VoidStorage_LoadUI')
+	self:CreateFrameLoader('GuildBank', 'GuildBankFrame_LoadUI')
+	self:CreateFrameLoader('VoidStorage', 'VoidStorage_LoadUI')
 	self:CreateOptionsLoader()
+end
+
+function Addon:CreateFrameLoader(module, method)
+	local addon = ADDON .. '_' .. module
+	if GetAddOnEnableState(UnitName('player'), addon) >= 2 then
+		_G[method] = function()
+			if LoadAddOn(addon) then
+				self:GetModule(module):OnOpen()
+			end
+		end
+	end
 end
 
 function Addon:CreateOptionsLoader()
@@ -36,14 +47,6 @@ function Addon:CreateOptionsLoader()
 		self:SetScript('OnShow', nil)
 		LoadAddOn(ADDON .. '_Config')
 	end)
-end
-
-function Addon:CreateFrameLoader(addon, method)
-	if GetAddOnEnableState(UnitName('player'), addon) >= 2 then
-		_G[method] = function()
-			LoadAddOn(addon)
-		end
-	end
 end
 
 
@@ -104,8 +107,8 @@ end
 function Addon:CreateFrame(id)
 	if self:IsFrameEnabled(id) then
  		self.frames[id] = self.frames[id] or self[id:gsub('^.', id.upper) .. 'Frame']:New(id)
+ 		return self.frames[id]
  	end
- 	return self.frames[id]
 end
 
 function Addon:IsFrameShown(id)
@@ -298,7 +301,7 @@ function Addon:HandleSlashCommand(cmd)
 		self:ToggleFrame('bank')
 	elseif cmd == 'bags' or cmd == 'inventory' then
 		self:ToggleFrame('inventory')
-	elseif cmd == 'guild' and LoadAddOn('Bagnon_GuildBaank')then
+	elseif cmd == 'guild' and LoadAddOn('Bagnon_GuildBank')then
 		self:ToggleFrame('guild')
 	elseif cmd == 'vault' and LoadAddOn('Bagnon_VoidStorage') then
 		self:ToggleFrame('vault')
