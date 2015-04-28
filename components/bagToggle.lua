@@ -61,9 +61,9 @@ end
 
 function BagToggle:OnClick(button)
 	if button == 'LeftButton' then
-		local sets = self:GetSettings()
-		sets.showBags = not sets.showBags or nil
-		self:GetFrame():Layout()
+		local frame = self:GetFrame()
+		frame.profile.showBags = not frame.profile.showBags or nil
+		frame:Layout()
 	else
 		local menu = {}
 		local function addLine(id, name, addon)
@@ -133,5 +133,5 @@ function BagToggle:Update()
 end
 
 function BagToggle:IsBagFrameShown()
-	return self:GetSettings().showBags
+	return self:GetProfile().showBags
 end

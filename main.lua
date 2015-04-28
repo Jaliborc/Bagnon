@@ -117,7 +117,7 @@ function Addon:IsFrameShown(id)
 end
 
 function Addon:IsFrameEnabled(id)
-	return self.sets.frames[id].enabled
+	return self.profile[id].enabled
 end
 
 function Addon:GetFrame(id)

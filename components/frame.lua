@@ -19,7 +19,6 @@ Frame.BrokerSpacing = 2
 
 function Frame:New(id)
 	local f = self:Bind(CreateFrame('Frame', ADDON .. 'Frame' .. id, UIParent))
-	f.profile = Addon.profile[id]
 	f.shownCount = 0
 	f.frameID = id
 
@@ -27,7 +26,10 @@ function Frame:New(id)
 	f:SetClampedToScreen(true)
 	f:EnableMouse(true)
 	f:SetMovable(true)
+
 	f:Hide()
+	f:SetScript('OnShow', f.OnShow)
+	f:SetScript('OnHide', f.OnHide)
 
 	f:SetBackdrop{
 	  bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
@@ -36,10 +38,6 @@ function Frame:New(id)
 	  tile = true, tileSize = 16,
 	  insets = {left = 4, right = 4, top = 4, bottom = 4}
 	}
-
-	f:SetScale(f:GetFrameScale())
-	f:SetScript('OnShow', f.OnShow)
-	f:SetScript('OnHide', f.OnHide)
 
 	tinsert(UISpecialFrames, f:GetName())
 	return f
@@ -94,6 +92,7 @@ end
 --[[ Update ]]--
 
 function Frame:Update()
+	self.profile = Addon.profile[self.frameID]
 	self:UpdateShown()
 
 	if self:IsVisible() then
@@ -123,7 +122,7 @@ function Frame:UpdateScale() -- maintain the same relative position of the frame
 end
 
 function Frame:GetFrameScale()
-	return self:GetSettings().scale
+	return self.profile.scale
 end
 
 
@@ -178,7 +177,7 @@ function Frame:UpdateOpacity()
 end
 
 function Frame:GetOpacity()
-	return self:GetSettings().alpha
+	return self.profile.alpha
 end
 
 function Frame:FadeInFrame(frame, alpha)
@@ -202,7 +201,7 @@ function Frame:UpdateBackdrop()
 end
 
 function Frame:GetFrameBackdropColor()
-	local color = self:GetSettings().color
+	local color = self.profile.color
 	return color[1], color[2], color[3], color[4]
 end
 
@@ -211,7 +210,7 @@ function Frame:UpdateBackdropBorder()
 end
 
 function Frame:GetFrameBackdropBorderColor()
-	local color = self:GetSettings().borderColor
+	local color = self.profile.borderColor
 	return color[1], color[2], color[3], color[4]
 end
 
@@ -222,7 +221,7 @@ function Frame:UpdateFrameLayer()
 end
 
 function Frame:GetFrameLayer()
-	return self:GetSettings().strata
+	return self.profile.strata
 end
 
 
@@ -364,7 +363,7 @@ function Frame:CreateSearchToggle()
 end
 
 function Frame:HasSearchToggle()
-	return self:GetSettings().search
+	return self.profile.search
 end
 
 
@@ -380,11 +379,11 @@ function Frame:GetSpecificButtons(list)
 end
 
 function Frame:HasBagFrame()
-	return self:GetSettings().bagFrame
+	return self.profile.bagFrame
 end
 
 function Frame:HasSortButton()
-	return self:GetSettings().sort
+	return self.profile.sort
 end
 
 function Frame:CreateBagToggle()
@@ -408,7 +407,7 @@ function Frame:CreateBagFrame()
 end
 
 function Frame:IsBagFrameShown()
-	return self:GetSettings().showBags
+	return self.profile.showBags
 end
 
 function Frame:PlaceBagFrame()
@@ -499,7 +498,7 @@ end
 
 -- money frame
 function Frame:HasMoneyFrame()
-	return self:GetSettings().money
+	return self.profile.money
 end
 
 function Frame:PlaceMoneyFrame()
@@ -525,7 +524,7 @@ end
 
 -- databroker display
 function Frame:HasBrokerDisplay()
-	return self:GetSettings().broker
+	return self.profile.broker
 end
 
 function Frame:PlaceBrokerDisplayFrame()
@@ -580,26 +579,11 @@ function Frame:PlaceOptionsToggle()
 end
 
 function Frame:HasOptionsToggle()
-	return GetAddOnEnableState(UnitName('player'), ADDON .. '_Config') >= 2 and self:GetSettings().options
+	return GetAddOnEnableState(UnitName('player'), ADDON .. '_Config') >= 2 and self.profile.options
 end
 
 
 --[[ Shared ]]--
-
-function Frame:GetSettings()
-	return Addon.sets.frames[self.frameID]
-end
-
-function Frame:GetProfile()
-	return Addon:GetProfile(self.player)[self.frameID]
-end
-
-function Frame:IsCached()
-	return Addon:IsBagCached(self.player, self.Bags[1])
-end
-
-
---[[ Players ]]--
 
 function Frame:SetPlayer(player)
 	self.player = player
@@ -608,4 +592,12 @@ end
 
 function Frame:GetPlayer()
 	return self.player or UnitName('player')
+end
+
+function Frame:GetProfile()
+	return Addon:GetProfile(self.player)[self.frameID]
+end
+
+function Frame:IsCached()
+	return Addon:IsBagCached(self.player, self.Bags[1])
 end

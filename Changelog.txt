@@ -1,3 +1,7 @@
+===== 6.1.6 (beta)
+* Now frame settings can be saved per character or shared between characters, depedning on the user preferences.
+* Fixed item quality search.
+
 ====== 6.1.5
 * Void Storage:
 ** Fixed issue affecting some users that caused the frame to require being open twice to appear.
