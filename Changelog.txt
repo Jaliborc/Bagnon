@@ -1,5 +1,11 @@
+===== 6.1.7
+* Fixed issue causing money display to not update when switching characters.
+
 ===== 6.1.6 (beta)
-* Now frame settings can be saved per character or shared between characters, depedning on the user preferences.
+* Now frame settings can be saved per character or shared between characters, depending on the user preferences.
+** You can choose wether to use the global settings on each different character. Look at the frame settings panel.
+** By default, new characters will use the global options.
+** Characters upgrading from previous versions will have specific settings.
 * Fixed item quality search.
 
 ====== 6.1.5
