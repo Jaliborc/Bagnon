@@ -1,5 +1,8 @@
 ===== 6.1.7
 * Fixed issue causing money display to not update when switching characters.
+* Improved class color readability in tooltips and menus.
+* Fixed minor bug in the guild log frames.
+* Item draw performance improvement.
 
 ===== 6.1.6 (beta)
 * Now frame settings can be saved per character or shared between characters, depending on the user preferences.
