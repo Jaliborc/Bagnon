@@ -1,10 +1,14 @@
-===== 6.1.7
+===== 6.2.0
+* Updated for Fury of Hellfire
+
+====== 6.1.7
 * Fixed issue causing money display to not update when switching characters.
 * Improved class color readability in tooltips and menus.
 * Fixed minor bug in the guild log frames.
-* Item draw performance improvement.
+* Major item draw performance improvement.
+* When enabling character specific settings, they are initialized as a copy of the current global settings.
 
-===== 6.1.6 (beta)
+====== 6.1.6 (beta)
 * Now frame settings can be saved per character or shared between characters, depending on the user preferences.
 ** You can choose wether to use the global settings on each different character. Look at the frame settings panel.
 ** By default, new characters will use the global options.
