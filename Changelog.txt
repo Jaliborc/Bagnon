@@ -1,3 +1,14 @@
+====== 6.2.3
+* Workaround issue introduced by Blizzard preventing tooltip counts from displaying on tradeskill windows
+* Fixed global leakage
+* Minor bugfix
+
+====== 6.2.2
+* Fixed rare frame display bug
+
+====== 6.2.1
+* Fixed bug with display blizzard frames option
+
 ===== 6.2.0
 * Updated for Fury of Hellfire
 
