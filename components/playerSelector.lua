@@ -6,6 +6,7 @@
 local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local PlayerSelector = Addon:NewClass('PlayerSelector', 'Button')
+local Cache = LibStub('LibItemCache-1.1')
 
 local SIZE = 20
 local TEXTURE_SIZE = 64 * (SIZE/36)
@@ -52,8 +53,12 @@ end
 
 --[[ Interaction ]]--
 
-function PlayerSelector:OnClick()
-	Addon:TogglePlayerDropdown(self, self:GetFrame(), -4, -2)
+function PlayerSelector:OnClick(button)
+	if button == 'RightButton' and not (BagnonPlayerDropdown == DropDownList1.dropdown and DropDownList1:IsShown()) then
+		self:GetFrame():SetPlayer(Cache.PLAYER)
+	else
+		Addon:TogglePlayerDropdown(self, self:GetFrame(), -4, -2)
+	end
 end
 
 function PlayerSelector:OnEnter()
@@ -63,7 +68,11 @@ function PlayerSelector:OnEnter()
 		GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
 	end
 
-	GameTooltip:SetText(L.TipChangePlayer)
+	local current = self:GetFrame():GetPlayer()
+	GameTooltip:SetText(CHARACTER)
+	GameTooltip:AddLine(L.TipChangePlayer, 1, 1, 1)
+	GameTooltip:AddLine(L.TipResetPlayer, 1, 1, 1)
+	GameTooltip:Show()
 end
 
 function PlayerSelector:OnLeave()
