@@ -82,15 +82,11 @@ function Frame:OnHide()
 	PlaySound(self.CloseSound)
 	self:UnregisterMessages()
 
-	if self:IsFrameShown() then -- for when a frame is hidden not via bagnon
+	if self:IsFrameShown() then
 		self:HideFrame()
-		-- self:SetPlayer(nil)
-		-- ^ Currently the only case this seems to catch is closing the frame
-		-- using the Esc key, but this shouldn't behave any differently than
-		-- closing the frame using its close button or assigned keybinding.
 	end
 
-	if Addon.sets.autoResetPlayer then
+	if Addon.sets.resetPlayer then
 		self:SetPlayer(nil)
 	end
 end

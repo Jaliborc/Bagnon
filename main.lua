@@ -187,6 +187,10 @@ function Addon:RegisterDisplayEvents(setting, showEvent, hideEvent)
 end
 
 function Addon:BANK_OPENED()
+	if self:GetFrame('bank') then
+		self:GetFrame('bank'):SetPlayer(nil)
+	end
+	
 	self.Cache.AtBank = true
 	self:ShowFrame('bank')
 
