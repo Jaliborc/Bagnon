@@ -84,6 +84,13 @@ function Frame:OnHide()
 
 	if self:IsFrameShown() then -- for when a frame is hidden not via bagnon
 		self:HideFrame()
+		-- self:SetPlayer(nil)
+		-- ^ Currently the only case this seems to catch is closing the frame
+		-- using the Esc key, but this shouldn't behave any differently than
+		-- closing the frame using its close button or assigned keybinding.
+	end
+
+	if Addon.sets.autoResetPlayer then
 		self:SetPlayer(nil)
 	end
 end
@@ -184,7 +191,7 @@ function Frame:FadeInFrame(frame, alpha)
 	if Addon.sets.fading then
 		UIFrameFadeIn(frame, 0.2, 0, alpha or 1)
 	end
-	
+
 	frame:Show()
 end
 
@@ -429,7 +436,7 @@ function Frame:PlaceBagFrame()
 	end
 
 	return 0, 0
-end 
+end
 
 
 -- title frame
