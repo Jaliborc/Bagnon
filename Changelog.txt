@@ -1,3 +1,8 @@
+====== 6.2.5
+* Bagnon will now fill existing item stacks in the bank bags before filling an empty slot in the reagent bank.
+* Localization updates. Thank you Phanx!
+* Can now search for "naval" items.
+
 ====== 6.2.4
 * Hotfix.
 
