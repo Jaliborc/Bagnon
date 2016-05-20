@@ -148,6 +148,10 @@ function Addon:StartupEvents()
 end
 
 function Addon:UpdateEvents()
+	if not self.sets then
+		return
+	end
+
 	self:UnregisterEvents()
 	self:RegisterEvent('BANKFRAME_CLOSED')
 	self:RegisterMessage('BANK_OPENED')

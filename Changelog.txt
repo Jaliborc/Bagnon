@@ -1,3 +1,8 @@
+====== 6.2.7
+* Fixed bug that caused errors when searching items with a few special characters.
+* Added korean localization.
+* Minor hotfix.
+
 ====== 6.2.6
 * Fixed bug when moving empty bag to inventory.
 
