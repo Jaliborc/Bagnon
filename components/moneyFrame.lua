@@ -64,7 +64,7 @@ function MoneyFrame:OnEnter()
 	end
 
 	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOM')
-	GameTooltip:AddDoubleLine(L.Total, GetCoinTextureString(total), nil,nil,nil, 1,1,1)
+	GameTooltip:AddDoubleLine(L.Total, self:FormatCoinTextureString(GetCoinTextureString(total)), nil,nil,nil, 1,1,1)
 	GameTooltip:AddLine(' ')
 
 	-- Each player
@@ -105,8 +105,9 @@ function MoneyFrame:GetMoney()
 	return Addon.Cache:GetPlayerMoney(self:GetPlayer())
 end
 
--- TODO: rename function after conventions
-function comma_value(amount)
+--[[ Helper method to return a number with seperated thousands. ]]--
+function MoneyFrame:ThousandsSeparator(amount)
+    -- credit for this function goes to http://lua-users.org/wiki/FormattingNumbers
 	local formatted = amount
 	while true do
 		formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1.%2')
@@ -117,16 +118,15 @@ function comma_value(amount)
 	return formatted
 end
 
--- TODO: rename function after conventions
-function gold_amount_formatted_CoinTextureString(CoinTextureString)
+--[[ Reformat the CoinTexttureString to display thousands-separator in the gold value. ]]--
+function MoneyFrame:FormatCoinTextureString(CoinTextureString)
 	local _,_,gold_amount = string.find(CoinTextureString,"(%d+)")
-	local gold_amount_comma = comma_value(gold_amount)
+	local gold_amount_comma = self:ThousandsSeparator(gold_amount)
 	return string.gsub(CoinTextureString,"(%d+)",gold_amount_comma,1)
 end
 
-
 function MoneyFrame:GetCoinsText(money)
-	return gold_amount_formatted_CoinTextureString(GetCoinTextureString(money))
+	return self:FormatCoinTextureString(GetCoinTextureString(money))
 end
 
 function MoneyFrame:GetCoins(money)
