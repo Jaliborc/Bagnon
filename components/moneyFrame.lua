@@ -13,12 +13,12 @@ local MoneyFrame = Addon:NewClass('MoneyFrame', 'Frame')
 function MoneyFrame:New(parent)
 	local f = self:Bind(CreateFrame('Button', parent:GetName() .. 'MoneyFrame', parent, 'SmallMoneyFrameTemplate'))
 	f:SetHeight(24)
-	
+
 	local click = CreateFrame('Button', f:GetName() .. 'Click', f)
 	click:SetFrameLevel(self:GetFrameLevel() + 4)
 	click:RegisterForClicks('anyUp')
 	click:SetAllPoints()
-	
+
 	click:SetScript('OnClick', function(_, ...) f:OnClick(...) end)
 	click:SetScript('OnEnter', function() f:OnEnter() end)
 	click:SetScript('OnLeave', function() f:OnLeave() end)
@@ -48,14 +48,14 @@ function MoneyFrame:OnClick()
 		OpenCoinPickupFrame(1, MoneyTypeInfo[self.moneyType].UpdateFunc(self), self)
 		self.hasPickup = 1
 	end
-	
+
 	self:OnLeave()
 end
 
 function MoneyFrame:OnEnter()
 	if not Addon.Cache:HasCache() then
-    	return
-  	end
+		return
+	end
 
 	-- Total
 	local total = 0
@@ -66,7 +66,7 @@ function MoneyFrame:OnEnter()
 	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOM')
 	GameTooltip:AddDoubleLine(L.Total, GetCoinTextureString(total), nil,nil,nil, 1,1,1)
 	GameTooltip:AddLine(' ')
-	
+
 	-- Each player
 	for i, player in Addon.Cache:IteratePlayers() do
 		local money = Addon.Cache:GetPlayerMoney(player)
@@ -77,7 +77,7 @@ function MoneyFrame:OnEnter()
 			GameTooltip:AddDoubleLine(player, coins, color.r, color.g, color.b, 1,1,1)
 		end
 	end
-	
+
 	GameTooltip:Show()
 end
 
@@ -105,23 +105,28 @@ function MoneyFrame:GetMoney()
 	return Addon.Cache:GetPlayerMoney(self:GetPlayer())
 end
 
+-- TODO: rename function after conventions
+function comma_value(amount)
+	local formatted = amount
+	while true do
+		formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1.%2')
+		if (k==0) then
+			break
+		end
+	end
+	return formatted
+end
+
+-- TODO: rename function after conventions
+function gold_amount_formatted_CoinTextureString(CoinTextureString)
+	local _,_,gold_amount = string.find(CoinTextureString,"(%d+)")
+	local gold_amount_comma = comma_value(gold_amount)
+	return string.gsub(CoinTextureString,"(%d+)",gold_amount_comma,1)
+end
+
+
 function MoneyFrame:GetCoinsText(money)
-	local gold, silver, copper = self:GetCoins(money)
-	local text = ''
-
-	if gold > 0 then
-		text = format('%d|cffffd700%s|r', gold, GOLD_AMOUNT_SYMBOL)
-	end
-
-	if silver > 0 then
-		text = text .. format(' %d|cffc7c7cf%s|r', silver, SILVER_AMOUNT_SYMBOL)
-	end
-
-	if copper > 0 or money == 0 then
-		text = text .. format(' %d|cffeda55f%s|r', copper, COPPER_AMOUNT_SYMBOL)
-	end
-
-	return text
+	return gold_amount_formatted_CoinTextureString(GetCoinTextureString(money))
 end
 
 function MoneyFrame:GetCoins(money)
