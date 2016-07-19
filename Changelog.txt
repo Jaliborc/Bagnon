@@ -1,3 +1,9 @@
+====== 7.0.2
+* Tagging as release.
+* Hopefully fixed issue with guild bank tabs in Legion (can't test yet).
+* Fixed issue with character and realm detection.
+* Russian localization updated (thanks to DogmaTX)
+
 ====== 7.0.1 (beta)
 * Hopefully fixed issue with server names like Azjol-Nerub
 
