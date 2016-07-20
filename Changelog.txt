@@ -1,3 +1,7 @@
+====== 7.0.3
+* Fixed issue with containers inside containers.
+* Fixed issue with displaying information about characters on the same server.
+
 ====== 7.0.2
 * Tagging as release.
 * Hopefully fixed issue with guild bank tabs in Legion (can't test yet).
