@@ -1,3 +1,8 @@
+====== 7.0.4
+* Fixed issue with server names with spaces.
+* Fixed issue causing compare tooltips to anchor on the wrong side of the main one.
+* Minor bugfix.
+
 ====== 7.0.3
 * Fixed issue with containers inside containers.
 * Fixed issue with displaying information about characters on the same server.

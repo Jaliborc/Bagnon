@@ -5,7 +5,7 @@
 ## SavedVariables: Bagnon_Sets
 
 ## OptionalDeps: BagBrother, ItemRack, Wardrobe, WoWUnit
-## Version: 7.0.3
+## Version: 7.0.4
 
 libs\libs.xml
 
