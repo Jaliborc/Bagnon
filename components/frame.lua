@@ -111,17 +111,8 @@ end
 
 
 -- scale
-function Frame:UpdateScale() -- maintain the same relative position of the frame
-	local oldScale = self:GetScale()
-	local newScale = self:GetFrameScale()
-
-	if oldScale ~= newScale then
-		local point, x, y = self:GetPosition()
-		local ratio = newScale / oldScale
-
-		self:SetScale(newScale)
-		self:SetPosition(point, x/ratio, y/ratio)
-	end
+function Frame:UpdateScale()
+	self:SetScale(self:GetFrameScale())
 end
 
 function Frame:GetFrameScale()
@@ -133,35 +124,6 @@ end
 function Frame:UpdatePosition()
 	self:ClearAllPoints()
 	self:SetPoint(self:GetPosition())
-end
-
-function Frame:SavePosition()
-	local x, y = self:GetCenter()
-
-	if x and y then
-		local scale = self:GetScale()
-		local h = UIParent:GetHeight() / scale
-		local w = UIParent:GetWidth() / scale
-		local xPoint, yPoint
-
-		if x > w/2 then
-			x = self:GetRight() - w
-			xPoint = 'RIGHT'
-		else
-			x = self:GetLeft()
-			xPoint = 'LEFT'
-		end
-
-		if x > w/2 then
-			y = self:GetTop() - h
-			yPoint = 'TOP'
-		else
-			y = self:GetBottom()
-			yPoint = 'BOTTOM'
-		end
-
-		self:SetPosition(yPoint..xPoint, x, y)
-	end
 end
 
 function Frame:SetPosition(point, x, y)
