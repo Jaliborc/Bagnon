@@ -1,3 +1,8 @@
+===== 7.1.0 (beta)
+* Updated for WoW patch 7.1.
+* Now displays upgrade icons.
+* Removed some unused library files from build.
+
 ====== 7.0.4
 * Fixed issue with server names with spaces.
 * Fixed issue causing compare tooltips to anchor on the wrong side of the main one.

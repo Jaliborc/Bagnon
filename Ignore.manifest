@@ -1,3 +1,13 @@
+libs/CustomTutorials-2.1/CustomTutorials-2.1.toc
+libs/Poncho-1.0/Poncho-1.0.toc
+libs/Sushi-3.0/Sushi-3.0.toc
+
+libs/Sushi-3.0/Classes/GrayButton.lua
+libs/Sushi-3.0/Classes/HelpButton.lua
+libs/Sushi-3.0/Classes/IconCheck.lua
+libs/Sushi-3.0/Classes/TabButtons.lua
+libs/Sushi-3.0/Classes/TabGroup.lua
+
 libs/LibItemSearch-1.2/LibItemSearch-1.2.toc
 libs/LibItemSearch-1.2/README.markdown
 
