@@ -1,3 +1,7 @@
+===== 7.1.1
+* Fixed issue displaying Void Storage tooltips.
+* Fixed issue with new build pipeline versioning system.
+
 ===== 7.1.0 (beta)
 * Updated for WoW patch 7.1.
 * Now displays upgrade icons.
