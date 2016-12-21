@@ -391,8 +391,8 @@ function SavedFrameSettings:GetDefaultSettings(frameID)
 		return self:GetDefaultBankSettings()
 	elseif frameID == 'guildbank' then
 		return self:GetDefaultGuildBankSettings()
-	elseif frameID == 'voidstorage' then
-		return self:GetDefaultVaultSettings()
+--	elseif frameID == 'voidstorage' then
+--		return self:GetDefaultVaultSettings()
 	end
 
 	return self:GetDefaultInventorySettings()
