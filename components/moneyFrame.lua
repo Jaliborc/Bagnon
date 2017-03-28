@@ -13,12 +13,12 @@ local MoneyFrame = Addon:NewClass('MoneyFrame', 'Frame')
 function MoneyFrame:New(parent)
 	local f = self:Bind(CreateFrame('Button', parent:GetName() .. 'MoneyFrame', parent, 'SmallMoneyFrameTemplate'))
 	f:SetHeight(24)
-	
+
 	local click = CreateFrame('Button', f:GetName() .. 'Click', f)
 	click:SetFrameLevel(self:GetFrameLevel() + 4)
 	click:RegisterForClicks('anyUp')
 	click:SetAllPoints()
-	
+
 	click:SetScript('OnClick', function(_, ...) f:OnClick(...) end)
 	click:SetScript('OnEnter', function() f:OnEnter() end)
 	click:SetScript('OnLeave', function() f:OnLeave() end)
@@ -48,14 +48,14 @@ function MoneyFrame:OnClick()
 		OpenCoinPickupFrame(1, MoneyTypeInfo[self.moneyType].UpdateFunc(self), self)
 		self.hasPickup = 1
 	end
-	
+
 	self:OnLeave()
 end
 
 function MoneyFrame:OnEnter()
 	if not Addon.Cache:HasCache() then
-    	return
-  	end
+		return
+	end
 
 	-- Total
 	local total = 0
@@ -64,9 +64,9 @@ function MoneyFrame:OnEnter()
 	end
 
 	GameTooltip:SetOwner(self, 'ANCHOR_BOTTOM')
-	GameTooltip:AddDoubleLine(L.Total, GetCoinTextureString(total), nil,nil,nil, 1,1,1)
+	GameTooltip:AddDoubleLine(L.Total, self:FormatCoinTextureString(GetCoinTextureString(total)), nil,nil,nil, 1,1,1)
 	GameTooltip:AddLine(' ')
-	
+
 	-- Each player
 	for i, player in Addon.Cache:IteratePlayers() do
 		local money = Addon.Cache:GetPlayerMoney(player)
@@ -77,7 +77,7 @@ function MoneyFrame:OnEnter()
 			GameTooltip:AddDoubleLine(player, coins, color.r, color.g, color.b, 1,1,1)
 		end
 	end
-	
+
 	GameTooltip:Show()
 end
 
@@ -105,23 +105,28 @@ function MoneyFrame:GetMoney()
 	return Addon.Cache:GetPlayerMoney(self:GetPlayer())
 end
 
+--[[ Helper method to return a number with seperated thousands. ]]--
+function MoneyFrame:ThousandsSeparator(amount)
+    -- credit for this function goes to http://lua-users.org/wiki/FormattingNumbers
+	local formatted = amount
+	while true do
+		formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1.%2')
+		if (k==0) then
+			break
+		end
+	end
+	return formatted
+end
+
+--[[ Reformat the CoinTexttureString to display thousands-separator in the gold value. ]]--
+function MoneyFrame:FormatCoinTextureString(CoinTextureString)
+	local _,_,gold_amount = string.find(CoinTextureString,"(%d+)")
+	local gold_amount_comma = self:ThousandsSeparator(gold_amount)
+	return string.gsub(CoinTextureString,"(%d+)",gold_amount_comma,1)
+end
+
 function MoneyFrame:GetCoinsText(money)
-	local gold, silver, copper = self:GetCoins(money)
-	local text = ''
-
-	if gold > 0 then
-		text = format('%d|cffffd700%s|r', gold, GOLD_AMOUNT_SYMBOL)
-	end
-
-	if silver > 0 then
-		text = text .. format(' %d|cffc7c7cf%s|r', silver, SILVER_AMOUNT_SYMBOL)
-	end
-
-	if copper > 0 or money == 0 then
-		text = text .. format(' %d|cffeda55f%s|r', copper, COPPER_AMOUNT_SYMBOL)
-	end
-
-	return text
+	return self:FormatCoinTextureString(GetCoinTextureString(money))
 end
 
 function MoneyFrame:GetCoins(money)
