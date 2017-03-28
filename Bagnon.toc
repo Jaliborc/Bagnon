@@ -2,6 +2,7 @@
 ## Title: |cff20ff20Bagnon|r
 ## Author: Tuller & Jaliborc (João Cardoso)
 ## Notes: Single window displays for your inventory and bank
+## Notes-ruRU: Объединяет все сумки в одну большую. Так же изменяет ваш банк. 
 ## SavedVariables: Bagnon_Sets
 
 ## OptionalDeps: BagBrother, ItemRack, Wardrobe, WoWUnit
