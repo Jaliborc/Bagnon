@@ -5,17 +5,16 @@
 
 local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
-local SortButton = Addon:NewClass('SortButton', 'CheckButton')
+local SortButton = Addon:NewClass('SortButton', 'Button')
 
 local SIZE = 20
 local NORMAL_TEXTURE_SIZE = 64 * (SIZE/36)
-local FIRST_FLAG, LAST_FLAG = LE_BAG_FILTER_FLAG_IGNORE_CLEANUP, NUM_LE_BAG_FILTER_FLAGS
 
 
 --[[ Constructor ]]--
 
 function SortButton:New(parent)
-	local b = self:Bind(CreateFrame('CheckButton', nil, parent))
+	local b = self:Bind(CreateFrame('Button', nil, parent))
 	b:RegisterForClicks('anyUp')
 	b:SetSize(SIZE, SIZE)
 
@@ -50,7 +49,7 @@ end
 --[[ Interaction ]]--
 
 function SortButton:OnClick(button)
-	local isBank = self:GetParent().frameID == 'bank'
+	local isBank = self:GetParent():IsBank()
 
 	if button == 'RightButton' then
 		if isBank then
@@ -67,8 +66,7 @@ end
 function SortButton:OnEnter()
 	GameTooltip:SetOwner(self, self:GetRight() > (GetScreenWidth() / 2) and 'ANCHOR_LEFT' or 'ANCHOR_RIGHT')
 	
-	local frameID = self:GetParent().frameID
-	if frameID == 'bank' then
+	if self:GetParent():IsBank() then
 		GameTooltip:SetText(L.TipManageBank)
 		GameTooltip:AddLine(L.TipDepositReagents, 1,1,1)
 		GameTooltip:AddLine(L.TipCleanBank, 1,1,1)

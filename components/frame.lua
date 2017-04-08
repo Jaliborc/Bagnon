@@ -96,7 +96,7 @@ end
 
 function Frame:Update()
 	self.profile = Addon.profile[self.frameID]
-	self:UpdateShown()
+	--self:UpdateShown() necessary? why?
 
 	if self:IsVisible() then
 		self:UpdatePosition()

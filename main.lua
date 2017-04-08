@@ -194,7 +194,7 @@ function Addon:BANK_OPENED()
 	if self:GetFrame('bank') then
 		self:GetFrame('bank'):SetPlayer(nil)
 	end
-	
+
 	self.Cache.AtBank = true
 	self:ShowFrame('bank')
 
@@ -304,7 +304,7 @@ end
 
 function Addon:HandleSlashCommand(cmd)
 	cmd = cmd and cmd:lower() or ''
-	
+
 	if cmd == 'bank' then
 		self:ToggleFrame('bank')
 	elseif cmd == 'bags' or cmd == 'inventory' then
@@ -315,12 +315,10 @@ function Addon:HandleSlashCommand(cmd)
 		self:ToggleFrame('vault')
 	elseif cmd == 'version' then
 		self:Print(GetAddOnMetadata(ADDON, 'Version'))
-	elseif cmd == '?' or cmd == 'help' then
-		self:PrintHelp()
+	elseif cmd == 'config' or cmd == 'options' then
+		 self:ShowOptions()
 	else
-		if not self:ShowOptions() and cmd ~= 'config' and cmd ~= 'options' then
-			self:PrintHelp()
-		end
+		self:PrintHelp()
 	end
 end
 
@@ -336,9 +334,9 @@ function Addon:PrintHelp()
 	PrintCmd('vault', L.CmdShowVault)
 	PrintCmd('version', L.CmdShowVersion)
 end
+
 function Addon:ShowOptions()
 	if LoadAddOn(ADDON .. '_Config') then
 		Addon.GeneralOptions:Open()
-		return true
 	end
 end

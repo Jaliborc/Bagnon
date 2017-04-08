@@ -28,7 +28,7 @@ function TitleFrame:New(title, parent)
 	b:SetScript('OnClick', b.OnClick)
 	b.title = title
 
-	b:RegisterMessage(b:GetFrameID() .. '_PLAYER_CHANGED', 'Update')
+	b:RegisterFrameMessage('PLAYER_CHANGED', 'Update')
 	b:Update()
 
 	return b
@@ -45,33 +45,8 @@ end
 
 function TitleFrame:OnMouseUp()
 	local parent = self:GetParent()
-	local x, y = parent:GetCenter()
 	parent:StopMovingOrSizing()
-
-	if x and y then
-		local scale = parent:GetScale()
-		local h = UIParent:GetHeight() / scale
-		local w = UIParent:GetWidth() / scale
-		local xPoint, yPoint
-
-		if x > w/2 then
-			x = parent:GetRight() - w
-			xPoint = 'RIGHT'
-		else
-			x = parent:GetLeft()
-			xPoint = 'LEFT'
-		end
-
-		if y > h/2 then
-			y = parent:GetTop() - h
-			yPoint = 'TOP'
-		else
-			y = parent:GetBottom()
-			yPoint = 'BOTTOM'
-		end
-
-		parent:SetPosition(yPoint..xPoint, x, y)
-	end
+	parent:RecomputePosition()
 end
 
 function TitleFrame:OnDoubleClick()
