@@ -9,5 +9,5 @@
 
 main.lua
 
-common\Wildpants.xml
+external\external.xml
 components\components.xml

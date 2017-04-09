@@ -6,82 +6,52 @@
 local ADDON, Addon = ...
 local LDB = LibStub:GetLibrary('LibDataBroker-1.1', true)
 local BrokerDisplay = Addon:NewClass('BrokerDisplay', 'Button')
-local ICON_SIZE = 18
+
 
 --[[ Constructor ]]--
 
-function BrokerDisplay:New(id, parent)
-	local obj = self:Bind(CreateFrame('Button', nil, parent))
-	obj:RegisterForClicks('anyUp')
-	obj:SetID(id)
+function BrokerDisplay:New(parent)
+	local f = self:Bind(CreateFrame('Button', nil, parent))
+	f:SetScript('OnMouseWheel', f.OnMouseWheel)
+	f:SetScript('OnEnter', f.OnEnter)
+	f:SetScript('OnLeave', f.OnLeave)
+	f:SetScript('OnClick', f.OnClick)
+	f:SetScript('OnShow', f.OnShow)
+	f:SetScript('OnHide', f.OnHide)
+	f:RegisterForClicks('anyUp')
+	f:EnableMouseWheel(true)
 
-	obj.left = obj:CreateLeftButton()
-	obj.left:SetPoint('LEFT')
-	obj.right = obj:CreateRightButton()
-	obj.right:SetPoint('RIGHT')
-	obj.icon = obj:AddIcon()
-	obj.icon:SetPoint('LEFT', obj.left, 'RIGHT')
-	obj.text = obj:AddText()
+	local left = f:CreateArrowButton('<')
+	left:SetScript('OnClick', function() f:SetPreviousObject() end)
+	left:SetPoint('LEFT')
 
-	obj:SetScript('OnShow', obj.OnShow)
-	obj:SetScript('OnHide', obj.OnHide)
-	obj:SetScript('OnEnter', obj.OnEnter)
-	obj:SetScript('OnLeave', obj.OnLeave)
-	obj:SetScript('OnClick', obj.OnClick)
-	obj:SetScript('OnMouseWheel', obj.OnMouseWheel)
+	local right = f:CreateArrowButton('>')
+	right:SetScript('OnClick', function() f:SetNextObject() end)
+	right:SetPoint('RIGHT', -10, 0)
 
-	obj:SetHeight(13)
-	obj:EnableMouseWheel(true)
-	obj:UpdateEverything()
+	local icon = f:CreateTexture(nil, 'OVERLAY')
+	icon:SetPoint('LEFT', left, 'RIGHT')
+	icon:SetSize(18, 18)
 
-	return obj
-end
-
-function BrokerDisplay:AddIcon()
-	local texture = self:CreateTexture(nil, 'OVERLAY')
-	texture:SetSize(ICON_SIZE, ICON_SIZE)
-
-	return texture
-end
-
-function BrokerDisplay:AddText()
-	local text = self:CreateFontString()
+	local text = f:CreateFontString()
 	text:SetFontObject('NumberFontNormalRight')
 	text:SetJustifyH('LEFT')
 
-	return text
+	f.icon, f.text = icon, text
+	f.left, f.right = left, right
+	f:SetHeight(13)
+	f:Update()
+
+	return f
 end
 
-
---[[
-	Broker Selection Buttons
---]]
-
-function BrokerDisplay:CreateLeftButton()
+function BrokerDisplay:CreateArrowButton(text)
 	local b = CreateFrame('Button', nil, self)
-
 	b:SetNormalFontObject('GameFontNormal')
 	b:SetHighlightFontObject('GameFontHighlight')
-	b:SetText('<')
-	b:SetWidth(b:GetTextWidth() + 4)
-	b:SetHeight(b:GetTextHeight())
-	b:SetScript('OnClick', function(self) self:GetParent():SetPreviousObject() end)
 	b:SetToplevel(true)
-
-	return b
-end
-
-function BrokerDisplay:CreateRightButton()
-	local b = CreateFrame('Button', nil, self)
-	b:SetSize(ICON_SIZE, ICON_SIZE)
-
-	b:SetNormalFontObject('GameFontNormal')
-	b:SetHighlightFontObject('GameFontHighlight')
-	b:SetText('>')
-	b:SetWidth(b:GetTextWidth() + 2)
-	b:SetHeight(b:GetTextHeight())
-	b:SetScript('OnClick', function(self) self:GetParent():SetNextObject() end)
-	b:SetToplevel(true)
+	b:SetSize(18, 18)
+	b:SetText(text)
 
 	return b
 end
@@ -89,14 +59,14 @@ end
 
 --[[ Messages ]]--
 
-function BrokerDisplay:LibDataBroker_DataObjectCreated(msg, name, dataobj)
+function BrokerDisplay:ObjectCreated(_, name)
 	if self:GetObjectName() == name then
 		self:UpdateDisplay()
 	end
 end
 
-function BrokerDisplay:LibDataBroker_AttributeChanged(msg, name, attr, value, dataobj)
-	if self:GetObjectName() == name then
+function BrokerDisplay:AttributeChanged(_, object, attr)
+	if self:GetObjectName() == object then
 		if attr == 'icon' then
 			self:UpdateIcon()
 		elseif attr == 'text' then
@@ -150,11 +120,11 @@ function BrokerDisplay:OnClick(...)
 end
 
 function BrokerDisplay:OnShow()
-	self:UpdateEverything()
+	self:Update()
 end
 
 function BrokerDisplay:OnHide()
-	self:UpdateEvents()
+	LDB.UnregisterAllCallbacks(self)
 end
 
 function BrokerDisplay:OnMouseWheel(direction)
@@ -166,25 +136,21 @@ function BrokerDisplay:OnMouseWheel(direction)
 end
 
 
---[[ Update Methods ]]--
+--[[ Update ]]--
 
-function BrokerDisplay:UpdateEverything()
-	self:UpdateEvents()
+function BrokerDisplay:Update()
+	self:RegisterEvents()
 	self:UpdateDisplay()
 end
 
-function BrokerDisplay:UpdateEvents()
-	LDB.UnregisterAllCallbacks(self)
-
-	if self:IsVisible() then
-		LDB.RegisterCallback(self, 'LibDataBroker_DataObjectCreated')
-		LDB.RegisterCallback(self, 'LibDataBroker_AttributeChanged')
-	end
+function BrokerDisplay:RegisterEvents()
+	LDB.RegisterCallback(self, 'LibDataBroker_DataObjectCreated', 'ObjectCreated')
+	LDB.RegisterCallback(self, 'LibDataBroker_AttributeChanged', 'AttributeChanged')
 end
 
 function BrokerDisplay:UpdateDisplay()
-	self:UpdateIcon()
 	self:UpdateText()
+	self:UpdateIcon()
 end
 
 function BrokerDisplay:UpdateText()
@@ -205,13 +171,8 @@ function BrokerDisplay:UpdateIcon()
 	local obj = self:GetObject()
 	local icon = obj and obj.icon
 
-	if icon then
-		self.icon:SetTexture(icon)
-		self.icon:Show()
-	else
-		self.icon:Hide()
-	end
-
+	self.icon:SetTexture(icon)
+	self.icon:SetShown(icon)
 	self:Layout()
 end
 
@@ -227,14 +188,11 @@ function BrokerDisplay:Layout()
 	self:UpdateInsets()
 end
 
---calculate the clickable portion of the frame
 function BrokerDisplay:UpdateInsets()
 	local realWidth = self.left:GetWidth()
-
 	if self.text:IsShown() then
 		realWidth = realWidth + (self.text:GetStringWidth() or 0)
 	end
-
 	if self.icon:IsShown() then
 		realWidth = realWidth + (self.icon:GetWidth() or 0)
 	end
@@ -243,8 +201,7 @@ function BrokerDisplay:UpdateInsets()
 end
 
 
---[[ Display Object Updating ]]--
-
+--[[ LDB Objects ]]--
 
 function BrokerDisplay:SetNextObject()
 	local objects = self:GetAvailableObjects()
@@ -252,10 +209,11 @@ function BrokerDisplay:SetNextObject()
 
 	for i, object in ipairs(objects) do
 		if current == object then
-			self:SetObject(objects[(i % #objects) + 1])
-			return
+			return self:SetObject(objects[(i % #objects) + 1])
 		end
 	end
+
+	self:SetObject(objects[1])
 end
 
 function BrokerDisplay:SetPreviousObject()
@@ -264,10 +222,11 @@ function BrokerDisplay:SetPreviousObject()
 
 	for i, object in ipairs(objects) do
 		if current == object then
-			self:SetObject(objects[i == 1 and #objects or i - 1])
-			return
+			return self:SetObject(objects[i == 1 and #objects or i - 1])
 		end
 	end
+
+	self:SetObject(objects[1])
 end
 
 function BrokerDisplay:SetObject(name)

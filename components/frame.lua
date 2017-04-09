@@ -87,10 +87,10 @@ function Frame:Layout()
 	width = max(w, width)
 	height = height + h
 
-	--[[local w, h = self:PlaceBrokerDisplayFrame()
+	local w, h = self:PlaceBrokerDisplayFrame()
 	if not self:HasMoneyFrame() then
 		height = height + h
-	end--]]
+	end
 
 	--adjust size
 	self:SetWidth(max(max(width, 156), self.itemFrame:GetWidth() - 2) + 16)
@@ -380,7 +380,7 @@ function Frame:PlaceBrokerDisplayFrame()
 end
 
 function Frame:CreateBrokerDisplay()
-	local f = Addon.BrokerDisplay:New(1, self)
+	local f = Addon.BrokerDisplay:New(self)
 	self.brokerDisplay = f
 	return f
 end
