@@ -7,11 +7,7 @@
 ## OptionalDeps: BagBrother, ItemRack, Wardrobe, WoWUnit
 ## Version: 7.1.1
 
-libs\libs.xml
-
-common\localization\localization.xml
-common\core\core.xml
-common\components\components.xml
-
-components\components.xml
 main.lua
+
+common\Wildpants.xml
+components\components.xml
