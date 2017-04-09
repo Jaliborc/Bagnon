@@ -1,7 +1,6 @@
 [submodule "external/Wildpants"]
 	path = external/Wildpants
-	url = https://jaliborc@github.com/tullamods/Wildpants.git
-
+	url = https://github.com/tullamods/Wildpants.git
 [submodule "external/LibDataBroker-1-1"]
-  path = external/LibDataBroker-1-1
-  url = https://github.com/tekkub/libdatabroker-1-1.git
+	path = external/LibDataBroker-1-1
+	url = https://github.com/tekkub/libdatabroker-1-1.git
