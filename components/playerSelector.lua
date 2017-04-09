@@ -6,56 +6,32 @@
 local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local PlayerSelector = Addon:NewClass('PlayerSelector', 'Button')
-local Cache = LibStub('LibItemCache-1.1')
-
-local SIZE = 20
-local TEXTURE_SIZE = 64 * (SIZE/36)
 
 
 --[[ Constructor ]]--
 
 function PlayerSelector:New(parent)
-	local b = self:Bind(CreateFrame('Button', nil, parent))
-	b:SetWidth(SIZE)
-	b:SetHeight(SIZE)
-	b:RegisterForClicks('anyUp')
-
-	local nt = b:CreateTexture()
-	nt:SetTexture([[Interface\Buttons\UI-Quickslot2]])
-	nt:SetSize(TEXTURE_SIZE, TEXTURE_SIZE)
-	nt:SetPoint('CENTER', 0, -1)
-	b:SetNormalTexture(nt)
-
-	local pt = b:CreateTexture()
-	pt:SetTexture([[Interface\Buttons\UI-Quickslot-Depress]])
-	pt:SetAllPoints(b)
-	b:SetPushedTexture(pt)
-
-	local ht = b:CreateTexture()
-	ht:SetTexture([[Interface\Buttons\ButtonHilight-Square]])
-	ht:SetAllPoints(b)
-	b:SetHighlightTexture(ht)
-
-	local icon = b:CreateTexture()
+	local b = self:Bind(CreateFrame('Button', nil, parent, ADDON .. 'MenuButtonTemplate'))
+	local icon = b:CreateTexture(nil, 'BACKGROUND')
 	icon:SetAllPoints(b)
-	b.icon = icon
 
+	b.icon = icon
+	b:RegisterFrameMessage('PLAYER_CHANGED', 'Update')
 	b:SetScript('OnClick', b.OnClick)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
-
-	b:RegisterMessage(b:GetFrameID() .. '_PLAYER_CHANGED', 'Update')
+	b:RegisterForClicks('anyUp')
 	b:Update()
 
 	return b
 end
 
 
---[[ Interaction ]]--
+--[[ Frame Events ]]--
 
 function PlayerSelector:OnClick(button)
-	if button == 'RightButton' and not (BagnonPlayerDropdown == DropDownList1.dropdown and DropDownList1:IsShown()) then
-		self:GetFrame():SetPlayer(Cache.PLAYER)
+	if button == 'RightButton' then
+		self:GetFrame():SetPlayer(Addon.Cache.PLAYER)
 	else
 		Addon:TogglePlayerDropdown(self, self:GetFrame(), -4, -2)
 	end

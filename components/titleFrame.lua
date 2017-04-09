@@ -38,8 +38,9 @@ end
 --[[ Interaction ]]--
 
 function TitleFrame:OnMouseDown()
-	if self:IsFrameMovable() or IsAltKeyDown() then
-		self:GetParent():StartMoving()
+	local parent = self:GetParent()
+	if not parent.profile.managed and (not Addon.sets.locked or IsAltKeyDown()) then
+		parent:StartMoving()
 	end
 end
 
@@ -54,9 +55,8 @@ function TitleFrame:OnDoubleClick()
 end
 
 function TitleFrame:OnClick(button)
-	if button == 'RightButton' and LoadAddOn(ADDON .. '_Config') then
-		Addon.FrameOptions.frameID = self:GetFrameID()
-		Addon.FrameOptions:Open()
+	if button == 'RightButton' then
+		Addon:ShowOptions()
 	end
 end
 
