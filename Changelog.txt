@@ -1,3 +1,10 @@
+#### 7.2.0 (beta)
+* Updated for WoW patch 7.2
+* Major internal update! The large majority of Bagnon now runs on the same code as Combuctor
+  - Added an API for registering item rulesets. Has no visible effect yet.
+* Fixed issue with some UI elements in the bank frame
+* New "options" slashcommand
+
 ##### 7.1.1
 * Fixed issue displaying Void Storage tooltips.
 * Fixed issue with new build pipeline versioning system.
