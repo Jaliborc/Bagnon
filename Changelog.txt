@@ -1,3 +1,7 @@
+#### 7.2.1 (beta)
+* Void Storage now fully functional again. Next update will bring the Guild Bank back.
+* Minor quality of life improvements to some UI elements hitboxes.
+
 #### 7.2.0 (beta)
 * Updated for WoW patch 7.2
 * Major internal update! The large majority of Bagnon now runs on the same code as Combuctor

@@ -9,6 +9,12 @@
 				<Anchor point="CENTER" x="0" y="0"/>
 			</Anchors>
 		</NormalTexture>
+
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Icon"/>
+			</Layer>
+		</Layers>
 	</Button>
 
 	<CheckButton name="BagnonMenuCheckButtonTemplate" inherits="BagnonMenuButtonTemplate" virtual="true">

@@ -27,7 +27,7 @@ function BrokerDisplay:New(parent)
 
 	local right = f:CreateArrowButton('>')
 	right:SetScript('OnClick', function() f:SetNextObject() end)
-	right:SetPoint('RIGHT', -10, 0)
+	right:SetPoint('RIGHT')
 
 	local icon = f:CreateTexture(nil, 'OVERLAY')
 	icon:SetPoint('LEFT', left, 'RIGHT')
@@ -39,7 +39,7 @@ function BrokerDisplay:New(parent)
 
 	f.icon, f.text = icon, text
 	f.left, f.right = left, right
-	f:SetHeight(13)
+	f:SetHeight(26)
 	f:Update()
 
 	return f
@@ -85,15 +85,11 @@ function BrokerDisplay:OnEnter()
 	if dbo.OnEnter then
 		dbo.OnEnter(self)
 	elseif dbo.OnTooltipShow then
-		GameTooltip:SetOwner(self, 'ANCHOR_TOPRIGHT')
-		GameTooltip:ClearLines()
-
+		GameTooltip:SetOwner(self, 'ANCHOR_TOPLEFT')
 		dbo.OnTooltipShow(GameTooltip)
-
 		GameTooltip:Show()
 	else
-		GameTooltip:SetOwner(self, 'ANCHOR_TOPRIGHT')
-		GameTooltip:ClearLines()
+		GameTooltip:SetOwner(self, 'ANCHOR_TOPLEFT')
 		GameTooltip:SetText(self:GetObjectName())
 		GameTooltip:Show()
 	end
@@ -184,20 +180,6 @@ function BrokerDisplay:Layout()
 		self.text:SetPoint('LEFT', self.left, 'RIGHT', 2, 0)
 		self.text:SetPoint('RIGHT', self.right, 'LEFT', -2, 0)
 	end
-
-	self:UpdateInsets()
-end
-
-function BrokerDisplay:UpdateInsets()
-	local realWidth = self.left:GetWidth()
-	if self.text:IsShown() then
-		realWidth = realWidth + (self.text:GetStringWidth() or 0)
-	end
-	if self.icon:IsShown() then
-		realWidth = realWidth + (self.icon:GetWidth() or 0)
-	end
-
-	self:SetHitRectInsets(0, self:GetWidth() - realWidth, 0, 0)
 end
 
 

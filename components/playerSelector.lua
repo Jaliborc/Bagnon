@@ -12,10 +12,6 @@ local PlayerSelector = Addon:NewClass('PlayerSelector', 'Button')
 
 function PlayerSelector:New(parent)
 	local b = self:Bind(CreateFrame('Button', nil, parent, ADDON .. 'MenuButtonTemplate'))
-	local icon = b:CreateTexture(nil, 'BACKGROUND')
-	icon:SetAllPoints(b)
-
-	b.icon = icon
 	b:RegisterFrameMessage('PLAYER_CHANGED', 'Update')
 	b:SetScript('OnClick', b.OnClick)
 	b:SetScript('OnEnter', b.OnEnter)
@@ -61,5 +57,5 @@ end
 --[[ Update ]]--
 
 function PlayerSelector:Update()
-	self.icon:SetTexture(Addon:GetPlayerIcon(self:GetPlayer()))
+	self.Icon:SetTexture(Addon:GetPlayerIcon(self:GetPlayer()))
 end

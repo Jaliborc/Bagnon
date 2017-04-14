@@ -12,16 +12,13 @@ local SearchToggle = Addon:NewClass('SearchToggle', 'CheckButton')
 
 function SearchToggle:New(parent)
 	local b = self:Bind(CreateFrame('CheckButton', nil, parent, ADDON .. 'MenuCheckButtonTemplate'))
+	b.Icon:SetTexture([[Interface\Icons\INV_Misc_Spyglass_03]])
 	b:SetScript('OnHide', b.UnregisterMessages)
 	b:SetScript('OnShow', b.OnShow)
 	b:SetScript('OnClick', b.OnClick)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
 	b:RegisterForClicks('anyUp')
-
-	local icon = b:CreateTexture(nil, 'BACKGROUND')
-	icon:SetTexture([[Interface\Icons\INV_Misc_Spyglass_03]])
-	icon:SetAllPoints(b)
 
 	return b
 end

@@ -10,7 +10,8 @@ local Frame = Addon.Frame
 Frame.ItemFrame = Addon.ItemFrame
 Frame.BagFrame = Addon.BagFrame
 Frame.MoneyFrame = Addon.MoneyFrame
-Frame.BrokerSpacing = 2
+Frame.BrokerSpacing = 1
+Frame.MoneySpacing = 0
 
 
 --[[ Constructor ]]--
@@ -316,7 +317,6 @@ function Frame:PlaceItemFrame()
 
 	local frame = self.itemFrame or self:CreateItemFrame()
 	frame:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', 0, -4)
-	frame:Show()
 end
 
 function Frame:CreateItemFrame()
@@ -335,7 +335,7 @@ function Frame:PlaceMoneyFrame()
 	if self:HasMoneyFrame() then
 		local frame = self.moneyFrame or self:CreateMoneyFrame()
 		frame:ClearAllPoints()
-		frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -(frame.ICON_SIZE or 0) - (frame.ICON_OFF or 0), 4)
+		frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -self.MoneySpacing, 4)
 		frame:Show()
 
 		return frame:GetSize()
@@ -359,13 +359,13 @@ end
 
 function Frame:PlaceBrokerDisplayFrame()
 	if self:HasBrokerDisplay() then
-		local x, x2, y = 4 * self.BrokerSpacing, 2 * self.BrokerSpacing, 5 * self.BrokerSpacing
+		local x, y = 4 * self.BrokerSpacing, 5 * self.BrokerSpacing
 		local frame = self.brokerDisplay or self:CreateBrokerDisplay()
 		frame:ClearAllPoints()
 		frame:SetPoint('BOTTOMLEFT', self, 'BOTTOMLEFT', x, y)
 
 		if self:HasMoneyFrame() then
-			frame:SetPoint('RIGHT', self.moneyFrame, 'LEFT', -x2, y)
+			frame:SetPoint('RIGHT', self.moneyFrame, 'LEFT', -3, y)
 		else
 			frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -x, y)
 		end
