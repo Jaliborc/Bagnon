@@ -51,7 +51,7 @@ function TitleFrame:OnMouseUp()
 end
 
 function TitleFrame:OnDoubleClick()
-	self:GetParent().searchFrame:SetShown(true)
+	self:SendMessage('SEARCH_TOGGLED', self:GetFrameID())
 end
 
 function TitleFrame:OnClick(button)

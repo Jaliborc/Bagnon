@@ -98,43 +98,72 @@ function Frame:Layout()
 	self:SetHeight(height + self.itemFrame:GetHeight())
 end
 
+
+-- menu buttons
 function Frame:PlaceMenuButtons()
-	local menuButtons = self.menuButtons or {}
-	self.menuButtons = menuButtons
-
-	--hide the old
-	for i, button in pairs(menuButtons) do
+	for i, button in pairs(self.menuButtons or {}) do
 		button:Hide()
-		menuButtons[i] = nil
 	end
 
-	--initiate new
-	if self:HasPlayerSelector() then
-		tinsert(menuButtons, self.playerSelector or self:CreatePlayerSelector())
-	end
-	self:GetSpecificButtons(menuButtons)
+	self.menuButtons = {}
+	self:ListMenuButtons()
 
-	if self:HasSearchToggle() then
-		tinsert(menuButtons, self.searchToggle or self:CreateSearchToggle())
-	end
-
-	--position them
-	for i, button in ipairs(menuButtons) do
+	for i, button in ipairs(self.menuButtons) do
 		button:ClearAllPoints()
 		if i == 1 then
 			button:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
 		else
-			button:SetPoint('TOPLEFT', menuButtons[i-1], 'TOPRIGHT', 4, 0)
+			button:SetPoint('TOPLEFT', self.menuButtons[i-1], 'TOPRIGHT', 4, 0)
 		end
 		button:Show()
 	end
 
-	--get used space
-	local numButtons = #menuButtons
-	if numButtons > 0 then
-		return (menuButtons[1]:GetWidth() + 4 * numButtons - 4), menuButtons[1]:GetHeight()
+	return 20 * #self.menuButtons, 20
+end
+
+function Frame:ListMenuButtons()
+	if self:HasPlayerSelector() then
+		tinsert(self.menuButtons, self.playerSelector or self:CreatePlayerSelector())
 	end
-	return 0, 0
+
+	if self:HasBagToggle() then
+		tinsert(self.menuButtons, self.bagToggle or self:CreateBagToggle())
+	end
+
+	if self:HasSortButton() then
+		tinsert(self.menuButtons, self.sortButton or self:CreateSortButton())
+	end
+
+	if self:HasSearchToggle() then
+		tinsert(self.menuButtons, self.searchToggle or self:CreateSearchToggle())
+	end
+end
+
+function Frame:HasSearchToggle()
+	return self.profile.search
+end
+
+function Frame:HasBagToggle()
+	return self.profile.bagToggle
+end
+
+function Frame:HasSortButton()
+	return self.profile.sort
+end
+
+function Frame:CreateSearchToggle()
+	self.searchToggle = Addon.SearchToggle:New(self)
+	return self.searchToggle
+end
+
+function Frame:CreateBagToggle()
+	self.bagToggle = Addon.BagToggle:New(self)
+	return self.bagToggle
+end
+
+function Frame:CreateSortButton()
+	self.sortButton = Addon.SortButton:New(self)
+	return self.sortButton
 end
 
 
@@ -145,7 +174,7 @@ function Frame:PlaceCloseButton()
 	b:SetPoint('TOPRIGHT', -2, -2)
 	b:Show()
 
-	return 20, 20 --make the same size as the other menu buttons
+	return 20, 20
 end
 
 function Frame:CreateCloseButton()
@@ -185,51 +214,6 @@ function Frame:CreateSearchFrame()
 	return f
 end
 
-
--- search toggle
-function Frame:CreateSearchToggle()
-	local toggle = Addon.SearchToggle:New(self)
-	self.searchToggle = toggle
-	return toggle
-end
-
-function Frame:HasSearchToggle()
-	return self.profile.search
-end
-
-
--- specific buttons
-function Frame:GetSpecificButtons(list)
-	if self:HasBagFrame() then
-		tinsert(list, self.bagToggle or self:CreateBagToggle())
-	end
-
-	if self:HasSortButton() then
-		tinsert(list, self.sortButton or self:CreateSortButton())
-	end
-end
-
-function Frame:HasBagFrame()
-	return self.profile.bagFrame
-end
-
-function Frame:HasSortButton()
-	return self.profile.sort
-end
-
-function Frame:CreateBagToggle()
-	local toggle = Addon.BagToggle:New(self)
-	self.bagToggle = toggle
-	return toggle
-end
-
-function Frame:CreateSortButton()
-	local button = Addon.SortButton:New(self)
-	self.sortButton = button
-	return button
-end
-
-
 -- bag frame
 function Frame:CreateBagFrame()
 	local f =  self.BagFrame:New(self, 'LEFT', 36, 0)
@@ -242,7 +226,7 @@ function Frame:IsBagFrameShown()
 end
 
 function Frame:PlaceBagFrame()
-	if self:HasBagFrame() and self:IsBagFrameShown() then
+	if self:IsBagFrameShown() then
 		local frame = self.bagFrame or self:CreateBagFrame()
 		frame:ClearAllPoints()
 		frame:Show()
@@ -311,7 +295,7 @@ end
 
 -- item frame
 function Frame:PlaceItemFrame()
-	local anchor = self:HasBagFrame() and self:IsBagFrameShown() and self.bagFrame
+	local anchor = self:IsBagFrameShown() and self.bagFrame
 					or #self.menuButtons > 0 and self.menuButtons[1]
 					or self.titleFrame
 

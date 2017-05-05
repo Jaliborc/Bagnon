@@ -16,6 +16,7 @@ function PlayerSelector:New(parent)
 	b:SetScript('OnClick', b.OnClick)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
+	b:SetScript('OnShow', b.Update)
 	b:RegisterForClicks('anyUp')
 	b:Update()
 
