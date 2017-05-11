@@ -1,3 +1,7 @@
+#### 7.2.3
+* Fixed bug preventing separate reagent bank option from working.
+* Added a localized thousands separator to money display (large gold amounts are now easier to read).
+
 #### 7.2.2
 * Guild Bank now fully functional again.
 * Clicking on the money display while viewing another character will no longer pick money from your current one.

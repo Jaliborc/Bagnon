@@ -28,23 +28,16 @@ end
 
 function SearchToggle:OnShow()
 	self:RegisterMessage('SEARCH_TOGGLED', 'OnToggle')
+	self:OnToggle()
 end
 
-function SearchToggle:OnToggle(_, checked)
-	self:SetChecked(checked)
+function SearchToggle:OnToggle()
+	self:SetChecked(Addon.canSearch)
 end
 
 function SearchToggle:OnClick()
-	local checked = self:GetChecked()
-	if checked then
-		Addon.search = SearchToggle.hiddenSearch
-	else
-		SearchToggle.hiddenSearch = Addon.search
-		Addon.search = ''
-	end
-
-	self:SendMessage('SEARCH_CHANGED', Addon.search)
-	self:SendMessage('SEARCH_TOGGLED', checked and self:GetFrameID())
+	Addon.canSearch = self:GetChecked()
+	Addon:SendMessage('SEARCH_TOGGLED', self:GetChecked() and self:GetFrameID())
 end
 
 function SearchToggle:OnEnter()
