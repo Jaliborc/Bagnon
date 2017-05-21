@@ -51,7 +51,8 @@ function TitleFrame:OnMouseUp()
 end
 
 function TitleFrame:OnDoubleClick()
-	self:SendMessage('SEARCH_TOGGLED', self:GetFrameID())
+	Addon.canSearch = true
+	Addon:SendMessage('SEARCH_TOGGLED', self:GetFrameID())
 end
 
 function TitleFrame:OnClick(button)
