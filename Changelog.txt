@@ -1,21 +1,21 @@
-#### 7.2.4
+##### 7.2.4
 * Fixed issue causing the search to start when double clicking the frame titles.
 * Hopefully fixed issue causing multiple tries being sometimes required to open/close frames.
 * The Frame Layer setting is now working as properly.
 
-#### 7.2.3
+##### 7.2.3
 * Fixed bug preventing separate reagent bank option from working.
 * Pressing escape on a search editbox now properly disables item searching.
 * Added a localized thousands separator to money display (large gold amounts are now easier to read).
 
-#### 7.2.2
+##### 7.2.2
 * Guild Bank now fully functional again.
 * Clicking on the money display while viewing another character will no longer pick money from your current one.
 * Fixed visual issue with right-clicking title to toggle search frame.
 * Fixed visual bugs with the money display and character icon when switching characters.
 * Fixed long-standing display issue on guild tabs with unlimited withrawals
 
-#### 7.2.1 (beta)
+##### 7.2.1 (beta)
 * Void Storage now fully functional again. Next update will bring the Guild Bank back.
 * Minor quality of life improvements to some UI elements hitboxes.
 
