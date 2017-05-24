@@ -34,8 +34,8 @@ function SearchFrame:New(parent)
 
 	f:RegisterMessage('SEARCH_TOGGLED', 'OnToggle')
 	f:SetScript('OnTextChanged', f.OnTextChanged)
-	f:SetScript('OnEscapePressed', f.OnEscapePressed)
-	f:SetScript('OnEnterPressed', f.Hide)
+	f:SetScript('OnEscapePressed', f.OnEscape)
+	f:SetScript('OnEnterPressed', f.OnEscape)
 	f:SetScript('OnShow', f.OnShow)
 	f:SetScript('OnHide', f.OnHide)
 	f:SetAutoFocus(false)
@@ -79,7 +79,7 @@ function SearchFrame:OnTextChanged()
 	end
 end
 
-function SearchFrame:OnEscapePressed()
+function SearchFrame:OnEscape()
 	Addon.canSearch = nil
 	Addon:SendMessage('SEARCH_TOGGLED', nil)
 	self:Hide()
