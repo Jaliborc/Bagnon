@@ -1,5 +1,8 @@
+##### 7.2.5
+* Pressing enter now properly closes the search bars.
+
 ##### 7.2.4
-* Fixed issue causing the search to start when double clicking the frame titles.
+* Fixed issue causing the search not to start when double clicking the frame titles.
 * Hopefully fixed issue causing multiple tries being sometimes required to open/close frames.
 * The Frame Layer setting is now working as properly.
 
