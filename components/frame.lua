@@ -25,6 +25,7 @@ function Frame:New(id)
 	f:Hide()
 	f:SetMovable(true)
 	f:SetToplevel(true)
+	f:EnableMouse(true)
 	f:SetClampedToScreen(true)
 	f:UpdateRules()
 	f:SetBackdrop{
