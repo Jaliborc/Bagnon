@@ -1,3 +1,10 @@
+##### 7.3.1
+* Fixed sound issues with guild bank and void storage frames
+* Minor internal optimizations
+
+#### 7.3
+* Updated for Shadow of Argus
+
 ##### 7.2.7
 * Added option to disable tooltip counts just for guild banks
 * Frames are no longer click-through
