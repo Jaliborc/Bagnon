@@ -1,3 +1,7 @@
+##### 7.3.2
+* Fixed an issue with the tooltip displaying characters' money.
+* The money tooltip now uses the standard money icons (except in colorblind mode).
+
 ##### 7.3.1
 * Fixed sound issues with guild bank and void storage frames
 * Minor internal optimizations
