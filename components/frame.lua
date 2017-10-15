@@ -284,7 +284,7 @@ end
 
 -- player selector
 function Frame:HasPlayerSelector()
-	return Addon.Cache:HasCache()
+	return Addon:HasMultiplePlayers()
 end
 
 function Frame:CreatePlayerSelector()

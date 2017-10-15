@@ -28,7 +28,7 @@ end
 
 function PlayerSelector:OnClick(button)
 	if button == 'RightButton' then
-		self:GetFrame():SetPlayer(Addon.Cache.PLAYER)
+		self:GetFrame():SetPlayer(nil)
 	else
 		Addon:TogglePlayerDropdown(self, self:GetFrame(), -4, -2)
 	end
@@ -58,5 +58,6 @@ end
 --[[ Update ]]--
 
 function PlayerSelector:Update()
-	self.Icon:SetTexture(Addon:GetPlayerIcon(self:GetPlayer()))
+	local info = LibStub('LibItemCache-2.0'):GetOwnerInfo(self:GetPlayer())
+	self.Icon:SetTexture(Addon:GetPlayerIcon(info))
 end
