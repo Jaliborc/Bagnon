@@ -284,7 +284,7 @@ end
 
 -- player selector
 function Frame:HasPlayerSelector()
-	return Addon:HasMultiplePlayers()
+	return Addon:MultipleOwnersFound()
 end
 
 function Frame:CreatePlayerSelector()

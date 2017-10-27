@@ -12,7 +12,7 @@ local PlayerSelector = Addon:NewClass('PlayerSelector', 'Button')
 
 function PlayerSelector:New(parent)
 	local b = self:Bind(CreateFrame('Button', nil, parent, ADDON .. 'MenuButtonTemplate'))
-	b:RegisterFrameMessage('PLAYER_CHANGED', 'Update')
+	b:RegisterFrameMessage('OWNER_CHANGED', 'Update')
 	b:SetScript('OnClick', b.OnClick)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
@@ -28,7 +28,7 @@ end
 
 function PlayerSelector:OnClick(button)
 	if button == 'RightButton' then
-		self:GetFrame():SetPlayer(nil)
+		self:GetFrame():SetOwner(nil)
 	else
 		Addon:TogglePlayerDropdown(self, self:GetFrame(), -4, -2)
 	end
@@ -41,7 +41,7 @@ function PlayerSelector:OnEnter()
 		GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
 	end
 
-	local current = self:GetFrame():GetPlayer()
+	local current = self:GetFrame():GetOwner()
 	GameTooltip:SetText(CHARACTER)
 	GameTooltip:AddLine(L.TipChangePlayer, 1, 1, 1)
 	GameTooltip:AddLine(L.TipResetPlayer, 1, 1, 1)
@@ -58,6 +58,5 @@ end
 --[[ Update ]]--
 
 function PlayerSelector:Update()
-	local info = LibStub('LibItemCache-2.0'):GetOwnerInfo(self:GetPlayer())
-	self.Icon:SetTexture(Addon:GetPlayerIcon(info))
+	self.Icon:SetTexture(Addon:GetCharacterIcon(self:GetOwnerInfo()))
 end
