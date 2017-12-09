@@ -123,8 +123,8 @@ function Frame:PlaceMenuButtons()
 end
 
 function Frame:ListMenuButtons()
-	if self:HasPlayerSelector() then
-		tinsert(self.menuButtons, self.playerSelector or self:CreatePlayerSelector())
+	if self:HasOwnerSelector() then
+		tinsert(self.menuButtons, self.ownerSelector or self:CreateOwnerSelector())
 	end
 
 	if self:HasBagToggle() then
@@ -140,6 +140,10 @@ function Frame:ListMenuButtons()
 	end
 end
 
+function Frame:HasOwnerSelector()
+	return Addon:MultipleOwnersFound()
+end
+
 function Frame:HasSearchToggle()
 	return self.profile.search
 end
@@ -150,6 +154,11 @@ end
 
 function Frame:HasSortButton()
 	return self.profile.sort
+end
+
+function Frame:CreateOwnerSelector()
+	self.ownerSelector = Addon.OwnerSelector:New(self)
+	return self.ownerSelector
 end
 
 function Frame:CreateSearchToggle()
@@ -278,18 +287,6 @@ end
 function Frame:CreateTitleFrame()
 	local f = Addon.TitleFrame:New(self.Title, self)
 	self.titleFrame = f
-	return f
-end
-
-
--- player selector
-function Frame:HasPlayerSelector()
-	return Addon:MultipleOwnersFound()
-end
-
-function Frame:CreatePlayerSelector()
-	local f = Addon.PlayerSelector:New(self)
-	self.playerSelector = f
 	return f
 end
 
