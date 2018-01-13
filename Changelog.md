@@ -1,16 +1,35 @@
+##### 7.3.5 (beta)
+* Fixed issue with deleting owner information.
+
+##### 7.3.4 (beta)
+* Fixed an issue when depositing items in the bank.
+* Fixed an issue with the _owner_ icon generator.
+* Added back _:GetItem_ API function of item buttons for legacy purposes (plugin support).
+
+##### 7.3.3 (beta)
+* Another major internal update! Completly reworked the internal system for representing item data.
+  * The previous system, although more memory efficient, suffered from many problems. It would easly break with updates of the game. It required constant re-specification, making developing and maintaining plugins for other developers much harder.
+  * More importantly, the previous system was designed before the advent of Guild Banks. These were considered a set of bags controlled by the player character, which led to a whole set of issues. In the new system, this is no longer the case.
+* Visible changes:
+  * Guilds are now considered independent entities from player characters, and the Guild Bank is owned by the Guild.
+  * Due to the above, issues from having multiple characters on the same guild are now fixed.
+  * Guilds your characters belong to are now listed in the _onwer_ selection dropdown. Selecting them will open the Guild Bank of that Guild.
+  * Choosing to open the Guild Bank of a player behaves the same as selecting his/hers Guild in the _owner_ selection dropdown.
+  * Tooltip counts now display icons for each _owner_, just as in the selection dropdown.
+
 ##### 7.3.2
 * Fixed an issue with the tooltip displaying characters' money.
 * The money tooltip now uses the standard money icons (except in colorblind mode).
 
 ##### 7.3.1
-* Fixed sound issues with guild bank and void storage frames
+* Fixed sound issues with Guild Bank and void storage frames
 * Minor internal optimizations
 
 #### 7.3
 * Updated for Shadow of Argus
 
 ##### 7.2.7
-* Added option to disable tooltip counts just for guild banks
+* Added option to disable tooltip counts just for Guild Banks
 * Frames are no longer click-through
 * Internal changes to prevent future issues with internal library (AceEvent)
 
@@ -26,7 +45,7 @@
 * The Frame Layer setting is now working as properly.
 
 ##### 7.2.3
-* Fixed bug preventing separate reagent bank option from working.
+* Fixed bug preventing separate reagent Bank option from working.
 * Pressing escape on a search editbox now properly disables item searching.
 * Added a localized thousands separator to money display (large gold amounts are now easier to read).
 
@@ -35,7 +54,7 @@
 * Clicking on the money display while viewing another character will no longer pick money from your current one.
 * Fixed visual issue with right-clicking title to toggle search frame.
 * Fixed visual bugs with the money display and character icon when switching characters.
-* Fixed long-standing display issue on guild tabs with unlimited withrawals
+* Fixed long-standing display issue on Guild tabs with unlimited withrawals
 
 ##### 7.2.1 (beta)
 * Void Storage now fully functional again. Next update will bring the Guild Bank back.
@@ -44,8 +63,8 @@
 #### 7.2.0 (beta)
 * Updated for WoW patch 7.2
 * Major internal update! The large majority of Bagnon now runs on the same code as Combuctor
-  - Added an API for registering item rulesets. Has no visible effect yet.
-* Fixed issue with some UI elements in the bank frame
+  * Added an API for registering item rulesets. Has no visible effect yet.
+* Fixed issue with some UI elements in the Bank frame
 * New "options" slashcommand
 
 ##### 7.1.1
@@ -68,7 +87,7 @@
 
 ##### 7.0.2
 * Tagging as release.
-* Hopefully fixed issue with guild bank tabs in Legion (can't test yet).
+* Hopefully fixed issue with Guild Bank tabs in Legion (can't test yet).
 * Fixed issue with character and realm detection.
 * Russian localization updated (thanks to DogmaTX)
 
@@ -87,7 +106,7 @@
 * Fixed bug when moving empty bag to inventory.
 
 ##### 6.2.5
-* Bagnon will now fill existing item stacks in the bank bags before filling an empty slot in the reagent bank.
+* Bagnon will now fill existing item stacks in the Bank bags before filling an empty slot in the reagent Bank.
 * Localization updates. Thank you Phanx!
 * Can now search for "naval" items.
 
@@ -111,22 +130,22 @@
 ##### 6.1.7
 * Fixed issue causing money display to not update when switching characters.
 * Improved class color readability in tooltips and menus.
-* Fixed minor bug in the guild log frames.
+* Fixed minor bug in the Guild log frames.
 * Major item draw performance improvement.
 * When enabling character specific settings, they are initialized as a copy of the current global settings.
 
 ##### 6.1.6 (beta)
 * Now frame settings can be saved per character or shared between characters, depending on the user preferences.
-** You can choose wether to use the global settings on each different character. Look at the frame settings panel.
-** By default, new characters will use the global options.
-** Characters upgrading from previous versions will have specific settings.
+  * You can choose wether to use the global settings on each different character. Look at the frame settings panel.
+  * By default, new characters will use the global options.
+  * Characters upgrading from previous versions will have specific settings.
 * Fixed item quality search.
 
 ##### 6.1.5
 * Void Storage:
-** Fixed issue affecting some users that caused the frame to require being open twice to appear.
-** Fixed issue causing frame to appear empty on first appearance.
-** Fixed issue preventing control click items to preview them.
+  * Fixed issue affecting some users that caused the frame to require being open twice to appear.
+  * Fixed issue causing frame to appear empty on first appearance.
+  * Fixed issue preventing control click items to preview them.
 * Flipped clean up button behaviour back to what it was before patch 6.1.
 * Updated chinese locales.
 
@@ -137,15 +156,15 @@
 * Display options that have no effect in specific frames are no longer displayed.
 
 ##### 6.1.3
-* Attempt to fix the "unresponsive bank" issue that affects some users.
+* Attempt to fix the "unresponsive Bank" issue that affects some users.
 
 ##### 6.1.2
-* Fixed issue with guild bank repostioning.
+* Fixed issue with Guild Bank repostioning.
 * Fixed issue with slot color.
 
 ##### 6.1.1
 * Added option to change frames strata.
-* Guildbank and voidstorage are now properly shown in row order.
+* GuildBank and voidstorage are now properly shown in row order.
 * Blizzard frames for disabled bags option is now functional.
 * Added keybindings and slashcommands for all windows.
 * Multiple bugfixes.
@@ -153,7 +172,7 @@
 #### 6.1.0 (beta)
 * This is an experimental version. Use at your own risk. If you find a bug and report it, **please indicate that you are using this version**.
 * More major bugfixes.
-* Added option to have the reagent bank separated from the normal bank bags.
+* Added option to have the reagent Bank separated from the normal Bank bags.
 * Bagnon databroker plugin now displays number of free slots in inventory.
 * You may now set the transparency of the frames background and borders.
 
@@ -165,18 +184,18 @@
 ##### 6.0.20 (beta)
 * This is an experimental version. Use at your own risk. If you find a bug and report it, **please indicate that you are using this version**.
 * Complete rewrite:
-** While Bagnon might look the same, the great majority of the code has been written from scratch.
-** These changes should provide better performance and make future development and debugging much faster.
-** "Script ran for too Long" errors should become much less frequent.
-** This also increases the amount of code shared between Bagnon and Combuctor, allowing for updates to be easly ported between both addons.
-** Note that there might be bugs on features that were previously working. This will be handled during the next days, as bug reports are received.
+  * While Bagnon might look the same, the great majority of the code has been written from scratch.
+  * These changes should provide better performance and make future development and debugging much faster.
+  * "Script ran for too Long" errors should become much less frequent.
+  * This also increases the amount of code shared between Bagnon and Combuctor, allowing for updates to be easly ported between both addons.
+  * Note that there might be bugs on features that were previously working. This will be handled during the next days, as bug reports are received.
 * The option menus have been redesigned.
 * When offline viewing other character items, frames will now layout the items according to the corresponding character settings.
 * Now typing "follower" will browse for follower items on english clients.
 * The "use blizzard frames for disabled bags" feature has not been reimplemented in this version. It should be reimplemeted next version.
 
 ##### 6.0.19
-* Swaped behaviour of sort button on bank.
+* Swaped behaviour of sort button on Bank.
 
 ##### 6.0.18
 * Fixed issue preventing proper stack splitting on right click.
@@ -190,7 +209,7 @@
 
 ##### 6.0.15
 * Fixed issues with item coloring (ex: highlight item sets not working properly).
-* No longer displays warning messages when depositing non-reagents in the bank or when the reagent bank is full.
+* No longer displays warning messages when depositing non-reagents in the Bank or when the reagent Bank is full.
 * No longer causes cursor flickering at vendors.
 * Small changes to prevent tainting issues and extremely rare loading error occurrences.
 
@@ -198,57 +217,57 @@
 * Fixed issue preventing character data from being deleted.
 * Fixed issue preventing proper searches in Korean clients and possibly other localizations.
 * The player dropdown list now displays all your connected realm characters.
-** The new class and race introduced in 6.0.10 should help to keep the list manageable for players with many characters.
-** Tooltips still only display players from the same faction (to keep tooltip sizes manageable) as only BOA accounts are sharable between these characters.
+  * The new class and race introduced in 6.0.10 should help to keep the list manageable for players with many characters.
+  * Tooltips still only display players from the same faction (to keep tooltip sizes manageable) as only BOA accounts are sharable between these characters.
 * Fixed issue preventing some servers to be visible in others.
 
 ##### 6.0.13
-* Fixed issue causing guild bank tabs sometimes to stay invisible.
+* Fixed issue causing Guild Bank tabs sometimes to stay invisible.
 
 ##### 6.0.12
-* Guild bank hotfix.
+* Guild Bank hotfix.
 
 ##### 6.0.11
 * Now supports all the Blizzard item sorting features, such as:
-** Ignoring bags for auto sort.
-** Setting bags to a specific type of loot.
+  * Ignoring bags for auto sort.
+  * Setting bags to a specific type of loot.
 * The sort confirmation dialog was removed.
-** To avoid unwanted sorts, the bank frame now performs a bulk deposit on left click, and a sort on right click.
-** You may also set bags to be ignored for sorting.
+  * To avoid unwanted sorts, the Bank frame now performs a bulk deposit on left click, and a sort on right click.
+  * You may also set bags to be ignored for sorting.
 * Bags now display the number of empy slots available.
 * More minor bugfixes.
 
 ##### 6.0.10
-* Reagents now take priority in going to the reagent bank before other bag slots when depositing.
+* Reagents now take priority in going to the reagent Bank before other bag slots when depositing.
 * Fixed issue that could be fired when configuring other addons.
 * Now the player dropdown list displays class colors and race icons. This should make it much easier to find players in long lists.
 
 ##### 6.0.9
 * Now new item glow flashes for a limited period of time.
-** It remains with a bolder glow than regular items until the bag is closed or the item moused over.
+  * It remains with a bolder glow than regular items until the bag is closed or the item moused over.
 * Now only characters from the same faction as yours will be displayed in the character list.
-** You must login again in your characters so that BagBrother can learn their factions!
+  * You must login again in your characters so that BagBrother can learn their factions!
 
 ##### 6.0.8
 * Reverse slot ordering option is now working properly.
-** Tip: you can use this option if you prefer to sort items to the bottom of the window instead of the top.
+  * Tip: you can use this option if you prefer to sort items to the bottom of the window instead of the top.
 * To avoid sorting bags by accident, now auto sort displays a confirmation dialog before sorting.
 
 ##### 6.0.7
 * Items are no longer marked as new after the bag is closed.
 * Made items in void storage movable.
 * Tooltips now properly display in the void storage.
-* Items in the bank reagents slot are now properly accounted on item tooltips.
+* Items in the Bank reagents slot are now properly accounted on item tooltips.
 
 ##### 6.0.6
-* Fixed guild bank issues, including long-standing log frame problems.
+* Fixed Guild Bank issues, including long-standing log frame problems.
 
 ##### 6.0.5
 * Fixed issue with Bagnon Facade
 
 ##### 6.0.4
-* Fixed bug causing tooltips not to appear on the reagents bank slot.
-* Fixed issue preventing bank slots from being purchased.
+* Fixed bug causing tooltips not to appear on the reagents Bank slot.
+* Fixed issue preventing Bank slots from being purchased.
 * Fixed errors with player listing.
 
 ##### 6.0.3
@@ -259,34 +278,34 @@
 
 ##### 6.0.1 (beta)
 * Item Sorting:
-** The long awaited feature is finally here! Now there is a new button at the inventory and bank windows where you can click to automatically sort your items.
-** The button can be disabled at the interface options. But why would you?
+  * The long awaited feature is finally here! Now there is a new button at the inventory and Bank windows where you can click to automatically sort your items.
+  * The button can be disabled at the interface options. But why would you?
 * Reagent Bank:
-** You can now right-click on the new sort button do deposit all reagents.
-** Now properly displays whether the reagent bank has been unlocked when offline browsing.
+  * You can now right-click on the new sort button do deposit all reagents.
+  * Now properly displays whether the reagent Bank has been unlocked when offline browsing.
 * Void Storage:
-** Now supports the new void tab!
-** Fixed several issues with the withdraw and deposit interfaces.
+  * Now supports the new void tab!
+  * Fixed several issues with the withdraw and deposit interfaces.
 
 
 ##### 6.0.0 (beta)
 * Updated for Warlords of Draenor.
-* Now supports the new reagent bank, which appears as a new bag in the bank window.
-** To deposit all reagents, click on the reagent bank icon.
+* Now supports the new reagent Bank, which appears as a new bag in the Bank window.
+  * To deposit all reagents, click on the reagent Bank icon.
 * Now flashes new items, much alike Diablo 3 style.
 
 ##### 5.4.15
-* Fixed issue causing errors when opening the guild bank for the first time.
+* Fixed issue causing errors when opening the Guild Bank for the first time.
 
 ##### 5.4.14
 * Hopefully solved tainting issues when opening the inventory for the first time in combat.
 
 ##### 5.4.13 (beta)
-* Now can change guild bank tabs while in offline mode.
-* Guild bank items now show tooltips in offline mode.
+* Now can change Guild Bank tabs while in offline mode.
+* Guild Bank items now show tooltips in offline mode.
 
 ##### 5.4.12 (beta)
-* Many offline guild bank issues solved.
+* Many offline Guild Bank issues solved.
 
 ##### 5.4.11 (beta)
 * Guild Bank bugfixes.
@@ -321,7 +340,7 @@
 * Fixed issue causing flash find to not work on all items.
 
 ##### 5.4.1
-* Fixed bug with guild bank and void storage.
+* Fixed bug with Guild Bank and void storage.
 
 ##### 5.4.0
 * Updated for Siege of Ogrimmar.
@@ -352,18 +371,18 @@
 * Fixed issue causing some cached item icons to not be properly displayed.
 
 ##### 5.2.4
-* Closing the bank window now properly releases the banker.
+* Closing the Bank window now properly releases the Banker.
 
 ##### 5.2.3
 * Fixed an issue causing caged pets to not be properly displayed in offline mode.
-* Added caged pet tooltip support for the guild bank.
+* Added caged pet tooltip support for the Guild Bank.
 
 ##### 5.2.2
 * Updated chinese translations.
 
 ##### 5.2.1
 * Added option to color items belonging to equipment sets. Packed with ItemRack and Wardrobe support!
-** Idea and initial prototype by Omee - Proudmoore (US).
+  * Idea and initial prototype by Omee - Proudmoore (US).
 * Upgraded item search engine.
 * Updated italian translations.
 
@@ -401,7 +420,7 @@
 * For now, disabled support for Armory and Baggins caching systems. Very few players use them, were costly yo maintain, and made bug reports harder to decipher.
 
 ##### 5.0.4
-* Fixed bug causing guild money display to behave incorrectly for users with no withdraw limit.
+* Fixed bug causing Guild money display to behave incorrectly for users with no withdraw limit.
 
 ##### 5.0.3
 * Fixed bug causing void storage purchase dialog to sometimes show up when vewing void storage offline.
@@ -435,7 +454,7 @@
 * Hacky hotfix of bug caused by unknown reasons
 
 ##### 4.3.21
-* Fixed bug when depositing money on guild bank
+* Fixed bug when depositing money on Guild Bank
 
 ##### 4.3.20
 * Added binding to toggle Void Storage
@@ -464,14 +483,14 @@
 * Hotfix
 
 ##### 4.3.14 (beta)
-* Fixed bug causing "quest bangs" to show up at the guild bank items
+* Fixed bug causing "quest bangs" to show up at the Guild Bank items
 * Fixed bug causing default Guild Bank to show up
 
 ##### 4.3.13 (beta)
 * Prevention of code taint
 
 ##### 4.3.12 (beta)
-* Locked guild bank tabs behavior improvements
+* Locked Guild Bank tabs behavior improvements
 * Chinese localization update
 * Delicious tweaks and goodies
 
@@ -483,7 +502,7 @@
 * BagBrother no longer disables itself when BagSync or Armory are enabled (could confuse users)
 
 ##### 4.3.9
-* Added guild bank german and portuguese translations
+* Added Guild Bank german and portuguese translations
 * Small money tooltip bug prevention
 * Fixed bug causing logs to appear and overlap items on odd situations
 
@@ -522,28 +541,28 @@
 * Fixed bug causing bag items to be incorrectly counted on item tooltips
 
 ##### 4.2.13
-* Jaliborc: Now when opening the bank window by right clicking in the "bag toggle" button at the inventory one, the selected player will be the same on both
+* Jaliborc: Now when opening the Bank window by right clicking in the "bag toggle" button at the inventory one, the selected player will be the same on both
 * Jaliborc: Windows no longer change position when viewing other characters items
-* Jaliborc: Should have fixed a bug causing BagBrother to loose bank data on some situations
-* Jaliborc: Fixed a bug causing the items in the guild bank to show the cool-down of the items in your bags
+* Jaliborc: Should have fixed a bug causing BagBrother to loose Bank data on some situations
+* Jaliborc: Fixed a bug causing the items in the Guild Bank to show the cool-down of the items in your bags
 * Jaliborc: No more "Jaliborc:" tag from now on. If no tag is here, it means it was me.
 
 ##### 4.2.12
 * Jaliborc: Several bug fixes
-* Jaliborc: Guild bank now should work like a charm
-* Thank you to thelucid for borrowing me his guild bank
+* Jaliborc: Guild Bank now should work like a charm
+* Thank you to thelucid for borrowing me his Guild Bank
 
 ##### 4.2.11
 * Jaliborc: Several bug fixes
 * Jaliborc: Started to implement portuguese translations
-* Jaliborc: Tweaked guild bank log position in the window
+* Jaliborc: Tweaked Guild Bank log position in the window
 
 ##### 4.2.10
 * Jaliborc: Bagnon_Forever has been replaced by BagBrother, an item cache which will be shared with Combuctor
 * Jaliborc: Now comes bundled with LibItemCache, a library that adds support for other item caches, such as BagSync and Armory
 * Jaliborc: With the new cache approach, Bagnon_Tooltips is no more. Now you can toggle the feature at the Interface Options.
 * Jaliborc: The character selector now changes depending on the selected character and has much better icons
-* Jaliborc: BagnonFacade now should work properly with the guild bank
+* Jaliborc: BagnonFacade now should work properly with the Guild Bank
 * Jaliborc: The tooltip item count is now colored by class
 * Jaliborc: Updated LibIemCache, providing many improvements in the search syntax
 
@@ -573,7 +592,7 @@
 
 ##### 4.2.4
 * Jaliborc: Fixed a bug causing some options to not show up in the config menu
-* Jaliborc: The bags toggle button now shows the bank window on right-click
+* Jaliborc: The bags toggle button now shows the Bank window on right-click
 
 ##### 4.2.3
 * Jaliborc: ButtonFacade support improvements and bugfixing
@@ -613,8 +632,8 @@
 
 ##### 2.16.1
 * Added Bagnon_GuildBank back, in a disabled state
-* Fixed the quest item issue in the guild bank module
-* Adjusted the money frame default for the guild bank from disabled to enabled
+* Fixed the quest item issue in the Guild Bank module
+* Adjusted the money frame default for the Guild Bank from disabled to enabled
 * Adjusted the text for the auto vendor display option to better reflect what it actually does
 * Fixed tackle box coloring
 * Removed some lingering ammo/soul shard detection code
@@ -642,13 +661,13 @@
 * Updated localization
 
 ##### 2.13.2b
-* Bagnon for WoW 3.3.3, without the guild bank
+* Bagnon for WoW 3.3.3, without the Guild Bank
 
 ##### 2.13.2
-* Fixed a typo that resulted in a redbox error when hovering over the guild bank money frame.
+* Fixed a typo that resulted in a redbox error when hovering over the Guild Bank money frame.
 
 ##### 2.13.1
-* Maybe if I enable right clicks on the guild bank money frame, you'll be able to withdraw via right click :P
+* Maybe if I enable right clicks on the Guild Bank money frame, you'll be able to withdraw via right click :P
 
 #### 2.13.0
 * Implemented support for Blizzard's quest item highlighting in WoW 3.3.3
@@ -664,7 +683,7 @@
 * Put a fix in for the withdraw bug.
 
 ##### 2.12.4
-* Initial guild bank support implemented.  Things not supported at the moment: Guild master management & offline viewing.
+* Initial Guild Bank support implemented.  Things not supported at the moment: Guild master management & offline viewing.
 
 ##### 2.12.3
 * Removed Bagnon_GuildBank.  I did not intend on including it quite yet, but my build process did :P
@@ -722,8 +741,8 @@
 
 ##### 2.6.3
 * Fixed a bug causing it to not be possible to disable auto display settings
-* Fixed a bug causing it to not be possible to search on other characters/your bank when not at the bank
-* Fixed a bug with hiding the default bank frame
+* Fixed a bug causing it to not be possible to search on other characters/your Bank when not at the Bank
+* Fixed a bug with hiding the default Bank frame
 * Made the general options panel a sub panel of the main Bagnon panel. This should hopefully make it easier to spot when configuring frames.
 
 ##### 2.6.2
@@ -751,7 +770,7 @@
 #### 2.5.0
 * Moved item slot event handling to the item frame.
 * Fixed a display issue with the player selector for undead characters
-* Added in settings to disable the inventory, bank and keyring frames
+* Added in settings to disable the inventory, Bank and keyring frames
 * Fixed some bugs related to saving and loading default settings
 * Updated localization
 
@@ -801,15 +820,15 @@
 * I'm calling this version a beta, since I want more feedback.
 
 ##### 2.0.3
-* Reimplemented slash commands: /bgn|/bagnon bank, /bgn bags, /bgn keys, and /bgn version
+* Reimplemented slash commands: /bgn|/bagnon Bank, /bgn bags, /bgn keys, and /bgn version
 
 ##### 2.0.2
-* Fixed bank frame tool tips
+* Fixed Bank frame tool tips
 * Fixed quality display for certain items
 * Removed a file that was not being called anymore.
 
 ##### 2.0.1
-* Fixed bank frame closing
-* Fixed an error when hovering over a bank item when at the bank
+* Fixed Bank frame closing
+* Fixed an error when hovering over a Bank item when at the Bank
 * Fixed an error when clicking on a databroker object with no click event
 * Added sounds when opening/closing frames.
