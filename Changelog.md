@@ -1,5 +1,6 @@
 ##### 7.3.5 (beta)
 * Fixed issue with deleting owner information.
+* The money total tooltip now displays player icons just alike the tooltip counts.
 
 ##### 7.3.4 (beta)
 * Fixed an issue when depositing items in the bank.
