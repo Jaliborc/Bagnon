@@ -1,3 +1,6 @@
+##### 7.3.6 (beta)
+* Fixed a bug in the owner list that appeared when _Bagnon_GuildBank_ was disabled.
+
 ##### 7.3.5 (beta)
 * Fixed issue with deleting owner information.
 * The money total tooltip now displays player icons just alike the tooltip counts.

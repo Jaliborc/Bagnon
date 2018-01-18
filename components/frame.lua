@@ -18,16 +18,15 @@ Frame.MoneySpacing = 0
 
 function Frame:New(id)
 	local f = self:Bind(CreateFrame('Frame', ADDON .. 'Frame' .. id, UIParent))
-	f.profile = Addon.profile[id]
-	f.frameID = id
-	f.quality = 0
+	f.frameID, f.quality = id, 0
+	f.profile = f:GetBaseProfile()
 
 	f:Hide()
 	f:SetMovable(true)
 	f:SetToplevel(true)
 	f:EnableMouse(true)
 	f:SetClampedToScreen(true)
-	f:UpdateRules()
+	f:FindRules()
 	f:SetBackdrop{
 	  bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
 	  edgeFile = [[Interface\Tooltips\UI-Tooltip-Border]],
@@ -45,7 +44,7 @@ end
 
 function Frame:RegisterMessages()
 	self:RegisterMessage('UPDATE_ALL', 'Update')
-	self:RegisterMessage('RULES_LOADED', 'UpdateRules')
+	self:RegisterMessage('RULES_LOADED', 'FindRules')
 	self:RegisterFrameMessage('BAG_FRAME_TOGGLED', 'Layout')
 	self:RegisterFrameMessage('ITEM_FRAME_RESIZED', 'Layout')
 	self:Update()
@@ -55,6 +54,7 @@ end
 --[[ Update ]]--
 
 function Frame:Update()
+	self.profile = self:GetBaseProfile()
 	self:UpdateAppearance()
 	self:UpdateBackdrop()
 	self:Layout()
@@ -232,7 +232,7 @@ function Frame:CreateBagFrame()
 end
 
 function Frame:IsBagFrameShown()
-	return self.profile.showBags
+	return self:GetProfile().showBags
 end
 
 function Frame:PlaceBagFrame()
