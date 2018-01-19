@@ -1,3 +1,10 @@
+##### 7.3.8 (beta)
+* Fixed issue on realms with hyphens on their names that caused other characters not to be browsable.
+
+##### 7.3.7 (beta)
+* Fixed multiple issues with character specific settings.
+* Reset the character specific settings that were screwed up by the previous version.
+
 ##### 7.3.6 (beta)
 * Fixed a bug in the owner list that appeared when _Bagnon_GuildBank_ was disabled.
 
