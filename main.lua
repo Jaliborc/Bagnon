@@ -19,10 +19,10 @@ function Addon:OnEnable()
 end
 
 function Addon:CreateFrameLoader(module, method)
-  local addon = ADDON .. '_' .. module
-  if GetAddOnEnableState(UnitName('player'), addon) >= 2 then
-    _G[method] = function()
+	local addon = ADDON .. '_' .. module
+	if GetAddOnEnableState(UnitName('player'), addon) >= 2 then
+		_G[method] = function()
 			LoadAddOn(addon)
-    end
-  end
+		end
+	end
 end

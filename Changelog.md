@@ -1,3 +1,15 @@
+##### 8.0.0
+* Updated for Battle for Azeroth
+
+##### 7.3.11 (beta)
+* Now handles server names with spaces properly.
+
+##### 7.3.10 (beta)
+* Now handles the first 4 released allied races properly.
+
+##### 7.3.9 (beta)
+* Fixed issue on realms that are not connected to other realms.
+
 ##### 7.3.8 (beta)
 * Fixed issue on realms with hyphens on their names that caused other characters not to be browsable.
 
