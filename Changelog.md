@@ -2,6 +2,7 @@
 * Reduced tooltip count memory usage by about 80%.
 * Fixed issue with updating inventory and bank frames.
 * Fixed issue with properly marking the bank frame as "live" (not cached).
+* Fixed issue with Aggra server.
 
 #### 8.0.0
 * Updated for Battle for Azeroth
