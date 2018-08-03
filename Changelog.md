@@ -1,4 +1,9 @@
-##### 8.0.0
+##### 8.0.1
+* Reduced tooltip count memory usage by about 80%.
+* Fixed issue with updating inventory and bank frames.
+* Fixed issue with properly marking the bank frame as "live" (not cached).
+
+#### 8.0.0
 * Updated for Battle for Azeroth
 
 ##### 7.3.11 (beta)
