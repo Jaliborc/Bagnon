@@ -1,3 +1,7 @@
+##### 8.0.2
+* Fixed issue with double clicking the title bar.
+* Fixed issue with Void Storage.
+
 ##### 8.0.1
 * Reduced tooltip count memory usage by about 80%.
 * Fixed issue with updating inventory and bank frames.
