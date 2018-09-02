@@ -1,3 +1,6 @@
+##### 8.0.3
+* Added patron list in the configuration options. See patreon.com/jaliborc to learn how to join the list.
+
 ##### 8.0.2
 * Fixed issue with double clicking the title bar.
 * Fixed issue with Void Storage.
