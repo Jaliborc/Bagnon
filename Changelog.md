@@ -1,4 +1,5 @@
 ##### 8.0.4
+* Added portrait icons for the remaining 4 allied races. Improved Nightborne and Goblin icons.
 * Items now display the azerite and artifact alternative border artwork.
 * Can now search for "azerite", "artifact" and "unusable" items. Keywords translated for the different locales.
 * Redesigned color options panel.
