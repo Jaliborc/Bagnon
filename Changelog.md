@@ -1,3 +1,9 @@
+##### 8.0.4
+* Items now display the azerite and artifact alternative border artwork.
+* Can now search for "azerite", "artifact" and "unusable" items. Keywords translated for the different locales.
+* Redesigned color options panel.
+* Fixed issue with disabling inventory or bag frames.
+
 ##### 8.0.3
 * Added patron list in the configuration options. See patreon.com/jaliborc to learn how to join the list.
 
