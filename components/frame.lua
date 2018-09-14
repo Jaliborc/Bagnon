@@ -28,11 +28,11 @@ function Frame:New(id)
 	f:SetClampedToScreen(true)
 	f:FindRules()
 	f:SetBackdrop{
-		bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
-		edgeFile = [[Interface\Tooltips\UI-Tooltip-Border]],
-		edgeSize = 16,
-		tile = true, tileSize = 16,
-		insets = {left = 4, right = 4, top = 4, bottom = 4}
+	  bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
+	  edgeFile = [[Interface\Tooltips\UI-Tooltip-Border]],
+	  edgeSize = 16,
+	  tile = true, tileSize = 16,
+	  insets = {left = 4, right = 4, top = 4, bottom = 4}
 	}
 
 	f:SetScript('OnShow', self.OnShow)
