@@ -28,11 +28,11 @@ function Frame:New(id)
 	f:SetClampedToScreen(true)
 	f:FindRules()
 	f:SetBackdrop{
-	  bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
-	  edgeFile = [[Interface\Tooltips\UI-Tooltip-Border]],
-	  edgeSize = 16,
-	  tile = true, tileSize = 16,
-	  insets = {left = 4, right = 4, top = 4, bottom = 4}
+		bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
+		edgeFile = [[Interface\Tooltips\UI-Tooltip-Border]],
+		edgeSize = 16,
+		tile = true, tileSize = 16,
+		insets = {left = 4, right = 4, top = 4, bottom = 4}
 	}
 
 	f:SetScript('OnShow', self.OnShow)
@@ -138,6 +138,10 @@ function Frame:ListMenuButtons()
 	if self:HasSearchToggle() then
 		tinsert(self.menuButtons, self.searchToggle or self:CreateSearchToggle())
 	end
+	
+	if self:HasReagentbankToggle() then
+		tinsert(self.menuButtons, self.reagentbankToggle or self:CreateReagentbankToggle())
+	end
 end
 
 function Frame:HasOwnerSelector()
@@ -154,6 +158,10 @@ end
 
 function Frame:HasSortButton()
 	return self.profile.sort
+end
+
+function Frame:HasReagentbankToggle()
+	return self:IsBank() and self.profile.reagentbankToggle
 end
 
 function Frame:CreateOwnerSelector()
@@ -176,6 +184,10 @@ function Frame:CreateSortButton()
 	return self.sortButton
 end
 
+function Frame:CreateReagentbankToggle()
+	self.reagentbankToggle = Addon.ReagentbankToggle:New(self)
+	return self.reagentbankToggle
+end
 
 -- close button
 function Frame:PlaceCloseButton()
@@ -236,6 +248,11 @@ function Frame:IsBagFrameShown()
 end
 
 function Frame:PlaceBagFrame()
+
+	if self:HasReagentbankToggle() and not self.bagFrame then
+		self:CreateBagFrame()
+	end
+ 
 	if self:IsBagFrameShown() then
 		local frame = self.bagFrame or self:CreateBagFrame()
 		frame:ClearAllPoints()

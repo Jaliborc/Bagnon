@@ -36,4 +36,12 @@
 			</Layer>
 		</Layers>
 	</CheckButton>
+
+	<CheckButton name="BagnonReagentbankToggleTemplate" inherits="BagnonMenuCheckButtonTemplate" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture file="Interface\Icons\Achievement_GuildPerk_BountifulBags" parentKey="BagnonReagentbankToggleTexture"/>
+			</Layer>
+		</Layers>
+	</CheckButton>
 </Ui>
