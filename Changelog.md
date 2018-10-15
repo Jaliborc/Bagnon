@@ -1,9 +1,22 @@
+##### 8.0.7
+* Guild Bank:
+  * Fixed bug causing only up to 4 tabs being shown.
+  * Redesigned and improved tab tooltips.
+  * Improved tab text placement.
+  * Tab permissions are now displayed even when not selected (requires caching).
+
+##### 8.0.6
+* Reversed internal modification that created more issues than it fixed.
+
+##### 8.0.5
+* Fixed issue with auto display events.
+* Added display event for scrapping machines.
+
 ##### 8.0.4
 * Added portrait icons for the remaining 4 allied races. Improved Nightborne and Goblin icons.
 * Items now display the azerite and artifact alternative border artwork.
 * Can now search for "azerite", "artifact" and "unusable" items. Keywords translated for the different locales.
 * Redesigned color options panel.
-* Fixed issue with disabling inventory or bag frames.
 
 ##### 8.0.3
 * Added patron list in the configuration options. See patreon.com/jaliborc to learn how to join the list.
