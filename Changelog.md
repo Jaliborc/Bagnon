@@ -1,8 +1,9 @@
 ##### 8.0.7
 * Guild Bank:
   * Fixed bug causing only up to 4 tabs being shown.
+  * Fixed issues with non-viewable tabs.
+  * Largely improved tab withdraw counter placement and behavior.
   * Redesigned and improved tab tooltips.
-  * Improved tab text placement.
   * Tab permissions are now displayed even when not selected (requires caching).
 
 ##### 8.0.6
