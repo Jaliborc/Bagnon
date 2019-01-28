@@ -1,4 +1,13 @@
-##### 8.0.7
+###### 8.1.1
+* Now handles server names differently, which should fix server specific issues.
+* Updated French and Russian localization.
+* Fixed issue with bag toggle button.
+
+##### 8.1.0
+* Fixed issue preventing Void Storage from working and that could also cause minor guild bank issues.
+* Updated for World of Warcraft patch 8.1.
+
+###### 8.0.7
 * Guild Bank:
   * Fixed bug causing only up to 4 tabs being shown.
   * Fixed issues with non-viewable tabs.
@@ -6,27 +15,27 @@
   * Redesigned and improved tab tooltips.
   * Tab permissions are now displayed even when not selected (requires caching).
 
-##### 8.0.6
+###### 8.0.6
 * Reversed internal modification that created more issues than it fixed.
 
-##### 8.0.5
+###### 8.0.5
 * Fixed issue with auto display events.
 * Added display event for scrapping machines.
 
-##### 8.0.4
+###### 8.0.4
 * Added portrait icons for the remaining 4 allied races. Improved Nightborne and Goblin icons.
 * Items now display the azerite and artifact alternative border artwork.
 * Can now search for "azerite", "artifact" and "unusable" items. Keywords translated for the different locales.
 * Redesigned color options panel.
 
-##### 8.0.3
+###### 8.0.3
 * Added patron list in the configuration options. See patreon.com/jaliborc to learn how to join the list.
 
-##### 8.0.2
+###### 8.0.2
 * Fixed issue with double clicking the title bar.
 * Fixed issue with Void Storage.
 
-##### 8.0.1
+###### 8.0.1
 * Reduced tooltip count memory usage by about 80%.
 * Fixed issue with updating inventory and bank frames.
 * Fixed issue with properly marking the bank frame as "live" (not cached).
