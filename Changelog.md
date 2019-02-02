@@ -1,5 +1,11 @@
+###### 8.1.2
+* Fixed issue with non connected reals introduced in 8.1.1
+* Fixed issue with splitting item stacks in the guild bank
+* Now shows item count tooltips for singleton characters in a server
+
 ###### 8.1.1
 * Now handles server names differently, which should fix server specific issues.
+   * You might need to re-login on some characters for their data to show.
 * Updated French and Russian localization.
 * Fixed issue with bag toggle button.
 
