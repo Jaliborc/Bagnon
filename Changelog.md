@@ -1,3 +1,9 @@
+###### 8.1.4
+* Hotfix
+
+###### 8.1.3
+* Fixed another tooltip issue that didn't went trough last version
+
 ###### 8.1.2
 * Fixed issue with non connected reals introduced in 8.1.1
 * Fixed issue with splitting item stacks in the guild bank
