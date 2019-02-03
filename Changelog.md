@@ -1,3 +1,6 @@
+###### 8.1.5
+* Hopefully fixed issue with character specific settings.
+
 ###### 8.1.4
 * Hotfix
 
