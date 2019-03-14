@@ -1,5 +1,8 @@
+###### 8.1.6
+* Fixed root cause of "numbered string" internal bug.
+
 ###### 8.1.5
-* Hopefully fixed issue with character specific settings.
+* Fixed issue with character specific settings.
 
 ###### 8.1.4
 * Hotfix
