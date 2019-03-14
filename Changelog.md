@@ -1,3 +1,6 @@
+###### 8.1.7
+* Updated for 8.1.5 game patch.
+
 ###### 8.1.6
 * Fixed root cause of "numbered string" internal bug.
 
