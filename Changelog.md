@@ -1,5 +1,16 @@
+##### 8.2.0
+* Updated for Rise of Aszhara.
+* Fixed issue with opening bags in combat.
+* Currently "act as standard panel" mode is not implemented. Still trying to figure out if it is possible to do so patch 8.2 onwards.
+
+###### 8.1.9
+* Fixed issue causing items to not appropriately show their greyed out locked status.
+
+###### 8.1.8
+* Fixed issue with automatic bank sorting introduced by latest game patch.
+
 ###### 8.1.7
-* Updated for 8.1.5 game patch.
+* Updated for World of Warcraft 8.1.5 patch.
 
 ###### 8.1.6
 * Fixed root cause of "numbered string" internal bug.
