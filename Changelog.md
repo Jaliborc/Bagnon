@@ -1,3 +1,11 @@
+##### 8.2.2 (beta)
+* Updated Ace libraries
+
+##### 8.2.1 (beta)
+* Now compatible with World of Warcraft classic servers.
+  * Does not support keyring yet (don't have a character with a key).
+* Now using the icons from character creation for player icons.
+
 ##### 8.2.0
 * Updated for Rise of Aszhara.
 * Fixed issue with opening bags in combat.
