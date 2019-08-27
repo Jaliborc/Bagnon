@@ -1,5 +1,7 @@
 ##### 8.2.2 (beta)
-* Updated Ace libraries
+* Now properly disables vault and guild configuration on classic servers.
+* Updated Ace libraries.
+* Smarter server type handling.
 
 ##### 8.2.1 (beta)
 * Now compatible with World of Warcraft classic servers.
