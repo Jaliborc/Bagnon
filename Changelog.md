@@ -1,3 +1,7 @@
+##### 8.2.3
+* Tagging release.
+* Fixed bug in 1st bank slot.
+
 ##### 8.2.2 (beta)
 * Now properly disables vault and guild configuration on classic servers.
 * Updated Ace libraries.
@@ -8,48 +12,48 @@
   * Does not support keyring yet (don't have a character with a key).
 * Now using the icons from character creation for player icons.
 
-##### 8.2.0
+#### 8.2.0
 * Updated for Rise of Aszhara.
 * Fixed issue with opening bags in combat.
 * Currently "act as standard panel" mode is not implemented. Still trying to figure out if it is possible to do so patch 8.2 onwards.
 
-###### 8.1.9
+##### 8.1.9
 * Fixed issue causing items to not appropriately show their greyed out locked status.
 
-###### 8.1.8
+##### 8.1.8
 * Fixed issue with automatic bank sorting introduced by latest game patch.
 
-###### 8.1.7
+##### 8.1.7
 * Updated for World of Warcraft 8.1.5 patch.
 
-###### 8.1.6
+##### 8.1.6
 * Fixed root cause of "numbered string" internal bug.
 
-###### 8.1.5
+##### 8.1.5
 * Fixed issue with character specific settings.
 
-###### 8.1.4
+##### 8.1.4
 * Hotfix
 
-###### 8.1.3
+##### 8.1.3
 * Fixed another tooltip issue that didn't went trough last version
 
-###### 8.1.2
+##### 8.1.2
 * Fixed issue with non connected reals introduced in 8.1.1
 * Fixed issue with splitting item stacks in the guild bank
 * Now shows item count tooltips for singleton characters in a server
 
-###### 8.1.1
+##### 8.1.1
 * Now handles server names differently, which should fix server specific issues.
    * You might need to re-login on some characters for their data to show.
 * Updated French and Russian localization.
 * Fixed issue with bag toggle button.
 
-##### 8.1.0
+#### 8.1.0
 * Fixed issue preventing Void Storage from working and that could also cause minor guild bank issues.
 * Updated for World of Warcraft patch 8.1.
 
-###### 8.0.7
+##### 8.0.7
 * Guild Bank:
   * Fixed bug causing only up to 4 tabs being shown.
   * Fixed issues with non-viewable tabs.
@@ -57,27 +61,27 @@
   * Redesigned and improved tab tooltips.
   * Tab permissions are now displayed even when not selected (requires caching).
 
-###### 8.0.6
+##### 8.0.6
 * Reversed internal modification that created more issues than it fixed.
 
-###### 8.0.5
+##### 8.0.5
 * Fixed issue with auto display events.
 * Added display event for scrapping machines.
 
-###### 8.0.4
+##### 8.0.4
 * Added portrait icons for the remaining 4 allied races. Improved Nightborne and Goblin icons.
 * Items now display the azerite and artifact alternative border artwork.
 * Can now search for "azerite", "artifact" and "unusable" items. Keywords translated for the different locales.
 * Redesigned color options panel.
 
-###### 8.0.3
+##### 8.0.3
 * Added patron list in the configuration options. See patreon.com/jaliborc to learn how to join the list.
 
-###### 8.0.2
+##### 8.0.2
 * Fixed issue with double clicking the title bar.
 * Fixed issue with Void Storage.
 
-###### 8.0.1
+##### 8.0.1
 * Reduced tooltip count memory usage by about 80%.
 * Fixed issue with updating inventory and bank frames.
 * Fixed issue with properly marking the bank frame as "live" (not cached).
@@ -395,8 +399,7 @@
   * Now supports the new void tab!
   * Fixed several issues with the withdraw and deposit interfaces.
 
-
-##### 6.0.0 (beta)
+#### 6.0.0 (beta)
 * Updated for Warlords of Draenor.
 * Now supports the new reagent Bank, which appears as a new bag in the Bank window.
   * To deposit all reagents, click on the reagent Bank icon.
@@ -450,7 +453,7 @@
 ##### 5.4.1
 * Fixed bug with Guild Bank and void storage.
 
-##### 5.4.0
+#### 5.4.0
 * Updated for Siege of Ogrimmar.
 * Added support for the new in-game store features.
 
@@ -541,7 +544,7 @@
 ##### 5.0.1 (beta)
 * Updated for compatibility with latest Scrap version.
 
-##### 5.0.0 (beta)
+#### 5.0.0 (beta)
 * Updated and tested for Mists of Pandaria.
 * Added monk class and pandaren race.
 * Bug fixes and internal improvements.
