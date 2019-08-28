@@ -11,6 +11,9 @@ assignees: ''
  - Addon version:
  - Server patch: [e.g. Build 8.0.1.27178]
 
+ **Have you read the changelog? (please don't waste our time)**
+ Mark if read.
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
