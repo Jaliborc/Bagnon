@@ -1,3 +1,7 @@
+##### 8.2.4
+* Added option for ammo pouch coloring.
+* Fixed issue with loading void storage offline before visiting vendor.
+
 ##### 8.2.3
 * Tagging release.
 * Fixed bug in 1st bank slot.
