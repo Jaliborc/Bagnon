@@ -9,14 +9,19 @@
 				<Anchor point="CENTER" x="0" y="0"/>
 			</Anchors>
 		</NormalTexture>
-
 		<Layers>
-			<Layer level="BACKGROUND">
+			<Layer level="BACKGROUND" textureSubLevel="-1">
+				<Texture parentKey="Bg">
+					<Color r="0" g="0" b="0"/>
+				</Texture>
+			</Layer>
+			<Layer level="BACKGROUND" textureSubLevel="0">
 				<Texture parentKey="Icon"/>
 			</Layer>
 		</Layers>
 	</Button>
 
+	<Button name="BagnonOwnerSelectorTemplate" inherits="BagnonMenuButtonTemplate" virtual="true"/>
 	<CheckButton name="BagnonMenuCheckButtonTemplate" inherits="BagnonMenuButtonTemplate" virtual="true">
 		<CheckedTexture file="Interface\Buttons\CheckButtonHilight" alphaMode="ADD"/>
 	</CheckButton>

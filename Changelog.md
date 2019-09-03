@@ -1,6 +1,19 @@
+##### 8.2.7
+* Fixed ordering issue with patron panel.
+* Started internal file organization change (make sure to update addon while wow isn't running).
+
+##### 8.2.6
+* Now character select button shows 3D portrait for current character. Racial and gender based icons remain the same for cached characters.
+
+##### 8.2.5
+* Fixed bug with herb pouches in classic servers (thank you Denzer - Mirage EU).
+* Ammo pouches now colored the same as quivers.
+* Added option to color soul bags.
+
 ##### 8.2.4
-* Added option for ammo pouch coloring.
+* Added option for quiver coloring.
 * Fixed issue with loading void storage offline before visiting vendor.
+* Fixed error with gem socketing auto display option on classic.
 
 ##### 8.2.3
 * Tagging release.

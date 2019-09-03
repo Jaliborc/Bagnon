@@ -1,6 +1,6 @@
 --[[
 	main.lua
-		The bagnon main file. Does almost nothing.
+		The Bagnon main file. Starts the addon.
 --]]
 
 local ADDON, Addon = ...
