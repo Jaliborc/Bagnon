@@ -6,8 +6,4 @@
 ## OptionalDeps: BagBrother, WoWUnit
 ## Version: 8.2.7
 
-main.lua
-
-external\Wildpants\Wildpants.xml
-external\LibDataBroker-1-1\LibDataBroker-1.1.lua
-components\components.xml
+modules\main.xml
