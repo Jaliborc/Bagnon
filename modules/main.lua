@@ -4,7 +4,6 @@
 --]]
 
 local ADDON, Addon = ...
-Addon.ItemScale = 1
 
 function Addon:OnEnable()
 	self:StartupSettings()

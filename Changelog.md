@@ -1,3 +1,15 @@
+##### 8.2.10
+* Can now sort items, even if the server doesn't support it:
+    * Bags and bank in classic
+    * Void storage in retail
+
+##### 8.2.9
+* Fixed issue with button generation on classic servers, preventing frames from being disabled.
+
+##### 8.2.8
+* Fixed issue with missing texture.
+* Finished internal file organization change (make sure to update addon while wow isn't running).
+
 ##### 8.2.7
 * Fixed ordering issue with patron panel.
 * Started internal file organization change (make sure to update addon while wow isn't running).
