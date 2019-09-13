@@ -1,6 +1,6 @@
 --[[
 	frame.lua
-		A specialized version of the bagnon frame for void storage
+		A specialized version of the window frame for void storage
 --]]
 
 local MODULE =  ...

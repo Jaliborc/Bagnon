@@ -1,6 +1,6 @@
 --[[
 	frame.lua
-		The bagnon frame object
+		The window frame object
 --]]
 
 local ADDON, Addon = ...

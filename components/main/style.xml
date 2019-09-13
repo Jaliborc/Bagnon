@@ -10,35 +10,34 @@
 			</Anchors>
 		</NormalTexture>
 		<Layers>
-			<Layer level="BACKGROUND" textureSubLevel="-1">
+			<Layer level="BACKGROUND" textureSubLevel="0">
 				<Texture parentKey="Bg">
 					<Color r="0" g="0" b="0"/>
 				</Texture>
 			</Layer>
-			<Layer level="BACKGROUND" textureSubLevel="0">
+			<Layer level="BACKGROUND" textureSubLevel="1">
 				<Texture parentKey="Icon"/>
 			</Layer>
 		</Layers>
 	</Button>
-
 	<Button name="BagnonOwnerSelectorTemplate" inherits="BagnonMenuButtonTemplate" virtual="true"/>
+
 	<CheckButton name="BagnonMenuCheckButtonTemplate" inherits="BagnonMenuButtonTemplate" virtual="true">
 		<CheckedTexture file="Interface\Buttons\CheckButtonHilight" alphaMode="ADD"/>
 	</CheckButton>
-
-	<Button name="BagnonSortButtonTemplate" inherits="BagnonMenuButtonTemplate" virtual="true">
-		<Layers>
-			<Layer level="BACKGROUND">
-				<Texture file="Interface\Icons\Achievement_GuildPerk_Quick and Dead"/>
-			</Layer>
-		</Layers>
-	</Button>
-
+	<CheckButton name="BagnonSortButtonTemplate" inherits="BagnonMenuCheckButtonTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+				self.Icon:SetAtlas('bags-button-autosort-up')
+				self.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+			</OnLoad>
+		</Scripts>
+	</CheckButton>
 	<CheckButton name="BagnonBagToggleTemplate" inherits="BagnonMenuCheckButtonTemplate" virtual="true">
-		<Layers>
-			<Layer level="BACKGROUND">
-				<Texture file="Interface\Buttons\Button-Backpack-Up"/>
-			</Layer>
-		</Layers>
+		<Scripts>
+			<OnLoad>
+				self.Icon:SetTexture([[Interface\Buttons\Button-Backpack-Up]])
+			</OnLoad>
+		</Scripts>
 	</CheckButton>
 </Ui>

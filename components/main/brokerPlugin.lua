@@ -1,6 +1,6 @@
 --[[
 	brokerDisplay.lua
-		A databroker plugin for Bagnon
+		A databroker plugin
 --]]
 
 local ADDON, Addon = ...

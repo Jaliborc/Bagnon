@@ -1,7 +1,17 @@
-##### 8.2.10
+##### 8.2.11 (beta)
+* Sorting:
+    * Improved sorting criteria.
+    * Fixed issue with the bank slot.
+    * Fixed issue with some quest items.
+    * Sorting button now highlights until the process is done.
+* Fixed small visual issue with character select button.
+* Internally changed how some tasks are scheduled with new delay API.
+
+##### 8.2.10 (beta)
 * Can now sort items, even if the server doesn't support it:
-    * Bags and bank in classic
-    * Void storage in retail
+    * Bags and bank in classic.
+    * Void storage in retail.
+* Changed sort button icon.
 
 ##### 8.2.9
 * Fixed issue with button generation on classic servers, preventing frames from being disabled.

@@ -1,6 +1,6 @@
 --[[
 	main.lua
-		Starts Bagnon per say
+		Starts the addon per say
 --]]
 
 local ADDON, Addon = ...
