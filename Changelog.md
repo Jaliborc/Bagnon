@@ -1,3 +1,15 @@
+##### 8.2.12
+* Sorting:
+    * Button tooltip now shows updated instructions.
+    * Now properly sorts void storage items in retail (guild bank will be next).
+    * No longer tries to start if in combat, dead, or holding something in the cursor.
+    * Automatically stops when entering combat.
+    * Fixed issue with enchanting reagents.
+* Tooltip Counts:
+    * Now properly count items in the 1st bank slot.
+* Localization:
+    * Changed how tooltip instructions are internally generated.
+
 ##### 8.2.11 (beta)
 * Sorting:
     * Improved sorting criteria.
