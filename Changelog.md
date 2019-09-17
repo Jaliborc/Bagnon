@@ -1,3 +1,10 @@
+##### 8.2.13
+* Fixed issue with Spanish, French, Italian, Portuguese and Russian localization.
+* Updated Chinese localization.
+* Retail:
+    * Fixed issue depositing items in the reagent bank.
+    * Fixed rare issue sorting the reagent bank.
+
 ##### 8.2.12
 * Sorting:
     * Button tooltip now shows updated instructions.
