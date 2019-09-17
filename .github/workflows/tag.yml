@@ -1,0 +1,19 @@
+name: tag
+
+on:
+  push:
+    paths:
+      - Bagnon.toc
+    branches:
+      - master
+
+jobs:
+  tag:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@master
+      - uses: jaliborc/action-general-autotag@master
+        with:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          source_file: "Bagnon.toc"
+          extraction_regex: "\\s*##\\s*Version\\s*:\\s*([\\d\\.]+)"
