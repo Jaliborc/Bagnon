@@ -1,3 +1,6 @@
+##### 8.2.15
+* Sorting now much faster in most situations.
+
 ##### 8.2.14
 * Fixed 2 sorting bugs, causing sorting to stop or enter a loop on very specific conditions on classic servers.
 * Fixed issue with some container tooltips.
