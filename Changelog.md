@@ -1,3 +1,6 @@
+##### 8.2.16
+* Sorting now even faster in most situations.
+
 ##### 8.2.15
 * Sorting now much faster in most situations.
 
