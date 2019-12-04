@@ -2,8 +2,8 @@
 ## Title: |cff20ff20Bagnon|r
 ## Author: Tuller & Jaliborc (João Cardoso)
 ## Notes: Single window displays for your inventory and bank
-## OptionalDeps: BagBrother, WoWUnit
+## OptionalDeps: BagBrother, WoWUnit, TestPoncho
 ## SavedVariables: Bagnon_Sets
 ## Version: 8.2.16
 
-modules\main.xml
+addons\main\main.xml

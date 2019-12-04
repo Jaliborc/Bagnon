@@ -1,3 +1,15 @@
+##### 8.2.17 (beta)
+* Visible changes
+    * New icons in interface options.
+    * New owner selection menu.
+    * New frame selection menu.
+    * Fixed issue with reappearing inactive widgets on scrollable menus.
+* Internal changes
+    * Upgraded to Poncho-2.0 and Sushi-3.1.
+    * Reorganization of components shared functionality using Poncho-2.0 new features.
+    * Massive cleaning and standardizing of code into Ace-like modules using WildAddon-1.0.
+    * Moved internally used timer API to new library DelayMutex-1.0.
+
 ##### 8.2.16
 * Sorting now even faster in most situations.
 
