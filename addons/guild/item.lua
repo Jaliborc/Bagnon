@@ -65,30 +65,19 @@ function Item:OnReceiveDrag(button)
 	end
 end
 
-function Item:OnEnter()
-	if self.info.id then
- 		self:AnchorTooltip()
-		self:UpdateTooltip()
-	end
-end
-
 
 --[[ Update ]]--
 
-function Item:UpdateTooltip()
-	if self:IsCached() then
-		local dummySlot = self:GetDummySlot()
-		dummySlot:SetParent(self)
-		dummySlot:SetAllPoints(self)
-		dummySlot:Show()
-	else
-		local pet = {GameTooltip:SetGuildBankItem(self:GetSlot())}
-		if pet[1] and pet[1] > 0 then
-			BattlePetToolTip_Show(unpack(pet))
-		end
+function Item:ShowTooltip()
+	GameTooltip:SetOwner(self:GetTipAnchor())
 
-		GameTooltip:Show()
+	local pet = {GameTooltip:SetGuildBankItem(self:GetSlot())}
+	if pet[1] and pet[1] > 0 then
+		BattlePetToolTip_Show(unpack(pet))
 	end
+
+	GameTooltip:Show()
+	CursorUpdate(self)
 end
 
 function Item:SplitStack(split)

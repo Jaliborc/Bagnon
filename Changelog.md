@@ -1,3 +1,7 @@
+##### 8.2.18 (beta)
+* Added keyring.
+* Fixed "blocked action" error introduced last version.
+
 ##### 8.2.17 (beta)
 * Visible changes
     * New owner selection menu.

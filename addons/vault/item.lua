@@ -58,7 +58,7 @@ end
 --[[ Tooltip ]]--
 
 function Item:ShowTooltip()
-	self:AnchorTooltip()
+	GameTooltip:SetOwner(self:GetTipAnchor())
 
 	if self.bag == 'vault' then
 		GameTooltip:SetVoidItem(1, self:GetID())
