@@ -7,11 +7,6 @@
   Bagnon_VoidStorage
 [ignore]
   common/Wildpants/libs/LibItemSearch-1.2/Tests.lua
+  common/Wildpants/libs/Poncho-2.0/Tests.lua
+  common/Wildpants/libs/Sushi-3.1/tests/
   common/Wildpants/libs/Unfit-1.0/Tests.lua
-  common/libs/Sushi-3.0/Classes/GlowBox.lua
-  common/libs/Sushi-3.0/Classes/HelpButton.lua
-  common/libs/Sushi-3.0/Classes/IconCheck.lua
-  common/libs/Sushi-3.0/Classes/TabButtons.lua
-  common/libs/Sushi-3.0/Classes/TabGroup.lua
-  common/libs/Sushi-3.0/Classes/TextureButton.lua
-  common/libs/Sushi-3.0/Classes/TextureDropdown.lua
