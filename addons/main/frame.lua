@@ -44,6 +44,7 @@ function Frame:New(id)
 	  edgeSize = 16,
 	}
 
+	tinsert(UISpecialFrames, f:GetName())
 	return f
 end
 

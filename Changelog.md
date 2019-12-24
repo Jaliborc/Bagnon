@@ -1,6 +1,37 @@
+##### 8.2.25
+* Frames now behave properly when pressing `ESC` key.
+* Fixed equipment tooltip compare issue.
+* Fixed bank main bag tooltip issue.
+* Fixed bug with slash command opening interface options.
+* Fixed multiple issues with interface options sliders.
+
+##### 8.2.24
+* Fixed issue on classic characters without keyring.
+
+##### 8.2.23
+* Fixed mouse-over bug on retail servers.
+
+##### 8.2.22
+* Fixed display issue with spacing option slider.
+* Fixed `UpdateTooltip` error when mouse-overing items.
+* Fixed keyring empty slot count.
+* Fixed startup issue on retail.
+
+##### 8.2.21
+* Added missing appearance options to Frame Settings.
+* Tagging release.
+
+##### 8.2.20 (beta)
+* Fixed all issues with clicking items introduced since 8.2.17.
+
+##### 8.2.19 (beta)
+* Fixed "blocked action" error when clicking items.
+* Inventory now closes when the escape key is pressed, as intended.
+* Fixed issue in retail PTR servers.
+* Updated classic TOC number.
+
 ##### 8.2.18 (beta)
 * Added keyring.
-* Fixed "blocked action" error introduced last version.
 
 ##### 8.2.17 (beta)
 * Visible changes
