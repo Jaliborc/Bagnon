@@ -1,3 +1,7 @@
+##### 8.2.27
+* Retail: fixed multiple bugs with void storage.
+* Classic: hopefully improved key sorting behavior.
+
 ##### 8.2.26
 * Fixed bug with data-broker display region.
 * Added some backwards compatibility for out of date plugins.

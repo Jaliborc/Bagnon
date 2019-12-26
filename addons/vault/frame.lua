@@ -6,9 +6,11 @@
 local MODULE =  ...
 local ADDON, Addon = MODULE:match('[^_]+'), _G[MODULE:match('[^_]+')]
 local Frame = Addon.Frame:NewClass('VaultFrame')
+
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local Sushi = LibStub('Sushi-3.1')
 
-Frame.Title = LibStub('AceLocale-3.0'):GetLocale(ADDON).TitleVault
+Frame.Title = L.TitleVault
 Frame.OpenSound = SOUNDKIT.UI_ETHEREAL_WINDOW_OPEN
 Frame.CloseSound = SOUNDKIT.UI_ETHEREAL_WINDOW_CLOSE
 Frame.SortEvent = 'VOID_STORAGE_CONTENTS_UPDATE'
@@ -71,7 +73,7 @@ end
 
 function Frame:GetItemInfo(bag, slot)
 	if bag == 'vault' then
-		return Addon.Frame:GetItemInfo(bag, slot)
+		return self:Super(Frame):GetItemInfo(bag, slot)
 	else
 		local get = bag == DEPOSIT and GetVoidTransferDepositInfo or GetVoidTransferWithdrawalInfo
 		local item = {}

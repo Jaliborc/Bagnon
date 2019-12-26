@@ -25,7 +25,7 @@ end
 
 function Group:RegisterEvents()
 	self:UnregisterAll()
-	self:RegisterFrameSignal('PLAYER_CHANGED', 'Update')
+	self:RegisterFrameSignal('OWNER_CHANGED', 'Update')
 	self:RegisterSignal('UPDATE_ALL', 'RequestLayout')
 
 	if self:IsCached() then

@@ -29,7 +29,7 @@ function Item:OnClick(button)
 		if self.info.link then
 			HandleModifiedItemClick(self.info.link)
 		end
-	elseif self.bag == 'vault' and not self:IsCached() then
+	elseif self:GetBag() == 'vault' and not self:IsCached() then
 		local isRight = button == 'RightButton'
 		local type, _, link = GetCursorInfo()
 		local cursor = self.Cursor
@@ -60,9 +60,9 @@ end
 function Item:ShowTooltip()
 	GameTooltip:SetOwner(self:GetTipAnchor())
 
-	if self.bag == 'vault' then
+	if self:GetBag() == 'vault' then
 		GameTooltip:SetVoidItem(1, self:GetID())
-	elseif self.bag == DEPOSIT then
+	elseif self:GetBag() == DEPOSIT then
 		GameTooltip:SetVoidDepositItem(self:GetID())
 	else
 		GameTooltip:SetVoidWithdrawalItem(self:GetID())
