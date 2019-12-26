@@ -1,3 +1,6 @@
+##### 8.2.26
+* Fixed bug with data-broker display region.
+* Added some backwards compatibility for out of date plugins.
 ##### 8.2.25
 * Frames now behave properly when pressing `ESC` key.
 * Fixed equipment tooltip compare issue.

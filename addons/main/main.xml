@@ -1,7 +1,5 @@
 <Ui>
-	<Script file="main.lua"/>
 	<Include file="style.xml"/>
-
 	<Include file="..\..\common\Wildpants\Wildpants.xml"/>
 	<Include file="..\..\common\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
 
@@ -15,4 +13,6 @@
 
 	<Script file="itemGroup.lua"/>
 	<Script file="frame.lua"/>
+
+	<Script file="main.lua"/>
 </Ui>

@@ -69,9 +69,9 @@ end
 function Display:AttributeChanged(_, object, attr)
 	if self:GetObjectName() == object then
 		if attr == 'icon' then
-			self:UpdateIcon(object)
+			self:UpdateIcon()
 		elseif attr == 'text' then
-			self:UpdateText(object)
+			self:UpdateText()
 		end
 	end
 end
@@ -144,27 +144,21 @@ function Display:RegisterEvents()
 end
 
 function Display:UpdateDisplay()
-	local obj = self:GetObject()
-	self:UpdateText(obj)
-	self:UpdateIcon(obj)
+	self:UpdateText()
+	self:UpdateIcon()
 end
 
-function Display:UpdateText(obj)
-	local text
-
-	if obj then
-		text = obj.text or obj.label or ''
-	else
-		text = 'Select Databroker Plugin'
-	end
+function Display:UpdateText()
+	local obj = self:GetObject()
+	local text = obj and (obj.text or obj.label or '') or 'Select Databroker Plugin'
 
 	self.text:SetText(text)
 	self:Layout()
 end
 
-function Display:UpdateIcon(obj)
+function Display:UpdateIcon()
+	local obj = self:GetObject()
 	local icon = obj and obj.icon
-
 	self.icon:SetTexture(icon)
 	self.icon:SetShown(icon)
 	self:Layout()

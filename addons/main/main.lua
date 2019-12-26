@@ -4,4 +4,5 @@
 --]]
 
 local ADDON, Addon = ...
+Addon.ItemSlot = Addon.Item -- deprecated behavior
 Addon.Slash = 'bgn'
