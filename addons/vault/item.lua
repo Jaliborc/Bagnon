@@ -15,6 +15,7 @@ function Item:Construct()
 	b:SetScript('OnReceiveDrag', self.OnDragStart)
 	b:SetScript('OnDragStart', self.OnDragStart)
 	b:SetScript('OnClick', self.OnClick)
+	b:SetScript('PreClick', nil)
 	return b
 end
 
@@ -25,23 +26,24 @@ end
 --[[ Interaction ]]--
 
 function Item:OnClick(button)
-	if IsModifiedClick() then
-		if self.info.link then
-			HandleModifiedItemClick(self.info.link)
-		end
-	elseif self:GetBag() == 'vault' and not self:IsCached() then
+	if HandleModifiedItemClick(self.info.link) or self:FlashFind(button) or IsModifiedClick() then
+		return
+	elseif self:GetBag() == 'vault' then
 		local isRight = button == 'RightButton'
 		local type, _, link = GetCursorInfo()
-		local cursor = self.Cursor
 
-		if not isRight and cursor and type == 'item' and link == cursor:GetItem() then
-			cursor:GetScript('PreClick')(cursor, 'RightButton') -- simulates a click on the button, less code to maintain
-			cursor:GetScript('OnClick')(cursor, 'RightButton')
-
+		if not isRight and type == 'item' and link then
+			for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
+				for slot = 1, GetContainerNumSlots(bag) do
+					if GetContainerItemLink(bag, slot) == link then
+						UseContainerItem(bag, slot)
+					end
+				end
+			end
 		elseif isRight and self.info.locked then
 			for i = 1,9 do
 				if GetVoidTransferWithdrawalInfo(i) == self.info.id then
-						ClickVoidTransferWithdrawalSlot(i, true)
+					ClickVoidTransferWithdrawalSlot(i, true)
 				end
 			end
 		else

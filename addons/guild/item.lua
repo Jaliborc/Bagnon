@@ -11,14 +11,15 @@ local Item = Addon.Item:NewClass('GuildItem')
 --[[ Construct ]]--
 
 function Item:Construct()
-	local item = self:Super(Item):Construct()
-	item:SetScript('OnReceiveDrag', self.OnReceiveDrag)
-	item:SetScript('OnDragStart', self.OnDragStart)
-	item:SetScript('OnClick', self.OnClick)
-	item:RegisterForDrag('LeftButton')
-	item:RegisterForClicks('anyUp')
-	item.SplitStack = nil -- template onload screws this up
-	return item
+	local b = self:Super(Item):Construct()
+	b:SetScript('OnReceiveDrag', self.OnReceiveDrag)
+	b:SetScript('OnDragStart', self.OnDragStart)
+	b:SetScript('OnClick', self.OnClick)
+	b:SetScript('PreClick', nil)
+	b:RegisterForDrag('LeftButton')
+	b:RegisterForClicks('anyUp')
+	b.SplitStack = nil -- template onload screws this up
+	return b
 end
 
 function Item:GetBlizzard()
@@ -28,28 +29,25 @@ end
 --[[ Events ]]--
 
 function Item:OnClick(button)
-	if HandleModifiedItemClick(self.info.link) or self:IsCached() then
+	if HandleModifiedItemClick(self.info.link) or self:FlashFind(button) then
 		return
-	end
-
-	if IsModifiedClick('SPLITSTACK') then
+	elseif IsModifiedClick('SPLITSTACK') then
 		if not CursorHasItem() and not self.info.locked and self.info.count > 1 then
 			StackSplitFrame:OpenStackSplitFrame(self.info.count, self, 'BOTTOMLEFT', 'TOPLEFT')
 		end
-		return
-	end
-
-	local type, money = GetCursorInfo()
-	if type == 'money' then
-		DepositGuildBankMoney(money)
-		ClearCursor()
-	elseif type == 'guildbankmoney' then
-		DropCursorMoney()
-		ClearCursor()
-	elseif button == 'RightButton' then
-		AutoStoreGuildBankItem(self:GetSlot())
 	else
-		PickupGuildBankItem(self:GetSlot())
+		local type, amount = GetCursorInfo()
+		if type == 'money' then
+			DepositGuildBankMoney(amount)
+			ClearCursor()
+		elseif type == 'guildbankmoney' then
+			DropCursorMoney()
+			ClearCursor()
+		elseif button == 'RightButton' then
+			AutoStoreGuildBankItem(self:GetSlot())
+		else
+			PickupGuildBankItem(self:GetSlot())
+		end
 	end
 end
 

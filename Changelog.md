@@ -1,6 +1,17 @@
+##### 8.2.30
+* Made showing a coin icon on poor items optional.
+* Removed some forgotten debug code.
+
+##### 8.2.29
+* Can now change the transparency of frames as before.
+* Now, if no plugins like `Bagnon Scrap` are installed, marks sellable gray items with the default junk coin icon.
+
+##### 8.2.28
+* Now void storage and guild bank properly support _Flash Find_.
+
 ##### 8.2.27
 * Retail: fixed multiple bugs with void storage.
-* Classic: hopefully improved key sorting behavior.
+* Classic: hopefully improved key sorting behaviour.
 
 ##### 8.2.26
 * Fixed bug with data-broker display region.
@@ -21,7 +32,7 @@
 
 ##### 8.2.22
 * Fixed display issue with spacing option slider.
-* Fixed `UpdateTooltip` error when mouse-overing items.
+* Fixed `UpdateTooltip` error when mouse-hovering items.
 * Fixed keyring empty slot count.
 * Fixed startup issue on retail.
 
