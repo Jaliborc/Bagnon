@@ -1,4 +1,11 @@
-##### 8.2.30
+##### 8.3.1
+* Retail: added recent races.
+* Retail: fixed issue making dropdowns unclickable.
+* Updated Chinese localization (by Adavak).
+* Updated Korean localization (by chkid).
+
+#### 8.3.0
+* Updated for Visions of Nzoth.
 * Made showing a coin icon on poor items optional.
 * Removed some forgotten debug code.
 
