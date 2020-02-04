@@ -31,7 +31,7 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Error Logs**
-Type `/console scriptErrors 1` in the chat and reload the game. If an error window appears, write here the first message (labelled 1/Many) that appeared.
+Type `/console scriptErrors 1` in the chat and reload the game. If an error window appears, write here the message with `ID: 1` (labelled 1/X). This is generally NOT the message that the window shows by default.
 
 **Additional context**
 Add any other context about the problem here.

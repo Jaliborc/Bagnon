@@ -1,3 +1,13 @@
+##### 8.3.4
+* Retail: fixed issue with some allied race icons.
+
+##### 8.3.3
+* Retail: fixed tooltip issues with caged pets and keystones.
+
+##### 8.3.2
+* Retail: fixed multiple loading issues with guild bank.
+* All: updated Italian localization (thanks to kikuchi).
+
 ##### 8.3.1
 * Retail: added recent races.
 * Retail: fixed issue making dropdowns unclickable.
