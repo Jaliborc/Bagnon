@@ -1,3 +1,7 @@
+##### 8.3.5
+* All: frame title now disappears during search for increased visibility.
+* Retail: fixed search issue with champion/follower equipment.
+
 ##### 8.3.4
 * Retail: fixed issue with some allied race icons.
 
