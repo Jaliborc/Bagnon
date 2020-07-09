@@ -1,3 +1,7 @@
+##### 8.3.6
+* All: sorting efficiency improved (with help by Pierre Sassoulas).
+* Retail: corrupted item overlay support (by mCzolko).
+
 ##### 8.3.5
 * All: frame title now disappears during search for increased visibility.
 * Retail: fixed search issue with champion/follower equipment.
