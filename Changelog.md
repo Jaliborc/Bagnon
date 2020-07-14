@@ -1,3 +1,13 @@
+##### 8.3.9
+* Improved backpack server update performance.
+
+##### 8.3.8
+* Fixed issue with handling bank events introduced last version.
+
+##### 8.3.7
+* Improved efficiency in server event handling.
+* Fixed issue in new sorting algorithm.
+
 ##### 8.3.6
 * All: sorting efficiency improved (with help by Pierre Sassoulas).
 * Retail: corrupted item overlay support (by mCzolko).
