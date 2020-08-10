@@ -18,6 +18,11 @@ Frame.MoneySpacing = 0
 
 function Frame:New(id)
 	local f = self:Super(Frame):New(UIParent)
+
+	if BackdropTemplateMixin then
+		Mixin(f, BackdropTemplateMixin)
+	end
+
 	f.frameID, f.quality = id, 0
 	f.profile = f:GetBaseProfile()
 	f.searchFrame = Addon.SearchFrame(f)
