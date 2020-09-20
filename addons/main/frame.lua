@@ -36,7 +36,7 @@ function Frame:New(id)
 	f:SetClampedToScreen(true)
 	f:SetScript('OnShow', self.OnShow)
 	f:SetScript('OnHide', self.OnHide)
-	f:SetBackdrop{
+	f:SetBackdrop {
 	  bgFile = 'Interface/ChatFrame/ChatFrameBackground',
 	  edgeFile = 'Interface/Tooltips/UI-Tooltip-Border',
 		insets = {left = 4, right = 4, top = 4, bottom = 4},
