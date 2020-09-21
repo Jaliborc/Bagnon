@@ -1,3 +1,6 @@
+#### 9.0.0
+* Updated for Shadowlands.
+
 ##### 8.3.9
 * Improved backpack server update performance.
 
@@ -259,7 +262,7 @@
 * Fixed issue with Aggra server.
 
 #### 8.0.0
-* Updated for Battle for Azeroth
+* Updated for Battle for Azeroth.
 
 ##### 7.3.11 (beta)
 * Now handles server names with spaces properly.
