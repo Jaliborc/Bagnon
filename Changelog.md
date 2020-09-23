@@ -1,3 +1,6 @@
+##### 9.0.1
+* Fixed issue introduced in classic servers.
+
 #### 9.0.0
 * Updated for Shadowlands.
 
