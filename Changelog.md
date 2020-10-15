@@ -1,3 +1,8 @@
+##### 9.0.2
+* Retail: fixed issue with junk icons.
+* Fixed issue hiding item slots introduced in Shadowlands.
+* Fixed visual update issue with bank slots after purchase.
+
 ##### 9.0.1
 * Fixed issue introduced in classic servers.
 
