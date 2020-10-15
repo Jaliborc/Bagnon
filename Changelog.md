@@ -1,3 +1,6 @@
+##### 9.0.3
+* Fixed issue with tooltips in profession window.
+
 ##### 9.0.2
 * Retail: fixed issue with junk icons.
 * Fixed issue hiding item slots introduced in Shadowlands.
