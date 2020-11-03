@@ -1,3 +1,6 @@
+##### 9.0.4
+* Now works with latest version of Pawn addon.
+
 ##### 9.0.3
 * Fixed issue with tooltips in profession window.
 
