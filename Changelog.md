@@ -1,3 +1,12 @@
+##### 9.0.6
+* Retail: can now sort guild bank tabs.
+* Retail: improved search on unorthodox items (ex: pets).
+* Retail: added command-line only option to disable server side sorting for inventory (not release quality).
+
+##### 9.0.5
+* You can now search items by uncollected appearances.
+* Equipment set items will be sorted separately from normal equipment.
+
 ##### 9.0.4
 * Now works with latest version of Pawn addon.
 
