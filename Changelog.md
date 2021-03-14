@@ -1,7 +1,3 @@
-##### 9.0.7
-* Retail: updated for 9.0.5.
-* Classic: updated for 1.13.6.
-
 ##### 9.0.6
 * Retail: can now sort guild bank tabs.
 * Retail: improved search on unorthodox items (ex: pets).
