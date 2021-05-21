@@ -1,4 +1,4 @@
-## Interface: 11306
+## Interface: 20501
 ## Title: |cff20ff20Bagnon|r
 ## Author: Tuller & Jaliborc (João Cardoso)
 ## Notes: Single window displays for your inventory and bank
