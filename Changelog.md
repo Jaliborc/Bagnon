@@ -1,3 +1,6 @@
+##### 9.0.7
+* Updated Wildpants to support TBC
+
 ##### 9.0.6
 * Retail: can now sort guild bank tabs.
 * Retail: improved search on unorthodox items (ex: pets).
