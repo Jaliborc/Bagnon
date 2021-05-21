@@ -1,3 +1,7 @@
+##### 9.0.7
+* Burning Crusade: now compatible
+* All Classic: fixed keyring sorting issue (thanks to jazminite)
+
 ##### 9.0.6
 * Retail: can now sort guild bank tabs.
 * Retail: improved search on unorthodox items (ex: pets).
