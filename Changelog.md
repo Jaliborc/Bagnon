@@ -1,7 +1,11 @@
+##### 9.1.2
+* All: Improved handling of simultaneous different bag types during sort to avoid "Item Cannot go into that Container" errors.
+* All: Changed default engineering bag color to set it further apart from others.
+
 ##### 9.1.1
 * TBC: Fixed profession items sorting issue.
 * TBC: Replaced guild bank icon that isn't available in these servers.
-* All: Changed default mining bag color to set it more apart from others.
+* All: Changed default mining bag color to set it further apart from others.
 
 #### 9.1.0
 * Retail: updated for Chains of Domination.
