@@ -1,3 +1,7 @@
+##### 9.1.3
+* TBC: Fixed keyring sorting bug.
+* All: Further improvement to avoid "Item Cannot go into that Container" errors.
+
 ##### 9.1.2
 * All: Improved handling of simultaneous different bag types during sort to avoid "Item Cannot go into that Container" errors.
 * All: Changed default engineering bag color to set it further apart from others.
