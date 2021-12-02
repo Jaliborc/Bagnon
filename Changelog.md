@@ -1,3 +1,6 @@
+##### 9.1.5 (unreleased)
+* All: Updated italian locales.
+
 ##### 9.1.4
 * Retail: Updated for Shadowlands 9.1.5.
 * All: Removed use of deprecated client APIs.
