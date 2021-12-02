@@ -1,5 +1,9 @@
+##### 9.1.4
+* Retail: Updated for Shadowlands 9.1.5.
+* All: Removed use of deprecated client APIs.
+
 ##### 9.1.3
-* TBC: Fixed keyring sorting bug.
+* TBC: Fixed keyring sorting issue.
 * All: Further improvement to avoid "Item Cannot go into that Container" errors.
 
 ##### 9.1.2
