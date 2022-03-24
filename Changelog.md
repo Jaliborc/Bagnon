@@ -1,5 +1,6 @@
-##### 9.1.5 (unreleased)
+##### 9.1.5
 * All: Updated italian locales.
+* Burning Crusade: Fixed startup issue introduced in the latest patch.
 
 ##### 9.1.4
 * Retail: Updated for Shadowlands 9.1.5.
