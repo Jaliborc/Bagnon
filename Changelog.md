@@ -1,3 +1,7 @@
+##### 9.1.6
+* All: Fixed issue with authenticator extra slots.
+* Retail: Fixed issue with viewing Vulpera's inventory offline.
+
 ##### 9.1.5
 * All: Updated italian locales.
 * Burning Crusade: Fixed startup issue introduced in the latest patch.
