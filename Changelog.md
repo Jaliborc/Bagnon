@@ -1,3 +1,11 @@
+##### 9.2.1
+* Classic: Updated for Wrath of the Lich King
+
+#### 9.2.0
+* All: Reverted authenticator slot changes from last version. Behaviour didn't match expected, our apologies.
+* Classic: Fixed bug preventing splitting stacks on guild bank.
+* Retail: Tagged for 9.2.
+
 ##### 9.1.6
 * All: Fixed issue with authenticator extra slots.
 * Retail: Fixed issue with viewing Vulpera's inventory offline.
