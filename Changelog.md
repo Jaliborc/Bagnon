@@ -1,9 +1,12 @@
+##### 9.2.2
+* Classic: Fixed bug introduced last version that only affected classic era servers.
+
 ##### 9.2.1
-* Classic: Updated for Wrath of the Lich King
+* WoLK: Updated for Wrath of the Lich King
 
 #### 9.2.0
 * All: Reverted authenticator slot changes from last version. Behaviour didn't match expected, our apologies.
-* Classic: Fixed bug preventing splitting stacks on guild bank.
+* TBC: Fixed bug preventing splitting stacks on guild bank.
 * Retail: Tagged for 9.2.
 
 ##### 9.1.6
@@ -12,7 +15,7 @@
 
 ##### 9.1.5
 * All: Updated italian locales.
-* Burning Crusade: Fixed startup issue introduced in the latest patch.
+* TBC: Fixed startup issue introduced in the latest patch.
 
 ##### 9.1.4
 * Retail: Updated for Shadowlands 9.1.5.
@@ -35,7 +38,7 @@
 * Retail: updated for Chains of Domination.
 
 ##### 9.0.7
-* Burning Crusade: now compatible.
+* TBC: now compatible.
 * All Classic: fixed keyring sorting issue (thanks to jazminite).
 
 ##### 9.0.6
