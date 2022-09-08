@@ -150,17 +150,14 @@ end
 
 function Display:UpdateText()
 	local obj = self:GetObject()
-	local text = obj and (obj.text or obj.label or '') or 'Select Databroker Plugin'
-
-	self.text:SetText(text)
+	self.text:SetText(obj.text or obj.label or '')
 	self:Layout()
 end
 
 function Display:UpdateIcon()
 	local obj = self:GetObject()
-	local icon = obj and obj.icon
-	self.icon:SetTexture(icon)
-	self.icon:SetShown(icon)
+	self.icon:SetTexture(obj.icon)
+	self.icon:SetShown(obj.icon)
 	self:Layout()
 end
 
@@ -182,7 +179,7 @@ function Display:SetNextObject()
 	local objects = self:GetAvailableObjects()
 	local i = FindInTableIf(objects, function(o) return o == current end)
 
-	self:SetObject(objects[(i or 0) + 1])
+	self:SetObject(objects[(i or 0) % #objects + 1])
 end
 
 function Display:SetPreviousObject()
@@ -190,7 +187,7 @@ function Display:SetPreviousObject()
 	local objects = self:GetAvailableObjects()
 	local i = FindInTableIf(objects, function(o) return o == current end)
 
-	self:SetObject(objects[(i or 2) - 1])
+	self:SetObject(objects[((i or 2) - 2) % #objects + 1])
 end
 
 function Display:SetObject(name)
@@ -203,7 +200,7 @@ function Display:SetObject(name)
 end
 
 function Display:GetObject()
-	return LDB:GetDataObjectByName(self:GetObjectName())
+	return LDB:GetDataObjectByName(self:GetObjectName()) or LDB:GetDataObjectByName(ADDON .. 'Launcher')
 end
 
 function Display:GetObjectName()
