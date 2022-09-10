@@ -38,8 +38,8 @@ function Display:New(parent)
 	text:SetJustifyH('LEFT')
 
 	f.objects = {}
-	f.icon, f.text = icon, text
-	f.left, f.right = left, right
+	f.Icon, f.Text = icon, text
+	f.Left, f.Right = left, right
 	f:SetHeight(26)
 	f:Update()
 
@@ -150,24 +150,24 @@ end
 
 function Display:UpdateText()
 	local obj = self:GetObject()
-	self.text:SetText(obj.text or obj.label or '')
+	self.Text:SetText(obj.text or obj.label or '')
 	self:Layout()
 end
 
 function Display:UpdateIcon()
 	local obj = self:GetObject()
-	self.icon:SetTexture(obj.icon)
-	self.icon:SetShown(obj.icon)
+	self.Icon:SetTexture(obj.icon)
+	self.Icon:SetShown(obj.icon)
 	self:Layout()
 end
 
 function Display:Layout()
-	if self.icon:IsShown() then
-		self.text:SetPoint('LEFT', self.icon, 'RIGHT', 2, 0)
-		self.text:SetPoint('RIGHT', self.right, 'LEFT', -2, 0)
+	if self.Icon:IsShown() then
+		self.Text:SetPoint('LEFT', self.Icon, 'RIGHT', 2, 0)
+		self.Text:SetPoint('RIGHT', self.Right, 'LEFT', -2, 0)
 	else
-		self.text:SetPoint('LEFT', self.left, 'RIGHT', 2, 0)
-		self.text:SetPoint('RIGHT', self.right, 'LEFT', -2, 0)
+		self.Text:SetPoint('LEFT', self.Left, 'RIGHT', 2, 0)
+		self.Text:SetPoint('RIGHT', self.Right, 'LEFT', -2, 0)
 	end
 end
 

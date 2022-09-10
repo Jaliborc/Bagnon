@@ -16,7 +16,7 @@ Frame.CloseSound = SOUNDKIT.UI_ETHEREAL_WINDOW_CLOSE
 Frame.ItemGroup = Addon.VaultItemGroup
 Frame.MoneyFrame = Addon.TransferButton
 Frame.MoneySpacing = 30
-Frame.BrokerSpacing = 2
+Frame.DisplaySpacing = 2
 Frame.Bags = {'vault'}
 
 

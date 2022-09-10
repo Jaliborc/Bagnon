@@ -10,7 +10,7 @@ local Frame = Addon.Frame
 Frame.ItemGroup = Addon.ItemGroup
 Frame.BagGroup = Addon.BagGroup
 Frame.MoneyFrame = Addon.MoneyFrame
-Frame.BrokerSpacing = 1
+Frame.DisplaySpacing = 1
 Frame.MoneySpacing = 0
 
 
@@ -20,13 +20,13 @@ function Frame:New(id)
 	local f = self:Super(Frame):New(UIParent)
 	f.frameID, f.quality = id, 0
 	f.profile = f:GetBaseProfile()
-	f.searchFrame = Addon.SearchFrame(f)
-	f.title = Addon.Title(f, f.Title)
-	f.itemGroup = self.ItemGroup(f, f.Bags)
 
-	f.closeButton = CreateFrame('Button', nil, f, 'UIPanelCloseButtonNoScripts')
-	f.closeButton:SetScript('OnClick', function() Addon.Frames:Hide(f.frameID, true) end)
-	f.closeButton:SetPoint('TOPRIGHT', -2, -2)
+	f.SearchFrame = Addon.SearchFrame(f)
+	f.Title = Addon.Title(f, f.Title)
+	f.ItemGroup = self.ItemGroup(f, f.Bags)
+	f.CloseButton = CreateFrame('Button', nil, f, 'UIPanelCloseButtonNoScripts')
+	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.frameID, true) end)
+	f.CloseButton:SetPoint('TOPRIGHT', -2, -2)
 
 	f:Hide()
 	f:FindRules()
@@ -81,35 +81,69 @@ function Frame:Layout()
 	width = width + self:PlaceMenuButtons()
 	width = width + self:PlaceOptionsToggle()
 	width = width + self:PlaceTitle()
-	self:PlaceSearchFrame()
+	self:PlaceSearchBar()
 
-	--place middle frames
+	--place middle content frames
 	local w, h = self:PlaceBagGroup()
-	width = max(w, width)
+	width = max(width, w)
 	height = height + h
 
 	local w, h = self:PlaceItemGroup()
-	width = max(w, width)
+	width = max(width, w)
 	height = height + h
 
-	--place bottom menu frames
-	local w, h = self:PlaceMoneyFrame()
-	width = max(w, width)
-	height = height + h
-
-	local w, h = self:PlaceBrokerDisplayFrame()
-	if not self:HasMoneyFrame() then
-		height = height + h
-	end
+	--place bottom display frames
+	local w, h = self:PlaceMoney()
+	local w2, h2 = self:PlaceCurrency()
+	local w3, h3 = self:PlaceBrokerDisplay()
+	height = height + max(h, h2, h3)
+	width = max(width, w + w2 + w3)
 
 	--adjust size
 	self:SetSize(max(width, 156) + 16, height)
-	--self:SetWidth(max(max(width, 156), self.itemGroup:GetWidth() - 2) + 16)
-	--self:SetHeight(height + self.itemGroup:GetHeight())
 end
 
 
--- menu buttons
+--[[ Essentials ]]--
+
+function Frame:PlaceTitle()
+	local frame = self.Title
+	local menuButtons = self.menuButtons
+	local w, h = 0, 0
+
+	frame:ClearAllPoints()
+	if #menuButtons > 0 then
+		frame:SetPoint('LEFT', menuButtons[#menuButtons], 'RIGHT', 4, 0)
+		w = frame:GetTextWidth() / 2 + 4
+		h = 20
+	else
+		frame:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
+		w = frame:GetTextWidth() + 8
+		h = 20
+	end
+
+	if self:HasOptionsToggle() then
+		frame:SetPoint('RIGHT', self.OptionsToggle, 'LEFT', -4, 0)
+	else
+		frame:SetPoint('RIGHT', self.CloseButton, 'LEFT', -4, 0)
+	end
+	frame:SetHeight(20)
+
+	return w, h
+end
+
+function Frame:PlaceItemGroup()
+	local anchor = self:IsBagGroupShown() and self.bagGroup
+					or #self.menuButtons > 0 and self.menuButtons[1]
+					or self.Title
+
+	self.ItemGroup:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', 0, -4)
+	return self.ItemGroup:GetWidth() - 2, self.ItemGroup:GetHeight()
+end
+
+
+--[[ Menu Buttons ]]--
+
 function Frame:PlaceMenuButtons()
 	for i, button in pairs(self.menuButtons or {}) do
 		button:Hide()
@@ -186,9 +220,10 @@ function Frame:CreateSortButton()
 end
 
 
--- search frame
-function Frame:PlaceSearchFrame()
-	local frame, menuButtons = self.searchFrame, self.menuButtons
+--[[ Remainder Top ]]--
+
+function Frame:PlaceSearchBar()
+	local frame, menuButtons = self.SearchFrame, self.menuButtons
 	frame:ClearAllPoints()
 
 	if #menuButtons > 0 then
@@ -198,22 +233,37 @@ function Frame:PlaceSearchFrame()
 	end
 
 	if self:HasOptionsToggle() then
-		frame:SetPoint('RIGHT', self.optionsToggle, 'LEFT', -2, 0)
+		frame:SetPoint('RIGHT', self.OptionsToggle, 'LEFT', -2, 0)
 	else
-		frame:SetPoint('RIGHT', self.closeButton, 'LEFT', -2, 0)
+		frame:SetPoint('RIGHT', self.CloseButton, 'LEFT', -2, 0)
 	end
 
 	frame:SetHeight(28)
 	return frame:GetSize()
 end
 
-function Frame:CreateSearchFrame()
-	self.searchFrame = Addon.SearchFrame(self)
-	return self.searchFrame
+function Frame:PlaceOptionsToggle()
+	if self:HasOptionsToggle() then
+		self.OptionsToggle = self.OptionsToggle or Addon.OptionsToggle(self)
+		self.OptionsToggle:ClearAllPoints()
+		self.OptionsToggle:SetPoint('TOPRIGHT', self, 'TOPRIGHT', -32, -8)
+		self.OptionsToggle:Show()
+
+		return self.OptionsToggle:GetWidth(), self.OptionsToggle:GetHeight()
+	elseif self.OptionsToggle then
+		self.OptionsToggle:Hide()
+	end
+
+	return 0,0
+end
+
+function Frame:HasOptionsToggle()
+	return GetAddOnEnableState(UnitName('player'), ADDON .. '_Config') >= 2 and self.profile.options
 end
 
 
--- bag frame
+--[[ Bag Frame ]]--
+
 function Frame:PlaceBagGroup()
 	if self:IsBagGroupShown() then
 		local frame = self.bagGroup or self:CreateBagGroup()
@@ -224,7 +274,7 @@ function Frame:PlaceBagGroup()
 		if #menuButtons > 0 then
 			frame:SetPoint('TOPLEFT', menuButtons[1], 'BOTTOMLEFT', 0, -4)
 		else
-			frame:SetPoint('TOPLEFT', self.title, 'BOTTOMLEFT', 0, -4)
+			frame:SetPoint('TOPLEFT', self.Title, 'BOTTOMLEFT', 0, -4)
 		end
 
 		return frame:GetWidth(), frame:GetHeight() + 4
@@ -245,122 +295,72 @@ function Frame:IsBagGroupShown()
 end
 
 
--- mandatories
-function Frame:PlaceTitle()
-	local frame = self.title
-	local menuButtons = self.menuButtons
-	local w, h = 0, 0
+--[[ Bottom Displays ]]--
 
-	frame:ClearAllPoints()
-	if #menuButtons > 0 then
-		frame:SetPoint('LEFT', menuButtons[#menuButtons], 'RIGHT', 4, 0)
-		w = frame:GetTextWidth() / 2 + 4
-		h = 20
-	else
-		frame:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
-		w = frame:GetTextWidth() + 8
-		h = 20
-	end
+function Frame:PlaceMoney()
+	if self:HasMoney() then
+		self.Money = self.Money or self.MoneyFrame(self)
+		self.Money:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -self.MoneySpacing, 4)
+		self.Money:Show()
 
-	if self:HasOptionsToggle() then
-		frame:SetPoint('RIGHT', self.optionsToggle, 'LEFT', -4, 0)
-	else
-		frame:SetPoint('RIGHT', self.closeButton, 'LEFT', -4, 0)
-	end
-	frame:SetHeight(20)
-
-	return w, h
-end
-
-function Frame:PlaceItemGroup()
-	local anchor = self:IsBagGroupShown() and self.bagGroup
-					or #self.menuButtons > 0 and self.menuButtons[1]
-					or self.title
-
-	self.itemGroup:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', 0, -4)
-	return self.itemGroup:GetWidth() - 2, self.itemGroup:GetHeight()
-end
-
-
--- money frame
-function Frame:PlaceMoneyFrame()
-	if self:HasMoneyFrame() then
-		local frame = self.moneyFrame or self:CreateMoneyFrame()
-		frame:ClearAllPoints()
-		frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -self.MoneySpacing, 4)
-		frame:Show()
-
-		return frame:GetSize()
-	elseif self.moneyFrame then
-		self.moneyFrame:Hide()
+		return self.Money:GetSize()
+	elseif self.Money then
+		self.Money:Hide()
 	end
 	return 0, 0
 end
 
-function Frame:CreateMoneyFrame()
-	self.moneyFrame = self.MoneyFrame(self)
-	return self.moneyFrame
-end
-
-function Frame:HasMoneyFrame()
+function Frame:HasMoney()
 	return self.profile.money
 end
 
+function Frame:PlaceCurrency()
+	if self:HasCurrency() then
+		self.Currency = self.Currency or Addon.CurrencyDisplay(self)
+		self.Currency:ClearAllPoints()
 
--- databroker display
-function Frame:PlaceBrokerDisplayFrame()
-	if self:HasBrokerDisplay() then
-		local x, y = 4 * self.BrokerSpacing, 5 * self.BrokerSpacing
-		local frame = self.brokerDisplay or self:CreateBrokerDisplay()
-		frame:ClearAllPoints()
-		frame:SetPoint('BOTTOMLEFT', self, 'BOTTOMLEFT', x, y)
-
-		if self:HasMoneyFrame() then
-			frame:SetPoint('RIGHT', self.moneyFrame, 'LEFT', -3, y)
+		local x, y = self.DisplaySpacing*4, self.DisplaySpacing*5
+		if self:HasMoney() then
+			self.Currency:SetPoint('BOTTOMLEFT', self, 'BOTTOMLEFT', x, y)
 		else
-			frame:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -x, y)
+			self.Currency:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -x, y)
 		end
 
-		frame:Show()
-		return frame:GetWidth(), 24
-	elseif self.brokerDisplay then
-		self.brokerDisplay:Hide()
+		self.Currency:Show()
+		return self.Currency:GetWidth(), 24
+	elseif self.Currency then
+		self.Currency:Hide()
 	end
 
 	return 0, 0
 end
 
-function Frame:CreateBrokerDisplay()
-	self.brokerDisplay = Addon.BrokerDisplay(self)
-	return self.brokerDisplay
+function Frame:HasCurrency()
+	return self.profile.currency
+end
+
+function Frame:PlaceBrokerDisplay()
+	if self:HasBrokerDisplay() then
+		self.Broker = self.Broker or Addon.BrokerDisplay(self)
+		self.Broker:ClearAllPoints()
+
+		local x, y = self.DisplaySpacing*4, self.DisplaySpacing*5-1
+		local right = self:HasMoney() and {'RIGHT', self.Money, 'LEFT', -5, y} or
+																			{'BOTTOMRIGHT', self, 'BOTTOMRIGHT', -x, y}
+		local left = self:HasCurrency() and {'LEFT', self.Currency, 'RIGHT', -2, 0} or
+																				{'BOTTOMLEFT', self, 'BOTTOMLEFT', x, y}
+
+		self.Broker:SetPoint(unpack(right))
+		self.Broker:SetPoint(unpack(left))
+		self.Broker:Show()
+		return 48, 24
+	elseif self.Broker then
+		self.Broker:Hide()
+	end
+
+	return 0, 0
 end
 
 function Frame:HasBrokerDisplay()
 	return self.profile.broker
-end
-
-
--- options toggle
-function Frame:PlaceOptionsToggle()
-	if self:HasOptionsToggle() then
-		local toggle = self.optionsToggle or self:CreateOptionsToggle()
-		toggle:ClearAllPoints()
-		toggle:SetPoint('TOPRIGHT', self, 'TOPRIGHT', -32, -8)
-		toggle:Show()
-
-		return toggle:GetWidth(), toggle:GetHeight()
-	elseif self.optionsToggle then
-		self.optionsToggle:Hide()
-	end
-
-	return 0,0
-end
-
-function Frame:CreateOptionsToggle()
-	self.optionsToggle = Addon.OptionsToggle(self)
-	return self.optionsToggle
-end
-
-function Frame:HasOptionsToggle()
-	return GetAddOnEnableState(UnitName('player'), ADDON .. '_Config') >= 2 and self.profile.options
 end
