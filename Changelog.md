@@ -6,6 +6,8 @@
     * Now supports all game versions, including Dragonflight and Wrath of the Lich King
     * Redesigned to match the layout [chosen by the community](https://www.patreon.com/posts/71748089).
     * Each currency in the tracker can now be interacted with separately.
+* Removed behavior that made all slots of guild bank glow when move-hovering a guild bank tab.
+* Improved tooltips behavior while interacting with items.
 
 ##### 9.2.3 (beta)
 * All: Added built-in currency tracker demo with basic functionality. [Please vote which design you ](https://www.patreon.com/posts/71748089) prefer.
