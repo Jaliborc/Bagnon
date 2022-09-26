@@ -1,8 +1,22 @@
+##### 9.2.4 (beta)
+* Basic Drangonflight support:
+    * No configuration, guild or vault yet.
+    * There are some known issues with the bank.
+* Currency tracker:
+    * Now supports all game versions, including Dragonflight and Wrath of the Lich King
+    * Redesigned to match the layout [chosen by the community](https://www.patreon.com/posts/71748089).
+    * Each currency in the tracker can now be interacted with separately.
+
+##### 9.2.3 (beta)
+* All: Added built-in currency tracker demo with basic functionality. [Please vote which design you ](https://www.patreon.com/posts/71748089) prefer.
+* All: Changed some default settings to better accommodate modern monitors and currency display.
+* All: Fixed minor bug in databroker display.
+
 ##### 9.2.2
 * Classic: Fixed bug introduced last version that only affected classic era servers.
 
 ##### 9.2.1
-* WoLK: Updated for Wrath of the Lich King
+* WotLK: Updated for Wrath of the Lich King
 
 #### 9.2.0
 * All: Reverted authenticator slot changes from last version. Behaviour didn't match expected, our apologies.
