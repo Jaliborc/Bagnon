@@ -52,7 +52,7 @@ function Frame:RegisterSignals()
 	self:RegisterSignal('UPDATE_ALL', 'Update')
 	self:RegisterSignal('RULES_LOADED', 'FindRules')
 	self:RegisterFrameSignal('BAG_FRAME_TOGGLED', 'Layout')
-	self:RegisterFrameSignal('ITEM_FRAME_RESIZED', 'Layout')
+	self:RegisterFrameSignal('ELEMENT_RESIZED', 'Layout')
 	self:Update()
 end
 
@@ -76,6 +76,10 @@ end
 
 function Frame:Layout()
 	local width, height = 44, 36
+	local grow = function(w, h)
+		width = max(width, w)
+		height = height + h
+	end
 
 	--place top menu frames
 	width = width + self:PlaceMenuButtons()
@@ -84,20 +88,13 @@ function Frame:Layout()
 	self:PlaceSearchBar()
 
 	--place middle content frames
-	local w, h = self:PlaceBagGroup()
-	width = max(width, w)
-	height = height + h
-
-	local w, h = self:PlaceItemGroup()
-	width = max(width, w)
-	height = height + h
+	grow(self:PlaceBagGroup())
+	grow(self:PlaceItemGroup())
 
 	--place bottom display frames
-	local w, h = self:PlaceMoney()
-	local w2, h2 = self:PlaceCurrency()
-	local w3, h3 = self:PlaceBrokerDisplay()
-	height = height + max(h, h2, h3)
-	width = max(width, w + w2 + w3)
+	grow(self:PlaceMoney())
+	grow(self:PlaceCurrencies(width, height))
+	self:PlaceBrokerDisplay(width, height)
 
 	--adjust size
 	self:SetSize(max(width, 156) + 16, height)
@@ -239,7 +236,6 @@ function Frame:PlaceSearchBar()
 	end
 
 	frame:SetHeight(28)
-	return frame:GetSize()
 end
 
 function Frame:PlaceOptionsToggle()
@@ -300,12 +296,51 @@ end
 function Frame:PlaceMoney()
 	if self:HasMoney() then
 		self.Money = self.Money or self.MoneyFrame(self)
-		self.Money:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -self.MoneySpacing, 4)
+		--self.Money:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -self.MoneySpacing, 4)
+		self.Money:SetPoint('TOPRIGHT', self.ItemGroup, 'BOTTOMRIGHT', 8,0)
 		self.Money:Show()
 
 		return self.Money:GetSize()
 	elseif self.Money then
 		self.Money:Hide()
+	end
+	return 0,0
+end
+
+function Frame:PlaceCurrencies(width)
+	if self:HasCurrencies() then
+		self.Currency = self.Currency or Addon.CurrencyDisplay(self)
+		self.Currency:ClearAllPoints()
+		self.Currency:Show()
+
+		if self:HasMoney() and self.Currency:GetWidth() < (width - self.Money:GetWidth() - (self:HasBrokerDisplay() and 24 or 2)) then
+			self.Currency:SetPoint('TOPLEFT', self.ItemGroup, 'BOTTOMLEFT')
+		else
+			self.Currency:SetPoint('TOPRIGHT', self:HasMoney() and self.Money or self, 'BOTTOMRIGHT', -7,0)
+			return self.Currency:GetSize()
+		end
+	elseif self.Currency then
+		self.Currency:Hide()
+	end
+	return 0,0
+end
+
+function Frame:PlaceBrokerDisplay()
+	if self:HasBrokerDisplay() then
+		local right = self:HasMoney() and {'RIGHT', self.Money, 'LEFT', -5,2} or
+																			{'BOTTOMRIGHT', self, 'BOTTOMRIGHT', -4,4}
+		local left = self:HasCurrencies() and self.Currency:GetPoint(0) == 'TOPLEFT' and
+																			{'LEFT', self.Currency, 'RIGHT', -2,0} or
+																			{'TOPLEFT', self.ItemGroup, 'BOTTOMLEFT', 0,2}
+
+		self.Broker = self.Broker or Addon.BrokerDisplay(self)
+		self.Broker:ClearAllPoints()
+		self.Broker:SetPoint(unpack(right))
+		self.Broker:SetPoint(unpack(left))
+		self.Broker:Show()
+		return 48, 24
+	elseif self.Broker then
+		self.Broker:Hide()
 	end
 	return 0, 0
 end
@@ -314,51 +349,8 @@ function Frame:HasMoney()
 	return self.profile.money
 end
 
-function Frame:PlaceCurrency()
-	if self:HasCurrency() then
-		self.Currency = self.Currency or Addon.CurrencyDisplay(self)
-		self.Currency:ClearAllPoints()
-
-		local x, y = self.DisplaySpacing*4, self.DisplaySpacing*5
-		if self:HasMoney() then
-			self.Currency:SetPoint('BOTTOMLEFT', self, 'BOTTOMLEFT', x, y)
-		else
-			self.Currency:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -x, y)
-		end
-
-		self.Currency:Show()
-		return self.Currency:GetWidth(), 24
-	elseif self.Currency then
-		self.Currency:Hide()
-	end
-
-	return 0, 0
-end
-
-function Frame:HasCurrency()
-	return self.profile.currency
-end
-
-function Frame:PlaceBrokerDisplay()
-	if self:HasBrokerDisplay() then
-		self.Broker = self.Broker or Addon.BrokerDisplay(self)
-		self.Broker:ClearAllPoints()
-
-		local x, y = self.DisplaySpacing*4, self.DisplaySpacing*5-1
-		local right = self:HasMoney() and {'RIGHT', self.Money, 'LEFT', -5, y} or
-																			{'BOTTOMRIGHT', self, 'BOTTOMRIGHT', -x, y}
-		local left = self:HasCurrency() and {'LEFT', self.Currency, 'RIGHT', -2, 0} or
-																				{'BOTTOMLEFT', self, 'BOTTOMLEFT', x, y}
-
-		self.Broker:SetPoint(unpack(right))
-		self.Broker:SetPoint(unpack(left))
-		self.Broker:Show()
-		return 48, 24
-	elseif self.Broker then
-		self.Broker:Hide()
-	end
-
-	return 0, 0
+function Frame:HasCurrencies()
+	return not Addon.IsClassic and self.profile.currency
 end
 
 function Frame:HasBrokerDisplay()
