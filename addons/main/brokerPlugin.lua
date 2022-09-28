@@ -1,6 +1,6 @@
 --[[
-	brokerDisplay.lua
-		A databroker plugin
+	brokerPlugin.lua
+		A databroker launcher plugin
 --]]
 
 local ADDON, Addon = ...

@@ -94,7 +94,7 @@ function Frame:Layout()
 	--place bottom display frames
 	grow(self:PlaceMoney())
 	grow(self:PlaceCurrencies(width, height))
-	self:PlaceBrokerDisplay(width, height)
+	self:PlaceBrokerCarrousel(width, height)
 
 	--adjust size
 	self:SetSize(max(width, 156) + 16, height)
@@ -309,11 +309,11 @@ end
 
 function Frame:PlaceCurrencies(width)
 	if self:HasCurrencies() then
-		self.Currency = self.Currency or Addon.CurrencyDisplay(self)
+		self.Currency = self.Currency or Addon.CurrencyTracker(self)
 		self.Currency:ClearAllPoints()
 		self.Currency:Show()
 
-		if self:HasMoney() and self.Currency:GetWidth() < (width - self.Money:GetWidth() - (self:HasBrokerDisplay() and 24 or 2)) then
+		if self:HasMoney() and self.Currency:GetWidth() < (width - self.Money:GetWidth() - (self:HasBrokerCarrousel() and 24 or 2)) then
 			self.Currency:SetPoint('TOPLEFT', self.ItemGroup, 'BOTTOMLEFT')
 		else
 			self.Currency:SetPoint('TOPRIGHT', self:HasMoney() and self.Money or self, 'BOTTOMRIGHT', -7,0)
@@ -325,15 +325,15 @@ function Frame:PlaceCurrencies(width)
 	return 0,0
 end
 
-function Frame:PlaceBrokerDisplay()
-	if self:HasBrokerDisplay() then
+function Frame:PlaceBrokerCarrousel()
+	if self:HasBrokerCarrousel() then
 		local right = self:HasMoney() and {'RIGHT', self.Money, 'LEFT', -5,2} or
 																			{'BOTTOMRIGHT', self, 'BOTTOMRIGHT', -4,4}
 		local left = self:HasCurrencies() and self.Currency:GetPoint(0) == 'TOPLEFT' and
 																			{'LEFT', self.Currency, 'RIGHT', -2,0} or
 																			{'TOPLEFT', self.ItemGroup, 'BOTTOMLEFT', 0,2}
 
-		self.Broker = self.Broker or Addon.BrokerDisplay(self)
+		self.Broker = self.Broker or Addon.BrokerCarrousel(self)
 		self.Broker:ClearAllPoints()
 		self.Broker:SetPoint(unpack(right))
 		self.Broker:SetPoint(unpack(left))
@@ -353,6 +353,6 @@ function Frame:HasCurrencies()
 	return not Addon.IsClassic and self.profile.currency
 end
 
-function Frame:HasBrokerDisplay()
+function Frame:HasBrokerCarrousel()
 	return self.profile.broker
 end
