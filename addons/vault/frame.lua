@@ -43,6 +43,9 @@ function Frame:OnHide()
 	CloseVoidStorageFrame()
 end
 
+
+--[[ Additions ]]--
+
 function Frame:TRANFER_TOGGLED(_, transfering)
 	self.deposit:SetShown(transfering)
 	self.withdraw:SetShown(transfering)
