@@ -1,3 +1,8 @@
+#### 10.0.0 (beta)
+* Near full Dragonflight support (except configuration).
+* Largely improved auto frame display features. Auto display settings have been reset to default values.
+* Updated Portuguese config locales (by... just me, actually).
+
 ##### 9.2.4 (beta)
 * Basic Drangonflight support:
     * No configuration, guild or vault yet.
