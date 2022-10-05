@@ -5,7 +5,7 @@
 
 local ADDON, Addon = ...
 local LDB = LibStub('LibDataBroker-1.1')
-local Carrousel = Addon.Parented:NewClass('BrokerCarrousel', 'Button')
+local Carrousel = Addon.Tipped:NewClass('BrokerCarrousel', 'Button')
 
 
 --[[ Construct ]]--
@@ -85,7 +85,7 @@ function Carrousel:OnEnter()
 		if object.OnEnter then
 			object.OnEnter(self)
 		else
-			GameTooltip:SetOwner(self, self:GetRight() > (GetScreenWidth() / 2) and 'ANCHOR_TOPLEFT' or 'ANCHOR_TOPRIGHT')
+			GameTooltip:SetOwner(self:GetTipAnchor())
 
 			if object.OnTooltipShow then
 				object.OnTooltipShow(GameTooltip)
@@ -102,8 +102,8 @@ function Carrousel:OnLeave()
 	local object = self:GetObject()
 	if object and object.OnLeave then
 		object.OnLeave(self)
-	elseif GameTooltip:IsOwned(self) then
-		GameTooltip:Hide()
+	else
+		self:Super(Carrousel):OnLeave()
 	end
 end
 
