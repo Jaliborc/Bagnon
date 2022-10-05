@@ -10,8 +10,8 @@ local Frame = Addon.Frame
 Frame.ItemGroup = Addon.ItemGroup
 Frame.BagGroup = Addon.BagGroup
 Frame.MoneyFrame = Addon.MoneyFrame
-Frame.DisplaySpacing = 1
-Frame.MoneySpacing = 0
+Frame.BrokerSpacing = 2
+Frame.MoneySpacing = 8
 
 
 --[[ Construct ]]--
@@ -296,8 +296,7 @@ end
 function Frame:PlaceMoney()
 	if self:HasMoney() then
 		self.Money = self.Money or self.MoneyFrame(self)
-		--self.Money:SetPoint('BOTTOMRIGHT', self, 'BOTTOMRIGHT', -self.MoneySpacing, 4)
-		self.Money:SetPoint('TOPRIGHT', self.ItemGroup, 'BOTTOMRIGHT', 8,0)
+		self.Money:SetPoint('TOPRIGHT', self.ItemGroup, 'BOTTOMRIGHT', self.MoneySpacing, 0)
 		self.Money:Show()
 
 		return self.Money:GetSize()
@@ -327,11 +326,11 @@ end
 
 function Frame:PlaceBrokerCarrousel()
 	if self:HasBrokerCarrousel() then
-		local right = self:HasMoney() and {'RIGHT', self.Money, 'LEFT', -5,2} or
+		local right = self:HasMoney() and {'RIGHT', self.Money, 'LEFT', -5, self.BrokerSpacing} or
 																			{'BOTTOMRIGHT', self, 'BOTTOMRIGHT', -4,4}
 		local left = self:HasCurrencies() and self.Currency:GetPoint(0) == 'TOPLEFT' and
 																			{'LEFT', self.Currency, 'RIGHT', -2,0} or
-																			{'TOPLEFT', self.ItemGroup, 'BOTTOMLEFT', 0,2}
+																			{'TOPLEFT', self.ItemGroup, 'BOTTOMLEFT', 0, self.BrokerSpacing}
 
 		self.Broker = self.Broker or Addon.BrokerCarrousel(self)
 		self.Broker:ClearAllPoints()
@@ -350,7 +349,7 @@ function Frame:HasMoney()
 end
 
 function Frame:HasCurrencies()
-	return not Addon.IsClassic and self.profile.currency
+	return self.profile.currency and BackpackTokenFrame
 end
 
 function Frame:HasBrokerCarrousel()

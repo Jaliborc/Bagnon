@@ -1,4 +1,8 @@
-#### 10.0.0 (beta)
+##### 10.0.1 (beta)
+* Fixed some bugs with vault and guild bank.
+* Fixed issue with databroker positioning in vault.
+
+#### 10 (beta)
 * Near full Dragonflight support (except configuration).
 * Largely improved auto frame display features. Auto display settings have been reset to default values.
 * Updated Portuguese config locales (by... just me, actually).
@@ -25,7 +29,7 @@
 ##### 9.2.1
 * WotLK: Updated for Wrath of the Lich King
 
-#### 9.2.0
+#### 9.2
 * All: Reverted authenticator slot changes from last version. Behaviour didn't match expected, our apologies.
 * TBC: Fixed bug preventing splitting stacks on guild bank.
 * Retail: Tagged for 9.2.
@@ -55,7 +59,7 @@
 * TBC: Replaced guild bank icon that isn't available in these servers.
 * All: Changed default mining bag color to set it further apart from others.
 
-#### 9.1.0
+#### 9.1
 * Retail: updated for Chains of Domination.
 
 ##### 9.0.7
@@ -85,7 +89,7 @@
 ##### 9.0.1
 * Fixed issue introduced in classic servers.
 
-#### 9.0.0
+#### 9
 * Updated for Shadowlands.
 
 ##### 8.3.9
@@ -122,7 +126,7 @@
 * Updated Chinese localization (by Adavak).
 * Updated Korean localization (by chkid).
 
-#### 8.3.0
+#### 8.3
 * Updated for Visions of Nzoth.
 * Made showing a coin icon on poor items optional.
 * Removed some forgotten debug code.
@@ -273,7 +277,7 @@
   * Does not support keyring yet (don't have a character with a key).
 * Now using the icons from character creation for player icons.
 
-#### 8.2.0
+#### 8.2
 * Updated for Rise of Aszhara.
 * Fixed issue with opening bags in combat.
 * Currently "act as standard panel" mode is not implemented. Still trying to figure out if it is possible to do so patch 8.2 onwards.
@@ -310,7 +314,7 @@
 * Updated French and Russian localization.
 * Fixed issue with bag toggle button.
 
-#### 8.1.0
+#### 8.1
 * Fixed issue preventing Void Storage from working and that could also cause minor guild bank issues.
 * Updated for World of Warcraft patch 8.1.
 
@@ -348,7 +352,7 @@
 * Fixed issue with properly marking the bank frame as "live" (not cached).
 * Fixed issue with Aggra server.
 
-#### 8.0.0
+#### 8
 * Updated for Battle for Azeroth.
 
 ##### 7.3.11 (beta)
@@ -433,7 +437,7 @@
 * Void Storage now fully functional again. Next update will bring the Guild Bank back.
 * Minor quality of life improvements to some UI elements hitboxes.
 
-#### 7.2.0 (beta)
+#### 7.2 (beta)
 * Updated for WoW patch 7.2
 * Major internal update! The large majority of Bagnon now runs on the same code as Combuctor
   * Added an API for registering item rulesets. Has no visible effect yet.
@@ -444,7 +448,7 @@
 * Fixed issue displaying Void Storage tooltips.
 * Fixed issue with new build pipeline versioning system.
 
-#### 7.1.0 (beta)
+#### 7.1 (beta)
 * Updated for WoW patch 7.1.
 * Now displays upgrade icons.
 * Removed some unused library files from build.
@@ -467,7 +471,7 @@
 ##### 7.0.1 (beta)
 * Hopefully fixed issue with server names like Azjol-Nerub
 
-#### 7.0.0 (beta)
+#### 7 (beta)
 * Updated for Legion
 
 ##### 6.2.7
@@ -497,7 +501,7 @@
 ##### 6.2.1
 * Fixed bug with display blizzard frames option
 
-#### 6.2.0
+#### 6.2
 * Updated for Fury of Hellfire
 
 ##### 6.1.7
@@ -542,7 +546,7 @@
 * Added keybindings and slashcommands for all windows.
 * Multiple bugfixes.
 
-#### 6.1.0 (beta)
+#### 6.1 (beta)
 * This is an experimental version. Use at your own risk. If you find a bug and report it, **please indicate that you are using this version**.
 * More major bugfixes.
 * Added option to have the reagent Bank separated from the normal Bank bags.
@@ -660,7 +664,7 @@
   * Now supports the new void tab!
   * Fixed several issues with the withdraw and deposit interfaces.
 
-#### 6.0.0 (beta)
+#### 6 (beta)
 * Updated for Warlords of Draenor.
 * Now supports the new reagent Bank, which appears as a new bag in the Bank window.
   * To deposit all reagents, click on the reagent Bank icon.
@@ -714,7 +718,7 @@
 ##### 5.4.1
 * Fixed bug with Guild Bank and void storage.
 
-#### 5.4.0
+#### 5.4
 * Updated for Siege of Ogrimmar.
 * Added support for the new in-game store features.
 
@@ -805,7 +809,7 @@
 ##### 5.0.1 (beta)
 * Updated for compatibility with latest Scrap version.
 
-#### 5.0.0 (beta)
+#### 5 (beta)
 * Updated and tested for Mists of Pandaria.
 * Added monk class and pandaren race.
 * Bug fixes and internal improvements.
@@ -975,14 +979,14 @@
 ##### 4.2.1
 * Tuller: Fixed a bug causing the lock checkbox to not show up in the config menu
 
-#### 4.2.0
+#### 4.2
 * Jaliborc: Removed keyring code, since the keyring is gone with WoW 4.2
 * Jaliborc: Implemented options for hiding frames when entering combat/entering a vehicle.
 
 ##### 4.1.1
 * Tuller: Fixed missing undead portraits.
 
-#### 4.1.0
+#### 4.1
 * Tuller: Hearthstones should now no longer have tooltip counts.
 
 ##### 2.19.2
@@ -991,13 +995,13 @@
 ##### 2.19.1
 * Tuller: Updated LibItemSearch to fix searching for bind on account items
 
-#### 2.19.0
+#### 2.19
 * Jaliborc: Added unsuable item highlighting as an option.
 
-#### 2.18.0
+#### 2.18
 * Tuller: Updated TOC for 4.1
 
-#### 2.17.0
+#### 2.17
 * Jaliborc: Added log views to the GuildBank
 * Tuller: Fixed tackle box highlighting
 * Tuller: Added some basic compatibility code for 4.1
@@ -1010,7 +1014,7 @@
 * Fixed tackle box coloring
 * Removed some lingering ammo/soul shard detection code
 
-#### 2.16.0
+#### 2.16
 * 4.0.6 fixes
 
 ##### 2.15.2
@@ -1020,13 +1024,13 @@
 * Added flash find options
 * Removed ammo + shard color options, since they have no use anymore.
 
-#### 2.15.0
+#### 2.15
 * Added FlashBind - Alt-Click a link or item to highlight it in your inventory (thanks Rueben)
 
 ##### 2.14.0b
 * Added back missing Bagnon_Forever + Tooltips
 
-#### 2.14.0
+#### 2.14
 * First Cataclysm beta
 
 ##### 2.13.3
@@ -1041,7 +1045,7 @@
 ##### 2.13.1
 * Maybe if I enable right clicks on the Guild Bank money frame, you'll be able to withdraw via right click :P
 
-#### 2.13.0
+#### 2.13
 * Implemented support for Blizzard's quest item highlighting in WoW 3.3.3
 
 ##### 2.12.6
@@ -1067,15 +1071,15 @@
 * Added comparison operators to item level and quality searches (you can now do things like q>=rare, q!=0, etc)
 * Added itemlevel searching: ilvl<op><number> (ex, ilvl>200 or ilvl:200)
 
-#### 2.12.0
+#### 2.12
 * Added new options for item slot colors and item border brightness
 
-#### 2.11.0
+#### 2.11
 * Added a new option to automatically display your inventory when opening the player frame
 * Added a new frame specific option: Enable bag break layout
 * Fixed a bug causing quest item highlighting to not work properly for non English locales
 
-#### 2.10.0
+#### 2.10
 * Added support for equipment set searching via s:<setName>
 * Made it easier for me to define new typed searches via Bagnon.ItemSearch.RegisterTypedSearch(typedSearchObj)
 
@@ -1100,13 +1104,13 @@
 ##### 2.8.1
 * Localization bugfix
 
-#### 2.8.0
+#### 2.8
 * Added a new option to disable the options toggle button
 * Adjusted a few default settings for the automatic display of the inventory frame
 * Adjusted priority of quest highlighting so that Uncommon+ items are not marked as quest items
 * Updated localization
 
-#### 2.7.0
+#### 2.7
 * Added new frame strata options: MEDIUMLOW, MEDIUMHIGH.  These are equivalent to Low + Toplevel and Medium + Toplevel
 * Added new option: Display Blizzard bag frames for disabled bags.
 * Added the ability to right click the title frame to display the options menu.
@@ -1139,7 +1143,7 @@
 * Added some bugfixes to broker tooltip handling
 * Updated localization
 
-#### 2.5.0
+#### 2.5
 * Moved item slot event handling to the item frame.
 * Fixed a display issue with the player selector for undead characters
 * Added in settings to disable the inventory, Bank and keyring frames
@@ -1149,7 +1153,7 @@
 ##### 2.4.1
 * Fixed a redbox error from hiding a frame when viewing another character
 
-#### 2.4.0
+#### 2.4
 * Fixed a bug with frame/border coloring
 * The player filter will now reset to the current player when a frame is closed
 * Made reverse bag slot ordering a per frame setting, instead of a global one
@@ -1164,7 +1168,7 @@
 * Updated localization
 * Added per frame option: Frame Layer - Controls frames appearing above or below other frames.
 
-#### 2.3.0
+#### 2.3
 * Rewrote saved settings back end to make it easier for me to adjust defaults.  Your settings have been reset.
 * Frame settings are now saved on per character basis
 * Global settings (stuff on the main options panel) are saved globally.
@@ -1176,7 +1180,7 @@
 * Fixed a frame display bug when closing frames via pressing escape
 * You can now double click to search once again.
 
-#### 2.2.0
+#### 2.2
 * Added option: show empty item slot textures
 * Added option: highlight items by quality
 * Added option: highlight quest items
@@ -1185,7 +1189,7 @@
 * Added a databroker launcher for Bagnon
 * Fixed a few bugs related to the databroker plugin
 
-#### 2.1.0
+#### 2.1
 * Started implementaton of the new options menu. Added options for color, border color, columns, spacing, opacity, and scale.
 * Added new slash command, /bgn options
 * Added a button to all frames as a shortcut to the options menu
