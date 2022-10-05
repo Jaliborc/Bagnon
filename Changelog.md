@@ -1,6 +1,7 @@
 ##### 10.0.1 (beta)
 * Fixed some bugs with vault and guild bank.
 * Fixed issue with databroker positioning in vault.
+* Fixed some technical issues with the configuration menu.
 
 #### 10 (beta)
 * Near full Dragonflight support (except configuration).
