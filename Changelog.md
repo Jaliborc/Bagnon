@@ -1,6 +1,9 @@
-##### 10.0.2 (beta)
+##### 10.0.2
+* New official logos and presentation, art by Daniel Troko.
+* Added support for new item border types (cosmetics, conduits,...).
+* Tightened currency display + bugfix.
 * Improved Pawn support.
-* Tightened currency display.
+* Tagging release.
 
 ##### 10.0.1 (beta)
 * Fixed some bugs with vault and guild bank.

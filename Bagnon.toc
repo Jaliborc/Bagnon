@@ -4,6 +4,6 @@
 ## Notes: The famous bag interface, designed to help the player find items|nas quickly and easily as possible. Possessions can be viewed at|nany time, from anywhere and from any character.|n|cffbbbbbbBy João Cardoso and Jason Greer|r|n|n|TInterface/Addons/BagBrother/Art/Paypal:12:12|t |cff82c5ffpaypal.me/jaliborc|r|n|TInterface/Addons/BagBrother/Art/Patreon:12:12:0:-4|t |cff82c5ffpatreon.com/jaliborc|r
 ## OptionalDeps: BagBrother, WoWUnit
 ## SavedVariables: Bagnon_Sets
-## Version: 10.0.1
+## Version: 10.0.2
 
 addons\main\main.xml
