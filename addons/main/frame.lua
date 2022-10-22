@@ -328,7 +328,7 @@ function Frame:PlaceBrokerCarrousel()
 	if self:HasBrokerCarrousel() then
 		local right = self:HasMoney() and {'RIGHT', self.Money, 'LEFT', -5, self.BrokerSpacing} or
 																			{'BOTTOMRIGHT', self, 'BOTTOMRIGHT', -4,4}
-		local left = self:HasCurrencies() and self.Currency:GetPoint(0) == 'TOPLEFT' and
+		local left = self:HasCurrencies() and self.Currency:GetPoint(1) == 'TOPLEFT' and
 																			{'LEFT', self.Currency, 'RIGHT', -2,0} or
 																			{'TOPLEFT', self.ItemGroup, 'BOTTOMLEFT', 0, self.BrokerSpacing}
 
