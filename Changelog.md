@@ -1,3 +1,7 @@
+##### 10.0.2 (beta)
+* Improved Pawn support.
+* Tightened currency display.
+
 ##### 10.0.1 (beta)
 * Fixed some bugs with vault and guild bank.
 * Fixed issue with databroker positioning in vault.
