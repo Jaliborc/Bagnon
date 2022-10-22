@@ -6,11 +6,11 @@
 local ADDON, Addon = ...
 local LDB = LibStub('LibDataBroker-1.1')
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+local ICON = 'Interface/Addons/BagBrother/Art/' .. ADDON .. '-Small'
 
 Addon:NewModule('LDB', LDB:NewDataObject(ADDON .. 'Launcher', {
 	type = 'launcher',
-	icon = [[Interface\Icons\INV_Misc_Bag_07]],
-	label = ADDON,
+	label = ADDON, icon = ICON,
 
 	OnEnable = function(self)
 		self:RegisterEvent('BAG_UPDATE_DELAYED', 'OnUpdate')
@@ -27,7 +27,7 @@ Addon:NewModule('LDB', LDB:NewDataObject(ADDON .. 'Launcher', {
 	end,
 
 	OnTooltipShow = function(tooltip)
-		tooltip:AddLine(ADDON)
+		tooltip:AddLine(format('|T%s:16:16|t %s', ICON, ADDON))
 		tooltip:AddLine(L.TipShowInventory:format(L.LeftClick), 1, 1, 1)
 		tooltip:AddLine(L.TipShowBank:format(L.RightClick), 1, 1, 1)
 		tooltip:AddLine(L.TipShowOptions:format(L.ShiftClick), 1, 1, 1)
