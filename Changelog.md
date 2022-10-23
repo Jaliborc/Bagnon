@@ -1,3 +1,7 @@
+##### 10.0.3
+* Wrath: Fixed issue with honor points.
+* All: Fixed issue if item slot coloring is turned off.
+
 ##### 10.0.2
 * New official logos and presentation, art by Daniel Troko.
 * Added support for new item border types (cosmetics, conduits,...).
@@ -35,7 +39,7 @@
 * Classic: Fixed bug introduced last version that only affected classic era servers.
 
 ##### 9.2.1
-* WotLK: Updated for Wrath of the Lich King
+* Updated for Wrath of the Lich King
 
 #### 9.2
 * All: Reverted authenticator slot changes from last version. Behaviour didn't match expected, our apologies.
