@@ -1,4 +1,9 @@
 ##### 10.0.3
+* All: Updated Chinese locals
+* Dragonflight: Updated for new bag slot IDs
+* Dragonflight: Fixed bag slot sorting flag bug
+
+##### 10.0.3
 * Wrath: Fixed issue with honor points.
 * All: Fixed issue if item slot coloring is turned off.
 
