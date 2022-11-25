@@ -6,6 +6,9 @@
 local MODULE =  ...
 local ADDON, Addon = MODULE:match('[^_]+'), _G[MODULE:match('[^_]+')]
 local Item = Addon.Item:NewClass('VaultItem')
+local GetContainerItemLink = C_Container.GetContainerItemLink
+local GetContainerNumSlots = C_Container.GetContainerNumSlots
+local UseContainerItem = C_Container.UseContainerItem
 
 
 --[[ Construct ]]--

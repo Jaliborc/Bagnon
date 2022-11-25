@@ -6,6 +6,8 @@
 local ADDON, Addon = ...
 local LDB = LibStub('LibDataBroker-1.1')
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+local GetContainerNumFreeSlots = C_Container.GetContainerNumFreeSlots
+local GetContainerNumSlots = C_Container.GetContainerNumSlots
 
 Addon:NewModule('LDB', LDB:NewDataObject(ADDON .. 'Launcher', {
 	type = 'launcher', label = ADDON,
