@@ -1,3 +1,6 @@
+##### 10.0.4 (beta)
+* Dragonflight: Main features supported, without removing backwards support. Currently not implemented: the new reagent bag, bag sorting types, guild bank and void storage.
+
 ##### 10.0.3
 * All: Updated Chinese locals
 * Dragonflight: Updated for new bag slot IDs

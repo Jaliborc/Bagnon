@@ -3,10 +3,14 @@
 [modules]
   BagBrother
   Bagnon_Config
-  Bagnon_GuildBank
-  Bagnon_VoidStorage
 [ignore]
   common/Wildpants/libs/LibItemSearch-1.2/Tests.lua
   common/Wildpants/libs/Poncho-2.0/Tests.lua
-  common/Wildpants/libs/Sushi-3.1/tests/
   common/Wildpants/libs/Unfit-1.0/Tests.lua
+  common/Wildpants/libs/Sushi-3.1/Tests/
+  common/Wildpants/libs/Sushi-3.1/Classes/Buttons/Help
+  common/Wildpants/libs/Sushi-3.1/Classes/Buttons/Gray
+  common/Wildpants/libs/Sushi-3.1/Classes/Buttons/Icon
+  common/Wildpants/libs/Sushi-3.1/Classes/Buttons/Expand
+  common/Wildpants/libs/Sushi-3.1/Classes/Groups/FauxScroll
+  common/Wildpants/libs/Sushi-3.1/Classes/Misc/GlowBox
