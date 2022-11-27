@@ -10,6 +10,19 @@ local Log = Addon.Parented:NewClass('LogFrame', 'ScrollingMessageFrame')
 local MESSAGE_PREFIX, _ = '|cff009999   '
 local MAX_TRANSACTIONS = 22
 
+local LOG_TYPES = {
+	deposit = GUILDBANK_DEPOSIT_FORMAT,
+	withdraw = GUILDBANK_WITHDRAW_FORMAT,
+	move = GUILDBANK_MOVE_FORMAT,
+	depositMoney = GUILDBANK_DEPOSIT_MONEY_FORMAT,
+	withdrawMoney = GUILDBANK_WITHDRAW_MONEY_FORMAT,
+	repairMoney = GUILDBANK_REPAIR_MONEY_FORMAT,
+	withdrawForTabMoney = GUILDBANK_WITHDRAWFORTAB_MONEY_FORMAT,
+	buyTabMoney = GUILDBANK_BUYTAB_MONEY_FORMAT,
+	unlockTab = GUILDBANK_UNLOCKTAB_FORMAT,
+	depositSummaryMoney = GUILDBANK_AWARD_MONEY_SUMMARY_FORMAT,
+}
+
 
 --[[ Construct ]]--
 
@@ -103,20 +116,7 @@ function Log:PrintMoney()
 		local type, name, amount, year, month, day, hour = self:ProcessLine(GetGuildBankMoneyTransaction(i))
 		local money = GetDenominationsFromCopper(amount)
 
-		local msg
-		if type == 'deposit' then
-			msg = format(GUILDBANK_DEPOSIT_MONEY_FORMAT, name, money)
-		elseif type == 'withdraw' then
-			msg = format(GUILDBANK_WITHDRAW_MONEY_FORMAT, name, money)
-		elseif type == 'repair' then
-			msg = format(GUILDBANK_REPAIR_MONEY_FORMAT, name, money)
-		elseif type == 'withdrawForTab' then
-			msg = format(GUILDBANK_WITHDRAWFORTAB_MONEY_FORMAT, name, money)
-		elseif type == 'buyTab' then
-			msg = amount > 0 and GUILDBANK_BUYTAB_MONEY_FORMAT:format(name, money) or GUILDBANK_UNLOCKTAB_FORMAT:format(name)
-		elseif type == 'depositSummary' then
-			msg = format(GUILDBANK_AWARD_MONEY_SUMMARY_FORMAT, money)
-		end
+		local msg = LOG_TYPES[type .. 'Money']:format(name, money)
 
 		self:AddLine(msg, year, month, day, hour)
 	end
