@@ -1,6 +1,6 @@
-﻿--[[
+--[[
 	optionsToggle.lua
-		A options frame toggle widget
+		A options frame toggle widget.
 --]]
 
 local ADDON, Addon = ...
@@ -11,13 +11,13 @@ local Toggle = Addon.Tipped:NewClass('OptionsToggle', 'Button', ADDON .. 'MenuBu
 --[[ Construct ]]--
 
 function Toggle:New(parent)
-	local b = self:Super(Toggle):New(parent)
-	b.Icon:SetTexture('Interface/Icons/Trade_Engineering')
-	b:SetScript('OnClick', b.OnClick)
-	b:SetScript('OnEnter', b.OnEnter)
-	b:SetScript('OnLeave', b.OnLeave)
-	b:RegisterForClicks('anyUp')
-	return b
+	local button = self:Super(Toggle):New(parent)
+	button.Icon:SetTexture('Interface/Icons/Trade_Engineering')
+	button:SetScript('OnClick', button.OnClick)
+	button:SetScript('OnEnter', button.OnEnter)
+	button:SetScript('OnLeave', button.OnLeave)
+	button:RegisterForClicks('anyUp')
+	return button
 end
 
 
@@ -25,12 +25,19 @@ end
 
 function Toggle:OnClick()
 	if LoadAddOn(ADDON .. '_Config') then
-		Addon.FrameOptions.frame = self:GetFrameID()
-		Addon.FrameOptions:Open()
+		local frame = self:GetFrame()
+		if frame then
+			Addon.FrameOptions.frame = frame
+			Addon.FrameOptions:Open()
+		end
 	end
 end
 
 function Toggle:OnEnter()
 	GameTooltip:SetOwner(self:GetTipAnchor())
+
+function Toggle:OnLeave()
+	GameTooltip:Hide()
+end
 	GameTooltip:SetText(L.TipConfigure:format(L.Click))
 end
