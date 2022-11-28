@@ -1,3 +1,8 @@
+##### 10.0.5 (beta)
+* Dragonflight: New sorting button icon (by Dethmold).
+* Dragonflight: Fixed issue with tooltip counts on merchant tooltips.
+* Dragonflight: Reagent bags now properly use the reagent slot color.
+
 ##### 10.0.4 (beta)
 * Dragonflight: Main features supported, without removing backwards support. Currently not implemented: the new reagent bag, bag sorting types, guild bank and void storage.
 
