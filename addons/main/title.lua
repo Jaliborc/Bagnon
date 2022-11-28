@@ -15,20 +15,20 @@ function Title:New(parent, title)
 	local b = self:Super(Title):New(parent)
 	b.title = title
 
-	b:SetScript('OnHide', b.OnMouseUp)
-	b:SetScript('OnMouseDown', b.OnMouseDown)
-	b:SetScript('OnMouseUp', b.OnMouseUp)
-	b:SetScript('OnDoubleClick', b.OnDoubleClick)
-	b:SetScript('OnEnter', b.OnEnter)
-	b:SetScript('OnLeave', b.OnLeave)
-	b:SetScript('OnClick', b.OnClick)
-
+	b:SetScripts(
+		'OnHide', b.OnMouseUp,
+		'OnMouseDown', b.OnMouseDown,
+		'OnMouseUp', b.OnMouseUp,
+		'OnDoubleClick', b.OnDoubleClick,
+		'OnEnter', b.OnEnter,
+		'OnLeave', b.OnLeave,
+		'OnClick', b.OnClick
+	)
 	b:RegisterSignal('SEARCH_TOGGLED', 'UpdateVisible')
 	b:RegisterFrameSignal('OWNER_CHANGED', 'Update')
 	b:RegisterForClicks('anyUp')
 
-	b:SetHighlightFontObject('GameFontHighlightLeft')
-	b:SetNormalFontObject('GameFontNormalLeft')
+	b:SetFonts('GameFontNormalLeft', 'GameFontHighlightLeft')
 	b:SetToplevel(true)
 	b:Update()
 
