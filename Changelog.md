@@ -1,5 +1,10 @@
+##### 10.0.6
+* Dragonflight: added guild bank, void storage and bag flags support.
+* Dragonflight: caged pet tooltips currently don't show counts.
+
 ##### 10.0.5 (beta)
-* Dragonflight: New sorting button icon (by Dethmold).
+* All: New sorting button icon (by Dethmold).
+* All: Moving forward will have to depend on BagBrother, makes more sense implementation-wise.
 * Dragonflight: Fixed issue with tooltip counts on merchant tooltips.
 * Dragonflight: Reagent bags now properly use the reagent slot color.
 

@@ -3,6 +3,8 @@
 [modules]
   BagBrother
   Bagnon_Config
+  Bagnon_VoidStorage
+  Bagnon_GuildBank
 [ignore]
   common/Wildpants/libs/LibItemSearch-1.2/Tests.lua
   common/Wildpants/libs/Poncho-2.0/Tests.lua
