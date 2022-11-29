@@ -1,3 +1,9 @@
+##### 10.0.7
+* All: Fixed bug introduced last version that was slowly deleting offline caches. Offline viewing functions again after visiting bank once.
+* WoLK, Classic: enchanting now should display item counts properly?
+* All: Item tooltips now longer refresh "OnUpdate".
+* All: Russian localization updated.
+
 ##### 10.0.6
 * Dragonflight: added guild bank, void storage and bag flags support.
 * Dragonflight: caged pet tooltips currently don't show counts.
