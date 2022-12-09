@@ -1,4 +1,17 @@
 <Ui>
+	<Script file="main.lua"/>
+	<Include file="..\..\BagBrother\addons\core\core.xml"/>
+	<Include file="..\..\BagBrother\addons\cache\cache.xml"/>
+
+	<Script file="title.lua"/>
+	<Script file="optionsToggle.lua"/>
+	<Script file="searchFrame.lua"/>
+	<Script file="searchToggle.lua"/>
+	<Script file="itemGroup.lua"/>
+	<Script file="frame.lua"/>
+
+	<Script file="legacy.lua"/>
+
 	<Button name="BagnonMenuButtonTemplate" virtual="true">
 		<Size x="20" y="20"/>
 		<HighlightTexture file="Interface\Buttons\ButtonHilight-Square" alphaMode="ADD"/>

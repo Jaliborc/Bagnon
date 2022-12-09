@@ -1,3 +1,26 @@
+##### 10.0.11
+* All: Fixed the conflict causing bad performance due to Blizzard's new tooltip implementation.
+* All: Colorization of quest items while offline is now more consistent with online viewing.
+* All: You can now search items by soulbound status.
+* Retail: You can now search items for all manner of stats, proprieties, expansion they were released on, etc...
+* Technical Details
+  * Started core redesign by merging Wildpants with BagBrother.
+  * Upgraded to the new LibItemSearch-1.3.
+  * Updated C_Everywhere with backwards TooltipInfo support.
+
+##### 10.0.10
+* All: Minor item display bugfixes.
+* All: Embedded TaintLess.
+
+##### 10.0.9
+* Dragonflight: Dragon Isle reagents now show quality icons.
+* All: Refactor and optimization of tooltip and item border display.
+
+##### 10.0.8
+* All: Fixed bug introduced last version that screwed up guild and vault tooltips.
+* All: Item tooltip now updates properly when new server data is received.
+* Dragonflight: Fixed bug preventing guildbank from being cached.
+
 ##### 10.0.7
 * All: Fixed bug introduced last version that was slowly deleting offline caches. Offline viewing functions again after visiting bank once.
 * WoLK, Classic: enchanting now should display item counts properly?
