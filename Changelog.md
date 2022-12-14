@@ -1,8 +1,22 @@
+##### 10.0.14
+* Retail: Fixed issue preventing disabling backgrounds. Additionally, you can now pick between 3 different designs.
+* All: Fixed issue preventing searching by expansion.
+* All: Fixed issue with changing settings while Scrap is running.
+* All: Fixed issue with color settings.
+* All: Fixed bug in Sushi.Choice.
+
+##### 10.0.13
+* All: Fixed unwanted behavior of new item flash.
+
+##### 10.0.12
+* Dragonflight: Circumvented issue with Dragonflight client that was preventing items from being clicked.
+* All: Updated vault and guild bank search to the new search engine.
+
 ##### 10.0.11
-* All: Fixed the conflict causing bad performance due to Blizzard's new tooltip implementation.
+* All: Fixed the conflict causing bad performance due to Blizzard's new tooltip hooking API.
 * All: Colorization of quest items while offline is now more consistent with online viewing.
 * All: You can now search items by soulbound status.
-* Retail: You can now search items for all manner of stats, proprieties, expansion they were released on, etc...
+* Dragonflight: You can now search items for all manner of stats, proprieties, expansion they were released on, etc...
 * Technical Details
   * Started core redesign by merging Wildpants with BagBrother.
   * Upgraded to the new LibItemSearch-1.3.

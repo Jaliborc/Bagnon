@@ -6,3 +6,7 @@
 
 local ADDON, Addon = ...
 Addon.ItemSlot = Addon.Item
+
+function Addon.Item:GetItem()
+	return self.info.link
+end
