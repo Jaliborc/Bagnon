@@ -1,3 +1,6 @@
+##### 10.0.15
+* All: Minor change that might reduce taint.
+
 ##### 10.0.14
 * Retail: Fixed issue preventing disabling backgrounds. Additionally, you can now pick between 3 different designs.
 * All: Fixed issue preventing searching by expansion.
