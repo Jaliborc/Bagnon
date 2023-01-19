@@ -16,8 +16,8 @@ function Title:New(parent, title)
 	b.title = title
 
 	b:SetScript('OnHide', b.OnMouseUp)
-	b:SetScript('OnMouseDown', b.OnMouseDown)
 	b:SetScript('OnMouseUp', b.OnMouseUp)
+	b:SetScript('OnMouseDown', b.OnMouseDown)
 	b:SetScript('OnDoubleClick', b.OnDoubleClick)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
@@ -76,7 +76,7 @@ end
 --[[ API ]]--
 
 function Title:Update()
-	self:SetFormattedText(self.title, self:GetOwnerInfo().name)
+	self:SetFormattedText(self.title, self:GetOwner().name)
 	self:GetFontString():SetAllPoints(self)
 end
 
