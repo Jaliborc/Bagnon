@@ -1,3 +1,7 @@
+##### 10.0.16
+* Wrath: Hotfix for blizzard server bugs introduced with Secrets of Ulduar.
+* All: New item glow no longer appears on all items for 1 frame the first time the inventory is open.
+
 ##### 10.0.15
 * All: Minor change that might reduce taint.
 
