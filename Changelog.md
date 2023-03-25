@@ -1,3 +1,6 @@
+##### 10.1
+* Dragonflight: can now do search by item level and required level using math operators again.
+
 ##### 10.0.16
 * Wrath: Hotfix for blizzard server bugs introduced with Secrets of Ulduar.
 * All: New item glow no longer appears on all items for 1 frame the first time the inventory is open.
