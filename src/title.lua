@@ -58,7 +58,7 @@ end
 
 function Title:OnClick(button)
 	if button == 'RightButton' and LoadAddOn(ADDON .. '_Config') then
-		Addon.FrameOptions.frameID = self:GetFrameID()
+		Addon.FrameOptions.frame = self:GetFrameID()
 		Addon.FrameOptions:Open()
 	end
 end
@@ -76,7 +76,7 @@ end
 --[[ API ]]--
 
 function Title:Update()
-	self:SetFormattedText(self.title, self:GetOwner().name)
+	self:SetFormattedText(self.title, self:GetOwner().name or ' ')
 	self:GetFontString():SetAllPoints(self)
 end
 

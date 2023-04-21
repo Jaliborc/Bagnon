@@ -1,3 +1,10 @@
+##### 10.0.15 (alpha)
+* All: Testing build featuring the nearly completed new core, which should feature better performance and easier development moving forward.
+* All: Tooltip counts now solely use the new data retrieval API. It should offer significant performance improvement to players with many characters.
+* All: Fixed structural issue that could cause guilds be assigned to the wrong server and cause a multitude of issues.
+* All: Fixed error when trying to open guild bank if not in one.
+* All: Fixed multiple minor void storage and guild bank bugs.
+
 ##### 10.0.14
 * Retail: Fixed issue preventing disabling backgrounds. Additionally, you can now pick between 3 different designs.
 * All: Fixed issue preventing searching by expansion.
