@@ -1,7 +1,8 @@
-#### 10.1.0
-* All: An open beta was planned for this week
-* Dragonflight: Updated for Embers of Netharion.
+##### 10.1.1 (beta)
 * Guild and Vault: Fixed issue with their keybindings.
+
+#### 10.1
+* Dragonflight: Updated for Embers of Netharion.
 
 ##### 10.0.19 (closed alpha)
 * Vault: Fixed long time unreported issue that the frame would start behaving erratically if closed mid transfer.
