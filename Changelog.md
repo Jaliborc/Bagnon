@@ -1,9 +1,32 @@
-##### 10.0.15 (alpha)
-* All: Testing build featuring the nearly completed new core, which should feature better performance and easier development moving forward.
-* All: Tooltip counts now solely use the new data retrieval API. It should offer significant performance improvement to players with many characters.
-* All: Fixed structural issue that could cause guilds be assigned to the wrong server and cause a multitude of issues.
-* All: Fixed error when trying to open guild bank if not in one.
-* All: Fixed multiple minor void storage and guild bank bugs.
+#### 10.1.0
+* All: An open beta was planned for this week
+* Dragonflight: Updated for Embers of Netharion.
+* Guild and Vault: Fixed issue with their keybindings.
+
+##### 10.0.19 (closed alpha)
+* Vault: Fixed long time unreported issue that the frame would start behaving erratically if closed mid transfer.
+* Vault: Fixed issue that would cause vault items to be in the wrong position until one was interacted with.
+* Bank and Vault: Fixed issue preventing items from being cached.
+
+##### 10.0.18 (closed alpha)
+* Reversed mistake made last version that caused new taint.
+* _Fallback Hidden Bags_ option now appears to work flawlessly.
+
+##### 10.0.17 (closed alpha)
+* Testing build featuring the nearly completed new core, which should feature better performance and easier development moving forward.
+* Tooltip counts now solely use the new data retrieval API. It should offer significant performance improvement to players with many characters.
+* Guild bank sort button now properly highlights when sorting is in process.
+* Fixed structural issue that could cause guilds be assigned to the wrong server and cause a multitude of issues.
+* Fixed error when trying to open guild bank if not in one.
+* Fixed multiple minor void storage and guild bank bugs.
+* Reduced taint.
+
+##### 10.0.16
+* Wrath: Hotfix for blizzard server bugs introduced with Secrets of Ulduar.
+* All: New item glow no longer appears on all items for 1 frame the first time the inventory is open.
+
+##### 10.0.15
+* All: Minor change that might reduce taint.
 
 ##### 10.0.14
 * Retail: Fixed issue preventing disabling backgrounds. Additionally, you can now pick between 3 different designs.
