@@ -1,8 +1,11 @@
 #### 10.1
+* THIS BUILD IS NOT MEANT FOR CLASSIC SERVERS!
 * Dragonflight: Updated for Embers of Neltharion.
 * Dragonflight: Can now do search by item level and required level using math operators again.
 * Guild and Vault: Fixed issue with their keybindings.
 * Still in the process of finishing integration with new core, had to release earlier than desired due to new patch.
+* Reverted local sorting to pre-alpha version, as it wasn't ready for release.
+* Improved behaviour of the sorting button highlight.
 
 ##### 10.0.19 (closed alpha)
 * Vault: Fixed long time unreported issue that the frame would start behaving erratically if closed mid transfer.
