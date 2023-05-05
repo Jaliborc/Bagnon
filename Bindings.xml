@@ -5,16 +5,10 @@
 	<Binding name="BAGNON_BANK_TOGGLE" category="ADDONS">
 		Bagnon.Frames:Toggle('bank')
 	</Binding>
-	<Binding name="BAGNON_GUILD_TOGGLE" category="ADDONS">
-		if Bagnon.LoadGuild then
-			Bagnon:LoadGuild()
-			Bagnon.Frames:Toggle('guild')
-		end
+		<Binding name="BAGNON_VAULT_TOGGLE" category="ADDONS">
+		Bagnon.Frames:Toggle('vault')
 	</Binding>
-	<Binding name="BAGNON_VAULT_TOGGLE" category="ADDONS">
-		if Bagnon.LoadVault then
-			Bagnon:LoadVault()
-			Bagnon.Frames:Toggle('vault')
-		end
+	<Binding name="BAGNON_GUILD_TOGGLE" category="ADDONS">
+		Bagnon.Frames:Toggle('guild')
 	</Binding>
 </Bindings>

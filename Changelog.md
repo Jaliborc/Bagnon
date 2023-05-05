@@ -1,5 +1,26 @@
-##### 10.1
-* Dragonflight: can now do search by item level and required level using math operators again.
+#### 10.1
+* Dragonflight: Updated for Embers of Neltharion.
+* Dragonflight: Can now do search by item level and required level using math operators again.
+* Guild and Vault: Fixed issue with their keybindings.
+* Still in the process of finishing integration with new core, had to release earlier than desired due to new patch.
+
+##### 10.0.19 (closed alpha)
+* Vault: Fixed long time unreported issue that the frame would start behaving erratically if closed mid transfer.
+* Vault: Fixed issue that would cause vault items to be in the wrong position until one was interacted with.
+* Bank and Vault: Fixed issue preventing items from being cached.
+
+##### 10.0.18 (closed alpha)
+* Reversed mistake made last version that caused new taint.
+* _Fallback Hidden Bags_ option now appears to work flawlessly.
+
+##### 10.0.17 (closed alpha)
+* Testing build featuring the nearly completed new core, which should feature better performance and easier development moving forward.
+* Tooltip counts now solely use the new data retrieval API. It should offer significant performance improvement to players with many characters.
+* Guild bank sort button now properly highlights when sorting is in process.
+* Fixed structural issue that could cause guilds be assigned to the wrong server and cause a multitude of issues.
+* Fixed error when trying to open guild bank if not in one.
+* Fixed multiple minor void storage and guild bank bugs.
+* Reduced taint.
 
 ##### 10.0.16
 * Wrath: Hotfix for blizzard server bugs introduced with Secrets of Ulduar.
@@ -10,39 +31,39 @@
 
 ##### 10.0.14
 * Retail: Fixed issue preventing disabling backgrounds. Additionally, you can now pick between 3 different designs.
-* All: Fixed issue preventing searching by expansion.
-* All: Fixed issue with changing settings while Scrap is running.
-* All: Fixed issue with color settings.
-* All: Fixed bug in Sushi.Choice.
+* Fixed issue preventing searching by expansion.
+* Fixed issue with changing settings while Scrap is running.
+* Fixed issue with color settings.
+* Fixed bug in Sushi.Choice.
 
 ##### 10.0.13
-* All: Fixed unwanted behavior of new item flash.
+* Fixed unwanted behavior of new item flash.
 
 ##### 10.0.12
 * Dragonflight: Circumvented issue with Dragonflight client that was preventing items from being clicked.
-* All: Updated vault and guild bank search to the new search engine.
+* Updated vault and guild bank search to the new search engine.
 
 ##### 10.0.11
-* All: Fixed the conflict causing bad performance due to Blizzard's new tooltip hooking API.
-* All: Colorization of quest items while offline is now more consistent with online viewing.
-* All: You can now search items by soulbound status.
-* Dragonflight: You can now search items for all manner of stats, proprieties, expansion they were released on, etc...
+* Fixed the conflict causing bad performance due to Blizzard's new tooltip hooking API.
+* Colorization of quest items while offline is now more consistent with online viewing.
+* You can now search items by soulbound status.
+* Dragonflight: You can now search items for all manner of stats, Properties, expansion they were released on, etc...
 * Technical Details
   * Started core redesign by merging Wildpants with BagBrother.
   * Upgraded to the new LibItemSearch-1.3.
   * Updated C_Everywhere with backwards TooltipInfo support.
 
 ##### 10.0.10
-* All: Minor item display bugfixes.
-* All: Embedded TaintLess.
+* Minor item display bugfixes.
+* Embedded TaintLess.
 
 ##### 10.0.9
 * Dragonflight: Dragon Isle reagents now show quality icons.
-* All: Refactor and optimization of tooltip and item border display.
+* Refactor and optimization of tooltip and item border display.
 
 ##### 10.0.8
-* All: Fixed bug introduced last version that screwed up guild and vault tooltips.
-* All: Item tooltip now updates properly when new server data is received.
+* Fixed bug introduced last version that screwed up guild and vault tooltips.
+* Item tooltip now updates properly when new server data is received.
 * Dragonflight: Fixed bug preventing guildbank from being cached.
 
 ##### 10.0.7

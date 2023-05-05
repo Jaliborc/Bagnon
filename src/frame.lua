@@ -6,10 +6,6 @@
 local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local Frame = Addon.Frame
-
-Frame.ItemGroup = Addon.ItemGroup
-Frame.BagGroup = Addon.BagGroup
-Frame.MoneyFrame = Addon.MoneyFrame
 Frame.BrokerSpacing = 2
 Frame.MoneySpacing = 8
 
@@ -18,14 +14,14 @@ Frame.MoneySpacing = 8
 
 function Frame:New(id)
 	local f = self:Super(Frame):New(UIParent)
-	f.frameID, f.quality = id, 0
+	f.id, f.quality = id, 0
 	f.profile = f:GetBaseProfile()
 
-	f.SearchFrame = Addon.SearchFrame(f)
 	f.Title = Addon.Title(f, f.Title)
+	f.SearchFrame = Addon.SearchFrame(f)
 	f.ItemGroup = self.ItemGroup(f, f.Bags)
 	f.CloseButton = CreateFrame('Button', nil, f, 'UIPanelCloseButtonNoScripts')
-	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.frameID, true) end)
+	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.id, true) end)
 	f.CloseButton:SetPoint('TOPRIGHT', -2, -2)
 
 	f:Hide()
@@ -37,11 +33,11 @@ function Frame:New(id)
 	f:SetScript('OnShow', self.OnShow)
 	f:SetScript('OnHide', self.OnHide)
 	f:SetBackdrop {
-	  bgFile = 'Interface/ChatFrame/ChatFrameBackground',
-	  edgeFile = 'Interface/Tooltips/UI-Tooltip-Border',
+		bgFile = 'Interface/ChatFrame/ChatFrameBackground',
+		edgeFile = 'Interface/Tooltips/UI-Tooltip-Border',
 		insets = {left = 4, right = 4, top = 4, bottom = 4},
 		tile = true, tileSize = 16,
-	  edgeSize = 16,
+		edgeSize = 16,
 	}
 
 	tinsert(UISpecialFrames, f:GetName())
@@ -73,6 +69,7 @@ function Frame:UpdateBackdrop()
 	self:SetBackdropColor(back[1], back[2], back[3], back[4])
 	self:SetBackdropBorderColor(border[1], border[2], border[3], border[4])
 end
+
 
 function Frame:Layout()
 	local width, height = 44, 36
@@ -181,7 +178,7 @@ function Frame:ListMenuButtons()
 end
 
 function Frame:HasOwnerSelector()
-	return Addon.Owners:MultipleFound()
+	return Addon.Owners:Count() > 1
 end
 
 function Frame:HasSearchToggle()
@@ -326,11 +323,12 @@ end
 
 function Frame:PlaceBrokerCarrousel()
 	if self:HasBrokerCarrousel() then
-		local right = self:HasMoney() and {'RIGHT', self.Money, 'LEFT', -5, self.BrokerSpacing} or
-																			{'BOTTOMRIGHT', self, 'BOTTOMRIGHT', -4,4}
+		local right = self:HasMoney() and 
+		              {'RIGHT', self.Money, 'LEFT', -5, self.BrokerSpacing} or
+		              {'BOTTOMRIGHT', self, 'BOTTOMRIGHT', -4,4}
 		local left = self:HasCurrencies() and self.Currency:GetPoint(1) == 'TOPLEFT' and
-																			{'LEFT', self.Currency, 'RIGHT', -2,0} or
-																			{'TOPLEFT', self.ItemGroup, 'BOTTOMLEFT', 0, self.BrokerSpacing}
+		              {'LEFT', self.Currency, 'RIGHT', -2,0} or
+		              {'TOPLEFT', self.ItemGroup, 'BOTTOMLEFT', 0, self.BrokerSpacing}
 
 		self.Broker = self.Broker or Addon.BrokerCarrousel(self)
 		self.Broker:ClearAllPoints()

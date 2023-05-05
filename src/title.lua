@@ -16,8 +16,8 @@ function Title:New(parent, title)
 	b.title = title
 
 	b:SetScript('OnHide', b.OnMouseUp)
-	b:SetScript('OnMouseDown', b.OnMouseDown)
 	b:SetScript('OnMouseUp', b.OnMouseUp)
+	b:SetScript('OnMouseDown', b.OnMouseDown)
 	b:SetScript('OnDoubleClick', b.OnDoubleClick)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
@@ -58,7 +58,7 @@ end
 
 function Title:OnClick(button)
 	if button == 'RightButton' and LoadAddOn(ADDON .. '_Config') then
-		Addon.FrameOptions.frameID = self:GetFrameID()
+		Addon.FrameOptions.frame = self:GetFrameID()
 		Addon.FrameOptions:Open()
 	end
 end
@@ -76,7 +76,7 @@ end
 --[[ API ]]--
 
 function Title:Update()
-	self:SetFormattedText(self.title, self:GetOwnerInfo().name)
+	self:SetFormattedText(self.title, self:GetOwner().name or ' ')
 	self:GetFontString():SetAllPoints(self)
 end
 
