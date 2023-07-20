@@ -1,10 +1,16 @@
+##### 10.1.1
+* Dragonflight: Added support for the new addon logos API and multiple-TOC format (no Compartiment support yet).
+* Classic and Wrath: Bagnon modules for features that don't exist in classic versions of the game no longer appear in the addon list.
+* Wrath: Updated TaintLess (previous version was causing issues on this version of the game).
+* All: There is an hidden easter egg included in this version, which will be removed in the close future. So if you want to hunt, hunt it now!
+
 #### 10.1
-* THIS BUILD IS NOT MEANT FOR CLASSIC SERVERS!
 * Dragonflight: Updated for Embers of Neltharion.
 * Dragonflight: Can now do search by item level and required level using math operators again.
 * Guild and Vault: Fixed issue with their keybindings.
 * Still in the process of finishing integration with new core, had to release earlier than desired due to new patch.
 * Reverted local sorting to pre-alpha version, as it wasn't ready for release.
+* * Fixed bug that prevented new players from using the addon.
 * Improved behaviour of the sorting button highlight.
 
 ##### 10.0.19 (closed alpha)

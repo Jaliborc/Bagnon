@@ -1,4 +1,5 @@
 <Ui>
+	<!-- All Rights Reserved -->
 	<Script file="main.lua"/>
 
 	<Include file="templates.xml"/>
