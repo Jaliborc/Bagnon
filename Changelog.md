@@ -1,3 +1,9 @@
+##### 10.1.2
+* Vanilla and Wrath: Fixed bug preventing sorting.
+* Vanilla and Wrath: Fixed bug preventing from opening the bags shelf.
+* Dragonflight: Tooltip for empty reagent bag slot now displays properly.
+* All: Bag buttons now desaturate when locked as expected.
+
 ##### 10.1.1
 * Dragonflight: Added support for the new addon logos API and multiple-TOC format (no Compartiment support yet).
 * Classic and Wrath: Bagnon modules for features that don't exist in classic versions of the game no longer appear in the addon list.
