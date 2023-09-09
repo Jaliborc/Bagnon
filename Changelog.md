@@ -1,3 +1,21 @@
+##### 10.1.8
+* All: New Feature! You can now offline view tracked currencies and amounts throughout characters in tooltips.
+
+##### 10.1.7
+* All: Potentially fixed issue with offline viewing entity sorting that was causing errors at startup to some users.
+
+##### 10.1.6
+* Vanilla & Wrath: Fixed issues with loading config in modern option panels.
+
+##### 10.1.4
+* Sorting now running on the new core, which concludes the transition to this new more efficient system.
+* Improvements to local sorting:
+  * Equipment saved as part of sets is still sorted before the rest of the equipment, but now right before it, without other categories of items inbetween.
+  * Fixed issue making sorting not target just the selected guild bank tab.
+
+##### 10.1.3
+* All: Implemented new recommended style for plugins in the addon list, to help telling plugins from core bagnon modules apart.
+
 ##### 10.1.2
 * Vanilla and Wrath: Fixed bug preventing sorting.
 * Vanilla and Wrath: Fixed bug preventing from opening the bags shelf.
@@ -16,7 +34,7 @@
 * Guild and Vault: Fixed issue with their keybindings.
 * Still in the process of finishing integration with new core, had to release earlier than desired due to new patch.
 * Reverted local sorting to pre-alpha version, as it wasn't ready for release.
-* * Fixed bug that prevented new players from using the addon.
+  * Fixed bug that prevented new players from using the addon.
 * Improved behaviour of the sorting button highlight.
 
 ##### 10.0.19 (closed alpha)
@@ -128,12 +146,12 @@
 
 ##### 9.2.4 (beta)
 * Basic Drangonflight support:
-    * No configuration, guild or vault yet.
-    * There are some known issues with the bank.
+  * No configuration, guild or vault yet.
+  * There are some known issues with the bank.
 * Currency tracker:
-    * Now supports all game versions, including Dragonflight and Wrath of the Lich King
-    * Redesigned to match the layout [chosen by the community](https://www.patreon.com/posts/71748089).
-    * Each currency in the tracker can now be interacted with separately.
+  * Now supports all game versions, including Dragonflight and Wrath of the Lich King
+  * Redesigned to match the layout [chosen by the community](https://www.patreon.com/posts/71748089).
+  * Each currency in the tracker can now be interacted with separately.
 * Removed behavior that made all slots of guild bank glow when move-hovering a guild bank tab.
 * Improved tooltips behavior while interacting with items.
 
@@ -302,17 +320,17 @@
 
 ##### 8.2.17 (beta)
 * Visible changes
-    * New owner selection menu.
-    * New frame selection menu.
-    * New icons in interface options.
-    * Upgraded interface options color picker design.
-    * Fixed issue with reappearing inactive widgets on scrollable menus.
+  * New owner selection menu.
+  * New frame selection menu.
+  * New icons in interface options.
+  * Upgraded interface options color picker design.
+  * Fixed issue with reappearing inactive widgets on scrollable menus.
 * Internal changes
-    * Upgraded to Poncho-2.0 and Sushi-3.1.
-    * Reorganization of components shared functionality using Poncho-2.0 new features.
-    * Massive cleaning and standardizing of code into Ace-like modules using WildAddon-1.0.
-    * Moved internally used timer API to new library DelayMutex-1.0.
-    * No longer using taintable dropdown or static popup implementations.
+  * Upgraded to Poncho-2.0 and Sushi-3.1.
+  * Reorganization of components shared functionality using Poncho-2.0 new features.
+  * Massive cleaning and standardizing of code into Ace-like modules using WildAddon-1.0.
+  * Moved internally used timer API to new library DelayMutex-1.0.
+  * No longer using taintable dropdown or static popup implementations.
 
 ##### 8.2.16
 * Sorting now even faster in most situations.
@@ -328,34 +346,34 @@
 * Fixed issue with Spanish, French, Italian, Portuguese and Russian localization.
 * Updated Chinese localization.
 * Retail:
-    * Fixed issue depositing items in the reagent bank.
-    * Fixed rare issue sorting the reagent bank.
+  * Fixed issue depositing items in the reagent bank.
+  * Fixed rare issue sorting the reagent bank.
 
 ##### 8.2.12
 * Sorting:
-    * Button tooltip now shows updated instructions.
-    * Now properly sorts void storage items in retail (guild bank will be next).
-    * No longer tries to start if in combat, dead, or holding something in the cursor.
-    * Automatically stops when entering combat.
-    * Fixed issue with enchanting reagents.
+  * Button tooltip now shows updated instructions.
+  * Now properly sorts void storage items in retail (guild bank will be next).
+  * No longer tries to start if in combat, dead, or holding something in the cursor.
+  * Automatically stops when entering combat.
+  * Fixed issue with enchanting reagents.
 * Tooltip Counts:
-    * Now properly count items in the 1st bank slot.
+  * Now properly count items in the 1st bank slot.
 * Localization:
-    * Changed how tooltip instructions are internally generated.
+  * Changed how tooltip instructions are internally generated.
 
 ##### 8.2.11 (beta)
 * Sorting:
-    * Improved sorting criteria.
-    * Fixed issue with the bank slot.
-    * Fixed issue with some quest items.
-    * Sorting button now highlights until the process is done.
+  * Improved sorting criteria.
+  * Fixed issue with the bank slot.
+  * Fixed issue with some quest items.
+  * Sorting button now highlights until the process is done.
 * Fixed small visual issue with character select button.
 * Internally changed how some tasks are scheduled with new delay API.
 
 ##### 8.2.10 (beta)
 * Can now sort items, even if the server doesn't support it:
-    * Bags and bank in classic.
-    * Void storage in retail.
+  * Bags and bank in classic.
+  * Void storage in retail.
 * Changed sort button icon.
 
 ##### 8.2.9
@@ -429,7 +447,7 @@
 
 ##### 8.1.1
 * Now handles server names differently, which should fix server specific issues.
-   * You might need to re-login on some characters for their data to show.
+  * You might need to re-login on some characters for their data to show.
 * Updated French and Russian localization.
 * Fixed issue with bag toggle button.
 

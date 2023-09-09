@@ -9,7 +9,7 @@ assignees: ''
 
 **Running Software (issues missing this information will be deleted):**
  - Addon version:
- - Server patch: [e.g. Build 8.0.1.27178]
+ - Client used: [e.g. Vanilla 1.14.4, Retail PTR x.x.x, etc]
 
  **Have you read the changelog? (please don't waste our time)**
  Mark if read.
