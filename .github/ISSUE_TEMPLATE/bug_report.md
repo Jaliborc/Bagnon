@@ -7,31 +7,24 @@ assignees: ''
 
 ---
 
-**Running Software (issues missing this information will be deleted):**
- - Addon version:
+**Which software were you running?**
+ - Addon version name:
  - Client used: [e.g. Vanilla 1.14.4, Retail PTR x.x.x, etc]
 
- **Have you read the changelog? (please don't waste our time)**
+**Have you read the changelog?**
  Mark if read.
 
-**Describe the bug**
+**Please describe the bug.**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behaviour:
+**Please describe how to reproduce it.**
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
 
-**Expected behaviour**
-A clear and concise description of what you expected to happen.
+**Any Screenshots?**
+If applicable, please add screenshots to help explain your problem.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Error Logs**
-Type `/console scriptErrors 1` in the chat and reload the game. If an error window appears, write here the message with `ID: 1` (labelled 1/X). This is generally NOT the message that the window shows by default.
-
-**Additional context**
-Add any other context about the problem here.
+**Error Logs are Important!**
+Type `/console scriptErrors 1` in the chat and reload the game. If an error window appears when reproducing the bug, please write here the first message (labelled 1/Many) that appeared. **:warning: By default, the last error message is shown, not the first!** You need to navigate back to the first error.
