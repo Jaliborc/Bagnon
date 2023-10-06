@@ -1,5 +1,35 @@
+##### 10.1.13
+* All: Offline viewing browser design.
+  * New dropdown menu.
+  * Right-clicking the bag toggle now opens bank.
+* Classic: Fixed error message when right-clicking bags.
+* All: Fixed issue that caused items to stay darkened after a cooldown.
+* All: Default bank bag artwork changed.
+
+##### 10.1.12
+* All: Fixed issue causing the wrong gender to be shown in the icons of some offline characters.
+* All: Fixed bug that caused guild to always be shown as horde.
+
+##### 10.1.11
+* All: Fixed bugs when shift-clicking items in guild bank or void storage.
+* All: Fixed silly bug in French locales.
+* Classic: Fixed issue that caused upgrade arrows sometimes not to show up (requires Pawn).
+
+##### 10.1.10
+* All: Fixed bug with Flash Find.
+* All: Redesigned the flash animation itself of Flash Find. Also reduced overall flashing speed to avoid creating negative effects on people vulnerable to intense flashing.
+* All: Fixed issue caused by server sending currency update events with missing arguments.
+* All: Updated French locales (by edalongeville).
+
+##### 10.1.9
+* Wrath: Fixed issue with caching the bank on Wrath servers (thank you to wishes90 for finding the cause).
+* All: Fixed bug with currency caching for offline viewing.
+* All: Overall update to localizations.
+* All: Added Dutch locales.
+
 ##### 10.1.8
 * All: New Feature! You can now offline view tracked currencies and amounts throughout characters in tooltips.
+* All: Fixed bug that would cause item tooltips to not enable in the settings without a reload.
 
 ##### 10.1.7
 * All: Potentially fixed issue with offline viewing entity sorting that was causing errors at startup to some users.
@@ -17,8 +47,8 @@
 * All: Implemented new recommended style for plugins in the addon list, to help telling plugins from core bagnon modules apart.
 
 ##### 10.1.2
-* Vanilla and Wrath: Fixed bug preventing sorting.
-* Vanilla and Wrath: Fixed bug preventing from opening the bags shelf.
+* Classic: Fixed bug preventing sorting.
+* Classic: Fixed bug preventing from opening the bags shelf.
 * Dragonflight: Tooltip for empty reagent bag slot now displays properly.
 * All: Bag buttons now desaturate when locked as expected.
 
