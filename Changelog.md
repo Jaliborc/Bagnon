@@ -1,7 +1,15 @@
+##### 10.1.15
+* All: Bagnon sort now clears the cursor before moving items, to prevent issues from the player grabbing an item or something else mid-sort.
+* Wrath: TOC update.
+
+##### 10.1.14
+* All: Fixed local sorting stacking issue.
+* All: Fixed offline inventory and bank search.
+
 ##### 10.1.13
 * All: Offline viewing browser design.
-  * New dropdown menu.
-  * Right-clicking the bag toggle now opens bank.
+	* New dropdown menu.
+	* Right-clicking the bag toggle now opens bank.
 * Classic: Fixed error message when right-clicking bags.
 * All: Fixed issue that caused items to stay darkened after a cooldown.
 * All: Default bank bag artwork changed.
@@ -40,8 +48,8 @@
 ##### 10.1.4
 * Sorting now running on the new core, which concludes the transition to this new more efficient system.
 * Improvements to local sorting:
-  * Equipment saved as part of sets is still sorted before the rest of the equipment, but now right before it, without other categories of items inbetween.
-  * Fixed issue making sorting not target just the selected guild bank tab.
+	* Equipment saved as part of sets is still sorted before the rest of the equipment, but now right before it, without other categories of items inbetween.
+	* Fixed issue making sorting not target just the selected guild bank tab.
 
 ##### 10.1.3
 * All: Implemented new recommended style for plugins in the addon list, to help telling plugins from core bagnon modules apart.
@@ -64,7 +72,7 @@
 * Guild and Vault: Fixed issue with their keybindings.
 * Still in the process of finishing integration with new core, had to release earlier than desired due to new patch.
 * Reverted local sorting to pre-alpha version, as it wasn't ready for release.
-  * Fixed bug that prevented new players from using the addon.
+* Fixed bug that prevented new players from using the addon.
 * Improved behaviour of the sorting button highlight.
 
 ##### 10.0.19 (closed alpha)
@@ -112,9 +120,9 @@
 * You can now search items by soulbound status.
 * Dragonflight: You can now search items for all manner of stats, Properties, expansion they were released on, etc...
 * Technical Details
-  * Started core redesign by merging Wildpants with BagBrother.
-  * Upgraded to the new LibItemSearch-1.3.
-  * Updated C_Everywhere with backwards TooltipInfo support.
+	* Started core redesign by merging Wildpants with BagBrother.
+	* Upgraded to the new LibItemSearch-1.3.
+	* Updated C_Everywhere with backwards TooltipInfo support.
 
 ##### 10.0.10
 * Minor item display bugfixes.
