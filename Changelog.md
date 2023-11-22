@@ -1,3 +1,15 @@
+##### 10.2.2
+* All: Due to a technical difficulty, **10.2** and **10.2.1** were never actually released without my knowledge.
+* All: Fixed issue with build system dependency making builds less optimized than they should have been.
+* Retail: Updated for new C_Addons API with backwards support.
+
+##### 10.2.1
+* All: Currency and sorting now more gracefully handle failed server requests.
+* All: Custom Bagnon keybindings now appear in their own category.
+
+#### 10.2
+* Retail: TOC update.
+
 ##### 10.1.15
 * All: Bagnon sort now clears the cursor before moving items, to prevent issues from the player grabbing an item or something else mid-sort.
 * Wrath: TOC update.

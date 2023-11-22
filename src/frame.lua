@@ -4,6 +4,7 @@
 --]]
 
 local ADDON, Addon = ...
+local C = LibStub('C_Everywhere')
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local Frame = Addon.Frame
 Frame.BrokerSpacing = 2
@@ -251,7 +252,7 @@ function Frame:PlaceOptionsToggle()
 end
 
 function Frame:HasOptionsToggle()
-	return GetAddOnEnableState(UnitName('player'), ADDON .. '_Config') >= 2 and self.profile.options
+	return C.Addons.GetAddOnEnableState(ADDON .. '_Config', UnitName('player')) >= 2 and self.profile.options
 end
 
 

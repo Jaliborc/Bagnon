@@ -1,14 +1,14 @@
 <Bindings>
-	<Binding name="BAGNON_TOGGLE" header="BAGNON" category="ADDONS">
+	<Binding name="BAGNON_TOGGLE" category="Bagnon">
 		Bagnon.Frames:Toggle('inventory')
 	</Binding>
-	<Binding name="BAGNON_BANK_TOGGLE" category="ADDONS">
+	<Binding name="BAGNON_BANK_TOGGLE" category="Bagnon">
 		Bagnon.Frames:Toggle('bank')
 	</Binding>
-		<Binding name="BAGNON_VAULT_TOGGLE" category="ADDONS">
+		<Binding name="BAGNON_VAULT_TOGGLE" category="Bagnon">
 		Bagnon.Frames:Toggle('vault')
 	</Binding>
-	<Binding name="BAGNON_GUILD_TOGGLE" category="ADDONS">
+	<Binding name="BAGNON_GUILD_TOGGLE" category="Bagnon">
 		Bagnon.Frames:Toggle('guild')
 	</Binding>
 </Bindings>
