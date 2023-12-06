@@ -1,3 +1,19 @@
+##### 10.2.4
+* Help menu improvements:
+  * Classic: Made sure help redirects behave the same as in retail.
+  * All: Fixed positioning of "Join Us"
+  * Added new Q&A about toggling frames.
+* Updated spanish locales.
+* New terms that were hard-coded are now localizable.
+
+##### 10.2.3
+* New Help menu!
+* Upgraded to Sushi-3.2:
+  * Popup rework, with bugfixes and improved design.
+  * Fixed dropdown issue that could create lag, improved design.
+  * Function-chaining now possible.
+  * Other minor optimizations.
+
 ##### 10.2.2
 * All: Due to a technical difficulty, **10.2** and **10.2.1** were never actually released without my knowledge.
 * All: Fixed issue with build system dependency making builds less optimized than they should have been.
