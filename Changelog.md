@@ -1,3 +1,10 @@
+##### 10.2.6
+* Retail: Added support to the new native Addon Compartment functionality.
+* Fixed bug that caused new item highlight not to reset on mousehover.
+
+##### 10.2.5
+* Now detects and warns user if the addon is out of date.
+
 ##### 10.2.4
 * Help menu improvements:
   * Classic: Made sure help redirects behave the same as in retail.
@@ -5,6 +12,7 @@
   * Added new Q&A about toggling frames.
 * Updated spanish locales.
 * New terms that were hard-coded are now localizable.
+* Fixed missing icon bug.
 
 ##### 10.2.3
 * New Help menu!
