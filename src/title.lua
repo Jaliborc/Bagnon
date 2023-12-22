@@ -1,6 +1,5 @@
 --[[
-	title.lua
-		A title frame widget
+	A title frame widget that can search on double-click
 --]]
 
 

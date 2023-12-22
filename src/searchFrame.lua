@@ -5,32 +5,18 @@
 
 local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
-local Search = Addon.Parented:NewClass('SearchFrame', 'EditBox', BackdropTemplateMixin and 'BackdropTemplate')
-
-Search.Backdrop = {
-	edgeFile = 'Interface/Tooltips/UI-Tooltip-Border',
-	bgFile = 'Interface/ChatFrame/ChatFrameBackground',
-	insets = {left = 2, right = 2, top = 2, bottom = 2},
-	tile = true,
-	tileSize = 16,
-	edgeSize = 16,
-}
+local Search = Addon.Parented:NewClass('SearchFrame', 'EditBox', 'TooltipBackdropTemplate')
 
 
 --[[ Construct ]]--
 
 function Search:New(parent)
 	local f = self:Super(Search):New(parent)
+	f:SetFontObject('ChatFontNormal')
+	f:SetTextInsets(8, 8, 0, 0)
+	f:SetFrameStrata('DIALOG')
 	f:SetToplevel(true)
 	f:Hide()
-
-	f:SetFrameStrata('DIALOG')
-	f:SetTextInsets(8, 8, 0, 0)
-	f:SetFontObject('ChatFontNormal')
-
-	f:SetBackdrop(f.Backdrop)
-	f:SetBackdropColor(0, 0, 0, 0.8)
-	f:SetBackdropBorderColor(1, 1, 1, 0.8)
 
 	f:RegisterSignal('SEARCH_TOGGLED', 'OnToggle')
 	f:SetScript('OnTextChanged', f.OnTextChanged)
