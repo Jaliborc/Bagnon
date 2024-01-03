@@ -6,6 +6,7 @@
 	<Include file="..\..\BagBrother\core\core.xml"/>
 	<Include file="..\..\BagBrother\frames\containers\containers.xml"/>
 
+	<Script file="skins.lua"/>
 	<Script file="title.lua"/>
 	<Script file="optionsToggle.lua"/>
 	<Script file="searchFrame.lua"/>

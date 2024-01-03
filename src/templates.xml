@@ -32,10 +32,17 @@
 			</OnLoad>
 		</Scripts>
 	</CheckButton>
+		<CheckButton name="BagnonReagentButtonTemplate" inherits="BagnonMenuCheckButtonTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+				self.Icon:SetTexture('Interface/Addons/BagBrother/Art/Reagents')
+			</OnLoad>
+		</Scripts>
+	</CheckButton>
 	<CheckButton name="BagnonBagToggleTemplate" inherits="BagnonMenuCheckButtonTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>
-				self.Icon:SetTexture([[Interface\Buttons\Button-Backpack-Up]])
+				self.Icon:SetTexture(130716)
 			</OnLoad>
 		</Scripts>
 	</CheckButton>
