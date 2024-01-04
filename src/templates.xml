@@ -46,4 +46,67 @@
 			</OnLoad>
 		</Scripts>
 	</CheckButton>
+
+	<Frame name="BagnonDialogSkinTemplate" inherits="DialogBorderNoCenterTemplate" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND" textureSubLevel="-5">
+				<Texture parentKey="Bg" file="Interface\Tooltips\UI-Tooltip-Background" horizTile="true" vertTile="true">
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="-7" y="-7"/>
+						<Anchor point="BOTTOMLEFT" x="7" y="7"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+	</Frame>
+	<Frame name="BagnonInsetSkinTemplate" inherits="InsetFrameTemplate2" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND" textureSubLevel="-5">
+				<Texture parentKey="Bg" file="Interface\Tooltips\UI-Tooltip-Background" horizTile="true" vertTile="true">
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="-1" y="-1"/>
+						<Anchor point="BOTTOMLEFT" x="1" y="1"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+	</Frame>
+	<Frame name="BagnonFlatSkinTemplate" virtual="true">
+		<Layers>
+			<Layer level="BORDER">
+				<Texture parentKey="Top">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT"/>
+						<Anchor point="TOPLEFT" y="-1"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="Bottom">
+					<Anchors>
+						<Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT"/>
+						<Anchor point="BOTTOMLEFT" y="1"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="Left">
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+						<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="1"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="Right">
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+						<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT" x="-1"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Center">
+					<Anchors>
+						<Anchor point="TOPRIGHT" relativeKey="$parent.Top" relativePoint="BOTTOMRIGHT"/>
+						<Anchor point="BOTTOMLEFT" relativeKey="$parent.Bottom" relativePoint="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+	</Frame>
 </Ui>

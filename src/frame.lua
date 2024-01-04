@@ -9,6 +9,7 @@ local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local Frame = Addon.Frame
 Frame.BrokerSpacing = 2
 Frame.MoneySpacing = 8
+Frame.Pools = {}
 
 
 --[[ Construct ]]--
@@ -63,15 +64,40 @@ function Frame:Update()
 end
 
 function Frame:UpdateBackdrop()
-	local skin = Addon.Skins:Get(self.profile.skin) or Addon.Skins:Get(ADDON)
-	local border = skin.borderColor ~= false and self.profile.borderColor or {1,1,1,1}
-	local back = skin.bgColor ~= false and self.profile.color or border
+	if self.pool then
+		if self.skin.reset then
+			self.skin.reset(self.bg)
+		end
 
-	NineSliceUtil.ApplyLayout(self.Bg, skin, '')
-	self.Bg:SetCenterColor(back[1], back[2], back[3], back[4])
-	self.Bg:SetBorderColor(border[1], border[2], border[3], border[4])
-	self.Bg:SetPoint('BOTTOMLEFT', skin.x or 0, skin.y or 0)
-	self.Bg:SetPoint('TOPRIGHT', skin.x1 or 0, skin.y1 or 0)
+		self.pool:Release(self.bg)
+	end
+
+	local skin = Addon.Skins:Get(self.profile.skin) or Addon.Skins:Get(ADDON)
+	local pool = self.Pools[skin.id] or CreateFramePool('Frame', UIParent, skin.template)
+	local bg = pool:Acquire()
+	bg:SetParent(self)
+	bg:SetFrameLevel(self:GetFrameLevel())
+	bg:SetPoint('BOTTOMLEFT', skin.x or 0, skin.y or 0)
+	bg:SetPoint('TOPRIGHT', skin.x1 or 0, skin.y1 or 0)
+	bg:EnableMouse(true)
+	bg:Show()
+
+	if skin.load then
+		skin.load(bg)
+	end
+
+	if skin.borderColor then
+		local border = self.profile.borderColor
+		skin.borderColor(bg, border[1], border[2], border[3], border[4])
+	end
+
+	if skin.centerColor then
+		local center = self.profile.color
+		skin.centerColor(bg, center[1], center[2], center[3], center[4])
+	end
+
+	self.skin, self.pool, self.bg = skin, pool, bg
+	self.Pools[skin.id] = pool
 end
 
 
@@ -82,59 +108,23 @@ function Frame:Layout()
 		height = height + h
 	end
 
-	--place top menu frames
+	--place top menu
 	width = width + self:PlaceMenuButtons()
 	width = width + self:PlaceOptionsToggle()
 	width = width + self:PlaceTitle()
 	self:PlaceSearchBar()
 
-	--place middle content frames
+	--place main grid
 	grow(self:PlaceBagGroup())
 	grow(self:PlaceItemGroup())
 
-	--place bottom display frames
+	--place bottom displays
 	grow(self:PlaceMoney())
 	grow(self:PlaceCurrencies(width, height))
 	self:PlaceBrokerCarrousel(width, height)
 
 	--adjust size
 	self:SetSize(max(width, 156) + 16, height)
-end
-
-
---[[ Essentials ]]--
-
-function Frame:PlaceTitle()
-	local frame = self.Title
-	local w = 0
-
-	frame:ClearAllPoints()
-	frame:SetHeight(20)
-
-	if #self.MenuButtons > 0 then
-		frame:SetPoint('LEFT', self.MenuButtons[#self.MenuButtons], 'RIGHT', 4, 0)
-		w = frame:GetTextWidth() / 2 + 4
-	else
-		frame:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
-		w = frame:GetTextWidth() + 8
-	end
-
-	if self:HasOptionsToggle() then
-		frame:SetPoint('RIGHT', self.OptionsToggle, 'LEFT', -4, 0)
-	else
-		frame:SetPoint('RIGHT', self.CloseButton, 'LEFT', -4, 0)
-	end
-
-	return w, 20
-end
-
-function Frame:PlaceItemGroup()
-	local anchor = self:IsBagGroupShown() and self.bagGroup
-					or #self.MenuButtons > 0 and self.MenuButtons[1]
-					or self.Title
-
-	self.ItemGroup:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', 0, -4)
-	return self.ItemGroup:GetWidth() - 2, self.ItemGroup:GetHeight()
 end
 
 
@@ -196,6 +186,30 @@ function Frame:PlaceOptionsToggle()
 	return 0,0
 end
 
+function Frame:PlaceTitle()
+	local frame = self.Title
+	local w = 0
+
+	frame:ClearAllPoints()
+	frame:SetHeight(20)
+
+	if #self.MenuButtons > 0 then
+		frame:SetPoint('LEFT', self.MenuButtons[#self.MenuButtons], 'RIGHT', 4, 0)
+		w = frame:GetTextWidth() / 2 + 4
+	else
+		frame:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
+		w = frame:GetTextWidth() + 8
+	end
+
+	if self:HasOptionsToggle() then
+		frame:SetPoint('RIGHT', self.OptionsToggle, 'LEFT', -4, 0)
+	else
+		frame:SetPoint('RIGHT', self.CloseButton, 'LEFT', -4, 0)
+	end
+
+	return w, 20
+end
+
 function Frame:HasOptionsToggle()
 	return C.Addons.GetAddOnEnableState(ADDON .. '_Config', UnitName('player')) >= 2 and self.profile.options
 end
@@ -213,25 +227,36 @@ function Frame:HasSortButton()
 end
 
 
---[[ Bag Frame ]]--
+--[[ Grid ]]--
 
 function Frame:PlaceBagGroup()
 	if self:IsBagGroupShown() then
+		local inset = self.skin.inset or 0 
 		self.bagGroup = self.bagGroup or self.BagGroup(self, 'LEFT', 36, 0)
 		self.bagGroup:Show()
 
 		if #self.MenuButtons > 0 then
-			self.bagGroup:SetPoint('TOPLEFT', self.MenuButtons[1], 'BOTTOMLEFT', 0, -4)
+			self.bagGroup:SetPoint('TOPLEFT', self.MenuButtons[1], 'BOTTOMLEFT', inset, -4-inset)
 		else
-			self.bagGroup:SetPoint('TOPLEFT', self.Title, 'BOTTOMLEFT', 0, -4)
+			self.bagGroup:SetPoint('TOPLEFT', self.Title, 'BOTTOMLEFT', inset, -4-inset)
 		end
 
-		return self.bagGroup:GetWidth(), self.bagGroup:GetHeight() + 4
+		return self.bagGroup:GetWidth() + inset*2, self.bagGroup:GetHeight() + 4
 	elseif self.bagGroup then
 		self.bagGroup:Hide()
 	end
 
 	return 0, 0
+end
+
+function Frame:PlaceItemGroup()
+	local anchor = self:IsBagGroupShown() and self.bagGroup
+					or #self.MenuButtons > 0 and self.MenuButtons[1]
+					or self.Title
+	local inset = anchor ~= self.bagGroup and self.skin.inset or 0
+
+	self.ItemGroup:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', inset, -4-inset)
+	return self.ItemGroup:GetWidth() - 2 + (self.skin.inset or 0) * 2, self.ItemGroup:GetHeight()
 end
 
 function Frame:IsBagGroupShown()
