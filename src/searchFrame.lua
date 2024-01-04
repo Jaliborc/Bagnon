@@ -1,6 +1,6 @@
 --[[
-	searchFrame.lua
-		A searcn frame widget
+	A search frame editbox.
+	All Rights Reserved
 --]]
 
 local ADDON, Addon = ...

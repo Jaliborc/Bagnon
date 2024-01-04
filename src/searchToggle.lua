@@ -1,6 +1,6 @@
 ﻿--[[
-	searchToggle.lua
-		A searcn toggle widget
+	A search toggle button.
+	All Rights Reserved
 --]]
 
 local ADDON, Addon = ...

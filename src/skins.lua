@@ -25,42 +25,54 @@ function Skins:Get(id)
 end
 
 function Skins:Iterate()
-	return pairs(self.registry)
+	local skins = GetValuesArray(self.registry)
+	sort(skins, function(a, b) return a.id < b.id end)
+	return ipairs(skins)
 end
 
 
 --[[ Built-In Skins ]]--
 
+local apply9S = function(name) return function(f) NineSliceUtil.ApplyLayout(f, NineSliceLayouts[name]) end end
 local border9S = function(f, ...) f:SetBorderColor(...) end
-local center9s = function(f, ...) f:SetCenterColor(...) end
-local vertexBg = function(f, ...) f.Bg:SetVertexColor(...) end
+local center9S = function(f, ...) f:SetCenterColor(...) end
 
-Skins:Register{ id = 'Bagnon', template = 'TooltipBackdropTemplate',
-				borderColor = function(f, ...) f:SetBackdropBorderColor(...) end,
-				centerColor = function(f, ...) f:SetBackdropColor(...) end }
-Skins:Register{ id = 'Bubble', template = 'ChatBubbleTemplate',
-				borderColor = function(f, ...) f:SetBorderColor(...); f.Tail:Hide() end }
-Skins:Register{ id = 'Frame', template = 'BasicFrameTemplateWithInset', x=1,y=-6,y1=-6, inset=4,
-				reset = function(f) f:GetParent().CloseButton:Show() end,
-				load = function(f)
-					f.CloseButton:SetScript('OnClick', function() ExecuteFrameScript(f:GetParent().CloseButton, 'OnClick') end)
-					f:GetParent().CloseButton:Hide()
-				end }
---Skins:Register{ id = 'Panel', template = 'DefaultPanelFlatTemplate',
---				load = function(f) f.NineSlice:SetFrameLevel(0) end }
+local resetClose = function(f) f:GetParent().CloseButton:SetPoint('TOPRIGHT', -2, -2) end
+local centerBG = function(f, ...) f.BG:SetColorTexture(...) end
 
-Skins:Register{ id = 'Dialog', template = 'BagnonDialogSkinTemplate', borderColor = border9S, centerColor = vertexBg, x=-7,y=-7, x1=7,y1=7 }
-Skins:Register{ id = 'Inset', template = 'BagnonInsetSkinTemplate', centerColor = vertexBg }
-Skins:Register{ id = 'Flat', template = 'BagnonFlatSkinTemplate',
-				reset = function(f) f:GetParent().Title:SetNormalFontObject(GameFontNormalLeft) end,
-				centerColor = function(f, ...) f.Center:SetColorTexture(...) end,
-				borderColor = function(f, ...)
-					f:GetParent().Title:SetNormalFontObject(GameFontHighlightLeft)
-					f.Top:SetColorTexture(...)
-					f.Left:SetColorTexture(...)
-					f.Right:SetColorTexture(...)
-					f.Bottom:SetColorTexture(...)
-				end }
+Skins:Register { id = 'Bagnon', template = 'NineSliceCodeTemplate', load = apply9S('TooltipDefaultLayout'), borderColor = border9S, centerColor = center9S }
+Skins:Register { id = 'Barber', template = 'NineSliceCodeTemplate', load = apply9S('CharacterCreateDropdown'), borderColor = border9S, x=-1,y=-20,y1=1 }
+Skins:Register { id = 'Bubble', template = 'NineSliceCodeTemplate', load = apply9S('ChatBubble'), borderColor = border9S }
+Skins:Register { id = 'Dialog', template = 'BagnonDialogSkinTemplate', borderColor = border9S, centerColor = centerBG, x=-7,y=-7, x1=7,y1=7 }
+Skins:Register { id = 'Inset', template = 'BagnonInsetSkinTemplate', centerColor = centerBG }
 
---DefaultPanelTemplate
---ThinBorderTemplate
+Skins:Register {
+	id = 'Panel - Flat', template = 'DefaultPanelFlatTemplate', reset = resetClose,
+	x = -2, x1 = -2, y = Addon.IsRetail and 0 or -6, y1 = -6, inset = 2,
+	load = function(f)
+		f:GetParent().CloseButton:SetPoint('TOPRIGHT', 2, Addon.IsRetail and -6 or -2)
+		f.TitleContainer:SetFrameLevel(0)
+		f.NineSlice:SetFrameLevel(0)
+	end
+}
+
+Skins:Register {
+	id = 'Panel - Marble', template = 'BasicFrameTemplateWithInset', reset = resetClose,
+	x = 1, y = -6, y1 = -6, inset = 4,
+	load = function(f)
+		f:GetParent().CloseButton:SetPoint('TOPRIGHT', Addon.IsRetail and 0 or 4, Addon.IsRetail and -5 or -1)
+		f.CloseButton:Hide()
+	end
+}
+
+Skins:Register {
+	id = 'Thin', template = 'HelpPlateBox', centerColor = centerBG,
+	borderColor = function(f, ...)
+		for i = 1, select('#', f:GetRegions()) do
+			local texture = select(i, f:GetRegions())
+			if texture:GetDrawLayer() == 'BORDER' then
+				texture:SetVertexColor(...)
+			end
+		end
+	end
+}

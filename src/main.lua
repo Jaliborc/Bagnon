@@ -1,5 +1,5 @@
 --[[
-	Constants and API specific to Bagnon
+	Constants specific to Bagnon
 --]]
 
 local ADDON, Addon = ...

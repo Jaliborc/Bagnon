@@ -1,6 +1,6 @@
 ﻿--[[
-	optionsToggle.lua
-		A options frame toggle widget
+	A options frame toggle button.
+	All Rights Reserved
 --]]
 
 local ADDON, Addon = ...

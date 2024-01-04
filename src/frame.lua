@@ -1,6 +1,6 @@
 --[[
-	frame.lua
-		The window frame object
+	The window frame object.
+	All Rights Reserved
 --]]
 
 local ADDON, Addon = ...
