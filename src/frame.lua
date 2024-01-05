@@ -367,11 +367,9 @@ do
 	f:SetScript("OnEvent", function()
 		if not InCombatLockdown() then
 			OpenAllBags()
-			CloseAllBags()
-			-- NOTE(Riotdog): The bag highlight persists despite the CloseAllBags() call.
-			-- It seems that we can't do it in the same frame. Disable the highlight on
-			-- the next possible frame.
-			C_Timer.After(0, function() Addon.Inventory:HighlightMainMenu(false) end)
+			-- NOTE(Riotdog): The bag highlight persists if we close the bags in the
+			-- same frame. Close all bags on the next possible frame instead.
+			C_Timer.After(0, function() CloseAllBags() end)
 			f:UnregisterAllEvents()
 		end
 	end)
