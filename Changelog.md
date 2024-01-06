@@ -1,6 +1,42 @@
+##### 10.2.12
+* Hotfixed issue with settings upgrade in previous version.
+
+##### 10.2.11
+* Added new Skin API and serveral built-in skins.
+* Users can now tell who is sending them version update alerts.
+* Fixed bug that caused sometimes dropdown menus to have full-screen backdrops.
+* Fixed bug causing an error on startup to some users.
+* Fixed bug with setting profiles.
+
+##### 10.2.10
+* New Trade-Skills/Reagents button.
+* DataBroker display area now supports _OnDragStart/OnReceiveDrag_ events.
+* Increased out-of-version warning cooldown. Can now detect invalid versions as well.
+* Fixed issue that caused the sort button to remain highlighted if pressed in an offline panel.
+* Retail: Fixed bug with reagent bank purchase dialog (caused by typo in Blizzard code).
+* Fixed bug that caused the Bag Break setting to reset to None.
+* Fixed bug with linking items in chat from offline windows.
+
+##### 10.2.9
+* This version is not yet feature-complete for Retail servers and thus only has Classic builds.
+* New Feature: You may now lock specific item slots to be ignored during sorting!
+* Happy new year!
+
+##### 10.2.8
+* This version is not yet feature-complete for Retail servers and thus only has Classic builds.
+* All: Made the buttons for forgetting character data more interactive and obvious.
+* All: Added the new sorting configuration menu with upcoming options.
+* All: Updated option headers and added a new question to the FAQ.
+* Retail: Local sorting now compatible with inventory and bank.
+* Retail: Fixed compartment being sillily attributed to Scrap.
+
+##### 10.2.7
+* Added ability to break bags by type (credit goes to Alban / Xin4rius).
+* Fixed concurrency issue introduced last version that could cause options not to appear.
+
 ##### 10.2.6
 * Retail: Added support to the new native Addon Compartment functionality.
-* Fixed bug that caused new item highlight not to reset on mousehover.
+* All: Fixed bug that caused new item highlight not to reset on mousehover.
 
 ##### 10.2.5
 * Now detects and warns user if the addon is out of date.
