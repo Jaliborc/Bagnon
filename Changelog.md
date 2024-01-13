@@ -1,3 +1,6 @@
+##### 10.2.13
+* Fixed issue with initializing the sorting configuration mode on some systems.
+
 ##### 10.2.12
 * Hotfixed issue with settings upgrade in previous version.
 

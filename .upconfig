@@ -6,14 +6,9 @@
   Bagnon_VoidStorage
   Bagnon_GuildBank
 [ignore]
+  BagBrother/libs/Sushi-3.2/Classes/Groups/FauxScroll.lua
   BagBrother/libs/C_Everywhere/Tests.lua
   BagBrother/libs/Unfit-1.0/Tests.lua
   BagBrother/libs/ItemSearch-1.3/Tests.lua
   BagBrother/libs/Poncho-2.0/Tests.lua
   BagBrother/libs/Sushi-3.2/Tests
-  BagBrother/libs/Sushi-3.2/Classes/Buttons/Help.lua
-  BagBrother/libs/Sushi-3.2/Classes/Buttons/Gray.lua
-  BagBrother/libs/Sushi-3.2/Classes/Buttons/Icon.lua
-  BagBrother/libs/Sushi-3.2/Classes/Buttons/Expand.lua
-  BagBrother/libs/Sushi-3.2/Classes/Groups/FauxScroll.lua
-  BagBrother/libs/Sushi-3.2/Classes/Misc/GlowBox.lua
