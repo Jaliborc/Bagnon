@@ -8,7 +8,7 @@
 
 	<Script file="skins.lua"/>
 	<Script file="title.lua"/>
-	<Script file="optionsToggle.lua"/>
+	<Script file="optionsButton.lua"/>
 	<Script file="searchFrame.lua"/>
 	<Script file="searchToggle.lua"/>
 	<Script file="frame.lua"/>

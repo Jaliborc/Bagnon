@@ -21,22 +21,15 @@
 			</Layer>
 		</Layers>
 	</Button>
-	<Button name="BagnonOwnerSelectorTemplate" inherits="BagnonMenuButtonTemplate" virtual="true"/>
-
 	<CheckButton name="BagnonMenuCheckButtonTemplate" inherits="BagnonMenuButtonTemplate" virtual="true">
 		<CheckedTexture file="Interface\Buttons\CheckButtonHilight" alphaMode="ADD"/>
 	</CheckButton>
+
+	<Button name="BagnonOwnerSelectorTemplate" inherits="BagnonMenuButtonTemplate" virtual="true"/>
 	<CheckButton name="BagnonSortButtonTemplate" inherits="BagnonMenuCheckButtonTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>
 				self.Icon:SetTexture('Interface/Addons/BagBrother/Art/Broom')
-			</OnLoad>
-		</Scripts>
-	</CheckButton>
-		<CheckButton name="BagnonReagentButtonTemplate" inherits="BagnonMenuCheckButtonTemplate" virtual="true">
-		<Scripts>
-			<OnLoad>
-				self.Icon:SetTexture('Interface/Addons/BagBrother/Art/Reagents')
 			</OnLoad>
 		</Scripts>
 	</CheckButton>
@@ -47,6 +40,13 @@
 			</OnLoad>
 		</Scripts>
 	</CheckButton>
+	<Button name="BagnonReagentButtonTemplate" inherits="BagnonMenuButtonTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+				self.Icon:SetTexture(413571)
+			</OnLoad>
+		</Scripts>
+	</Button>
 
 	<Frame name="BagnonDialogSkinTemplate" inherits="DialogBorderNoCenterTemplate" virtual="true">
 		<Layers>

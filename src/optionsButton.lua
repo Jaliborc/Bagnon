@@ -4,7 +4,6 @@
 --]]
 
 local ADDON, Addon = ...
-local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local Toggle = Addon.Tipped:NewClass('OptionsToggle', 'Button', ADDON .. 'MenuButtonTemplate')
 
 
@@ -31,6 +30,5 @@ function Toggle:OnClick()
 end
 
 function Toggle:OnEnter()
-	GameTooltip:SetOwner(self:GetTipAnchor())
-	GameTooltip:SetText(L.TipConfigure:format(L.Click))
+	self:ShowTooltip(OPTIONS)
 end

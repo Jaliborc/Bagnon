@@ -1,3 +1,9 @@
+##### 10.2.14 (beta)
+* Reorganized the menu buttons and what actions their perform given the recently added functionalities.
+  ** IMPORTANT! Some shortcuts, such as opening the bank with right-click, are no longer where they used to be! Please pay attention to the new tooltips.
+  ** Temporarily highlighted important recent changes and functionalities in the tooltips.
+* Comprehensive revamp of tooltip design, including tooltip item counts.
+
 ##### 10.2.13
 * Fixed issue with initializing the sorting configuration mode on some systems.
 
