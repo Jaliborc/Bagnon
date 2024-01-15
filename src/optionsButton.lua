@@ -6,9 +6,6 @@
 local ADDON, Addon = ...
 local Toggle = Addon.Tipped:NewClass('OptionsToggle', 'Button', ADDON .. 'MenuButtonTemplate')
 
-
---[[ Construct ]]--
-
 function Toggle:New(parent)
 	local b = self:Super(Toggle):New(parent)
 	b.Icon:SetTexture('Interface/Icons/Trade_Engineering')
@@ -18,9 +15,6 @@ function Toggle:New(parent)
 	b:RegisterForClicks('anyUp')
 	return b
 end
-
-
---[[ Events ]]--
 
 function Toggle:OnClick()
 	if LoadAddOn(ADDON .. '_Config') then

@@ -1,12 +1,10 @@
 <Ui>
 	<!-- All Rights Reserved -->
-	<Script file="main.lua"/>
-
 	<Include file="templates.xml"/>
 	<Include file="..\..\BagBrother\core\core.xml"/>
 	<Include file="..\..\BagBrother\frames\containers\containers.xml"/>
 
-	<Script file="skins.lua"/>
+	<Script file="main.lua"/>
 	<Script file="title.lua"/>
 	<Script file="optionsButton.lua"/>
 	<Script file="searchFrame.lua"/>

@@ -1,5 +1,5 @@
 --[[
-	The window frame object.
+	The Bagnon frame design.
 	All Rights Reserved
 --]]
 
@@ -9,7 +9,6 @@ local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local Frame = Addon.Frame
 Frame.BrokerSpacing = 2
 Frame.MoneySpacing = 8
-Frame.Pools = {}
 
 
 --[[ Construct ]]--
@@ -19,17 +18,12 @@ function Frame:New(id)
 	f.id, f.quality = id, 0
 	f.profile = f:GetBaseProfile()
 
-	f.Bg = CreateFrame('Frame', nil, f, 'NineSliceCodeTemplate')
-	f.Bg:SetFrameLevel(0)
-
 	f.MenuButtons = {}
 	f.Title = Addon.Title(f, f.Title)
 	f.SearchFrame = Addon.SearchFrame(f)
 	f.ItemGroup = self.ItemGroup(f, f.Bags)
-	
 	f.CloseButton = CreateFrame('Button', nil, f, 'UIPanelCloseButtonNoScripts')
 	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.id, true) end)
-	f.CloseButton:SetPoint('TOPRIGHT', -2, -2)
 
 	f:Hide()
 	f:FindRules()
@@ -64,42 +58,26 @@ function Frame:Update()
 end
 
 function Frame:UpdateBackdrop()
-	if self.pool then
-		if self.skin.reset then
-			self.skin.reset(self.bg)
-		end
-
-		self.pool:Release(self.bg)
+	if self.bg then
+		Addon.Skins:Release(self.bg)
 	end
 
-	local skin = Addon.Skins:Get(self.profile.skin) or Addon.Skins:Get(ADDON)
-	local pool = self.Pools[skin.id] or CreateFramePool('Frame', UIParent, skin.template)
-	local bg = pool:Acquire()
+	local center = self.profile.color
+	local border = self.profile.borderColor
+	local bg = Addon.Skins:Acquire(self.profile.skin)
 	bg:SetParent(self)
 	bg:SetFrameLevel(self:GetFrameLevel())
-	bg:SetPoint('BOTTOMLEFT', skin.x or 0, skin.y or 0)
-	bg:SetPoint('TOPRIGHT', skin.x1 or 0, skin.y1 or 0)
+	bg:SetPoint('BOTTOMLEFT', bg.skin.x or 0, bg.skin.y or 0)
+	bg:SetPoint('TOPRIGHT', bg.skin.x1 or 0, bg.skin.y1 or 0)
 	bg:EnableMouse(true)
-	bg:Show()
 
-	if skin.load then
-		skin.load(bg)
-	end
+	self.CloseButton:SetPoint('TOPRIGHT', (bg.skin.closeX or 0)-2, (bg.skin.closeY or 0)-2)
+	self.bg = bg
 
-	if skin.borderColor then
-		local border = self.profile.borderColor
-		skin.borderColor(bg, border[1], border[2], border[3], border[4])
-	end
-
-	if skin.centerColor then
-		local center = self.profile.color
-		skin.centerColor(bg, center[1], center[2], center[3], center[4])
-	end
-
-	self.skin, self.pool, self.bg = skin, pool, bg
-	self.Pools[skin.id] = pool
+	Addon.Skins:Call('load', bg)
+	Addon.Skins:Call('borderColor', bg, border[1], border[2], border[3], border[4])
+	Addon.Skins:Call('centerColor', bg, center[1], center[2], center[3], center[4])
 end
-
 
 function Frame:Layout()
 	local width, height = 44, 36
@@ -125,6 +103,7 @@ function Frame:Layout()
 
 	--adjust size
 	self:SetSize(max(width, 156) + 16, height)
+	Addon.Skins:Call('layout', self.bg)
 end
 
 
@@ -231,7 +210,7 @@ end
 
 function Frame:PlaceBagGroup()
 	if self:IsBagGroupShown() then
-		local inset = self.skin.inset or 0 
+		local inset = self.bg.skin.inset or 0 
 		self.bagGroup = self.bagGroup or self.BagGroup(self, 'LEFT', 36, 0)
 		self.bagGroup:Show()
 
@@ -253,10 +232,10 @@ function Frame:PlaceItemGroup()
 	local anchor = self:IsBagGroupShown() and self.bagGroup
 					or #self.MenuButtons > 0 and self.MenuButtons[1]
 					or self.Title
-	local inset = anchor ~= self.bagGroup and self.skin.inset or 0
+	local inset = anchor ~= self.bagGroup and self.bg.skin.inset or 0
 
 	self.ItemGroup:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', inset, -4-inset)
-	return self.ItemGroup:GetWidth() - 2 + (self.skin.inset or 0) * 2, self.ItemGroup:GetHeight()
+	return self.ItemGroup:GetWidth() - 2 + (self.bg.skin.inset or 0) * 2, self.ItemGroup:GetHeight()
 end
 
 function Frame:IsBagGroupShown()

@@ -7,9 +7,6 @@ local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local Toggle = Addon.Tipped:NewClass('SearchToggle', 'CheckButton', ADDON .. 'MenuButtonTemplate')
 
-
---[[ Construct ]]--
-
 function Toggle:New(parent)
 	local b = self:Super(Toggle):New(parent)
 	b.Icon:SetTexture('Interface/Icons/INV_Misc_Spyglass_03')
@@ -21,9 +18,6 @@ function Toggle:New(parent)
 	b:RegisterForClicks('anyUp')
 	return b
 end
-
-
---[[ Events ]]--
 
 function Toggle:OnShow()
 	self:RegisterSignal('SEARCH_TOGGLED', 'OnToggle')
