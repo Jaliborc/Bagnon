@@ -308,3 +308,23 @@ end
 function Frame:HasBrokerCarrousel()
 	return self.profile.broker
 end
+
+
+--[[ Eager frame creation to prevent taint ]]--
+
+-- Create the inventory frame on login (by opening and closing all bags) before
+-- potential combat lockdown to prevent taint and ADDON_ACTION_BLOCKED errors.
+do
+	local f = CreateFrame("Frame")
+	f:RegisterEvent("PLAYER_ENTERING_WORLD")
+	f:RegisterEvent("PLAYER_REGEN_ENABLED")
+	f:SetScript("OnEvent", function()
+		if not InCombatLockdown() then
+			OpenAllBags()
+			-- NOTE(Riotdog): The bag highlight persists if we close the bags in the
+			-- same frame. Close all bags on the next possible frame instead.
+			C_Timer.After(0, function() CloseAllBags() end)
+			f:UnregisterAllEvents()
+		end
+	end)
+end
