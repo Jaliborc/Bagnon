@@ -71,7 +71,7 @@ function Frame:UpdateBackdrop()
 	bg:SetPoint('TOPRIGHT', bg.skin.x1 or 0, bg.skin.y1 or 0)
 	bg:EnableMouse(true)
 
-	self.CloseButton:SetPoint('TOPRIGHT', (bg.skin.closeX or 0)-2, (bg.skin.closeY or 0)-2)
+	self.CloseButton:SetPoint('TOPRIGHT', (bg.skin.closeX or 0)-6, (bg.skin.closeY or 0)-6)
 	self.bg = bg
 
 	Addon.Skins:Call('load', bg)
