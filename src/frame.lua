@@ -34,6 +34,14 @@ function Frame:New(id)
 	f:SetScript('OnShow', self.OnShow)
 	f:SetScript('OnHide', self.OnHide)
 
+	--[[
+		This is not working properly since the name of the frame
+		always nil. I'm not sure how could you set it properly or
+		what's the actual problem
+		The interesting part is when both the bag and the bank is open,
+		it is closing but only the bag, though both name is still nil.
+		That's some sort of black magic.
+	]]
 	tinsert(UISpecialFrames, f:GetName())
 	return f
 end
@@ -44,6 +52,14 @@ function Frame:RegisterSignals()
 	self:RegisterSignal('SKINS_LOADED', 'UpdateBackdrop')
 	self:RegisterFrameSignal('BAG_FRAME_TOGGLED', 'Layout')
 	self:RegisterFrameSignal('ELEMENT_RESIZED', 'Layout')
+	self:SetScript('OnKeyDown', function(_, key)
+		if key == 'ESCAPE' or key == 27 then
+			self:SetPropagateKeyboardInput(false)
+			self:Hide()
+		else
+			self:SetPropagateKeyboardInput(true)
+		end
+	end)
 	self:Update()
 end
 
