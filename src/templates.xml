@@ -74,4 +74,58 @@
 			</Layer>
 		</Layers>
 	</Frame>
+		<Frame name="OnePixel" virtual="true">
+		<Layers>
+			<Layer level="LOW">
+				<Texture File="Interface\Buttons\WHITE8X8" parentKey="BG">
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="-1" y="-1"/>
+						<Anchor point="BOTTOMLEFT" x="1" y="1"/>
+					</Anchors>
+				</Texture>		
+			</Layer>
+			<Layer level="MEDIUM">
+				<!-- Top Border -->
+				<Texture File="Interface\Buttons\WHITE8X8" parentKey="BORDER">
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+						<Anchor point="TOPRIGHT"/>
+					</Anchors>
+					<Size x="1" y="1"/>
+					<TexCoords left="0" right="1" top="0" bottom="0.01"/>
+					<Color r="0" g="0" b="0" a="1"/>
+				</Texture>
+				<!-- Left Border -->
+				<Texture File="Interface\Buttons\WHITE8X8" parentKey="BORDER">
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+						<Anchor point="BOTTOMLEFT"/>
+					</Anchors>
+					<Size x="1" y="1"/>
+					<TexCoords left="0" right="0.01" top="0" bottom="1"/>
+					<Color r="0" g="0" b="0" a="1"/>
+				</Texture>
+				<!-- Right Border -->
+				<Texture File="Interface\Buttons\WHITE8X8" parentKey="BORDER">
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+					<Size x="1" y="1"/>
+					<TexCoords left="0" right="0.01" top="0" bottom="1"/>
+					<Color r="0" g="0" b="0" a="1"/>
+				</Texture>
+				<!-- Bottom Border -->
+				<Texture File="Interface\Buttons\WHITE8X8" parentKey="BORDER">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT"/>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+					<Size x="1" y="1"/>
+					<TexCoords left="0" right="1" top="0" bottom="0.01"/>
+					<Color r="0" g="0" b="0" a="1"/>
+				</Texture>
+			</Layer>
+		</Layers>
+	</Frame>
 </Ui>
