@@ -17,7 +17,7 @@ Addon.Skins:Register { id = 'Dialog', template = 'BagnonDialogSkinTemplate', bor
 Addon.Skins:Register { id = 'Inset', template = 'BagnonInsetSkinTemplate', centerColor = centerBG }
 
 Addon.Skins:Register {
-	id = 'Panel - Flat', template = 'DefaultPanelFlatTemplate',
+	id = 'Panel - Flat', template = 'DefaultPanelFlatTemplate', font = GameFontNormalCenter, fontH = GameFontHighlightCenter,
 	x = -2, x1 = -2, y = Addon.IsRetail and 0 or -6, y1 = -6, inset = 2, closeX = 4, closeY = Addon.IsRetail and -4,
 	load = function(f)
 		f.TitleContainer:SetFrameLevel(0)
@@ -26,13 +26,14 @@ Addon.Skins:Register {
 }
 
 Addon.Skins:Register {
-	id = 'Panel - Marble', template = 'BasicFrameTemplateWithInset',
+	id = 'Panel - Marble', template = 'BasicFrameTemplateWithInset', font = GameFontNormalCenter, fontH = GameFontHighlightCenter,
 	x = 1, y = -6, y1 = -6, inset = 4, closeX = Addon.IsRetail and 2 or 6, closeY = Addon.IsRetail and -3 or 1,
 	load = function(f) f.CloseButton:Hide() end
 }
 
 Addon.Skins:Register {
-	id = 'Thin', template = 'HelpPlateBox', centerColor = centerBG,
+	id = 'Thin', template = 'HelpPlateBox', font = GameFontHighlightLeft,
+	centerColor = centerBG,
 	borderColor = function(f, ...)
 		for i = 1, select('#', f:GetRegions()) do
 			local texture = select(i, f:GetRegions())

@@ -1,7 +1,53 @@
+##### 10.2.24 (unreleased)
+* All: Currenty Tracker can now enter multiline mode to fix niche issue that ocurred when tracking an extremely large amount of currencies.
+
+##### 10.2.23 (unreleased)
+* All: Fixed issue with party version broadcast detected by the community.
+
+##### 10.2.22
+* All: Fixed issue with ColorPicker detected by the community.
+
+##### 10.2.21
+* Wrath: Potential bugfix for the guild tab editing functionality.
+
+##### 10.2.20
+* Retail: Multiple guild bank improvements.
+	* You can now edit guild bank tabs icons and names without having to turn Bagnon off.
+	* Unlike in the stock UI, you can also edit tab descriptions from the same edit menu. 
+	* Redesigned guild bank tabs tooltips - more informative and better readability.
+	* Removed the tab info button from the guild bank, as it is now redundant due to the aforementioned changes.
+	* Made workaround of a bug in Blizzard API that reports the incorrect number of remaining withdrawals for guild bank tabs.
+	* Fixed issue that would cause guild bank not to show up if opened while any but the first tab was selected.  
+* Wrath: These changes have not been tested on Classic servers, as I currently don't have access to a guild bank there.
+
+##### 10.2.19
+* Wrath, Retail: Guild tabs now show their description/notes on mouse-over.
+* Wrath, Retail: Guild leaders can now buy new guild tabs.
+* All: Updated TOC numbers.
+
+##### 10.2.18
+* Updated portuguese localization.
+* Small tweak to Slot Settings for clarity.
+* Retail: Updated Color Picker to support changed API (while retaining classic support)
+
+##### 10.2.17
+* Fixed issue with the "Character Specific Settings" button.
+* Added optional parameters to the skin API to more easily control fonts.
+
+##### 10.2.16
+* Fixed bug introduced last build that disabled closing bags on ESC.
+* Retail: now displays caged battle pets and keystones properly while offline (wasn't supported since the new core).
+
+##### 10.2.15
+* Updated "guild bank and vault"-only tooltips to the new design.
+* Added new optional parameters to the skin API with commonly useful frame modifications.
+* Miscellaneous  code improvements and fixes.
+* Overall update to the wiki.
+
 ##### 10.2.14 (beta)
 * Reorganized the menu buttons and what actions their perform given the recently added functionalities.
-  ** IMPORTANT! Some shortcuts, such as opening the bank with right-click, are no longer where they used to be! Please pay attention to the new tooltips.
-  ** Temporarily highlighted important recent changes and functionalities in the tooltips.
+	** IMPORTANT! Some shortcuts, such as opening the bank with right-click, are no longer where they used to be! Please pay attention to the new tooltips.
+	** Temporarily highlighted important recent changes and functionalities in the tooltips.
 * Comprehensive revamp of tooltip design, including tooltip item counts.
 
 ##### 10.2.13
@@ -52,9 +98,9 @@
 
 ##### 10.2.4
 * Help menu improvements:
-  * Classic: Made sure help redirects behave the same as in retail.
-  * All: Fixed positioning of "Join Us"
-  * Added new Q&A about toggling frames.
+	* Classic: Made sure help redirects behave the same as in retail.
+	* All: Fixed positioning of "Join Us"
+	* Added new Q&A about toggling frames.
 * Updated spanish locales.
 * New terms that were hard-coded are now localizable.
 * Fixed missing icon bug.
@@ -62,10 +108,10 @@
 ##### 10.2.3
 * New Help menu!
 * Upgraded to Sushi-3.2:
-  * Popup rework, with bugfixes and improved design.
-  * Fixed dropdown issue that could create lag, improved design.
-  * Function-chaining now possible.
-  * Other minor optimizations.
+	* Popup rework, with bugfixes and improved design.
+	* Fixed dropdown issue that could create lag, improved design.
+	* Function-chaining now possible.
+	* Other minor optimizations.
 
 ##### 10.2.2
 * All: Due to a technical difficulty, **10.2** and **10.2.1** were never actually released without my knowledge.

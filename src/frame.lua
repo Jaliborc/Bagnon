@@ -72,6 +72,8 @@ function Frame:UpdateBackdrop()
 	bg:EnableMouse(true)
 
 	self.CloseButton:SetPoint('TOPRIGHT', (bg.skin.closeX or 0)-2, (bg.skin.closeY or 0)-2)
+	self.Title:SetHighlightFontObject(bg.skin.fontH or 'GameFontHighlightLeft')
+	self.Title:SetNormalFontObject(bg.skin.font or 'GameFontNormalLeft')
 	self.bg = bg
 
 	Addon.Skins:Call('load', bg)
@@ -267,7 +269,7 @@ function Frame:PlaceCurrencies(width)
 		if self:HasMoney() and self.Currency:GetWidth() < (width - self.Money:GetWidth() - (self:HasBrokerCarrousel() and 24 or 2)) then
 			self.Currency:SetPoint('TOPLEFT', self.ItemGroup, 'BOTTOMLEFT')
 		else
-			self.Currency:SetPoint('TOPRIGHT', self:HasMoney() and self.Money or self, 'BOTTOMRIGHT', -7,0)
+			self.Currency:SetPoint('TOPRIGHT', self:HasMoney() and self.Money or self, 'BOTTOMRIGHT', -7,2)
 			return self.Currency:GetSize()
 		end
 	elseif self.Currency then

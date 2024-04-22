@@ -21,13 +21,9 @@ function Title:New(parent, title)
 	b:SetScript('OnEnter', b.OnEnter)
 	b:SetScript('OnLeave', b.OnLeave)
 	b:SetScript('OnClick', b.OnClick)
-
 	b:RegisterSignal('SEARCH_TOGGLED', 'UpdateVisible')
 	b:RegisterFrameSignal('OWNER_CHANGED', 'Update')
 	b:RegisterForClicks('anyUp')
-
-	b:SetHighlightFontObject('GameFontHighlightLeft')
-	b:SetNormalFontObject('GameFontNormalLeft')
 	b:SetToplevel(true)
 	b:Update()
 
