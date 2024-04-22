@@ -15,6 +15,7 @@ Addon.Skins:Register { id = 'Barber', template = 'NineSliceCodeTemplate', load =
 Addon.Skins:Register { id = 'Bubble', template = 'NineSliceCodeTemplate', load = apply9S('ChatBubble'), borderColor = border9S }
 Addon.Skins:Register { id = 'Dialog', template = 'BagnonDialogSkinTemplate', borderColor = border9S, centerColor = centerBG, x=-7,y=-7, x1=7,y1=7 }
 Addon.Skins:Register { id = 'Inset', template = 'BagnonInsetSkinTemplate', centerColor = centerBG }
+Addon.Skins:Register { id = 'One Pixel', template = 'OnePixel', centerColor = centerBG}
 
 Addon.Skins:Register {
 	id = 'Panel - Flat', template = 'DefaultPanelFlatTemplate', font = GameFontNormalCenter, fontH = GameFontHighlightCenter,
