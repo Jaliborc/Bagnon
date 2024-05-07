@@ -5,8 +5,8 @@
 
 local ADDON, Addon = ...
 local C = LibStub('C_Everywhere')
-local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local Frame = Addon.Frame
+Frame.Font, Frame.FontH = GameFontNormalLeft, GameFontHighlightLeft
 Frame.BrokerSpacing = 2
 Frame.MoneySpacing = 8
 
@@ -38,48 +38,11 @@ function Frame:New(id)
 	return f
 end
 
-function Frame:RegisterSignals()
-	self:RegisterSignal('UPDATE_ALL', 'Update')
-	self:RegisterSignal('RULES_LOADED', 'FindRules')
-	self:RegisterSignal('SKINS_LOADED', 'UpdateBackdrop')
-	self:RegisterFrameSignal('BAG_FRAME_TOGGLED', 'Layout')
-	self:RegisterFrameSignal('ELEMENT_RESIZED', 'Layout')
-	self:Update()
+function Frame:RegisterEvents()
 end
 
 
 --[[ Update ]]--
-
-function Frame:Update()
-	self.profile = self:GetBaseProfile()
-	self:UpdateAppearance()
-	self:UpdateBackdrop()
-	self:Layout()
-end
-
-function Frame:UpdateBackdrop()
-	if self.bg then
-		Addon.Skins:Release(self.bg)
-	end
-
-	local center = self.profile.color
-	local border = self.profile.borderColor
-	local bg = Addon.Skins:Acquire(self.profile.skin)
-	bg:SetParent(self)
-	bg:SetFrameLevel(self:GetFrameLevel())
-	bg:SetPoint('BOTTOMLEFT', bg.skin.x or 0, bg.skin.y or 0)
-	bg:SetPoint('TOPRIGHT', bg.skin.x1 or 0, bg.skin.y1 or 0)
-	bg:EnableMouse(true)
-
-	self.CloseButton:SetPoint('TOPRIGHT', (bg.skin.closeX or 0)-2, (bg.skin.closeY or 0)-2)
-	self.Title:SetHighlightFontObject(bg.skin.fontH or 'GameFontHighlightLeft')
-	self.Title:SetNormalFontObject(bg.skin.font or 'GameFontNormalLeft')
-	self.bg = bg
-
-	Addon.Skins:Call('load', bg)
-	Addon.Skins:Call('borderColor', bg, border[1], border[2], border[3], border[4])
-	Addon.Skins:Call('centerColor', bg, center[1], center[2], center[3], center[4])
-end
 
 function Frame:Layout()
 	local width, height = 44, 36
@@ -304,7 +267,7 @@ function Frame:HasMoney()
 end
 
 function Frame:HasCurrencies()
-	return self.profile.currency and BackpackTokenFrame
+	return self.profile.currency
 end
 
 function Frame:HasBrokerCarrousel()
