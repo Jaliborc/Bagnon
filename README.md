@@ -1,8 +1,8 @@
-![Preview](http://jaliborc.com/media/addons/large/bagnon/watsup.jpg)
+![Preview](https://jaliborc.com/media/addons/large/bagnon/watsup.jpg)
 
-[![Install](http://img.shields.io/badge/install-curseforge-f16436)](https://www.curseforge.com/wow/addons/pettracker)
-[![Patreon](http://img.shields.io/badge/news-patreon-ff424d)](https://www.patreon.com/jaliborc)
-[![Community](http://img.shields.io/badge/community-discord-5865F2)](https://bit.ly/discord-jaliborc)
+[![Install](https://img.shields.io/badge/install-curseforge-f16436)](https://www.curseforge.com/wow/addons/pettracker)
+[![Patreon](https://img.shields.io/badge/news-patreon-ff424d)](https://www.patreon.com/jaliborc)
+[![Community](https://img.shields.io/badge/community-discord-5865F2)](https://bit.ly/discord-jaliborc)
 
 # Bagnon :handbag:
 Bagnon is the most popular replacement of the bag interface, designed to help the player find items as quickly and easily as possible.
