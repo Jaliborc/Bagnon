@@ -8,6 +8,6 @@
 ## Dependencies: BagBrother
 ## X-Development: True
 ## Interface: 40400
-## Version: 10.2.30
+## Version: 11.0.5
 
 src\main.xml

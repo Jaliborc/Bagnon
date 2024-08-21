@@ -4,8 +4,9 @@
 
 
 local ADDON, Addon = ...
-local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
 local Title = Addon.Tipped:NewClass('Title', 'Button')
+local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
+local C = LibStub('C_Everywhere')
 
 
 --[[ Construct ]]--
@@ -56,7 +57,7 @@ function Title:OnDoubleClick()
 end
 
 function Title:OnClick(button)
-	if button == 'RightButton' and LoadAddOn(ADDON .. '_Config') then
+	if button == 'RightButton' and C.AddOns.LoadAddOn(ADDON .. '_Config') then
 		Addon.FrameOptions.frame = self:GetFrameID()
 		Addon.FrameOptions:Open()
 	end

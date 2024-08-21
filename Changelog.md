@@ -1,3 +1,36 @@
+## 11.0.5
+* All: Fixed error message that sometimes appeared during search or sorting.
+
+## 11.0.4
+* Retail: Added support for Warband Money deposit/withdrawal.
+* Retail: Online tooltip count now properly includes the reagent bank.
+* Classic: Fixed error message at startup (did nothing bad, but still).
+
+## 11.0.3
+* Retail: Started adding support for Warband Bank.
+	* This is a work in progress, thought it was important to get a working version in your hands early.
+	* The current state is in no way representative of the intended final vision.
+	* Editing the bank tabs within Bagnon IS supported! 
+	* Local-side sorting is NOT supported yet.
+* Retail: Improved server sorting implementation and added warband support.
+* All: Added bag break spacing option.
+* All: Bag break "By Type" is now the default setting.
+
+## 11.0.2
+* Retail: Updated for WoW patch 11.0.2.
+* Classic, Cata: Verified support.
+* All: Updated TaintLess.
+
+## 11.0.1
+* Retail: Polished compatibility with The War Within.
+
+## 11.0.0
+* Retail: Now compatible with The War Within!
+* Retail: Warband bank support still in the works.
+
+### 10.2.31
+* All: The new item glow should no longer appear when using appearance-chaning addons (ex: Masque).
+
 ### 10.2.30
 * All: Update detection now takes into account reports by other players, which should drastically reduce the need for version broadcast.
 * Dragonflight: Updated toc.
@@ -135,7 +168,7 @@
 ### 10.2.2
 * All: Due to a technical difficulty, **10.2** and **10.2.1** were never actually released without my knowledge.
 * All: Fixed issue with build system dependency making builds less optimized than they should have been.
-* Retail: Updated for new C_Addons API with backwards support.
+* Retail: Updated for new C_AddOns API with backwards support.
 
 ### 10.2.1
 * All: Currency and sorting now more gracefully handle failed server requests.

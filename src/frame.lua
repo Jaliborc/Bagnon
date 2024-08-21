@@ -155,7 +155,7 @@ function Frame:PlaceTitle()
 end
 
 function Frame:HasOptionsToggle()
-	return C.Addons.GetAddOnEnableState(ADDON .. '_Config', UnitName('player')) >= 2 and self.profile.options
+	return C.AddOns.GetAddOnEnableState(ADDON .. '_Config', UnitName('player')) >= 2 and self.profile.options
 end
 
 function Frame:HasOwnerSelector()

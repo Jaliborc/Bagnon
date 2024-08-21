@@ -5,6 +5,7 @@
 
 local ADDON, Addon = ...
 local Toggle = Addon.Tipped:NewClass('OptionsToggle', 'Button', ADDON .. 'MenuButtonTemplate')
+local C = LibStub('C_Everywhere')
 
 function Toggle:New(parent)
 	local b = self:Super(Toggle):New(parent)
@@ -17,7 +18,7 @@ function Toggle:New(parent)
 end
 
 function Toggle:OnClick()
-	if LoadAddOn(ADDON .. '_Config') then
+	if C.AddOns.LoadAddOn(ADDON .. '_Config') then
 		Addon.FrameOptions.frame = self:GetFrameID()
 		Addon.FrameOptions:Open()
 	end
