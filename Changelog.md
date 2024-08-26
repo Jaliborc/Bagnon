@@ -1,4 +1,22 @@
-## 11.0.5
+### 11.0.8
+* Retail: Added tabs to focus between player and account bags.
+	* This is still a work in progress!
+	* These current tabs are provided as a temporary solution until I am ready for a proper release of a tab system (I have been experimenting with systems and designs internally for Bagnonium).
+	* Neither the current look nor funtionality of the tabs are final.
+	* When a proper system is released, it will be optional and highly configurable - think Combuctor, but smarter.
+* All: Fixed error message that could appear at startup on fresh new installs.
+
+### 11.0.7
+* Retail: Can once again configure server sorting by right-clicking the bags.
+* Retail: Now marks uncollected appearances with unique art, not just purely cosmetic items.
+
+### 11.0.6
+* Retail: Can now cache and offline display the Warband bank bags.
+* Retail: Can now more accurately detect whether one is able to withdraw/deposit Warband money.
+* Retail: Can now tell personal bank bags are offline when using the remote warband bank spell.
+* Retail: Fixed issues with display of reagent bank purchase status, both online and offline.
+
+### 11.0.5
 * All: Fixed error message that sometimes appeared during search or sorting.
 
 ## 11.0.4
@@ -6,7 +24,7 @@
 * Retail: Online tooltip count now properly includes the reagent bank.
 * Classic: Fixed error message at startup (did nothing bad, but still).
 
-## 11.0.3
+### 11.0.3
 * Retail: Started adding support for Warband Bank.
 	* This is a work in progress, thought it was important to get a working version in your hands early.
 	* The current state is in no way representative of the intended final vision.
@@ -16,12 +34,12 @@
 * All: Added bag break spacing option.
 * All: Bag break "By Type" is now the default setting.
 
-## 11.0.2
+### 11.0.2
 * Retail: Updated for WoW patch 11.0.2.
 * Classic, Cata: Verified support.
 * All: Updated TaintLess.
 
-## 11.0.1
+### 11.0.1
 * Retail: Polished compatibility with The War Within.
 
 ## 11.0.0
