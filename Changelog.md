@@ -1,3 +1,13 @@
+### 11.0.11
+* All: Re-introduced the LibItemCache library as part of the legacy code section to support plugins that still rely on it.
+
+### 11.0.10
+* Retail: Warband tabs now have their own slot type.
+* Retail: "Break by Type" now separates normal and warband slots, even of the reagent bank is hidden.
+
+### 11.0.9
+* All: New version detection now handled by StaleCheck-1.0. 
+
 ### 11.0.8
 * Retail: Added tabs to focus between player and account bags.
 	* This is still a work in progress!

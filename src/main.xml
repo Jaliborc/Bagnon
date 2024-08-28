@@ -2,7 +2,8 @@
 	<!-- All Rights Reserved -->
 	<Include file="templates.xml"/>
 	<Include file="..\..\BagBrother\core\core.xml"/>
-	<Include file="..\..\BagBrother\frames\containers\containers.xml"/>
+	<Include file="..\..\BagBrother\frames\containers\inventory.xml"/>
+	<Include file="..\..\BagBrother\frames\bank\bank.xml"/>
 
 	<Script file="main.lua"/>
 	<Script file="title.lua"/>
@@ -10,6 +11,4 @@
 	<Script file="searchFrame.lua"/>
 	<Script file="searchToggle.lua"/>
 	<Script file="frame.lua"/>
-
-	<Script file="legacy.lua"/>
 </Ui>

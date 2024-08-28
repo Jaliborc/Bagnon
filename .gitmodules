@@ -1,0 +1,3 @@
+[submodule "legacy/LibItemCache-2.0"]
+	path = legacy/LibItemCache-2.0
+	url = https://github.com/Jaliborc/LibItemCache-2.0.git
