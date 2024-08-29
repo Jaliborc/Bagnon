@@ -1,3 +1,8 @@
+### 11.0.12
+* All: Fixed longstanding bug that sometimes caused offline viewing items to display tinted colors.
+* All: Fixed error message that could appear when opening the bank for the first time.
+* Retail: Added a subtle default color-tint to warband item slots (configurable).
+
 ### 11.0.11
 * All: Re-introduced the LibItemCache library as part of the legacy code section to support plugins that still rely on it.
 
