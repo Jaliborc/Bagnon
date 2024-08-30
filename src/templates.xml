@@ -40,10 +40,10 @@
 			</OnLoad>
 		</Scripts>
 	</CheckButton>
-	<Button name="BagnonReagentButtonTemplate" inherits="BagnonMenuButtonTemplate" virtual="true">
+	<Button name="BagnonDepositButtonTemplate" inherits="BagnonMenuButtonTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>
-				self.Icon:SetTexture(413571)
+				self.Icon:SetTexture(454048)
 			</OnLoad>
 		</Scripts>
 	</Button>

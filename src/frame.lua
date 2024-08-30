@@ -31,8 +31,6 @@ function Frame:New(id)
 	f:SetToplevel(true)
 	f:EnableMouse(true)
 	f:SetClampedToScreen(true)
-	f:SetScript('OnShow', self.OnShow)
-	f:SetScript('OnHide', self.OnHide)
 
 	tinsert(UISpecialFrames, f:GetName())
 	return f
@@ -76,10 +74,10 @@ end
 
 function Frame:PlaceMenuButtons()
 	local buttons = {}
-	tinsert(buttons, self:HasOwnerSelector() and self:Get('OwnerSelector', function() return Addon.OwnerSelector(self) end))
+	tinsert(buttons, self:HasOwnerSelector() and self:GetWidget('OwnerSelector'))
 	tAppendAll(buttons, self:GetExtraButtons())
-	tinsert(buttons, self:HasSortButton() and self:Get('SortButton', function() return Addon.SortButton(self) end))
-	tinsert(buttons, self:HasSearchToggle() and self:Get('SearchToggle', function() return Addon.SearchToggle(self) end))
+	tinsert(buttons, self:HasSortButton() and self:GetWidget('SortButton'))
+	tinsert(buttons, self:HasSearchToggle() and self:GetWidget('SearchToggle'))
 
 	for i, button in pairs(self.MenuButtons) do
 		button:Hide()

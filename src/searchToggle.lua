@@ -11,10 +11,6 @@ function Toggle:New(parent)
 	local b = self:Super(Toggle):New(parent)
 	b.Icon:SetTexture('Interface/Icons/INV_Misc_Spyglass_03')
 	b:SetScript('OnHide', b.UnregisterAll)
-	b:SetScript('OnShow', b.OnShow)
-	b:SetScript('OnClick', b.OnClick)
-	b:SetScript('OnEnter', b.OnEnter)
-	b:SetScript('OnLeave', b.OnLeave)
 	b:RegisterForClicks('anyUp')
 	return b
 end

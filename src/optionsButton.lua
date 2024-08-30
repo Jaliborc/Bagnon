@@ -10,9 +10,6 @@ local C = LibStub('C_Everywhere')
 function Toggle:New(parent)
 	local b = self:Super(Toggle):New(parent)
 	b.Icon:SetTexture('Interface/Icons/Trade_Engineering')
-	b:SetScript('OnClick', b.OnClick)
-	b:SetScript('OnEnter', b.OnEnter)
-	b:SetScript('OnLeave', b.OnLeave)
 	b:RegisterForClicks('anyUp')
 	return b
 end

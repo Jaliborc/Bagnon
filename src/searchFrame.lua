@@ -19,13 +19,8 @@ function Search:New(parent)
 	f:Hide()
 
 	f:RegisterSignal('SEARCH_TOGGLED', 'OnToggle')
-	f:SetScript('OnTextChanged', f.OnTextChanged)
-	f:SetScript('OnEscapePressed', f.OnEscape)
-	f:SetScript('OnEnterPressed', f.OnEscape)
-	f:SetScript('OnShow', f.OnShow)
-	f:SetScript('OnHide', f.OnHide)
+	f:SetScript('OnEnterPressed', f.OnEscapePressed)
 	f:SetAutoFocus(false)
-
 	return f
 end
 
@@ -65,7 +60,7 @@ function Search:OnTextChanged()
 	end
 end
 
-function Search:OnEscape()
+function Search:OnEscapePressed()
 	Addon.canSearch = nil
 	self:SendSignal('SEARCH_TOGGLED', nil)
 	self:Hide()
