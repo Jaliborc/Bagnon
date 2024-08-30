@@ -1,3 +1,7 @@
+### 11.0.13 (beta)
+* Retail: Added new deposit items button in the bank.
+* All: Changed some internal infrastructure that affects many aspects of the addon, hence the beta for testing.
+
 ### 11.0.12
 * All: Fixed longstanding bug that sometimes caused offline viewing items to display tinted colors.
 * All: Fixed error message that could appear when opening the bank for the first time.
