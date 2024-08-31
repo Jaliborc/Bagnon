@@ -1,4 +1,14 @@
-### 11.0.14 (unreleased)
+### 11.0.16 
+* All: Settings for server sorting are now saved per-frame.
+* All: Popup dialogs now play sound effects, appropriate to each dialog.
+* All: Minor improvement to sorting options menu.
+* Retail: Clicking the deposit button will no longer throw an error on characters without a reagent bank.
+
+### 11.0.15 
+* Retail: Fixed bug with enabling/disabling frames in settings.
+* Retail: Updated bank settings to include the new "Deposit Items" button.
+
+### 11.0.14
 * All: Fixes two bugs from occurring in inventory and bank.
 * Cata, Retail: Fixed a major bug with void storage startup and guild log selection.
 
