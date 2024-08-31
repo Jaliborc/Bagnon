@@ -36,9 +36,6 @@ function Frame:New(id)
 	return f
 end
 
-function Frame:RegisterEvents()
-end
-
 
 --[[ Update ]]--
 

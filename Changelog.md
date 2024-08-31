@@ -1,3 +1,7 @@
+### 11.0.14 (unreleased)
+* All: Fixes two bugs from occurring in inventory and bank.
+* Cata, Retail: Fixed a major bug with void storage startup and guild log selection.
+
 ### 11.0.13 (beta)
 * Retail: Added new deposit items button in the bank.
 * All: Changed some internal infrastructure that affects many aspects of the addon, hence the beta for testing.
