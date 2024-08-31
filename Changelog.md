@@ -1,10 +1,14 @@
-### 11.0.16 
+### 11.0.17
+* Retail: Fixed issue with "Bag Break by Type" that caused warband bags to be separated in some conditions.
+* Thank you to DeVeteran for the large gold donation that made debugging this issue possible.
+
+### 11.0.16
 * All: Settings for server sorting are now saved per-frame.
 * All: Popup dialogs now play sound effects, appropriate to each dialog.
 * All: Minor improvement to sorting options menu.
 * Retail: Clicking the deposit button will no longer throw an error on characters without a reagent bank.
 
-### 11.0.15 
+### 11.0.15
 * Retail: Fixed bug with enabling/disabling frames in settings.
 * Retail: Updated bank settings to include the new "Deposit Items" button.
 
