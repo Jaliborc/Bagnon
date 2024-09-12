@@ -1,12 +1,34 @@
+### 11.0.21 (unreleased)
+* Retail: Client sorting now supports warband bank.
+* All: Added FAQ question on how to quickly deposit items in the warband bank.
+
+### 11.0.20 (unreleased)
+* Retail: Tooltip item counts now displays the amount of items in the warband bank.
+* Retail: No longer caches account-shared currencies, which was unecessary.
+
+### 11.0.19
+* Retail: Account-shared currencies do not show currency counters. Conversely, transferable currencies now show account totals on top of per-character amounts.
+
+### 11.0.18
+* Retail: The temporary side filters appear again as intended.
+* Retail, Cata: Improved uncollected appearance detection.
+* Classic, Cata: Fixed issue with tooltip searching for item propriety detection.
+
 ### 11.0.17
+* All: Implemented sound design missing in UI elements.
+* Retail: Shift-right clicking while at the bank will now deposit items in the warband bags.
 * Retail: Fixed issue with "Bag Break by Type" that caused warband bags to be separated in some conditions.
-* Thank you to DeVeteran for the large gold donation that made debugging this issue possible.
+	* Thank you to DeVeteran for the large gold donation that made debugging this issue possible.
+* Cata, Retail: Fixed an error that would appear when shift-clicking empty slots in the guild bank.
+* All: Sorting will now immediately stop if the player leaves the bank, void storage, etc...
+* All: Fixed a bug introduced in the last beta that caused frames to behave as if cached when first open.
+* All: Fixed a bug introduced in the last beta, which affected Void Storage and Guild Bank.
 
 ### 11.0.16
 * All: Settings for server sorting are now saved per-frame.
 * All: Popup dialogs now play sound effects, appropriate to each dialog.
 * All: Minor improvement to sorting options menu.
-* Retail: Clicking the deposit button will no longer throw an error on characters without a reagent bank.
+* Retail: Clicking the deposit button will no longer throw an audio line on characters without a reagent bank.
 
 ### 11.0.15
 * Retail: Fixed bug with enabling/disabling frames in settings.

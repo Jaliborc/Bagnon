@@ -30,6 +30,7 @@ end
 function Search:OnToggle(_, shownFrame)
 	if shownFrame then
 		if not self:IsShown() then
+			PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
 			UIFrameFadeIn(self, 0.1)
 
 			if shownFrame == self:GetFrameID() then
@@ -37,7 +38,8 @@ function Search:OnToggle(_, shownFrame)
 				self:SetFocus()
 			end
 		end
-	else
+	elseif self:IsShown() then
+		PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF)
 		self:Hide()
 	end
 end
