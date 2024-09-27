@@ -3,7 +3,6 @@
 	<Include file="templates.xml"/>
 	<Include file="..\..\BagBrother\core\core.xml"/>
 	<Include file="..\..\BagBrother\frames\inventory\inventory.xml"/>
-	<Include file="..\..\BagBrother\frames\bank\bank.xml"/>
 
 	<Script file="main.lua"/>
 	<Script file="title.lua"/>
