@@ -2,7 +2,7 @@
 * Retail: Client sorting now supports warband bank.
 * All: Added FAQ question on how to quickly deposit items in the warband bank.
 
-### 11.0.20 (unreleased)
+### 11.0.20
 * Retail: Tooltip item counts now displays the amount of items in the warband bank.
 * Retail: No longer caches account-shared currencies, which was unecessary.
 
