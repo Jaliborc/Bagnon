@@ -25,7 +25,6 @@ function Frame:New(id)
 	f.CloseButton = CreateFrame('Button', nil, f, 'UIPanelCloseButtonNoScripts')
 	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.id, true) end)
 
-	f:FindRules()
 	f:SetMovable(true)
 	f:SetToplevel(true)
 	f:EnableMouse(true)
