@@ -1,3 +1,8 @@
+### 11.0.23
+* Tagging release.
+* Disabled the example filters for now, to not confuse casual users while the feature is in development.
+* Updated TOC.
+
 ### 11.0.22 (beta)
 * Version for Retail only.
 * Made progress in development of new item filtering features. Testing of current state would be very welcome!
