@@ -1,3 +1,15 @@
+### 11.0.24
+* Reverted to 11.0.21 and updated TOC.
+
+### 11.0.23 (beta)
+* Version for Retail only.
+* Disabled the example filters for now, to not confuse casual users while the feature is in development.
+* Bank is now load on demand.
+* Updated TOC.
+
+### 11.0.22 (beta)
+* Made progress in development of new item filtering features. Testing of current state would be very welcome!
+
 ### 11.0.21
 * Retail: Client sorting now supports warband bank.
 * All: Added FAQ question on how to quickly deposit items in the warband bank.
