@@ -9,7 +9,7 @@
 ## Dependencies: BagBrother
 ## X-Development: True
 ## Interface: 110005
-## Version: 11.0.24
+## Version: 11.0.25
 
 src\main.xml
 legacy\legacy.xml

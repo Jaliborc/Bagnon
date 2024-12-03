@@ -1,3 +1,6 @@
+### 11.0.25
+* Fixed issue with saving some specific currencies on retail (with help of Mctalian).
+  
 ### 11.0.24
 * Reverted to 11.0.21 and updated TOC.
 
