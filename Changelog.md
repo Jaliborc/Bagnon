@@ -1,3 +1,7 @@
+### 11.0.24
+* All: Bank is now load on demand (reduces login time).
+* Retail: Added support for the upcoming addon list native grouping capabilities.
+
 ### 11.0.23
 * Tagging release.
 * Disabled the example filters for now, to not confuse casual users while the feature is in development.
