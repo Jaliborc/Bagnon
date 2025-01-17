@@ -1,3 +1,6 @@
+### 11.0.26
+* Retail: Added support for the upcoming addon list native grouping capabilities.
+
 ### 11.0.25
 * Fixed issue with saving some specific currencies on retail (with help of Mctalian).
   
