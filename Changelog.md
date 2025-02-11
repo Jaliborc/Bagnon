@@ -1,14 +1,28 @@
-### 11.0.24
+### 11.0.27 (beta)
 * All: Bank is now load on demand (reduces login time).
+* Retail: Big progress on the bank side filters:
+	* The filters are now configurable - you can toggle and reorder them.
+	* You can create and edit your own filters ingame, much alike action bar macros.
+	* Expanded on the list of default provided filters. The goal is to eventually match Combuctor.
+	* Improved the look and feel of existing filters.
+	* Note: sharing/importing filters is not yet implemented.
+
+### 11.0.26
 * Retail: Added support for the upcoming addon list native grouping capabilities.
 
-### 11.0.23
-* Tagging release.
+### 11.0.25
+* Fixed issue with saving some specific currencies on retail (with help of Mctalian).
+  
+### 11.0.24
+* Reverted to 11.0.21 and updated TOC.
+
+### 11.0.23 (beta)
+* Version for Retail only.
 * Disabled the example filters for now, to not confuse casual users while the feature is in development.
+* Bank is now load on demand.
 * Updated TOC.
 
 ### 11.0.22 (beta)
-* Version for Retail only.
 * Made progress in development of new item filtering features. Testing of current state would be very welcome!
 
 ### 11.0.21
