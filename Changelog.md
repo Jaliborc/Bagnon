@@ -1,3 +1,8 @@
+### 11.0.28
+* All: Added check at startup that upgrades outdated "Bag Break" settings, which could lead to only the first bag being shown.
+* Retail: Increased the default number of columns of the bank frame.
+* Classic: TOC update.
+
 ### 11.0.26
 * Retail: Added support for the upcoming addon list native grouping capabilities.
 
@@ -6,15 +11,6 @@
   
 ### 11.0.24
 * Reverted to 11.0.21 and updated TOC.
-
-### 11.0.23 (beta)
-* Version for Retail only.
-* Disabled the example filters for now, to not confuse casual users while the feature is in development.
-* Bank is now load on demand.
-* Updated TOC.
-
-### 11.0.22 (beta)
-* Made progress in development of new item filtering features. Testing of current state would be very welcome!
 
 ### 11.0.21
 * Retail: Client sorting now supports warband bank.
