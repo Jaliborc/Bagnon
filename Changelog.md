@@ -1,3 +1,10 @@
+### 11.1.x (beta)
+* Retail: Updated for the "Undermined" game patch.
+* Retail: More progress on the bank side filters:
+	* The filters in the configuration menu are now sorted alphabetically.
+	* Added "Normal Bags" and "Trade Bags" filters. Updated the icons of some of the existing filters.
+  * Fixed bugs when opening the bank, including one that made chat unresponsive.
+
 ### 11.0.27 (beta)
 * All: Bank is now load on demand (reduces login time).
 * Retail: Big progress on the bank side filters:
