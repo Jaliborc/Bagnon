@@ -1,3 +1,6 @@
+### 11.1
+* Retail: Updated for the "Undermined" game patch.
+
 ### 11.0.28
 * All: Added check at startup that upgrades outdated "Bag Break" settings, which could lead to only the first bag being shown.
 * Retail: Increased the default number of columns of the bank frame.
