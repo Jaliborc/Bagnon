@@ -11,12 +11,11 @@ function Addon.Item:GetItem()
 	return self.info.link
 end
 
-local createRule = Addon.Rules.New
-function Addon.Rules:New(id, title, icon, filter)
-	if type(id) == 'string' then
-		createRule(Addon.Rules, {id = id, title = title, icon = icon, filter = filter})-- backwards compatibility
+function Addon.Rules:New(data, title, icon, filter)
+	if type(data) == 'string' then
+		self:Register {id = data, title = title, icon = icon, filter = filter }
 	else
-		createRule(Addon.Rules, id)
+		self:Register(data)
 	end
 end
 

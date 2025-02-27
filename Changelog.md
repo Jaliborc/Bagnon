@@ -1,9 +1,18 @@
-### 11.1.x (beta)
-* Retail: Updated for the "Undermined" game patch.
-* Retail: More progress on the bank side filters:
-	* The filters in the configuration menu are now sorted alphabetically.
+### 11.1.1 (beta)
+* Continuation of the 11.0.27 beta, with the updates from 11.0.28 and 11.1.
+* More progress on the bank side filters:
+	* The filters in the configuration menu now display icons and are sorted alphabetically.
 	* Added "Normal Bags" and "Trade Bags" filters. Updated the icons of some of the existing filters.
   * Fixed bugs when opening the bank, including one that made chat unresponsive.
+  * Overall made the Bagnon.Rules API more robust and object-oriented.
+
+## 11.1
+* Retail: Updated for the "Undermined" game patch.
+
+### 11.0.28
+* All: Added check at startup that upgrades outdated "Bag Break" settings, which could lead to only the first bag being shown.
+* Retail: Increased the default number of columns of the bank frame.
+* Classic: TOC update.
 
 ### 11.0.27 (beta)
 * All: Bank is now load on demand (reduces login time).
