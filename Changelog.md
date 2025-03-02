@@ -1,3 +1,15 @@
+### 11.1.2 (beta)
+* New features:
+  * You can now share and import custom filters.
+	* Added the ability to create and edit "Search" filters, on top of the existing "Macro" filters.
+	* Filters can be used on all the frames on all game servers, not just Retail.
+* Ohter improvements:
+	* Filter configuration is now part of Bagnon_Config, for better loading performance.
+  * Frames now take into account their filters when resizing.
+  * Updated frame layout logic to ensure money, currency, etc are always at the bottom of the frame.
+  * Fixed other edge-case issues with the frame layout logic.
+  * The bank deposit button is now enabled by default (was always the intended behaviour).
+
 ### 11.1.1 (beta)
 * Continuation of the 11.0.27 beta, with the updates from 11.0.28 and 11.1.
 * More progress on the bank side filters:
