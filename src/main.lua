@@ -8,7 +8,7 @@ local center9S = NineSlicePanelMixin.SetCenterColor
 local border9S = NineSlicePanelMixin.SetBorderColor
 
 Addon.Slash = 'bgn'
-Addon.Skins.Default = 'Bagnon'
+Addon.DefaultSkin = 'Bagnon'
 Addon.Skins:Register { id = 'Bagnon', template = 'NineSliceCodeTemplate', load = apply9S('TooltipDefaultLayout'), centerColor = center9S, borderColor = border9S }
 Addon.Skins:Register { id = 'Barber', template = 'NineSliceCodeTemplate', load = apply9S('CharacterCreateDropdown'), borderColor = border9S, x=-1,y=-20,y1=1 }
 Addon.Skins:Register { id = 'Bubble', template = 'NineSliceCodeTemplate', load = apply9S('ChatBubble'), borderColor = border9S }
