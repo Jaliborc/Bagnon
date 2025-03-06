@@ -10,7 +10,7 @@ body:
     - label: I have searched the existing open and closed issues.
       required: true
   
-- type: textfield
+- type: textarea
   attributes:
     label: Feature Request
     description: |
