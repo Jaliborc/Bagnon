@@ -1,5 +1,5 @@
 name: "Taint Report"
-description: Occurrences of "This action has been blocked" error dialogs.
+description: Report occurrence of a "This action has been blocked" error dialog.
 labels: ['🔒 taint']
 body:
 - type: checkboxes
