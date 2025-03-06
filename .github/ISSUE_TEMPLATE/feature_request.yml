@@ -10,7 +10,7 @@ body:
     - label: I have searched the existing open and closed issues.
       required: true
   
-- type: input
+- type: textfield
   attributes:
     label: Feature Request
     description: |
