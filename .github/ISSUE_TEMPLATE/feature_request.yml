@@ -1,6 +1,6 @@
 name: "Feature Request"
 description: Suggest an idea for this addon
-labels: [':sparkles: enhancement']
+labels: ['✨ enhancement']
 body:
 - type: checkboxes
   attributes:
