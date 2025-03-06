@@ -1,0 +1,67 @@
+name: "Bug Report"
+description: Create a report to help us improve
+labels: ['🔒 taint']
+body:
+- type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: Please [search for existing issues](https://github.com/Jaliborc/Bagnon/issues?q=is%3Aissue%20) to see if one already exists for the bug you encountered. If an issue exists but it is closed, it may be solved but not yet available in a stable release, or simply not a solvable (not all taint issues can be resolved by mod developers).
+    options:
+    - label: I have searched the existing open and closed issues.
+      required: true
+
+- type: input
+  attributes:
+    label: Bagnon Version
+    description: |
+      You can see the current version in the ingame addons list, in the CurseForge app or in the `## Version:` field of the Bagnon_X.toc file.
+    placeholder: "Bagnon 4.4.4"
+  validations:
+    required: true
+
+- type: dropdown
+  id: flavor
+  attributes:
+    label: World of Warcraft Flavor
+    description: What version of World of Warcraft are you running?
+    options:
+      - Retail
+      - Classic Era
+      - Cataclysm Classic
+      - Beta (which one?)
+  validations:
+    required: true
+
+- type: dropdown
+  id: region
+  attributes:
+    label: World of Warcraft Region
+    description: Which region are you playing World of Warcraft in?
+    options:
+      - EU
+      - TW/Asia
+      - US/NA
+  validations:
+    required: true
+    
+- type: check
+  id: interference 
+  attributes:
+    label: Tested with only Bagnon
+    description: |
+      Due to the nature of taint, errors can easily be blamed by the client on the wrong addon. When running multiple ones, it is generally not clear which caused the issue.
+    options:
+    - label: I got this issue with only Bagnon enabled.
+      required: true
+
+- type: textarea
+  attributes:
+    label: Reproduction Steps
+    description: Please list out the steps to reproduce your bug. Please verify that your reproduction steps are enough to reproduce the problem.
+    placeholder: |
+      1. Go to '...'
+      2. Click on '....'
+      3. Scroll down to '....'
+      4. See error
+  validations:
+    required: true
