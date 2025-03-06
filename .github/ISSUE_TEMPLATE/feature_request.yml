@@ -1,0 +1,18 @@
+name: "Feature Request"
+description: Suggest an idea for this addon
+labels: [':sparkles: enhancement']
+body:
+- type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: Please [search for existing issues](https://github.com/Jaliborc/Bagnon/issues?q=is%3Aissue%20) to see if one already exists for the idea you have.
+      If one already exists, comment instead there that you also would like to see that feature in the game.
+    - label: I have searched the existing open and closed issues.
+      required: true
+- type: input
+  attributes:
+    label: Feature Request
+    description: |
+      Describe the feature you'd like to see.
+  validations:
+    required: true
