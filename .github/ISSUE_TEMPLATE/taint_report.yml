@@ -1,11 +1,12 @@
 name: "Taint Report"
-description: Create a report to help us improve
+description: Issues that cause "This action has been blocked" error dialogs.
 labels: ['🔒 taint']
 body:
 - type: checkboxes
   attributes:
     label: Is there an existing issue for this?
-    description: Please [search for existing issues](https://github.com/Jaliborc/Bagnon/issues?q=is%3Aissue%20) to see if one already exists for the bug you encountered. If an issue exists but it is closed, it may be solved but not yet available in a stable release, or simply not a solvable (not all taint issues can be resolved by mod developers).
+    description: Please [search for existing issues](https://github.com/Jaliborc/Bagnon/issues?q=is%3Aissue%20) to see if one already exists for the bug you encountered.
+      If an issue exists but it is closed, it may be solved but not yet available in a stable release, or simply not a solvable (not all taint issues can be resolved by mod developers).
     options:
     - label: I have searched the existing open and closed issues.
       required: true
