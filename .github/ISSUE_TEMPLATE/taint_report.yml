@@ -44,7 +44,7 @@ body:
   validations:
     required: true
     
-- type: check
+- type: checkboxes
   id: interference 
   attributes:
     label: Tested with only Bagnon
