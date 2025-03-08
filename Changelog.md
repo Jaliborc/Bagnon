@@ -1,3 +1,12 @@
+### 11.1.4
+* Improved compatibility with plugins made for earlier versions of Bagnon.
+* Reinstated the old "right-click bags to toggle bank" behaviour, as "focus trade/normal" functionality is no longer needed with the filters update.
+* Fixed edge-case issues with updating items when a side tab is selected.
+* Improved performance of some side tabs.
+
+### 11.1.3
+* Tagging release, with all the new features developed in the beta included moving foward.
+
 ### 11.1.2 (beta)
 * New features:
   * You can now share and import custom filters.
