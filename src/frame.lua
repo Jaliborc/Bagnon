@@ -12,11 +12,12 @@ Frame.MoneySpacing = 2
 
 --[[ Construct ]]--
 
-function Frame:New(id)
+function Frame:New(params)
 	local f = self:Super(Frame):New(UIParent)
-	f.id, f.quality = id, 0
-	f.profile = f:GetBaseProfile()
+	tinsert(UISpecialFrames, f:GetName())
+	MergeTable(f, params)
 
+	f.profile = f:GetBaseProfile()
 	f.MenuButtons = {}
 	f.Search = Addon.SearchFrame(f)
 	f.Title = Addon.Title(f, f.Title)
@@ -30,7 +31,6 @@ function Frame:New(id)
 	f:EnableMouse(true)
 	f:SetClampedToScreen(true)
 
-	tinsert(UISpecialFrames, f:GetName())
 	return f
 end
 
@@ -166,10 +166,6 @@ function Frame:PlaceBagGroup()
 
 		return bags:GetWidth() + self.inset*2, bags:GetHeight() + 4
 	end)
-end
-
-function Frame:AreBagsShown()
-	return self:GetProfile().showBags
 end
 
 

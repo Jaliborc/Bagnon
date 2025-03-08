@@ -1,3 +1,10 @@
+### 11.1.5 (unreleased)
+* The side filters now indicate they can be configured with a right-click.
+* Sorting no longer starts if the user is viewing offline content.
+* Some settings are now always saved per-character/guild:
+  * Shown/hidden bags.
+  * Locked item slots.
+
 ### 11.1.4
 * Improved compatibility with plugins made for earlier versions of Bagnon.
 * Reinstated the old "right-click bags to toggle bank" behaviour, as "focus trade/normal" functionality is no longer needed with the filters update.
