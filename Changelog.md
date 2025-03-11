@@ -1,9 +1,10 @@
-### 11.1.5 (unreleased)
+### 11.1.5
 * The side filters now indicate they can be configured with a right-click.
 * Sorting no longer starts if the user is viewing offline content.
 * Some settings are now always saved per-character/guild:
   * Shown/hidden bags.
   * Locked item slots.
+* Note: Bagnon will convert your character's cached data to a new format to support the new per-character settings. In case you lose cached information in the conversion process, visit characters/banks again and it will resolve itself.
 
 ### 11.1.4
 * Improved compatibility with plugins made for earlier versions of Bagnon.
@@ -19,7 +20,7 @@
   * You can now share and import custom filters.
 	* Added the ability to create and edit "Search" filters, on top of the existing "Macro" filters.
 	* Filters can be used on all the frames on all game servers, not just Retail.
-* Ohter improvements:
+* Other improvements:
 	* Filter configuration is now part of Bagnon_Config, for better loading performance.
   * Frames now take into account their filters when resizing.
   * Updated frame layout logic to ensure money, currency, etc are always at the bottom of the frame.
