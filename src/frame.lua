@@ -7,31 +7,30 @@ local ADDON, Addon = ...
 local C = LibStub('C_Everywhere')
 local Frame = Addon.Frame
 Frame.Font, Frame.FontH = GameFontNormalLeft, GameFontHighlightLeft
-Frame.BrokerSpacing = 2
-Frame.MoneySpacing = 8
+Frame.MoneySpacing = 2
 
 
 --[[ Construct ]]--
 
-function Frame:New(id)
+function Frame:New(params)
 	local f = self:Super(Frame):New(UIParent)
-	f.id, f.quality = id, 0
-	f.profile = f:GetBaseProfile()
+	tinsert(UISpecialFrames, f:GetName())
+	MergeTable(f, params)
 
+	f.profile = f:GetBaseProfile()
 	f.MenuButtons = {}
+	f.Search = Addon.SearchFrame(f)
 	f.Title = Addon.Title(f, f.Title)
-	f.SearchFrame = Addon.SearchFrame(f)
 	f.ItemGroup = self.ItemGroup(f, f.Bags)
+	f.Footer = CreateFrame('Frame', nil, f)
 	f.CloseButton = CreateFrame('Button', nil, f, 'UIPanelCloseButtonNoScripts')
 	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.id, true) end)
 
-	f:FindRules()
 	f:SetMovable(true)
 	f:SetToplevel(true)
 	f:EnableMouse(true)
 	f:SetClampedToScreen(true)
 
-	tinsert(UISpecialFrames, f:GetName())
 	return f
 end
 
@@ -39,30 +38,29 @@ end
 --[[ Update ]]--
 
 function Frame:Layout()
-	local width, height = 44, 36
-	local grow = function(w, h)
+	local width = 44 + self:PlaceMenuButtons()
+	                 + self:PlaceOptionsToggle() + self:PlaceTitle()
+			
+	local function grow(height, stack, w,h)
 		width = max(width, w)
-		height = height + h
-	end
+		return stack and (height + h) or max(height, h)
+	end					
 
-	--place top menu
-	width = width + self:PlaceMenuButtons()
-	width = width + self:PlaceOptionsToggle()
-	width = width + self:PlaceTitle()
+	local main = 0
+	main = grow(main, true, self:PlaceBagGroup())
+	main = grow(main, true, self:PlaceItemGroup())
+
+	local foot = 0
+	foot = grow(foot, true, self:PlaceMoney())
+	foot = grow(foot, true, self:PlaceCurrencies(width))
+	foot = grow(foot, false, self:PlaceBroker())
+
+	local height = grow(main + foot, false, self:PlaceSidebar())
+		
 	self:PlaceSearchBar()
-
-	--place main grid
-	grow(self:PlaceBagGroup())
-	grow(self:PlaceItemGroup())
-
-	--place bottom displays
-	grow(self:PlaceMoney())
-	grow(self:PlaceCurrencies(width, height))
-	self:PlaceBrokerCarrousel(width, height)
-
-	--adjust size
-	self:SetSize(max(width, 156) + 16, height)
-	Addon.Skins:Call('layout', self.bg)
+	self:PlaceFooter(foot)
+	self:SetSize(max(156, width) + 16, height + 30)
+	self:SendFrameSignal('LAYOUT_FINISHED')
 end
 
 
@@ -93,56 +91,37 @@ function Frame:PlaceMenuButtons()
 end
 
 function Frame:PlaceSearchBar()
-	self.SearchFrame:ClearAllPoints()
-	self.SearchFrame:SetHeight(28)
+	self.Search:ClearAllPoints()
+	self.Search:SetPoint('RIGHT', self:HasOptionsToggle() and self.OptionsToggle or self.CloseButton, 'LEFT', -2, 0)
+	self.Search:SetHeight(28)
 
 	if #self.MenuButtons > 0 then
-		self.SearchFrame:SetPoint('LEFT', self.MenuButtons[#self.MenuButtons], 'RIGHT', 2, 0)
+		self.Search:SetPoint('LEFT', self.MenuButtons[#self.MenuButtons], 'RIGHT', 2, 0)
 	else
-		self.SearchFrame:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
-	end
-
-	if self:HasOptionsToggle() then
-		self.SearchFrame:SetPoint('RIGHT', self.OptionsToggle, 'LEFT', -2, 0)
-	else
-		self.SearchFrame:SetPoint('RIGHT', self.CloseButton, 'LEFT', -2, 0)
+		self.Search:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
 	end
 end
 
 function Frame:PlaceOptionsToggle()
-	if self:HasOptionsToggle() then
-		self.OptionsToggle = self.OptionsToggle or Addon.OptionsToggle(self)
-		self.OptionsToggle:ClearAllPoints()
-		self.OptionsToggle:SetPoint('TOPRIGHT', self, 'TOPRIGHT', -32, -8)
-		self.OptionsToggle:Show()
-
-		return self.OptionsToggle:GetWidth(), self.OptionsToggle:GetHeight()
-	elseif self.OptionsToggle then
-		self.OptionsToggle:Hide()
-	end
-
-	return 0,0
+	return self:PlaceWidget('OptionsToggle', self:HasOptionsToggle() and function(toggle)
+		toggle:SetPoint('TOPRIGHT', self, 'TOPRIGHT', -32, -8)
+	end)
 end
 
 function Frame:PlaceTitle()
-	local frame = self.Title
+	local title = self.Title
 	local w = 0
 
-	frame:ClearAllPoints()
-	frame:SetHeight(20)
+	title:ClearAllPoints()
+	title:SetPoint('RIGHT', self:HasOptionsToggle() and self.OptionsToggle or self.CloseButton, 'LEFT', -4, 0)
+	title:SetHeight(20)
 
 	if #self.MenuButtons > 0 then
-		frame:SetPoint('LEFT', self.MenuButtons[#self.MenuButtons], 'RIGHT', 4, 0)
-		w = frame:GetTextWidth() / 2 + 4
+		title:SetPoint('LEFT', self.MenuButtons[#self.MenuButtons], 'RIGHT', 4, 0)
+		w = title:GetTextWidth() / 2 + 4
 	else
-		frame:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
-		w = frame:GetTextWidth() + 8
-	end
-
-	if self:HasOptionsToggle() then
-		frame:SetPoint('RIGHT', self.OptionsToggle, 'LEFT', -4, 0)
-	else
-		frame:SetPoint('RIGHT', self.CloseButton, 'LEFT', -4, 0)
+		title:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
+		w = title:GetTextWidth() + 8
 	end
 
 	return w, 20
@@ -165,95 +144,89 @@ function Frame:HasSortButton()
 end
 
 
---[[ Grid ]]--
-
-function Frame:PlaceBagGroup()
-	if self:IsBagGroupShown() then
-		local inset = self.bg.skin.inset or 0 
-		self.bagGroup = self.bagGroup or self.BagGroup(self, 'LEFT', 36, 0)
-		self.bagGroup:Show()
-
-		if #self.MenuButtons > 0 then
-			self.bagGroup:SetPoint('TOPLEFT', self.MenuButtons[1], 'BOTTOMLEFT', inset, -4-inset)
-		else
-			self.bagGroup:SetPoint('TOPLEFT', self.Title, 'BOTTOMLEFT', inset, -4-inset)
-		end
-
-		return self.bagGroup:GetWidth() + inset*2, self.bagGroup:GetHeight() + 4
-	elseif self.bagGroup then
-		self.bagGroup:Hide()
-	end
-
-	return 0, 0
-end
+--[[ Main Grid ]]--
 
 function Frame:PlaceItemGroup()
-	local anchor = self:IsBagGroupShown() and self.bagGroup
+	local anchor = self:AreBagsShown() and self.BagGroup
 					or #self.MenuButtons > 0 and self.MenuButtons[1]
 					or self.Title
-	local inset = anchor ~= self.bagGroup and self.bg.skin.inset or 0
+	local inset = anchor ~= self.BagGroup and self.inset or 0
 
 	self.ItemGroup:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', inset, -4-inset)
-	return self.ItemGroup:GetWidth() - 2 + (self.bg.skin.inset or 0) * 2, self.ItemGroup:GetHeight()
+	return self.ItemGroup:GetWidth() - 2 + (self.bg.skin.inset or 0) * 2, self.ItemGroup:GetHeight() + 6
 end
 
-function Frame:IsBagGroupShown()
-	return self:GetProfile().showBags
+function Frame:PlaceBagGroup()
+	return self:PlaceWidget('BagGroup', self:AreBagsShown() and function(bags)
+		if #self.MenuButtons > 0 then
+			bags:SetPoint('TOPLEFT', self.MenuButtons[1], 'BOTTOMLEFT', self.inset, -4-self.inset)
+		else
+			bags:SetPoint('TOPLEFT', self.Title, 'BOTTOMLEFT', self.inset, -4-self.inset)
+		end
+
+		return bags:GetWidth() + self.inset*2, bags:GetHeight() + 4
+	end)
+end
+
+
+--[[ Sidebar ]]--
+
+function Frame:PlaceSidebar()
+	return self:PlaceWidget('FilterGroup', self:HasSidebar() and function(filters)
+		if self.id == 'inventory' then
+			filters:SetPoint('TOPRIGHT', self, 'TOPLEFT', 4,0)
+		else
+			filters:SetPoint('TOPLEFT', self, 'TOPRIGHT')
+		end
+	end)
+end
+
+function Frame:HasSidebar()
+	return self.profile.sidebar
 end
 
 
 --[[ Bottom Displays ]]--
 
-function Frame:PlaceMoney()
-	if self:HasMoney() then
-		self.Money = self.Money or self.MoneyFrame(self)
-		self.Money:SetPoint('TOPRIGHT', self.ItemGroup, 'BOTTOMRIGHT', self.MoneySpacing, 0)
-		self.Money:Show()
+function Frame:PlaceFooter(size)
+	self.Footer:SetPoint('BOTTOMLEFT', self.inset, 4-self.inset)
+	self.Footer:SetPoint('BOTTOMRIGHT', -self.inset, 4-self.inset)
+	self.Footer:SetHeight(size)
+end
 
-		return self.Money:GetSize()
-	elseif self.Money then
-		self.Money:Hide()
-	end
-	return 0,0
+function Frame:PlaceMoney()
+	return self:PlaceWidget('MoneyFrame', self:HasMoney() and function(money)
+		money:SetPoint('TOPRIGHT', self.Footer, self.MoneySpacing, 0)
+	end)
 end
 
 function Frame:PlaceCurrencies(width)
-	if self:HasCurrencies() then
-		self.Currency = self.Currency or Addon.CurrencyTracker(self)
-		self.Currency:ClearAllPoints()
-		self.Currency:Show()
-
-		if self:HasMoney() and self.Currency:GetWidth() < (width - self.Money:GetWidth() - (self:HasBrokerCarrousel() and 24 or 2)) then
-			self.Currency:SetPoint('TOPLEFT', self.ItemGroup, 'BOTTOMLEFT')
+	return self:PlaceWidget('CurrencyTracker', self:HasCurrencies() and function(tracker)
+		local wide = self:HasMoney() and tracker:GetWidth() > (width - self.MoneyFrame:GetWidth() - (self:HasBroker() and 24 or 2))
+		if wide then
+			tracker:SetPoint('BOTTOMRIGHT', self.Footer, -4,2)
 		else
-			self.Currency:SetPoint('TOPRIGHT', self:HasMoney() and self.Money or self, 'BOTTOMRIGHT', -7,2)
-			return self.Currency:GetSize()
+			tracker:SetPoint('TOPLEFT', self.Footer, 6,0)
 		end
-	elseif self.Currency then
-		self.Currency:Hide()
-	end
-	return 0,0
+
+		return not wide and self:HasMoney() and 0
+	end)
 end
 
-function Frame:PlaceBrokerCarrousel()
-	if self:HasBrokerCarrousel() then
+function Frame:PlaceBroker()
+	return self:PlaceWidget('BrokerCarrousel', self:HasBroker() and function(broker)
 		local right = self:HasMoney() and 
-		              {'RIGHT', self.Money, 'LEFT', -5, self.BrokerSpacing} or
-		              {'BOTTOMRIGHT', self, 'BOTTOMRIGHT', -4,4}
-		local left = self:HasCurrencies() and self.Currency:GetPoint(1) == 'TOPLEFT' and
-		              {'LEFT', self.Currency, 'RIGHT', -2,0} or
-		              {'TOPLEFT', self.ItemGroup, 'BOTTOMLEFT', 0, self.BrokerSpacing}
+		              {'RIGHT', self.MoneyFrame, 'LEFT', -5,0} or
+		              {'RIGHT', self.Footer, 'RIGHT', -4,0}
+		local left = self:HasCurrencies() and self.CurrencyTracker:GetPoint(1) == 'TOPLEFT' and
+		              {'TOPLEFT', self.CurrencyTracker, 'TOPRIGHT', -2,1} or
+		              {'TOPLEFT', self.Footer, 'TOPLEFT', 4,0}
 
-		self.Broker = self.Broker or Addon.BrokerCarrousel(self)
-		self.Broker:ClearAllPoints()
-		self.Broker:SetPoint(unpack(right))
-		self.Broker:SetPoint(unpack(left))
-		self.Broker:Show()
-		return 48, 24
-	elseif self.Broker then
-		self.Broker:Hide()
-	end
-	return 0, 0
+		broker:SetPoint(unpack(right))
+		broker:SetPoint(unpack(left))
+
+		return 48,24
+	end)
 end
 
 function Frame:HasMoney()
@@ -264,6 +237,29 @@ function Frame:HasCurrencies()
 	return self.profile.currency
 end
 
-function Frame:HasBrokerCarrousel()
+function Frame:HasBroker()
 	return self.profile.broker
+end
+
+
+--[[ Utilities ]]--
+
+function Frame:PlaceWidget(key, setup)
+    local widget = rawget(self, key)
+    if setup then
+        widget = widget or self:GetWidget(key)
+        widget:ClearAllPoints()
+        widget:Show()
+
+        local width, height = setup(widget)
+        if not width then
+            width, height = widget:GetSize()
+        end
+
+        return width, height or width
+    elseif widget then
+        widget:Hide()
+    end
+    
+    return 0, 0
 end

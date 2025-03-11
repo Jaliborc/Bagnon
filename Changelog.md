@@ -1,10 +1,56 @@
-### 11.1
+### 11.1.5
+* The side filters now indicate they can be configured with a right-click.
+* Sorting no longer starts if the user is viewing offline content.
+* Some settings are now always saved per-character/guild:
+  * Shown/hidden bags.
+  * Locked item slots.
+* Note: Bagnon will convert your character's cached data to a new format to support the new per-character settings. In case you lose cached information in the conversion process, visit characters/banks again and it will resolve itself.
+
+### 11.1.4
+* Improved compatibility with plugins made for earlier versions of Bagnon.
+* Reinstated the old "right-click bags to toggle bank" behaviour, as "focus trade/normal" functionality is no longer needed with the filters update.
+* Fixed edge-case issues with updating items when a side tab is selected.
+* Improved performance of some side tabs.
+
+### 11.1.3
+* Tagging release, with all the new features developed in the beta included moving foward.
+
+### 11.1.2 (beta)
+* New features:
+  * You can now share and import custom filters.
+	* Added the ability to create and edit "Search" filters, on top of the existing "Macro" filters.
+	* Filters can be used on all the frames on all game servers, not just Retail.
+* Other improvements:
+	* Filter configuration is now part of Bagnon_Config, for better loading performance.
+  * Frames now take into account their filters when resizing.
+  * Updated frame layout logic to ensure money, currency, etc are always at the bottom of the frame.
+  * Fixed other edge-case issues with the frame layout logic.
+  * The bank deposit button is now enabled by default (was always the intended behaviour).
+
+### 11.1.1 (beta)
+* Continuation of the 11.0.27 beta, with the updates from 11.0.28 and 11.1.
+* More progress on the bank side filters:
+	* The filters in the configuration menu now display icons and are sorted alphabetically.
+	* Added "Normal Bags" and "Trade Bags" filters. Updated the icons of some of the existing filters.
+  * Fixed bugs when opening the bank, including one that made chat unresponsive.
+  * Overall made the Bagnon.Rules API more robust and object-oriented.
+
+## 11.1
 * Retail: Updated for the "Undermined" game patch.
 
 ### 11.0.28
 * All: Added check at startup that upgrades outdated "Bag Break" settings, which could lead to only the first bag being shown.
 * Retail: Increased the default number of columns of the bank frame.
 * Classic: TOC update.
+
+### 11.0.27 (beta)
+* All: Bank is now load on demand (reduces login time).
+* Retail: Big progress on the bank side filters:
+	* The filters are now configurable - you can toggle and reorder them.
+	* You can create and edit your own filters ingame, much alike action bar macros.
+	* Expanded on the list of default provided filters. The goal is to eventually match Combuctor.
+	* Improved the look and feel of existing filters.
+	* Note: sharing/importing filters is not yet implemented.
 
 ### 11.0.26
 * Retail: Added support for the upcoming addon list native grouping capabilities.
@@ -14,6 +60,15 @@
   
 ### 11.0.24
 * Reverted to 11.0.21 and updated TOC.
+
+### 11.0.23 (beta)
+* Version for Retail only.
+* Disabled the example filters for now, to not confuse casual users while the feature is in development.
+* Bank is now load on demand.
+* Updated TOC.
+
+### 11.0.22 (beta)
+* Made progress in development of new item filtering features. Testing of current state would be very welcome!
 
 ### 11.0.21
 * Retail: Client sorting now supports warband bank.
