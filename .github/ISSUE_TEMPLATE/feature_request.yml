@@ -1,0 +1,19 @@
+name: "Feature Request"
+description: Suggest an idea for this addon
+labels: ['✨ enhancement']
+body:
+- type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: Please [search for existing issues](https://github.com/Jaliborc/Bagnon/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22%3Asparkles%3A%20enhancement%22) to see if one already exists for the idea you have. If one already exists, comment instead on the existing issue that you also would like to see that feature in the game.
+    options:
+    - label: I have searched the existing open and closed issues.
+      required: true
+  
+- type: textarea
+  attributes:
+    label: Feature Request
+    description: |
+      Describe the feature you'd like to see.
+  validations:
+    required: true
