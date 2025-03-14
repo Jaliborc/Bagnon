@@ -1,3 +1,9 @@
+### 11.1.6
+* Classic: Fixed bug preventing sorting from starting on the inventory.
+* All: Fixed function related with bag display that forgot to update.
+* All: Items will now always properly display the locked symbols while in "sorting configuration mode", even if changing characters or moving bags.
+* All: Filter editor is now placed appropriately if shown from the inventory.
+
 ### 11.1.5
 * The side filters now indicate they can be configured with a right-click.
 * Sorting no longer starts if the user is viewing offline content.
