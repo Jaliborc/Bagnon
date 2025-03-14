@@ -172,7 +172,7 @@ end
 --[[ Sidebar ]]--
 
 function Frame:PlaceSidebar()
-	return self:PlaceWidget('FilterGroup', self:HasSidebar() and function(filters)
+	return self:PlaceWidget('TabGroup', self:HasSidebar() and function(filters)
 		if self.id == 'inventory' then
 			filters:SetPoint('TOPRIGHT', self, 'TOPLEFT', 4,0)
 		else

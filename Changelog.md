@@ -1,3 +1,13 @@
+### 11.1.x (unreleased)
+* Added "Help" button to the filter editor.
+
+### 11.1.x (stashed)
+* Added new "margin" property to skins, allowing for better placement of the side tabs.
+
+### 11.1.7
+* All: Further fixes into the settings upgrade internal system introduced in 11.1.5.
+* All: Settings upgrade is now done in a "try-catch" manner, making sure the addon will run even if the upgrade fails.
+
 ### 11.1.6
 * Classic: Fixed bug preventing sorting from starting on the inventory.
 * All: Fixed function related with bag display that forgot to update.
