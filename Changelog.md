@@ -1,8 +1,22 @@
-### 11.1.x (unreleased)
+### 11.1.12
+* All: Fixed typo that could prevent inventory items from being cached.
+
+### 11.1.11
+* All: Fixed issue that could cause duplicate upgrade icons.
+* All: Updated settings upgrade system.
+
+### 11.1.10
+* Retail, Classic: Added support to undocumented Blizzard API change.
 * Added "Help" button to the filter editor.
 
-### 11.1.x (stashed)
-* Added new "margin" property to skins, allowing for better placement of the side tabs.
+### 11.1.9
+* Added new "margin" property to skins, allowing for better placement of the side tabs across different skins.
+* The "Slot Options" panel now appears again as intended.
+
+### 11.1.8
+* All: Fixed bug with "ignored slot" display.
+* All: Fixed issue with displaying bank bags while the bank frame is disabled.
+* All: Fixed layout issue that could happen when swaping two bags of the same size.
 
 ### 11.1.7
 * All: Further fixes into the settings upgrade internal system introduced in 11.1.5.
