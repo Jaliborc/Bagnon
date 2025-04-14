@@ -153,7 +153,7 @@ function Frame:PlaceItemGroup()
 	local inset = anchor ~= self.BagGroup and self.inset or 0
 
 	self.ItemGroup:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', inset, -4-inset)
-	return self.ItemGroup:GetWidth() - 2 + (self.bg.skin.inset or 0) * 2, self.ItemGroup:GetHeight() + 6
+	return self.ItemGroup:GetWidth() - 2 + (self.inset or 0) * 2, self.ItemGroup:GetHeight() + 6
 end
 
 function Frame:PlaceBagGroup()
@@ -173,10 +173,11 @@ end
 
 function Frame:PlaceSidebar()
 	return self:PlaceWidget('TabGroup', self:HasSidebar() and function(filters)
+		local margin = self.bg.skin.margin or 0
 		if self.id == 'inventory' then
-			filters:SetPoint('TOPRIGHT', self, 'TOPLEFT', 4,0)
+			filters:SetPoint('TOPRIGHT', self, 'TOPLEFT', 4-margin,0)
 		else
-			filters:SetPoint('TOPLEFT', self, 'TOPRIGHT')
+			filters:SetPoint('TOPLEFT', self, 'TOPRIGHT', margin,0)
 		end
 	end)
 end
