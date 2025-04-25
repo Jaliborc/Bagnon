@@ -4,10 +4,11 @@
 	<Include file="..\..\BagBrother\core\core.xml"/>
 	<Include file="..\..\BagBrother\frames\inventory\inventory.xml"/>
 
-	<Script file="main.lua"/>
 	<Script file="title.lua"/>
 	<Script file="optionsButton.lua"/>
 	<Script file="searchFrame.lua"/>
 	<Script file="searchToggle.lua"/>
+	<Script file="itemGroup.lua"/>
 	<Script file="frame.lua"/>
+	<Script file="skins.lua"/>
 </Ui>
