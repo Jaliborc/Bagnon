@@ -1,5 +1,12 @@
 <Ui>
-	<!-- All Rights Reserved -->
+	<!-- Components -->
+	<Frame name="BagnonFrameTemplate" virtual="true" movable="true" toplevel="true" enableMouse="true" clampedToScreen="true">
+		<Frames>
+			<Button parentKey="CloseButton" inherits="UIPanelCloseButtonNoScripts"/>
+			<Frame parentKey="Footer"/>
+		</Frames>
+	</Frame>
+
     <Button name="BagnonMenuButtonTemplate" virtual="true">
 		<Size x="20" y="20"/>
 		<HighlightTexture file="Interface\Buttons\ButtonHilight-Square" alphaMode="ADD"/>
@@ -49,6 +56,7 @@
 		</Scripts>
 	</Button>
 
+	<!-- Skins -->
 	<Frame name="BagnonDialogSkinTemplate" inherits="DialogBorderNoCenterTemplate" virtual="true">
 		<Layers>
 			<Layer level="BACKGROUND" textureSubLevel="-5">

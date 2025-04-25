@@ -22,14 +22,7 @@ function Frame:New(params)
 	f.Search = Addon.SearchFrame(f)
 	f.Title = Addon.Title(f, f.Title)
 	f.ItemGroup = self.ItemGroup(f, f.Bags)
-	f.Footer = CreateFrame('Frame', nil, f)
-	f.CloseButton = CreateFrame('Button', nil, f, 'UIPanelCloseButtonNoScripts')
 	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.id, true) end)
-
-	f:SetMovable(true)
-	f:SetToplevel(true)
-	f:EnableMouse(true)
-	f:SetClampedToScreen(true)
 
 	return f
 end

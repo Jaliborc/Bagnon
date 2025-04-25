@@ -1,3 +1,11 @@
+### 11.1.14
+* All: Disabled "Thin" skin (the template it used was removed by Blizzard).
+* All: Minor template changes as part of Bagnonium development.
+
+### 11.1.13
+* All: Updated to new version of the search engine, featuring improvements in logical operators and updates to keywords (like boe, bop, etc).
+* All: Added missing sound design to the side filters.
+
 ### 11.1.12
 * All: Fixed typo that could prevent inventory items from being cached.
 
