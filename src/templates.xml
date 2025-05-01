@@ -46,13 +46,7 @@
 		</NormalTexture>
 	</CheckButton>
 
-	<Button name="BagnonOwnerSelectorTemplate" inherits="BagnonButtonTemplate" virtual="true">
-		<Scripts>
-			<OnLoad>
-				self.Icon:SetTexture(130716)
-			</OnLoad>
-		</Scripts>
-	</CheckButton>
+	<Button name="BagnonOwnerSelectorTemplate" inherits="BagnonButtonTemplate" virtual="true"/>
 	<Button name="BagnonDepositButtonTemplate" inherits="BagnonButtonTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>
@@ -62,7 +56,14 @@
 		</Scripts>
 	</Button>
 
-	<CheckButton name="BagnonBagToggleTemplate" inherits="BagnonCheckButtonTemplate" virtual="true"/>
+	<CheckButton name="BagnonBagToggleTemplate" inherits="BagnonCheckButtonTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+				self.Icon:SetTexture(130716)
+			</OnLoad>
+		</Scripts>
+	</CheckButton>
+	<CheckButton name="BagnonLogToggleTemplate" inherits="BagnonCheckButtonTemplate" virtual="true"/>
 	<CheckButton name="BagnonSortButtonTemplate" inherits="BagnonCheckButtonTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>

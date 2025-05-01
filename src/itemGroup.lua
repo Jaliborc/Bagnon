@@ -8,5 +8,5 @@ local Items = Addon.ItemGroup
 
 function Items:LayoutTraits()
 	local profile = self:GetProfile()
-	return profile.columns, profile.itemScale, 37 + profile.spacing
+	return profile.columns, profile.itemScale, 37 + profile.spacing, self.Transposed
 end
