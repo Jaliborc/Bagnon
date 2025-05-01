@@ -43,7 +43,7 @@ end
 function Title:OnMouseUp()
 	local parent = self:GetParent()
 	parent:StopMovingOrSizing()
-	parent:RecomputePosition()
+	parent:SavePosition()
 end
 
 function Title:OnDoubleClick()
