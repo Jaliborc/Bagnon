@@ -194,7 +194,7 @@ function Frame:PlaceMoney()
 end
 
 function Frame:PlaceCurrencies(width)
-	return self:PlaceWidget('CurrencyTracker', self:HasCurrencies() and function(tracker)
+	return self:PlaceWidget('CurrencyTracker', 'NumberFontNormal', self:HasCurrencies() and function(tracker)
 		local wide = self:HasMoney() and tracker:GetWidth() > (width - self.MoneyFrame:GetWidth() - (self:HasBroker() and 24 or 2))
 		if wide then
 			tracker:SetPoint('BOTTOMRIGHT', self.Footer, -4,2)

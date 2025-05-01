@@ -7,7 +7,7 @@
 		</Frames>
 	</Frame>
 
-	<Button name="BagnonButtonTemplate" virtual="true">
+	<Button name="BagnonButtonTemplate" registerForClicks="anyUp" virtual="true">
 		<Size x="20" y="20"/>
 		<Layers>
 			<Layer level="BACKGROUND" textureSubLevel="0">
@@ -46,7 +46,13 @@
 		</NormalTexture>
 	</CheckButton>
 
-	<Button name="BagnonOwnerSelectorTemplate" inherits="BagnonButtonTemplate" virtual="true"/>
+	<Button name="BagnonOwnerSelectorTemplate" inherits="BagnonButtonTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+				self.Icon:SetTexture(130716)
+			</OnLoad>
+		</Scripts>
+	</CheckButton>
 	<Button name="BagnonDepositButtonTemplate" inherits="BagnonButtonTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>
@@ -56,13 +62,7 @@
 		</Scripts>
 	</Button>
 
-	<CheckButton name="BagnonBagToggleTemplate" inherits="BagnonCheckButtonTemplate" virtual="true">
-		<Scripts>
-			<OnLoad>
-				self.Icon:SetTexture(130716)
-			</OnLoad>
-		</Scripts>
-	</CheckButton>
+	<CheckButton name="BagnonBagToggleTemplate" inherits="BagnonCheckButtonTemplate" virtual="true"/>
 	<CheckButton name="BagnonSortButtonTemplate" inherits="BagnonCheckButtonTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>
