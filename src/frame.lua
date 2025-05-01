@@ -60,15 +60,15 @@ end
 --[[ Top Menu ]]--
 
 function Frame:PlaceMenuButtons()
+	for i, button in pairs(self.MenuButtons) do
+		button:Hide()
+	end
+
 	local buttons = {}
 	tinsert(buttons, self:HasOwnerSelector() and self:GetWidget('OwnerSelector'))
 	tAppendAll(buttons, self:GetExtraButtons())
 	tinsert(buttons, self:HasSortButton() and self:GetWidget('SortButton'))
 	tinsert(buttons, self:HasSearchToggle() and self:GetWidget('SearchToggle'))
-
-	for i, button in pairs(self.MenuButtons) do
-		button:Hide()
-	end
 	self.MenuButtons = tFilter(buttons, function(v) return v end, true)
 
 	for i, button in ipairs(self.MenuButtons) do
@@ -77,7 +77,6 @@ function Frame:PlaceMenuButtons()
 		else
 			button:SetPoint('TOPLEFT', self.MenuButtons[i-1], 'TOPRIGHT', 4, 0)
 		end
-		button:Show()
 	end
 
 	return 20 * #self.MenuButtons, 20
@@ -165,7 +164,7 @@ end
 --[[ Sidebar ]]--
 
 function Frame:PlaceSidebar()
-	return self:PlaceWidget('TabGroup', self:HasSidebar() and function(filters)
+	return self:PlaceWidget('TabGroup', 42, self:HasSidebar() and function(filters)
 		local margin = self.bg.skin.margin or 0
 		if self.id == 'inventory' then
 			filters:SetPoint('TOPRIGHT', self, 'TOPLEFT', 4-margin,0)
@@ -238,10 +237,11 @@ end
 
 --[[ Utilities ]]--
 
-function Frame:PlaceWidget(key, setup)
+function Frame:PlaceWidget(key, ...)
     local widget = rawget(self, key)
+	local setup = select(-1, ...)
     if setup then
-        widget = widget or self:GetWidget(key)
+        widget = widget or self:GetWidget(key, ...)
         widget:ClearAllPoints()
         widget:Show()
 

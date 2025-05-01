@@ -4,7 +4,7 @@
 --]]
 
 local ADDON, Addon = ...
-local Toggle = Addon.Tipped:NewClass('OptionsToggle', 'Button', ADDON .. 'MenuButtonTemplate')
+local Toggle = Addon.Tipped:NewClass('OptionsToggle', 'Button', ADDON .. 'ButtonTemplate')
 local C = LibStub('C_Everywhere')
 
 function Toggle:New(parent)

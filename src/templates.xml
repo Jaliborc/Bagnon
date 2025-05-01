@@ -7,47 +7,47 @@
 		</Frames>
 	</Frame>
 
-    <Button name="BagnonMenuButtonTemplate" virtual="true">
+	<Button name="BagnonButtonTemplate" virtual="true">
 		<Size x="20" y="20"/>
-		<HighlightTexture file="Interface\Buttons\ButtonHilight-Square" alphaMode="ADD"/>
-		<PushedTexture file="Interface\Buttons\UI-Quickslot-Depress"/>
-		<NormalTexture file="Interface\Buttons\UI-Quickslot2">
-			<Size x="34" y="34"/>
-			<Anchors>
-				<Anchor point="CENTER" x="0" y="0"/>
-			</Anchors>
-		</NormalTexture>
 		<Layers>
 			<Layer level="BACKGROUND" textureSubLevel="0">
 				<Texture parentKey="Bg">
 					<Color r="0" g="0" b="0"/>
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" x="-1" y="1"/>
+						<Anchor point="TOPLEFT" x="1" y="-1"/>
+					</Anchors>
 				</Texture>
 			</Layer>
 			<Layer level="BACKGROUND" textureSubLevel="1">
 				<Texture parentKey="Icon"/>
 			</Layer>
 		</Layers>
+		<NormalTexture parentKey="Border" file="Interface\Buttons\UI-Quickslot2">
+			<Size x="34" y="34"/>
+			<Anchors>
+				<Anchor point="CENTER"/>
+			</Anchors>
+		</NormalTexture>
+		<HighlightTexture file="Interface\Buttons\ButtonHilight-Square" alphaMode="ADD"/>
+		<PushedTexture file="Interface\Buttons\UI-Quickslot-Depress"/>
 	</Button>
-	<CheckButton name="BagnonMenuCheckButtonTemplate" inherits="BagnonMenuButtonTemplate" virtual="true">
+	<CheckButton name="BagnonCheckButtonTemplate" inherits="BagnonButtonTemplate" virtual="true">
 		<CheckedTexture file="Interface\Buttons\CheckButtonHilight" alphaMode="ADD"/>
 	</CheckButton>
 
-	<Button name="BagnonOwnerSelectorTemplate" inherits="BagnonMenuButtonTemplate" virtual="true"/>
-	<CheckButton name="BagnonSortButtonTemplate" inherits="BagnonMenuCheckButtonTemplate" virtual="true">
-		<Scripts>
-			<OnLoad>
-				self.Icon:SetTexture('Interface/Addons/BagBrother/Art/Broom')
-			</OnLoad>
-		</Scripts>
+	<CheckButton name="BagnonTabTemplate" inherits="BagnonCheckButtonTemplate" virtual="true">
+		<Size x="37" y="37"/>
+		<NormalTexture parentKey="Border" file="Interface\Buttons\UI-Quickslot2">
+			<Size x="63" y="63"/>
+			<Anchors>
+				<Anchor point="CENTER" x="0" y="-1"/>
+			</Anchors>
+		</NormalTexture>
 	</CheckButton>
-	<CheckButton name="BagnonBagToggleTemplate" inherits="BagnonMenuCheckButtonTemplate" virtual="true">
-		<Scripts>
-			<OnLoad>
-				self.Icon:SetTexture(130716)
-			</OnLoad>
-		</Scripts>
-	</CheckButton>
-	<Button name="BagnonDepositButtonTemplate" inherits="BagnonMenuButtonTemplate" virtual="true">
+
+	<Button name="BagnonOwnerSelectorTemplate" inherits="BagnonButtonTemplate" virtual="true"/>
+	<Button name="BagnonDepositButtonTemplate" inherits="BagnonButtonTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>
 				self.Icon:SetTexture(1455684)
@@ -55,6 +55,21 @@
 			</OnLoad>
 		</Scripts>
 	</Button>
+
+	<CheckButton name="BagnonBagToggleTemplate" inherits="BagnonCheckButtonTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+				self.Icon:SetTexture(130716)
+			</OnLoad>
+		</Scripts>
+	</CheckButton>
+	<CheckButton name="BagnonSortButtonTemplate" inherits="BagnonCheckButtonTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+				self.Icon:SetTexture('Interface/Addons/BagBrother/Art/Broom')
+			</OnLoad>
+		</Scripts>
+	</CheckButton>
 
 	<!-- Skins -->
 	<Frame name="BagnonDialogSkinTemplate" inherits="DialogBorderNoCenterTemplate" virtual="true">

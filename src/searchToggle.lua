@@ -5,7 +5,7 @@
 
 local ADDON, Addon = ...
 local L = LibStub('AceLocale-3.0'):GetLocale(ADDON)
-local Toggle = Addon.Tipped:NewClass('SearchToggle', 'CheckButton', ADDON .. 'MenuButtonTemplate')
+local Toggle = Addon.Tipped:NewClass('SearchToggle', 'CheckButton', ADDON .. 'CheckButtonTemplate')
 
 function Toggle:New(parent)
 	local b = self:Super(Toggle):New(parent)
