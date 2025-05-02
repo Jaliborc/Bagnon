@@ -64,22 +64,18 @@ function Frame:PlaceMenuButtons()
 		button:Hide()
 	end
 
-	local buttons = {}
-	tinsert(buttons, self:HasOwnerSelector() and self:GetWidget('OwnerSelector'))
+	local buttons = { self:HasOwnerSelector() and self:GetWidget('OwnerSelector') }
 	tAppendAll(buttons, self:GetExtraButtons())
 	tinsert(buttons, self:HasSortButton() and self:GetWidget('SortButton'))
 	tinsert(buttons, self:HasSearchToggle() and self:GetWidget('SearchToggle'))
 	self.MenuButtons = tFilter(buttons, function(v) return v end, true)
 
 	for i, button in ipairs(self.MenuButtons) do
-		if i == 1 then
-			button:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
-		else
-			button:SetPoint('TOPLEFT', self.MenuButtons[i-1], 'TOPRIGHT', 4, 0)
-		end
+		button:SetPoint('TOPLEFT', self, 'TOPLEFT', i*24-16, -8)
+		button:Show()
 	end
 
-	return 20 * #self.MenuButtons, 20
+	return 24 * #self.MenuButtons, 20
 end
 
 function Frame:PlaceSearchBar()
@@ -124,7 +120,7 @@ function Frame:HasOptionsToggle()
 end
 
 function Frame:HasOwnerSelector()
-	return Addon.Owners:Count() > 1
+	return not self:GetOwner().isguild
 end
 
 function Frame:HasSearchToggle()

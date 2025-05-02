@@ -17,7 +17,7 @@ Addon.Skins:Register { id = 'Inset', template = 'BagnonInsetSkinTemplate', cente
 Addon.Skins:Register { id = 'OnePixel', template = 'BagnonOnePixelTemplate', centerColor = center9S, borderColor = border9S, margin=3 }
 
 Addon.Skins:Register {
-	id = 'Panel - Flat', template = 'DefaultPanelFlatTemplate', font = GameFontNormalCenter, fontH = GameFontHighlightCenter,
+	id = 'Bagnonium', template = 'DefaultPanelFlatTemplate', font = GameFontNormalCenter, fontH = GameFontHighlightCenter,
 	x = -2, x1 = -2, y = Addon.IsRetail and 0 or -6, y1 = -6, inset = 2, closeX = 4, closeY = Addon.IsRetail and -4,
 	load = function(f)
 		f.TitleContainer:SetFrameLevel(0)
@@ -26,7 +26,7 @@ Addon.Skins:Register {
 }
 
 Addon.Skins:Register {
-	id = 'Panel - Marble', template = 'BasicFrameTemplateWithInset', font = GameFontNormalCenter, fontH = GameFontHighlightCenter,
+	id = 'Combuctor', template = 'BasicFrameTemplateWithInset', font = GameFontNormalCenter, fontH = GameFontHighlightCenter,
 	x = 1, y = -6, y1 = -6, inset = 4, margin = 3, closeX = Addon.IsRetail and 2 or 6, closeY = Addon.IsRetail and -3 or 1,
 	load = function(f) f.CloseButton:Hide() end
 }
