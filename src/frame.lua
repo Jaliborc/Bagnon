@@ -27,6 +27,11 @@ function Frame:New(params)
 	return f
 end
 
+function Frame:RegisterEvents()
+	self:RegisterFrameSignal('BAG_FRAME_TOGGLED', 'Layout')
+	self:RegisterFrameSignal('ELEMENT_RESIZED', 'Layout')
+end
+
 
 --[[ Update ]]--
 

@@ -38,7 +38,7 @@
 
 	<CheckButton name="BagnonTabTemplate" inherits="BagnonCheckButtonTemplate" virtual="true">
 		<Size x="37" y="37"/>
-		<NormalTexture parentKey="Border" file="Interface\Buttons\UI-Quickslot2">
+		<NormalTexture file="Interface\Buttons\UI-Quickslot2">
 			<Size x="63" y="63"/>
 			<Anchors>
 				<Anchor point="CENTER" x="0" y="-1"/>
