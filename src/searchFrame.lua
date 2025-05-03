@@ -55,7 +55,9 @@ function Search:OnHide()
 end
 
 function Search:OnTextChanged()
-	local text = self:GetText():lower()
+	local text = self:GetText()
+	text = text ~= '' and text
+
 	if text ~= Addon.search then
 		Addon.search = text
 		Addon:SendSignal('SEARCH_CHANGED', text)

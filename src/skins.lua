@@ -22,6 +22,7 @@ Addon.Skins:Register {
 	load = function(f)
 		f.TitleContainer:SetFrameLevel(0)
 		f.NineSlice:SetFrameLevel(0)
+		f.Bg:SetFrameLevel(0)
 	end
 }
 
