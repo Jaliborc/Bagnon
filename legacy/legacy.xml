@@ -1,5 +1,6 @@
 <Ui>
 	<!-- Please do not implement plugins using this code -->
+	<Script file="AceEvent-3.0/AceEvent-3.0.lua"/>
 	<Script file="LibItemCache-2.0/LibItemCache-2.0.lua"/>
 	<Script file="legacy.lua"/>
 </Ui>

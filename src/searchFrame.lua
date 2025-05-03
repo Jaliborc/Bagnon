@@ -27,7 +27,7 @@ end
 
 --[[ Frame Events ]]--
 
-function Search:OnToggle(_, shownFrame)
+function Search:OnToggle(shownFrame)
 	if shownFrame then
 		if not self:IsShown() then
 			PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)

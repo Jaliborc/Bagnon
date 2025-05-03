@@ -66,7 +66,7 @@ function Title:Update()
 	self:GetFontString():SetAllPoints(self)
 end
 
-function Title:UpdateVisible(_, busy)
+function Title:UpdateVisible(busy)
 	self:SetShown(not busy)
 end
 
