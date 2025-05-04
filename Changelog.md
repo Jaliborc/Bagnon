@@ -1,9 +1,9 @@
 ### 11.1.15 (beta)
 * All: Large internal restructuring of systems, including new item layout algorithm, to accomodate Bagnonium upcoming release.
 * All: Upgraded to WildAddon-1.1.
-* All: Minor optimizations thanks to upgrades wherever possible.
+* All: Minor optimizations wherever possible, thanks to the upgrades.
 * All: Version warnings now ignore beta/alpha builds.
-* All: Fixed issue with changing display event settings.
+* All: Fixed issue with changing the display event settings.
 * All: Fixed issue with "Bag Break" settings upgrade.
 * All: You can now type uppercase characters in the search bar.
 
