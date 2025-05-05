@@ -10,5 +10,7 @@
 	<Script file="searchToggle.lua"/>
 	<Script file="others.lua"/>
 	<Script file="frame.lua"/>
+	
 	<Script file="skins.lua"/>
+	<Script file="defaults.lua"/>
 </Ui>
