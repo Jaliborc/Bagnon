@@ -1,26 +1,31 @@
+### 11.1.16 (unreleased)
+* All: Settings upgrade system can now report errors, while still not interrupting addon loading.
+* All: Re-added the missing english localization for slash commands help menu (since when has it been missing?!)
+* Retail: Updated description to match the new addon list formatting.
+
 ### 11.1.15 (beta)
-* All: Large internal restructuring of systems, including new item layout algorithm, to accomodate Bagnonium upcoming release.
-* All: Upgraded to WildAddon-1.1.
-* All: Minor optimizations wherever possible, thanks to the upgrades.
-* All: Version warnings now ignore beta/alpha builds.
-* All: Fixed issue with changing the display event settings.
-* All: Fixed issue with "Bag Break" settings upgrade.
-* All: You can now type uppercase characters in the search bar.
+* Large internal restructuring of systems, including new item layout algorithm, to accomodate Bagnonium upcoming release.
+* Upgraded to WildAddon-1.1.
+* Minor optimizations wherever possible, thanks to the upgrades.
+* Version warnings now ignore beta/alpha builds.
+* Fixed issue with changing the display event settings.
+* Fixed issue with "Bag Break" settings upgrade.
+* You can now type uppercase characters in the search bar.
 
 ### 11.1.14
-* All: Disabled "Thin" skin (the template it used was removed by Blizzard).
-* All: Minor template changes as part of Bagnonium development.
+* Disabled "Thin" skin (the template it used was removed by Blizzard).
+* Minor template changes as part of Bagnonium development.
 
 ### 11.1.13
-* All: Updated to new version of the search engine, featuring improvements in logical operators and updates to keywords (like boe, bop, etc).
-* All: Added missing sound design to the side filters.
+* Updated to new version of the search engine, featuring improvements in logical operators and updates to keywords (like boe, bop, etc).
+* Added missing sound design to the side filters.
 
 ### 11.1.12
-* All: Fixed typo that could prevent inventory items from being cached.
+* Fixed typo that could prevent inventory items from being cached.
 
 ### 11.1.11
-* All: Fixed issue that could cause duplicate upgrade icons.
-* All: Updated settings upgrade system.
+* Fixed issue that could cause duplicate upgrade icons.
+* Updated settings upgrade system.
 
 ### 11.1.10
 * Retail, Classic: Added support to undocumented Blizzard API change.
@@ -31,13 +36,13 @@
 * The "Slot Options" panel now appears again as intended.
 
 ### 11.1.8
-* All: Fixed bug with "ignored slot" display.
-* All: Fixed issue with displaying bank bags while the bank frame is disabled.
-* All: Fixed layout issue that could happen when swaping two bags of the same size.
+* Fixed bug with "ignored slot" display.
+* Fixed issue with displaying bank bags while the bank frame is disabled.
+* Fixed layout issue that could happen when swaping two bags of the same size.
 
 ### 11.1.7
-* All: Further fixes into the settings upgrade internal system introduced in 11.1.5.
-* All: Settings upgrade is now done in a "try-catch" manner, making sure the addon will run even if the upgrade fails.
+* Further fixes into the settings upgrade internal system introduced in 11.1.5.
+* Settings upgrade is now done in a "try-catch" manner, making sure the addon will run even if the upgrade fails.
 
 ### 11.1.6
 * Classic: Fixed bug preventing sorting from starting on the inventory.
