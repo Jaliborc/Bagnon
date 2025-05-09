@@ -165,12 +165,12 @@ end
 --[[ Sidebar ]]--
 
 function Frame:PlaceSidebar()
-	return self:PlaceWidget('TabGroup', 42, self:HasSidebar() and function(filters)
+	return self:PlaceWidget('TabGroup', self:HasSidebar() and function(filters)
 		local margin = self.bg.skin.margin or 0
 		if self.id == 'inventory' then
-			filters:SetPoint('TOPRIGHT', self, 'TOPLEFT', 4-margin,0)
+			filters:SetPoint('TOPRIGHT', self, 'TOPLEFT', 4-margin,-33)
 		else
-			filters:SetPoint('TOPLEFT', self, 'TOPRIGHT', margin,0)
+			filters:SetPoint('TOPLEFT', self, 'TOPRIGHT', margin,-33)
 		end
 	end)
 end
