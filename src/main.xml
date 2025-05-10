@@ -6,8 +6,8 @@
 
 	<Script file="title.lua"/>
 	<Script file="optionsButton.lua"/>
-	<Script file="searchFrame.lua"/>
 	<Script file="searchToggle.lua"/>
+	<Script file="searchBar.lua"/>
 	<Script file="others.lua"/>
 	<Script file="frame.lua"/>
 	

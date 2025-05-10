@@ -17,9 +17,9 @@ function Frame:New(params)
 	tinsert(UISpecialFrames, f:GetName())
 	MergeTable(f, params)
 
-	f.profile = f:GetBaseProfile()
+	f.profile, f.rules = f:GetBaseProfile(), {}
 	f.MenuButtons = {}
-	f.Search = Addon.SearchFrame(f)
+	f.SearchBar = Addon.SearchBar(f)
 	f.Title = Addon.Title(f, f.Title)
 	f.ItemGroup = self.ItemGroup(f, f.Bags)
 	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.id, true) end)
@@ -84,14 +84,14 @@ function Frame:PlaceMenuButtons()
 end
 
 function Frame:PlaceSearchBar()
-	self.Search:ClearAllPoints()
-	self.Search:SetPoint('RIGHT', self:HasOptionsToggle() and self.OptionsToggle or self.CloseButton, 'LEFT', -2, 0)
-	self.Search:SetHeight(28)
+	self.SearchBar:ClearAllPoints()
+	self.SearchBar:SetPoint('RIGHT', self:HasOptionsToggle() and self.OptionsToggle or self.CloseButton, 'LEFT', -2, 0)
+	self.SearchBar:SetHeight(28)
 
 	if #self.MenuButtons > 0 then
-		self.Search:SetPoint('LEFT', self.MenuButtons[#self.MenuButtons], 'RIGHT', 2, 0)
+		self.SearchBar:SetPoint('LEFT', self.MenuButtons[#self.MenuButtons], 'RIGHT', 2, 0)
 	else
-		self.Search:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
+		self.SearchBar:SetPoint('TOPLEFT', self, 'TOPLEFT', 8, -8)
 	end
 end
 
@@ -165,7 +165,7 @@ end
 --[[ Sidebar ]]--
 
 function Frame:PlaceSidebar()
-	return self:PlaceWidget('TabGroup', self:HasSidebar() and function(filters)
+	return self:PlaceWidget('TabGroup', 'sidebar', self:HasSidebar() and function(filters)
 		local margin = self.bg.skin.margin or 0
 		if self.id == 'inventory' then
 			filters:SetPoint('TOPRIGHT', self, 'TOPLEFT', 4-margin,-33)
