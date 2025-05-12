@@ -3,6 +3,7 @@
 ## X-License: All Rights Reserved
 ## Category: Bags & Inventory
 ## Author: Jaliborc & Tuller
+## Group: BagBrother
 
 ## SavedVariables: Bagnon_Sets
 ## Dependencies: BagBrother
