@@ -67,7 +67,7 @@
 	<CheckButton name="BagnonSortButtonTemplate" inherits="BagnonCheckButtonTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>
-				self.Icon:SetTexture('Interface/Addons/BagBrother/Art/Broom')
+				self.Icon:SetTexture('Interface/Addons/Bagnon/Art/Broom')
 			</OnLoad>
 		</Scripts>
 	</CheckButton>

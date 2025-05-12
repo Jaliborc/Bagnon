@@ -1,6 +1,13 @@
-### 11.1.16 (unreleased)
+### 11.1.17
+* Fixed a bug with bank search.
+* Reversed the algorithmic change to frame positioning made last version. The old algorithm turned out superior.
+* Tagging release.
+
+### 11.1.16 (beta)
 * All: Settings upgrade system can now report errors, while still not interrupting addon loading.
 * All: Re-added the missing english localization for slash commands help menu (since when has it been missing?!)
+* All: Search custom filters now 100% accurately match using the search bar.
+* All: Minor final changes to prepare for Bagnonium release.
 * Retail: Updated description to match the new addon list formatting.
 
 ### 11.1.15 (beta)
