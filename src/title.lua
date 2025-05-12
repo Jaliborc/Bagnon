@@ -35,7 +35,7 @@ end
 
 function Title:OnMouseDown()
 	local parent = self:GetParent()
-	if not parent.profile.managed and (not Addon.sets.locked or IsAltKeyDown()) then
+	if parent:CanDrag() then
 		parent:StartMoving()
 	end
 end

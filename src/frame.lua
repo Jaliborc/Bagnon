@@ -17,7 +17,7 @@ function Frame:New(params)
 	tinsert(UISpecialFrames, f:GetName())
 	MergeTable(f, params)
 
-	f.profile, f.rules = f:GetBaseProfile(), {}
+	f.profile, f.rules, f.compiled = f:GetBaseProfile(), {}, {}
 	f.MenuButtons = {}
 	f.SearchBar = Addon.SearchBar(f)
 	f.Title = Addon.Title(f, f.Title)
