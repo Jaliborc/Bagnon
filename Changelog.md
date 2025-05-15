@@ -1,3 +1,20 @@
+### 11.1.20
+* Updated with workaround to serious flaw within Blizzard's EventRegistry.
+
+### 11.1.19
+* Retail: offline view now shows all warband characters, not just characters in your server group!
+* Can now gracefully handle errors in skins.
+* Now prevents error caused by bad code in Outfitter Retrofit.
+* Fixed error message on startup that would appear if you had disabled item or currency tooltip counts. 
+* Added a mechanism to fix old corrupted settings one user reported.
+
+### 11.1.18
+* All Bagnon modules are now grouped under BagBrother.
+* Fixed visual bug when right-clicking on the Sidebar or the "Bags" button.
+* Fixed a bug with moving items while a dynamic ruleset is active.
+* New BagBrother icon (by Maxime Playoust, based on Blackmane's work).
+* TOC update.
+
 ### 11.1.17
 * Fixed a bug with bank search.
 * Reversed the algorithmic change to frame positioning made last version. The old algorithm turned out superior.

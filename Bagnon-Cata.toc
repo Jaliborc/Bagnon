@@ -9,7 +9,7 @@
 ## Dependencies: BagBrother
 ## X-Development: True
 ## Interface: 40402
-## Version: 11.1.17
+## Version: 11.1.20
 
 src\main.xml
 legacy\legacy.xml

@@ -36,6 +36,9 @@ end
 --[[ Update ]]--
 
 function Frame:Layout()
+	self.margin = self.skin.margin or 0
+	self.inset = self.skin.inset or 0
+
 	local width = 44 + self:PlaceMenuButtons()
 	                 + self:PlaceOptionsToggle() + self:PlaceTitle()
 			
@@ -166,11 +169,10 @@ end
 
 function Frame:PlaceSidebar()
 	return self:PlaceWidget('TabGroup', 'sidebar', self:HasSidebar() and function(filters)
-		local margin = self.bg.skin.margin or 0
 		if self.id == 'inventory' then
-			filters:SetPoint('TOPRIGHT', self, 'TOPLEFT', 4-margin,-33)
+			filters:SetPoint('TOPRIGHT', self, 'TOPLEFT', 4-self.margin,-33)
 		else
-			filters:SetPoint('TOPLEFT', self, 'TOPRIGHT', margin,-33)
+			filters:SetPoint('TOPLEFT', self, 'TOPRIGHT', self.margin,-33)
 		end
 	end)
 end
