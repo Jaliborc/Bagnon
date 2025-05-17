@@ -1,5 +1,20 @@
+### 11.1.22 (unreleased)
+* Characters from the current server group are now sorted before others by default.
+* Offline view menu rework:
+  * You can now favorite characters. Favorited characters take priority over all others.
+  * If too many characters are present, additional characters will be shown in a scrollable overflow menu.
+  * Design now adapts to each server type.
+* Money tooltip now only shows the top 8 characters, and truncates the remainder into a single entry.
+* The filters menu now becomes scrollable if many filters are available.
+* Now defaults pet rarity to common in offline view if rarity is missing (to prevent bugs).
+
+### 11.1.21
+* Fixed bug preventing custom search filters from filtering.
+* Added more mechanisms for automatic wipeout of invalid settings/cache structures.
+* No longer warns of detected new version on login if the user as since updated.
+
 ### 11.1.20
-* Updated with workaround to serious flaw within Blizzard's EventRegistry.
+* Updated with workaround to serious flaw within Blizzard's EventRegistry, causing frames to stop updating.
 
 ### 11.1.19
 * Retail: offline view now shows all warband characters, not just characters in your server group!
