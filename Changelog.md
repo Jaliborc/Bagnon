@@ -1,4 +1,9 @@
-### 11.1.22 (unreleased)
+### 11.1.23
+* Fixed bug preventing startup of the databroker plugin.
+* Guilds are now also stacked into a scrollable submenu when too many are listed (why are some of you on 50 different guilds? explain yourselves!)
+* Tagged recently added features with a "NEW" stamp. 
+
+### 11.1.22
 * Characters from the current server group are now sorted before others by default.
 * Offline view menu rework:
   * You can now favorite characters. Favorited characters take priority over all others.
