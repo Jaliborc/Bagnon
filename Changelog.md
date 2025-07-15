@@ -1,3 +1,7 @@
+### 11.1.27
+* The filters editor help button now directs to a new instructional video (https://youtu.be/sie39ZW8uZo).
+* Hotfixed an issue in blizzard's event code.
+
 ### 11.1.26
 * Fixed issue with item pre-click logic on Mists servers.
 * Fixed issue in the guild bank causing the latest transactions in the log to be hidden.
