@@ -1,3 +1,10 @@
+## 11.2
+* Retail: Updated for patch 11.2.
+* Retail: You can once again buy bank bag slots while using the addon, without being blocked by the game.
+
+### 11.1.28
+* Moved back to a full addon-based event handling, as Blizzard's event registry is prone to event loss (thank you to the dev community for all the suggestions).
+
 ### 11.1.27
 * The filters editor help button now directs to a new instructional video (https://youtu.be/sie39ZW8uZo).
 * Hotfixed an issue in blizzard's event code.
