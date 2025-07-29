@@ -1,6 +1,7 @@
 ## 11.2
 * Retail: Updated for patch 11.2.
-* Retail: You can once again buy bank bag slots while using the addon, without being blocked by the game.
+* Retail: You can once again buy bank bag slots within the addon, without being blocked by the game.
+* Mists: Color settings for bag types such as inscription or jewelcrafting are now available.
 
 ### 11.1.28
 * Moved back to a full addon-based event handling, as Blizzard's event registry is prone to event loss (thank you to the dev community for all the suggestions).
