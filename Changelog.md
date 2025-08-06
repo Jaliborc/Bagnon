@@ -1,3 +1,6 @@
+### 11.2.2
+* Retail: Now gracefully handles Blizzard having deleted a font from the game.
+
 ### 11.2.1
 * Classic, Mists: fixed issue with right-clicking items introduced in the last update.
 
