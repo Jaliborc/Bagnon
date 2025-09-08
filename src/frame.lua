@@ -22,7 +22,7 @@ function Frame:New(params)
 	f.SearchBar = Addon.SearchBar(f)
 	f.Title = Addon.Title(f, f.Title)
 	f.ItemGroup = self.ItemGroup(f, f.Bags)
-	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.id, true) end)
+	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.id) end)
 
 	return f
 end

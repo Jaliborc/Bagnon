@@ -1,3 +1,10 @@
+### 11.2.7
+* Classic: Hotfixed error message introduced last version.
+* Classic: Improved calculation of keyring size.
+
+### 11.2.6
+* Classic: Forcefully disabled right-click item banking features (which only activated on retail anyway), to test potential causes for combat taint blocks.
+
 ### 11.2.5
 * Retail: Fixed error message that would appear on startup, introduced by last build (ups).
 * All: Added slash command which can be used to reset the addon settings and clear the cache.
