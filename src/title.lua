@@ -70,10 +70,6 @@ function Title:UpdateVisible(busy)
 	self:SetShown(not busy)
 end
 
-function Title:IsFrameMovable()
-	return not Addon.sets.locked
-end
-
 function Title:GetTipAnchor()
 	return self, 'ANCHOR_TOPLEFT'
   end

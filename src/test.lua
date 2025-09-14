@@ -146,7 +146,9 @@ itemBtn:SetSize(36, 36)
 itemBtn:SetID(1)
 itemBtn:Show()
 itemBtn:SetScript('PreClick', function(self)
-  C_Container.UseContainerItem(0, 1, nil, 2)
+  if IsShiftKeyDown() then
+    C_Container.UseContainerItem(0, 1, nil, 2)
+  end
 end)
 
 local label = itemBtn:CreateFontString(nil, "OVERLAY", "GameFontNormal")
