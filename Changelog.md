@@ -1,4 +1,18 @@
+### 11.2.9
+* All: Client-sorting can now sort in reverse!
+  * Added option for reverse sorting, both for client-sorting and server-sorting (Blizzard hid this option for no clear reason).
+* Fixed issues reported with the new taint-free frame display system:
+  * Mists, Retail: Adressed issue that caused the default blizzard code to lag in specific game interactions.
+  * Classic: The default blizzard bags now scale with the UI scaling setting appropriately.
+
+### 11.2.8
+* Entirely retooled Bagnon's internal frame display logic, which required an update since the Dragonflight UI rework. You might some notice some differences:
+  * The system now runs entirely-taint free, potentially making "Action Blocked" errors less likely to occur.
+  * The display events settings now apply to a broader range of NPCs (ex: disabling display at the bank will also disable it at the warbound bank chest).
+  * Fixed issues with disabling display events (ex: inability to not show the inventory at the mailbox if the user choses), which could not be fixed in the old system.
+
 ### 11.2.7
+* Retail: Shift-right click will now fallback to a normal right click when warband bank is not available.
 * Classic: Hotfixed error message introduced last version.
 * Classic: Improved calculation of keyring size.
 
