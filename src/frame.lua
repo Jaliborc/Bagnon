@@ -192,7 +192,7 @@ end
 
 function Frame:PlaceMoney()
 	return self:PlaceWidget('MoneyFrame', self:HasMoney() and function(money)
-		money:SetPoint('TOPRIGHT', self.Footer, self.MoneySpacing, Addon.IsRetail and -4 or 0)
+		money:SetPoint('TOPRIGHT', self.Footer, self.MoneySpacing, 0)
 	end)
 end
 

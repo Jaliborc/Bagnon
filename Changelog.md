@@ -1,9 +1,14 @@
+### 11.2.10
+* Retail: Right-click behaviour at the bank is no longer changed if the bank frame is disabled.
+* Retail: Fixed layout positioning issues introduced by the last patch.
+* Mists: Updated TOC number.
+
 ### 11.2.9
 * All: Client-sorting can now sort in reverse!
   * Added option for reverse sorting, both for client-sorting and server-sorting (Blizzard hid this option for no clear reason).
 * Fixed issues reported with the new taint-free frame display system:
   * Mists, Retail: Adressed issue that caused the default blizzard code to lag in specific game interactions.
-  * Classic: The default blizzard bags now scale with the UI scaling setting appropriately.
+  * Classic, Mists: The default blizzard bags now scale with the UI scaling setting appropriately.
 
 ### 11.2.8
 * Entirely retooled Bagnon's internal frame display logic, which required an update since the Dragonflight UI rework. You might some notice some differences:
