@@ -1,3 +1,10 @@
+### 11.2.11
+* All: Modified BagBrother's item storage format, prioritizing future-proofing it for Blizzard changes on retail.
+  * This fixes the recent issues with keystone tooltips.
+  * Removed some unecessary data introduced recently by Blizzard.
+* Retail: The deposit button toggle button now appears in the settings as intended once again.
+* All: Improved the efficiency of tooltip count generation.
+
 ### 11.2.10
 * Retail: Right-click behaviour at the bank is no longer changed if the bank frame is disabled.
 * Retail: Fixed layout positioning issues introduced by the last patch.
