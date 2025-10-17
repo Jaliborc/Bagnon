@@ -17,7 +17,7 @@ function Frame:New(params)
 	tinsert(UISpecialFrames, f:GetName())
 	MergeTable(f, params)
 
-	f.profile, f.rules, f.compiled = f:GetBaseProfile(), {}, {}
+	f.profile, f.compiled, f.wait = f:GetBaseProfile(), {}, 0
 	f.MenuButtons = {}
 	f.SearchBar = Addon.SearchBar(f)
 	f.Title = Addon.Title(f, f.Title)
@@ -28,40 +28,49 @@ function Frame:New(params)
 end
 
 function Frame:RegisterEvents()
-	self:RegisterFrameSignal('BAG_FRAME_TOGGLED', 'Layout')
 	self:RegisterFrameSignal('ELEMENT_RESIZED', 'Layout')
+	self:RegisterFrameSignal('BAG_FRAME_TOGGLED', 'Layout')
 end
 
 
 --[[ Update ]]--
 
 function Frame:Layout()
-	self.margin = self.skin.margin or 0
-	self.inset = self.skin.inset or 0
+	self.wait = self.wait + 1
+	if self.wait == 1 then
+		self.margin = self.skin.margin or 0
+		self.inset = self.skin.inset or 0
 
-	local width = 44 + self:PlaceMenuButtons()
-	                 + self:PlaceOptionsToggle() + self:PlaceTitle()
-			
-	local function grow(height, stack, w,h)
-		width = max(width, w)
-		return stack and (height + h) or max(height, h)
-	end					
-
-	local main = 0
-	main = grow(main, true, self:PlaceBagGroup())
-	main = grow(main, true, self:PlaceItemGroup())
-
-	local foot = 0
-	foot = grow(foot, true, self:PlaceMoney())
-	foot = grow(foot, true, self:PlaceCurrencies(width))
-	foot = grow(foot, false, self:PlaceBroker())
-
-	local height = grow(main + foot, false, self:PlaceSidebar())
+		local _, side = self:PlaceSidebar()
+		local width = 44 + self:PlaceMenuButtons()
+						+ self:PlaceOptionsToggle() + self:PlaceTitle()
+				
+		local function grow(height, stack, w,h)
+			width = max(width, w)
+			return stack and (height + h) or max(height, h)
+		end			
 		
-	self:PlaceSearchBar()
-	self:PlaceFooter(foot)
-	self:SetSize(max(156, width) + 16, height + 30)
-	self:SendFrameSignal('LAYOUT_FINISHED')
+		local main = 0
+		main = grow(main, true, self:PlaceBagGroup())
+		main = grow(main, true, self:PlaceItemGroup())
+
+		local foot = 0
+		foot = grow(foot, true, self:PlaceMoney())
+		foot = grow(foot, true, self:PlaceCurrencies(width))
+		foot = grow(foot, false, self:PlaceBroker())
+			
+		self:PlaceSearchBar()
+		self:PlaceFooter(foot)
+		self:SetSize(max(156, width) + 16, max(main+foot, side) + 30)
+
+		if self.wait == 1 then
+			self.wait = 0
+			self:SendFrameSignal('LAYOUT_FINISHED')
+		else
+			self.wait = 0
+			self:Layout()
+		end
+	end
 end
 
 

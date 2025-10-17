@@ -20,7 +20,7 @@ local FrameDefaults = {
 	bagBreak = 1, breakSpace = 1.3,
 
 	rules = {sidebar = AsArray({'all', 'tradegoods', 'consumable', 'armor', 'questitem', 'miscellaneous'})},
-	brokerObject = ADDON .. 'Launcher',
+	activeRules = {}, brokerObject = ADDON .. 'Launcher',
     skin = Addon.Skins.Default,
 }
 
@@ -37,6 +37,7 @@ Addon.Settings.ProfileDefaults = {
 	bank = Addon:SetDefaults({
 		borderColor = {1, 1, 0, 1},
 		rules = Addon.IsRetail and {sidebar = AsArray({'all', 'player', 'account'})},
+		activeRules = Addon.IsRetail and {sidebar = 'player'},
 		columns = Addon.IsRetail and 22 or 14,
 		sidebar = Addon.IsRetail,
 		deposit = true, currency = true,

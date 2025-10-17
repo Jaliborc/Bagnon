@@ -1,3 +1,7 @@
+### 11.2.12
+* All: Selected filters are now remembered between sessions.
+* Retail: Updated TOC to 12.2.5.
+
 ### 11.2.11
 * All: Modified BagBrother's item storage format, prioritizing future-proofing it for Blizzard changes on retail.
   * This fixes the recent issues with keystone tooltips.
