@@ -1,3 +1,6 @@
+### 11.2.15
+* All: Minor improvement to StaleCheck-1.0.
+
 ### 11.2.14
 * All: Minor optization of ruleset code.
 * All: Ensured the default tab will always be "All", until the user selects one for the first time, to avoid confusing existing users.
