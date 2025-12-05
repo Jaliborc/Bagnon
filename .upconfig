@@ -4,7 +4,6 @@
   BagBrother
   Bagnon_Bank
   Bagnon_Config
-  Bagnon_VoidStorage
   Bagnon_GuildBank
 [ignore]
   BagBrother/libs/Sushi-3.2/Classes/Groups/FauxScroll.lua

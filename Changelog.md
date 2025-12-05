@@ -1,3 +1,6 @@
+### 11.2.16
+* Retail: Added support for Midnight open beta.
+
 ### 11.2.15
 * All: Minor improvement to StaleCheck-1.0.
 
