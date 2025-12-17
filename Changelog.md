@@ -1,3 +1,7 @@
+### 11.2.17
+* All: Added option to invert looting order in the sort options menu.
+* All: Added unique sound design to the item locking mode.
+
 ### 11.2.16
 * Retail: Added support for Midnight open beta.
 

@@ -57,3 +57,7 @@ Addon.Settings.ProfileDefaults = {
 		columns = 7,
 	}, FrameDefaults)
 }
+
+Addon.Settings.GlobalDefaults = {
+	slotBackground = 2
+}
