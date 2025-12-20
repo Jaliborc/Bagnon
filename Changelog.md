@@ -1,6 +1,7 @@
 ### 11.2.17
 * All: Added option to invert looting order in the sort options menu.
 * All: Added unique sound design to the item locking mode.
+* All: Changed the default number of displayed characters to 10 (which matches essentially how it worked before multi-realm was possible).
 
 ### 11.2.16
 * Retail: Added support for Midnight open beta.
