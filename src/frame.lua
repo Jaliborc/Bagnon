@@ -17,11 +17,11 @@ function Frame:New(params)
 	tinsert(UISpecialFrames, f:GetName())
 	MergeTable(f, params)
 
-	f.profile, f.compiled, f.wait = f:GetBaseProfile(), {}, 0
+	f.rules, f.wait = {}, 0
+	f.profile = f:GetBaseProfile()
 	f.MenuButtons = {}
 	f.SearchBar = Addon.SearchBar(f)
 	f.Title = Addon.Title(f, f.Title)
-	f.ItemGroup = self.ItemGroup(f, f.Bags)
 	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.id) end)
 
 	return f
@@ -152,13 +152,14 @@ end
 --[[ Main Grid ]]--
 
 function Frame:PlaceItemGroup()
+	local group = self:GetWidget('ItemGroup', self.Bags)
 	local anchor = self:AreBagsShown() and self.BagGroup
-					or #self.MenuButtons > 0 and self.MenuButtons[1]
-					or self.Title
+				or #self.MenuButtons > 0 and self.MenuButtons[1]
+				or self.Title
 	local inset = anchor ~= self.BagGroup and self.inset or 0
 
-	self.ItemGroup:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', inset, -4-inset)
-	return self.ItemGroup:GetWidth() - 2 + (self.inset or 0) * 2, self.ItemGroup:GetHeight() + 6
+	group:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', inset, -4-inset)
+	return group:GetWidth() - 2 + (self.inset or 0) * 2, group:GetHeight() + 6
 end
 
 function Frame:PlaceBagGroup()
