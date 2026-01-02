@@ -46,7 +46,7 @@
 		</NormalTexture>
 	</CheckButton>
 
-	<Button name="BagnonOwnerSelectorTemplate" inherits="BagnonButtonTemplate" virtual="true"/>
+	<Button name="BagnonOfflineSelectorTemplate" inherits="BagnonButtonTemplate" virtual="true"/>
 	<Button name="BagnonDepositButtonTemplate" inherits="BagnonButtonTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>

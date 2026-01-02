@@ -81,7 +81,7 @@ function Frame:PlaceMenuButtons()
 		button:Hide()
 	end
 
-	local buttons = { self:HasOwnerSelector() and self:GetWidget('OwnerSelector') }
+	local buttons = { self:HasOfflineSelector() and self:GetWidget('OfflineSelector') }
 	tAppendAll(buttons, self:GetExtraButtons())
 	tinsert(buttons, self:HasSortButton() and self:GetWidget('SortButton'))
 	tinsert(buttons, self:HasSearchToggle() and self:GetWidget('SearchToggle'))
@@ -136,7 +136,7 @@ function Frame:HasOptionsToggle()
 	return C.AddOns.GetAddOnEnableState(ADDON .. '_Config', UnitName('player')) >= 2 and self.profile.options
 end
 
-function Frame:HasOwnerSelector()
+function Frame:HasOfflineSelector()
 	return not self:GetOwner().isguild
 end
 
