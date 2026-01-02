@@ -1,3 +1,15 @@
+### 11.2.19 (beta)
+* __Improved Performance:__
+  * Opening a window for the first time each session is now **29% faster**.
+  * Massively improved searh engine performance by developing a JIT compiler - search and filters are now **13.51 times faster**! That's a **1351% improvement**!
+* __New Feature:__
+  * You can now search battle pets by name, both online and offline.
+* __Bug Fixes:__
+  * Fixed issue that caused custom search filters to not always exactly match a normal text search, for example when using a keyword like _Soulbound_ or _Warbound_.
+  * Fixed error message that could appear when searching offline characters.
+* __Visual Improvement:__
+  * The sort options menu now detects and refreshes when the blizzard settings change (these client settings can take time to change, and it was visually confusing to use).
+
 ### 11.2.18
 * __Improved Warbank Interaction:__
   * Using an item from your bags while viewing the Warband Bank tab will now deposit it directly into the Warband Bank.
