@@ -28,8 +28,8 @@ function Frame:New(params)
 end
 
 function Frame:RegisterEvents()
-	self:RegisterFrameSignal('ELEMENT_RESIZED', 'Layout')
 	self:RegisterFrameSignal('BAG_FRAME_TOGGLED', 'Layout')
+	self:RegisterFrameSignal('ELEMENT_RESIZED', 'Layout')
 end
 
 
@@ -37,7 +37,7 @@ end
 
 function Frame:Layout()
 	self.wait = self.wait + 1
-	if self.wait == 1 then
+	if self.wait == 1 then -- making sure an infinite loop can never happen, just in case
 		self.margin = self.skin.margin or 0
 		self.inset = self.skin.inset or 0
 
@@ -65,7 +65,7 @@ function Frame:Layout()
 
 		if self.wait == 1 then
 			self.wait = 0
-			self:SendFrameSignal('LAYOUT_FINISHED')
+			self.skin('layout')
 		else
 			self.wait = 0
 			self:Layout()

@@ -1,3 +1,6 @@
+### 11.2.20 (beta)
+* Reversed a very minor performance improvement on retail servers to maintain backwards compatibility with 3rd party plugins.
+
 ### 11.2.19 (beta)
 * __Improved Performance:__
   * Opening a window for the first time each session is now **29% faster**.
