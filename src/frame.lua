@@ -29,7 +29,6 @@ end
 
 function Frame:RegisterEvents()
 	self:RegisterFrameSignal('BAG_FRAME_TOGGLED', 'Layout')
-	self:RegisterFrameSignal('ELEMENT_RESIZED', 'Layout')
 end
 
 
@@ -158,6 +157,7 @@ function Frame:PlaceItemGroup()
 				or self.Title
 	local inset = anchor ~= self.BagGroup and self.inset or 0
 
+	group:SetScript('OnSizeChanged', function() self:Layout() end)
 	group:SetPoint('TOPLEFT', anchor, 'BOTTOMLEFT', inset, -4-inset)
 	return group:GetWidth() - 2 + (self.inset or 0) * 2, group:GetHeight() + 6
 end
@@ -179,6 +179,8 @@ end
 
 function Frame:PlaceSidebar()
 	return self:PlaceWidget('TabGroup', 'sidebar', self:HasSidebar() and function(filters)
+		filters:SetScript('OnSizeChanged', function() self:Layout() end)
+
 		if self.id == 'inventory' then
 			filters:SetPoint('TOPRIGHT', self, 'TOPLEFT', 4-self.margin,-33)
 		else
@@ -215,6 +217,7 @@ function Frame:PlaceCurrencies(width)
 			tracker:SetPoint('TOPLEFT', self.Footer, 6,0)
 		end
 
+		tracker:SetScript('OnSizeChanged', function() self:Layout() end)
 		return not wide and self:HasMoney() and 0
 	end)
 end

@@ -1,3 +1,16 @@
+### 11.2.23 (beta)
+* __Options:__
+  * Updated dropdown buttons in Bagnon Options to use the new native implementation. Their appearance will now match the version of the game.
+  * Fixed the missing "Opening the World Map" button text in auto-display options.
+* __Tooltips:__
+  * Tooltip currency counts now correctly update during gameplay.
+  * To increase readability, money tooltip now hides copper amounts when dealing with large amounts of gold.
+  * To increase readability, large numbers in tooltip currency counts are now formatted as in the rest of the UI.
+
+### 11.2.22 (beta)
+* Made workaround to stop bug being caused by a major flaw with CallbackHandler-1.0.
+* Overall reduced reliance on CallbackHandler-1.0 wherever possible.
+
 ### 11.2.20 (beta)
 * Reversed a very minor performance improvement on retail servers to maintain backwards compatibility with 3rd party plugins.
 
