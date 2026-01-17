@@ -1,3 +1,11 @@
+### 11.2.24
+* __Primary Changes:__ 
+  * Given beta testers have not found any new issues, included all the improvements from the beta versions!
+  * Added support for Burning Crusade Anniversary realms.
+* __Other Changes:__ 
+  * New Feature: Now tracks items in the mailbox and includes them in tooltip item counts!
+  * Bug Fix: Fixed issue that caused equipped items to be incorrectly shown to be in the bags in tooltip item counts.
+
 ### 11.2.23 (beta)
 * __Options:__
   * Updated dropdown buttons in Bagnon Options to use the new native implementation. Their appearance will now match the version of the game.
