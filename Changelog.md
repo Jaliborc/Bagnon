@@ -1,3 +1,6 @@
+### 11.2.25
+* Fixed issue on Mists of Pandaria introduced with the TBC support.
+
 ### 11.2.24
 * __Primary Changes:__ 
   * Given beta testers have not found any new issues, included all the improvements from the beta versions!
