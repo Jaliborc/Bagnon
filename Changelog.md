@@ -1,3 +1,11 @@
+### 11.2.26 (beta)
+* Shift-Right Clicking an item now inverts where it is stored - if you have player tab selected, deposits on the warband and vice-versa.
+* Equipment manager is now correctly detected on TBC.
+* __Bag Disabling Improvements:__
+  * The main menu buttons now correctly reflect which bags are enabled in the inventory frame.
+  * Bagnon will no longer disable the "combined bags" setting if the inventory frame is disabled.
+  * Retail - fixed issue displaying blizzard bags through the "Fallback" setting. 
+
 ### 11.2.25
 * Fixed issue on Mists of Pandaria introduced with the TBC support.
 
@@ -28,7 +36,7 @@
 ### 11.2.19 (beta)
 * __Improved Performance:__
   * Opening a window for the first time each session is now **29% faster**.
-  * Massively improved searh engine performance by developing a JIT compiler - search and filters are now **13.51 times faster**! That's a **1351% improvement**!
+  * Massively improved search engine performance by developing a JIT compiler - search and filters are now **13.51 times faster**! That's a **1351% improvement**!
 * __New Feature:__
   * You can now search battle pets by name, both online and offline.
 * __Bug Fixes:__
