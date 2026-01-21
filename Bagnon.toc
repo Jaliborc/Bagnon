@@ -9,8 +9,8 @@
 ## X-Development: True
 ## Dependencies: BagBrother
 ## SavedVariables: Bagnon_Sets
-## Interface: 120001, 110207, 50501, 40402, 30404, 20505, 11507
-## Version: 11.2.26 (beta)
+## Interface: 120001, 120000, 50501, 40402, 30404, 20505, 11507
+## Version: 12.0.0
 
 src\main.xml
 legacy\legacy.xml

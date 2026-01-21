@@ -1,3 +1,8 @@
+## 12.0.0
+* Updated TOC number to match live Midnight servers.
+* If you have characters with duplicated names, now the corresponding server names will be shown.
+* Includes all improvements from yesterday's beta.
+
 ### 11.2.26 (beta)
 * Shift-Right Clicking an item now inverts where it is stored - if you have player tab selected, deposits on the warband and vice-versa.
 * Equipment manager is now correctly detected on TBC.
