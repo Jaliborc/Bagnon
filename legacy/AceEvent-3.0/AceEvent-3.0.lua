@@ -1,52 +1,61 @@
---- AceEvent-3.0 provides event registration and secure dispatching.
--- All dispatching is done using **CallbackHandler-1.0**. AceEvent is a simple wrapper around
--- CallbackHandler, and dispatches all game events or addon message to the registrees.
---
--- **AceEvent-3.0** can be embeded into your addon, either explicitly by calling AceEvent:Embed(MyAddon) or by
--- specifying it as an embeded library in your AceAddon. All functions will be available on your addon object
--- and can be accessed directly, without having to explicitly call AceEvent itself.\\
--- It is recommended to embed AceEvent, otherwise you'll have to specify a custom `self` on all calls you
--- make into AceEvent.
--- @class file
--- @name AceEvent-3.0
--- @release $Id: AceEvent-3.0.lua 1202 2019-05-15 23:11:22Z nevcairiel $
+--- AceEvent-3.0 provides event registration and dispatching.
+-- 12.0 SAFE VERSION (static event registration)
+
 local CallbackHandler = LibStub("CallbackHandler-1.0")
 
 local MAJOR, MINOR = "AceEvent-3.0", 4
 local AceEvent = LibStub:NewLibrary(MAJOR, MINOR)
-
 if not AceEvent then return end
 
 -- Lua APIs
 local pairs = pairs
 
-AceEvent.frame = AceEvent.frame or CreateFrame("Frame", "AceEvent30Frame") -- our event frame
-AceEvent.embeds = AceEvent.embeds or {} -- what objects embed this lib
+-- =========================================================
+-- Use an anonymous frame (never protected)
+-- =========================================================
+AceEvent.frame = AceEvent.frame or CreateFrame("Frame")
+AceEvent.embeds = AceEvent.embeds or {}
 
--- APIs and registry for blizzard events, using CallbackHandler lib
+-- =========================================================
+-- CallbackHandler registry (NO dynamic RegisterEvent)
+-- =========================================================
 if not AceEvent.events then
-	AceEvent.events = CallbackHandler:New(AceEvent,
-		"RegisterEvent", "UnregisterEvent", "UnregisterAllEvents")
+	AceEvent.events = CallbackHandler:New(
+		AceEvent,
+		"RegisterEvent",
+		"UnregisterEvent",
+		"UnregisterAllEvents"
+	)
 end
 
+-- =========================================================
+-- 12.0 FIX: DO NOTHING HERE (critical)
+-- Blizzard forbids this path entirely
+-- =========================================================
 function AceEvent.events:OnUsed(target, eventname)
-	AceEvent.frame:RegisterEvent(eventname)
+	-- intentionally empty
 end
 
 function AceEvent.events:OnUnused(target, eventname)
-	AceEvent.frame:UnregisterEvent(eventname)
+	-- intentionally empty
 end
 
-
--- APIs and registry for IPC messages, using CallbackHandler lib
+-- =========================================================
+-- IPC messages (safe, no Blizzard API)
+-- =========================================================
 if not AceEvent.messages then
-	AceEvent.messages = CallbackHandler:New(AceEvent,
-		"RegisterMessage", "UnregisterMessage", "UnregisterAllMessages"
+	AceEvent.messages = CallbackHandler:New(
+		AceEvent,
+		"RegisterMessage",
+		"UnregisterMessage",
+		"UnregisterAllMessages"
 	)
 	AceEvent.SendMessage = AceEvent.messages.Fire
 end
 
---- embedding and embed handling
+-- =========================================================
+-- Embedding support
+-- =========================================================
 local mixins = {
 	"RegisterEvent", "UnregisterEvent",
 	"RegisterMessage", "UnregisterMessage",
@@ -54,73 +63,49 @@ local mixins = {
 	"UnregisterAllEvents", "UnregisterAllMessages",
 }
 
---- Register for a Blizzard Event.
--- The callback will be called with the optional `arg` as the first argument (if supplied), and the event name as the second (or first, if no arg was supplied)
--- Any arguments to the event will be passed on after that.
--- @name AceEvent:RegisterEvent
--- @class function
--- @paramsig event[, callback [, arg]]
--- @param event The event to register for
--- @param callback The callback function to call when the event is triggered (funcref or method, defaults to a method with the event name)
--- @param arg An optional argument to pass to the callback function
-
---- Unregister an event.
--- @name AceEvent:UnregisterEvent
--- @class function
--- @paramsig event
--- @param event The event to unregister
-
---- Register for a custom AceEvent-internal message.
--- The callback will be called with the optional `arg` as the first argument (if supplied), and the event name as the second (or first, if no arg was supplied)
--- Any arguments to the event will be passed on after that.
--- @name AceEvent:RegisterMessage
--- @class function
--- @paramsig message[, callback [, arg]]
--- @param message The message to register for
--- @param callback The callback function to call when the message is triggered (funcref or method, defaults to a method with the event name)
--- @param arg An optional argument to pass to the callback function
-
---- Unregister a message
--- @name AceEvent:UnregisterMessage
--- @class function
--- @paramsig message
--- @param message The message to unregister
-
---- Send a message over the AceEvent-3.0 internal message system to other addons registered for this message.
--- @name AceEvent:SendMessage
--- @class function
--- @paramsig message, ...
--- @param message The message to send
--- @param ... Any arguments to the message
-
-
--- Embeds AceEvent into the target object making the functions from the mixins list available on target:..
--- @param target target object to embed AceEvent in
 function AceEvent:Embed(target)
-	for k, v in pairs(mixins) do
-		target[v] = self[v]
+	for _, method in pairs(mixins) do
+		target[method] = self[method]
 	end
 	self.embeds[target] = true
 	return target
 end
 
--- AceEvent:OnEmbedDisable( target )
--- target (object) - target object that is being disabled
---
--- Unregister all events messages etc when the target disables.
--- this method should be called by the target manually or by an addon framework
 function AceEvent:OnEmbedDisable(target)
 	target:UnregisterAllEvents()
 	target:UnregisterAllMessages()
 end
 
--- Script to fire blizzard events into the event listeners
+-- =========================================================
+-- Event dispatcher
+-- =========================================================
 local events = AceEvent.events
-AceEvent.frame:SetScript("OnEvent", function(this, event, ...)
+AceEvent.frame:SetScript("OnEvent", function(_, event, ...)
 	events:Fire(event, ...)
 end)
 
---- Finally: upgrade our old embeds
-for target, v in pairs(AceEvent.embeds) do
+-- =========================================================
+-- STATIC EVENT REGISTRATION (12.0 SAFE)
+-- These cover Bagnon + BagBrother
+-- =========================================================
+local staticEvents = {
+	"BAG_UPDATE",
+	"BAG_UPDATE_DELAYED",
+	"PLAYERBANKSLOTS_CHANGED",
+	-- "PLAYERBANKBAGSLOTS_CHANGED",
+	-- "PLAYERREAGENTBANKSLOTS_CHANGED",
+	"PLAYER_MONEY",
+	"BANKFRAME_OPENED",
+	"BANKFRAME_CLOSED",
+}
+
+for _, event in ipairs(staticEvents) do
+	AceEvent.frame:RegisterEvent(event)
+end
+
+-- =========================================================
+-- Upgrade existing embeds
+-- =========================================================
+for target in pairs(AceEvent.embeds) do
 	AceEvent:Embed(target)
 end
