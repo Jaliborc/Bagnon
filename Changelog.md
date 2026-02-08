@@ -1,4 +1,7 @@
-## 12.0.1
+### 12.0.2
+* Created icons for Shift-Left-Click and Shift-Right-Click actions that are now used on tooltips.
+
+### 12.0.1
 * Removed old legacy code that existed only to support any potential extremely outdated plugin, which is now guaranteed to no longer work anyway (Midnight now refuses to load any outdated addon).
 * Community contributions!
   * Equipment sets are now automatically registered as search filters.  You can also Shift-Click them to equip (by _r15ch13_)
