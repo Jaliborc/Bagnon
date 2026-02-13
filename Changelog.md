@@ -1,3 +1,6 @@
+### 12.0.3
+* Fixed potential theoretical issue with nil item searches.
+
 ### 12.0.2
 * Created icons for Shift-Left-Click and Shift-Right-Click actions that are now used on tooltips.
 
