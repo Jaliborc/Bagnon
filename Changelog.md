@@ -1,3 +1,9 @@
+### 12.0.4
+* Fixed issue in settings upgrade system which was causing warband bank data to be reset on login.
+* Fixed error message on startup that would appear to players that have disabled the Bagnon inventory.
+* Added falllback mechanism to prevent issues in case user somehow disables all side filters in a frame.
+* Fixed situation in which players could disable all side filters.
+
 ### 12.0.3
 * Fixed potential theoretical issue with nil item searches.
 

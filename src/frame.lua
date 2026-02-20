@@ -23,6 +23,7 @@ function Frame:New(params)
 	f.SearchBar = Addon.SearchBar(f)
 	f.Title = Addon.Title(f, f.Title)
 	f.CloseButton:SetScript('OnClick', function() Addon.Frames:Hide(f.id) end)
+	f:Update()
 
 	return f
 end
