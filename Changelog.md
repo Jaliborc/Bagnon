@@ -1,3 +1,8 @@
+### 12.0.5
+* __Guild Bank:__
+  * Fixed issue starting the guild bank introduced last version.
+  * Now large tab permission numbers are formatted for easier reading (example: 1000 becomes 1k)
+
 ### 12.0.4
 * Fixed issue in settings upgrade system which was causing warband bank data to be reset on login.
 * Fixed error message on startup that would appear to players that have disabled the Bagnon inventory.
