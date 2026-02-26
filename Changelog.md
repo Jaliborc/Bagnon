@@ -1,3 +1,6 @@
+### 12.0.7
+* __Hotfix:__ Currency tracking now works as intended on both retail and classic servers.
+
 ### 12.0.6
 * Fixed issue caused by Blizzard changes that prevented more than 3 currencies from being tracked at a time.
 
