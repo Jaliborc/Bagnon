@@ -1,3 +1,6 @@
+### 12.0.6
+* Fixed issue caused by Blizzard changes that prevented more than 3 currencies from being tracked at a time.
+
 ### 12.0.5
 * __Guild Bank:__
   * Fixed issue starting the guild bank introduced last version.
