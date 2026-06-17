@@ -1,3 +1,10 @@
+### 12.0.13
+* Updated for WoW patch 12.0.7.
+* Updated TOC for Mists.
+* Items you send to another of your characters are now immediately be counted on item tooltips (thanks to _Dramacydal_).
+* Removed all references to `SetTooltipMoney`, a problematic Blizzard function that has since been deprecated.
+* Added workaround to unexplained Blizzard issue where the Offline View menu would appear large and with a scrollbar even when unecessary.
+
 ### 12.0.12
 * Now should display icons for Erathen and Haranir characters correctly.
 * Updated the content of the Help menu, as some information was becoming outdated and could cause confusion amongst players.
