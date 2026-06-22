@@ -1,3 +1,6 @@
+### 12.0.14
+* Now forces the deprecated `Twilight's Blade Insignia` to not be tracked, which is impossible to manually untrack.
+
 ### 12.0.13
 * Updated for WoW patch 12.0.7.
 * Updated TOC for Mists.
