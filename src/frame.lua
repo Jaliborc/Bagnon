@@ -7,7 +7,7 @@ local ADDON, Addon = ...
 local C = LibStub('C_Everywhere')
 local Frame = Addon.Frame
 Frame.Font, Frame.FontH = GameFontNormalLeft, GameFontHighlightLeft
-Frame.MoneySpacing = 2
+Frame.MoneySpacing = -10
 
 
 --[[ Construct ]]--
@@ -210,7 +210,7 @@ end
 
 function Frame:PlaceCurrencies(width)
 	return self:PlaceWidget('CurrencyTracker', 'NumberFontNormal', self:HasCurrencies() and function(tracker)
-		local wide = self:HasMoney() and tracker:GetWidth() > (width - self.MoneyFrame:GetWidth() - (self:HasBroker() and 24 or 2))
+		local wide = self:HasMoney() and tracker:GetWidth() > (width - self.MoneyFrame:GetWidth() - (self:HasBroker() and 55 or 0))
 		if wide then
 			tracker:SetPoint('BOTTOMRIGHT', self.Footer, -4,2)
 		else
@@ -225,7 +225,7 @@ end
 function Frame:PlaceBroker()
 	return self:PlaceWidget('BrokerCarrousel', self:HasBroker() and function(broker)
 		local right = self:HasMoney() and 
-		              {'RIGHT', self.MoneyFrame, 'LEFT', -5,0} or
+		              {'RIGHT', self.MoneyFrame, 'LEFT', -2,0} or
 		              {'RIGHT', self.Footer, 'RIGHT', -4,0}
 		local left = self:HasCurrencies() and self.CurrencyTracker:GetPoint(1) == 'TOPLEFT' and
 		              {'TOPLEFT', self.CurrencyTracker, 'TOPRIGHT', -2,1} or

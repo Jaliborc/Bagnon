@@ -1,3 +1,7 @@
+### 12.0.15
+* Removed all use of the now unsecure blizzard "MoneyFrame" templates.
+* Reversed minor change which accidentally disabled item counts in TBC.
+
 ### 12.0.14
 * Now forces the deprecated `Twilight's Blade Insignia` to not be tracked, which is impossible to manually untrack.
 
