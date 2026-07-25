@@ -1,3 +1,7 @@
+### 12.0.18
+* Improved memory management on offline viewing guild and void storage banking (by _lucienve_).
+* Updated TOC for classic realms.
+
 ### 12.0.17
 * Fixed sorting ordering bug that could occur with reverse-sorting enabled.
 * Updated TOC for Burning Crusade.
