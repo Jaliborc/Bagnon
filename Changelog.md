@@ -1,6 +1,15 @@
+### 12.0.19
+* __Improvement:__  Updated addon list formatting for Classic realms.
+* __Bugfixes:__ 
+  * Fixed blank gray Blizzard backpack button when inventory frame is disabled (by _lucienve_).
+  * Fixed Blizzard backpack missing item slots when inventory frame is disabled.
+  * Fixed specific instances of right-click item usage blocking related to banking (by _lucienve_).
+  * Resolved error message that could occur when addon Pawn is installed (by _lucienve_).
+  * Fixed wrong offline currency count for some warband currencies (by _lucienve_).
+
 ### 12.0.18
 * Improved memory management on offline viewing guild and void storage banking (by _lucienve_).
-* Updated TOC for classic realms.
+* Updated TOC for Classic realms.
 
 ### 12.0.17
 * Fixed sorting ordering bug that could occur with reverse-sorting enabled.
