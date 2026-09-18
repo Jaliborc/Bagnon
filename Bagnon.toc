@@ -10,7 +10,7 @@
 ## X-Development: True
 ## Dependencies: BagBrother
 ## SavedVariables: Bagnon_Sets
-## Interface: 120100, 50504, 40402, 30404, 20506, 11509
-## Version: 12.1.1
+## Interface: 120100, 50504, 40402, 30404, 20506, 16001, 11509
+## Version: 12.1.2
 
 src\main.xml

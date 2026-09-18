@@ -18,7 +18,7 @@ Addon.Skins:Register { id = 'OnePixel', template = 'BagnonOnePixelTemplate', cen
 
 Addon.Skins:Register {
 	id = 'Bagnonium', template = 'DefaultPanelFlatTemplate', font = GameFontNormalCenter, fontH = GameFontHighlightCenter,
-	x = -2, x1 = -2, y = Addon.IsRetail and 0 or -6, y1 = -6, inset = 2, closeX = 4, closeY = Addon.IsRetail and -4,
+	x = -2, x1 = -2, y = Addon.IsMainline and 0 or -6, y1 = -6, inset = 2, closeX = 4, closeY = Addon.IsMainline and -4,
 	load = function(f)
 		f.TitleContainer:SetFrameLevel(0)
 		f.NineSlice:SetFrameLevel(0)
@@ -28,6 +28,6 @@ Addon.Skins:Register {
 
 Addon.Skins:Register {
 	id = 'Combuctor', template = 'BasicFrameTemplateWithInset', font = GameFontNormalCenter, fontH = GameFontHighlightCenter,
-	x = 1, y = -6, y1 = -6, inset = 4, margin = 3, closeX = Addon.IsRetail and 2 or 6, closeY = Addon.IsRetail and -3 or 1,
+	x = 1, y = -6, y1 = -6, inset = 4, margin = 3, closeX = Addon.IsMainline and 2 or 6, closeY = Addon.IsMainline and -3 or 1,
 	load = function(f) f.CloseButton:Hide() end
 }
