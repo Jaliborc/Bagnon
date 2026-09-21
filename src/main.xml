@@ -13,6 +13,4 @@
 	
 	<Script file="skins.lua"/>
 	<Script file="defaults.lua"/>
-
-	<!--<Script file="test.lua"/>-->
 </Ui>
