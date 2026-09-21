@@ -36,9 +36,9 @@ Addon.Settings.ProfileDefaults = {
 
 	bank = Addon:SetDefaults({
 		borderColor = {1, 1, 0, 1},
-		rules = Addon.IsRetail and {sidebar = AsArray({'all', 'player', 'account'})},
-		columns = Addon.IsRetail and 22 or 14,
 		sidebar = Addon.IsRetail,
+		rules = Addon.IsRetail and {sidebar = AsArray({'all', 'player', 'account'})},
+		columns = Addon.IsMainline and 22 or 14,
 		deposit = true, currency = true,
 		point = 'LEFT',
 		x = 95

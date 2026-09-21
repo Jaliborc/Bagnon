@@ -1,3 +1,9 @@
+### 12.1.2
+* Updated for WoW Forever!
+* Notes
+  * There are still some minor details to iron out on Forever, such as which bag types do exist and polishing skins to look perfect.
+  * Beta realms appear to not be loading saved variables at the moment, so item caches aren't remembered between sessions at the moment. Might be intentional from Blizzard to avoid certain types of bugs.
+
 ### 12.1.1
 * __New Feature:__ Added option to reverse order of item stacks in sorting options (co-authored by _lucienve_).
 * Redesigned sorting options on retail, to make it clearer which settings are only available when using client sorting. 
