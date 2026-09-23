@@ -1,3 +1,8 @@
+### 12.1.3
+* __Design improvement:__ when searching for items, all extraneous information about items that have been filtered out is hidden (such as rarity glow), for clearer results. 
+* __Forever:__ client-sorting is not ready yet, so server sort is enabled by default on these servers.
+* Fixed minor visual issues that could occur when dragging items or changing tabs while text searching is active.
+
 ### 12.1.2
 * Updated for WoW Forever!
 * Notes
