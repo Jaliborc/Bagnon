@@ -16,8 +16,8 @@ local FrameDefaults = {
 	color = {0, 0, 0, 0.5},
 	x = 0, y = 0,
 
-	itemScale = 1, spacing = 2,
-	bagBreak = 1, breakSpace = 1.3,
+	bagBreak = Addon.IsModern and 1 or 0,
+	breakSpace = 1.3, spacing = 2, itemScale = 1,
 
 	rules = {sidebar = AsArray({'all', 'tradegoods', 'consumable', 'armor', 'questitem', 'miscellaneous'})},
 	activeRules = {}, brokerObject = ADDON .. 'Launcher',

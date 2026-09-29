@@ -1,3 +1,12 @@
+### 12.1.5
+* The "action blocked" dialog is solved! BagBrother now makes sure that buttons are never created in combat and initialized properly by the game engine, by:
+  * At startup, the maximum possible number of inventory slots in the current expansion will be created.
+  * At startup, and before each combat starts, BagBrother checks whether there is any bag larger than the expected maximum bag size. If there is, buttons are created for all bags to accommodate those potential dimensions.
+  * Buttons no longer live in a shared reusable pool. Each button will always be the same item slot, to make sure that if a slot was safe, it will always be safe. While wasteful, better safe than sorry, and we're creating buttons in advance anyway.
+  * At startup, the inventory is open, rendered for 1 frame, and immediately closed (behind the loading screen, so the user doesn't see). The addon sound is also disabled until that action is performed.
+* Now prevents bags from being dragged in combat (game will not let you place them anyway).
+* Classic and Forever: No bag break is now the default setting on these game versions, unlike Retail makes more sense given the smaller size of the bags.
+
 ### 12.1.4
 * __Forever:__ 
   * Client-side sorting is now compatible.
