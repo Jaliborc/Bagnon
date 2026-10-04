@@ -1,3 +1,9 @@
+### 12.1.6
+* __All:__ Added some mechanisms to prevent possible future nil-errors or breaking due to Blizzard refactoring.
+* __Forever:__
+  * Updated for the new beta build that had broke everything.
+  * Guild bank is now supported.
+
 ### 12.1.5
 * __The "action blocked" dialog issue is solved!__ BagBrother now makes sure that buttons are never created in combat and initialized properly by the game engine, by:
   * At startup, the maximum possible number of inventory slots in the current expansion will be created.
