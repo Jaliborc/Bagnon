@@ -1,3 +1,7 @@
+### 12.1.7
+* Did an overall pass on tuning skins for each version of the game, in particular making versions for Forever.
+* TOC update.
+
 ### 12.1.6
 * __All:__ Added some mechanisms to prevent possible future nil-errors or breaking due to Blizzard refactoring.
 * __Forever:__
