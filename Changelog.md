@@ -1,3 +1,6 @@
+### 12.1.8
+* **Forever**: Servers are falsely indicating there is a warband bank. Addon now ignores it on Forever and only shows personal bank bags.
+
 ### 12.1.7
 * Did an overall pass on tuning skins for each version of the game, in particular making versions for Forever.
 * TOC update.
