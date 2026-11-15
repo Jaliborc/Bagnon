@@ -1,3 +1,7 @@
+### 12.1.11
+* __Retail__ and __Forever__: Fixed issue that would prevent combined bag from being opened when inventory frame is disabled.
+* __Forever__: Hopefully fixed bug preventing guild logs from being displayed (co-authored by _bswebdes_).
+
 ### 12.1.10
 * __All__: Improved accuracy of item counts on recipe tooltips (by _Dramacydal_).
 
