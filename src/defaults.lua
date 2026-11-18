@@ -38,7 +38,7 @@ Addon.Settings.ProfileDefaults = {
 		borderColor = {1, 1, 0, 1},
 		sidebar = Addon.IsRetail,
 		rules = Addon.IsRetail and {sidebar = AsArray({'all', 'player', 'account'})},
-		columns = Addon.IsMainline and 22 or 14,
+		columns = Addon.IsRetail and 22 or 14,
 		deposit = true, currency = true,
 		point = 'LEFT',
 		x = 95
@@ -58,6 +58,4 @@ Addon.Settings.ProfileDefaults = {
 	}, FrameDefaults)
 }
 
-Addon.Settings.GlobalDefaults = {
-	slotBackground = 2
-}
+Addon.Settings.GlobalDefaults = {}
