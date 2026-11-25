@@ -17,6 +17,7 @@ local FrameDefaults = {
 	x = 0, y = 0,
 
 	bagBreak = Addon.IsModern and 1 or 0,
+	reagentBagNewRow = false,
 	breakSpace = 1.3, spacing = 2, itemScale = 1,
 
 	rules = {sidebar = AsArray({'all', 'tradegoods', 'consumable', 'armor', 'questitem', 'miscellaneous'})},
