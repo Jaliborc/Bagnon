@@ -1,3 +1,6 @@
+### 12.1.13
+* __All__: You can now toggle the deposit button of the guild bank frame.
+
 ### 12.1.12
 * __All__: You can now shift-click tracked currencies to untrack them.
 * __Retail__: When searching, reagent quality is now faded out for unmatched items.
