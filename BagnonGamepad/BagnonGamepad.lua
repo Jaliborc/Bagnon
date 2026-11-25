@@ -33,6 +33,7 @@
 --  * Money windows that need a keyboard open this addon's money prompt (guild bank, mail gold).
 
 local AddToBagnonOptions
+local LogSession, Snapshot, SetDebug
 local Bags = _G.Bagnon or _G.BagBrother -- Bagnon embeds the BagBrother core (src/main.xml)
 if not (Bags and Bags.Frames) then
 	return
@@ -65,6 +66,377 @@ local triggersBound = false
 local function GamepadUI()
 	return InputUtil and InputUtil.IsGamepadUIEnabled and InputUtil.IsGamepadUIEnabled()
 end
+
+--[[ Debug log ]]--
+
+-- Off by default (Bagnon options > Controller, or /bagnonpad log on). Records into the saved
+-- variable BagnonGamepadLog (written to WTF/Account/<account>/SavedVariables/BagnonGamepad.lua on
+-- /reload or logout), newest last, at most LOG_MAX lines across sessions (oldest dropped first):
+--   BLOCKED/FORBIDDEN  every ADDON_ACTION_BLOCKED / _FORBIDDEN (any addon) with the call stack
+--   ERROR              Lua errors (message + stack), passed on to the normal error handler
+--   TAINT              keys of Forever's controller tables (frame manager, smart navigation, the
+--                      game menu, Settings, Blizzard's bag) that turn tainted, and by which addon;
+--                      this usually shows up before anything is blocked
+--   BIND/FOCUS/WIN/OVERLAY/CLICK/COMBAT/GUARD  what this addon did, for context
+local LOG_MAX = 100000
+local Log
+local function Name(object)
+	if object == nil then return "nil" end
+	if type(object) ~= "table" then return tostring(object) end
+	local ok, name = pcall(function()
+		return (object.GetDebugName and object:GetDebugName()) or (object.GetName and object:GetName())
+	end)
+	return (ok and name) or tostring(object)
+end
+
+-- one value for a log line: frames by name, plain tables as "table#<length>"
+local function Describe(value)
+	if type(value) == "table" and rawget(value, 0) == nil and not value.GetObjectType then
+		return "table#" .. #value
+	end
+	return Name(value)
+end
+
+local function ArgsText(...)
+	local parts = {}
+	for i = 1, select("#", ...) do
+		parts[#parts + 1] = Describe((select(i, ...)))
+	end
+	return table.concat(parts, ", ")
+end
+
+local function Verbose()
+	return BagnonGamepadDB and BagnonGamepadDB.debug and BagnonGamepadDB.debugVerbose
+end
+local V -- V(category, fmt, ...): Log, only with verbose logging on
+
+do
+	local function Enabled()
+		return BagnonGamepadDB and BagnonGamepadDB.debug
+	end
+
+	local function Store(line)
+		BagnonGamepadLog = BagnonGamepadLog or {}
+		local lines = BagnonGamepadLog
+		lines[#lines + 1] = line
+		-- trim in one go once 10% over the limit (removing line by line would shift the whole log
+		-- on every new line)
+		local n = #lines
+		if n > LOG_MAX * 1.1 then
+			local drop = n - LOG_MAX
+			for i = 1, LOG_MAX do lines[i] = lines[i + drop] end -- (no table.move in this Lua)
+			for i = n, LOG_MAX + 1, -1 do lines[i] = nil end
+		end
+		if BagnonGamepadDB.debugChat then
+			print("|cff888888BGP|r " .. line)
+		end
+	end
+
+	V = function(category, fmt, ...)
+		if Verbose() then Log(category, fmt, ...) end
+	end
+
+	local wall0, game0
+	local function Stamp()
+		local now = GetTime()
+		if not wall0 then wall0, game0 = time(), now end
+		local t = wall0 + (now - game0)
+		return ("%s.%03d"):format(date("%H:%M:%S", math.floor(t)), math.floor((t % 1) * 1000))
+	end
+
+	Log = function(category, fmt, ...)
+		if not Enabled() then return end
+		local ok, msg = pcall(string.format, fmt, ...)
+		if not ok then msg = tostring(fmt) end
+		Store(("%s %s [%s]%s %s"):format(Stamp(), GamepadUI() and "pad" or "kbm", category, InCombatLockdown() and "{combat}" or "", msg))
+	end
+
+	-- taint watch
+	local WATCH = {
+		{ "FrameControlsManager", function() return GamepadMode and GamepadMode.FrameControlsManager end, true },
+		{ "SmartNavigation", function() return SmartNavigation end, true },
+		{ "GamepadMode", function() return GamepadMode end },
+		{ "ContainerFrameCombinedBags", function() return ContainerFrameCombinedBags end },
+		{ "GameMenuFrame", function() return GameMenuFrame end },
+		{ "SettingsPanel", function() return SettingsPanel end },
+		{ "StaticPopup1", function() return StaticPopup1 end },
+	}
+	local known = {}
+
+	local function Check(label, t, key)
+		local secure, by = issecurevariable(t, key)
+		local id = label .. "." .. tostring(key)
+		if not secure then
+			by = by or "?"
+			if known[id] ~= by then
+				known[id] = by
+				Log("TAINT", "%s tainted by %s (value %s)", id, by, Name(rawget(t, key)))
+			end
+		elseif known[id] then
+			known[id] = nil
+			Log("TAINT", "%s secure again", id)
+		end
+	end
+
+	local function ScanTable(label, t, deep)
+		for key, value in pairs(t) do
+			local kt = type(key)
+			if kt == "string" or kt == "number" then
+				Check(label, t, key)
+				-- one level into plain tables (frame lists, binding sets), not into frames
+				if deep and type(value) == "table" and rawget(value, 0) == nil then
+					for k2 in pairs(value) do
+						local k2t = type(k2)
+						if k2t == "string" or k2t == "number" then
+							Check(label .. "." .. tostring(key), value, k2)
+						end
+					end
+				end
+			end
+		end
+	end
+
+	local function ScanTaint()
+		if not Enabled() then return end
+		for _, entry in ipairs(WATCH) do
+			local t = entry[2]()
+			if type(t) == "table" and not (t.IsForbidden and t:IsForbidden()) then
+				pcall(ScanTable, entry[1], t, entry[3])
+			end
+		end
+	end
+	BagnonGamepadScanTaint = ScanTaint
+
+	-- deep scan: every global, plus Blizzard registries addons may write into (UISpecialFrames,
+	-- UIPanelWindows, EventRegistry callbacks, the gamepad tables), for values tainted by an
+	-- addon whose name isn't the addon's own (Bagnon writing into Blizzard's state is what breaks
+	-- the controller UI). Run after a Bagnon module loads, after a blocked call, every 10 s with verbose
+	-- logging, and with /bagnonpad log scan.
+	local deepKnown = {}
+	local OWN = { Bagnon = true, BagBrother = true, Sushi = true, BagnonGamepad = true }
+	local function OwnName(key, by)
+		if type(key) ~= "string" then return false end
+		local prefix = key:match("^%a+")
+		return (prefix and (OWN[prefix] or prefix:find("^Bagnon") or prefix:find("^BagBrother"))) or (by and key:find("^" .. by))
+	end
+	local function Report(id, by, value)
+		if deepKnown[id] ~= by then
+			deepKnown[id] = by
+			Log("TAINT", "deep: %s tainted by %s (value %s)", id, by, Name(value))
+		end
+	end
+	local function Walk(label, t, depth, seen)
+		if seen[t] or depth < 0 then return end
+		if type(t.IsForbidden) == "function" and t:IsForbidden() then return end
+		seen[t] = true
+		for key, value in pairs(t) do
+			local kt = type(key)
+			if kt == "string" or kt == "number" then
+				local secure, by = issecurevariable(t, key)
+				if not secure and by and by:find("Bag") then
+					Report(label .. "." .. tostring(key), by, value)
+				end
+				if depth > 0 and type(value) == "table" and rawget(value, 0) == nil then
+					Walk(label .. "." .. tostring(key), value, depth - 1, seen)
+				end
+			end
+		end
+	end
+	local function DeepScan(reason)
+		if not Enabled() then return end
+		local start = debugprofilestop()
+		local found = 0
+		for key in pairs(_G) do
+			if type(key) == "string" then
+				local secure, by = issecurevariable(key)
+				if not secure and by and by:find("Bag") and not OwnName(key, by) then
+					found = found + 1
+					Report("_G." .. key, by, rawget(_G, key))
+				end
+			end
+		end
+		local seen = {}
+		if type(UISpecialFrames) == "table" then Walk("UISpecialFrames", UISpecialFrames, 0, seen) end
+		if type(UIPanelWindows) == "table" then Walk("UIPanelWindows", UIPanelWindows, 1, seen) end
+		if type(EventRegistry) == "table" then Walk("EventRegistry", EventRegistry, 4, seen) end
+		if type(GamepadMode) == "table" then Walk("GamepadMode", GamepadMode, 2, seen) end
+		if type(SmartNavigation) == "table" then Walk("SmartNavigation", SmartNavigation, 2, seen) end
+		Log("TAINT", "deep scan (%s): %d foreign globals, %.1f ms", reason, found, debugprofilestop() - start)
+	end
+	BagnonGamepadDeepScan = DeepScan
+	-- the global walk can take tens of ms: on a timer only with verbose logging
+	C_Timer.NewTicker(10, function()
+		if BagnonGamepadDB and BagnonGamepadDB.debugVerbose then DeepScan("timer") end
+	end)
+
+	local ticker
+	local errorWrapped = false
+	local function Start()
+		if not ticker then
+			ticker = C_Timer.NewTicker(1, ScanTaint)
+		end
+		-- Lua errors: log, then hand on to whatever handler was there
+		if not errorWrapped and geterrorhandler and seterrorhandler then
+			errorWrapped = true
+			local previous = geterrorhandler()
+			seterrorhandler(function(msg, ...)
+				if Enabled() then
+					Log("ERROR", "%s\n%s", tostring(msg), debugstack(2, 20, 0) or "")
+				end
+				return previous(msg, ...)
+			end)
+		end
+	end
+	local function Stop()
+		if ticker then ticker:Cancel() ticker = nil end
+	end
+	BagnonGamepadDebugStart, BagnonGamepadDebugStop = Start, Stop
+
+	local events = CreateFrame("Frame")
+	for _, event in ipairs({ "ADDON_ACTION_BLOCKED", "ADDON_ACTION_FORBIDDEN",
+		"MACRO_ACTION_BLOCKED", "MACRO_ACTION_FORBIDDEN", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED",
+		"GAME_PAD_ACTIVE_CHANGED", "GAME_PAD_CONNECTED", "GAME_PAD_DISCONNECTED", "LOADING_SCREEN_DISABLED" }) do
+		pcall(events.RegisterEvent, events, event)
+	end
+	pcall(events.RegisterEvent, events, "ADDON_LOADED")
+	if type(StaticPopup_Show) == "function" then
+		hooksecurefunc("StaticPopup_Show", function(which, text1)
+			Log("POPUP", "StaticPopup_Show(%s, %s)\n%s", tostring(which), tostring(text1), debugstack(3, 12, 0) or "")
+		end)
+	end
+	events:SetScript("OnEvent", function(_, event, ...)
+		if not Enabled() then return end
+		if event == "ADDON_LOADED" then
+			local addon = tostring((...))
+			Log("EVENT", "ADDON_LOADED %s\n%s", addon, debugstack(2, 12, 0) or "")
+			if addon:find("^Bag") then
+				C_Timer.After(0, function() BagnonGamepadDeepScan("after loading " .. addon) end)
+			end
+			return
+		end
+		if event:find("_ACTION_") then
+			-- these fire inside the blocked call, so the stack shows who made it
+			local a, b = ...
+			Log(event:find("FORBIDDEN") and "FORBIDDEN" or "BLOCKED", "%s %s %s\n%s", event,
+				tostring(a), tostring(b), debugstack(2, 40, 0) or "")
+			ScanTaint()
+			C_Timer.After(0, function() BagnonGamepadDeepScan("after " .. event) end)
+		elseif event:find("REGEN") then
+			Log("COMBAT", event == "PLAYER_REGEN_DISABLED" and "enter combat" or "leave combat")
+		else
+			Log("EVENT", "%s %s", event, tostring((...)))
+		end
+	end)
+end
+
+--[[ Debug log: Bagnon activity (mouse and keyboard as well as controller) ]]--
+
+-- Post-hooks only (hooksecurefunc), so logging can't change what Bagnon or Blizzard do. Each line
+-- carries "pad" or "kbm" for the input mode at that moment.
+local LogActivityHooks
+do
+	local hookedMethods = {}
+
+	local function Args(...)
+		local parts = {}
+		for i = 1, select("#", ...) do
+			parts[#parts + 1] = Name((select(i, ...)))
+		end
+		return table.concat(parts, ", ")
+	end
+
+	local function HookMethods(label, class, methods)
+		if type(class) ~= "table" then return end
+		for _, method in ipairs(methods) do
+			local key = label .. ":" .. method
+			if not hookedMethods[key] and type(rawget(class, method)) == "function" then
+				hookedMethods[key] = true
+				hooksecurefunc(class, method, function(self, ...)
+					if self == class then
+						Log("BAGNON", "%s(%s)", key, Args(...))
+					else
+						Log("BAGNON", "%s(%s) on %s", key, Args(...), Name(self))
+					end
+				end)
+			end
+		end
+	end
+
+	local function ItemText(button)
+		local bag = button.GetBag and button:GetBag()
+		local slot = button.GetID and button:GetID()
+		local info = button.info
+		return ("%s bag=%s slot=%s item=%s count=%s"):format(Name(button), tostring(bag), tostring(slot),
+			tostring(info and (info.hyperlink or info.itemID)), tostring(info and info.stackCount))
+	end
+
+	local function CursorText()
+		local kind, a, b = GetCursorInfo()
+		if not kind then return "empty" end
+		return ("%s %s %s"):format(tostring(kind), tostring(a), tostring(b))
+	end
+
+	LogActivityHooks = function()
+		HookMethods("Frames", Bags.Frames, { "Toggle", "Show", "Hide", "ToggleBag", "ShowBag", "HideBag" })
+		HookMethods("Bag", Bags.Bag, { "OnClick", "OnDragStart", "Toggle", "ShowMenu" })
+		HookMethods("SortButton", Bags.SortButton, { "OnClick" })
+		HookMethods("Sorting", Bags.Sorting, { "Start", "Stop" })
+		HookMethods("Tab", Bags.Tab, { "OnClick" })
+		HookMethods("DepositButton", Bags.DepositButton, { "OnClick" })
+		HookMethods("OfflineSelector", Bags.OfflineSelector, { "OnClick" })
+		HookMethods("Owners", Bags.Owners, { "SetCurrent" })
+		local item = Bags.Item
+		if type(item) == "table" and not hookedMethods["Item:OnEnter"] and type(rawget(item, "OnEnter")) == "function" then
+			hookedMethods["Item:OnEnter"] = true
+			hooksecurefunc(item, "OnEnter", function(self)
+				V("HOVER", "%s", ItemText(self))
+			end)
+		end
+		local item = Bags.Item
+		if type(item) == "table" and not hookedMethods["Item:PostClick"] and type(rawget(item, "PostClick")) == "function" then
+			hookedMethods["Item:PostClick"] = true
+			hooksecurefunc(item, "PostClick", function(self, button)
+				Log("ITEM", "%s click %s, cursor now %s", ItemText(self), tostring(button), CursorText())
+			end)
+		end
+	end
+
+	-- Blizzard's bag/panel entry points (Bagnon hooks the same ones to take over)
+	for _, name in ipairs({ "ToggleBag", "ToggleBackpack", "ToggleAllBags", "OpenAllBags", "CloseAllBags",
+		"OpenBag", "CloseBag", "OpenBackpack", "CloseBackpack", "ShowUIPanel", "HideUIPanel", "MaximizeUIPanel" }) do
+		if type(_G[name]) == "function" then
+			hooksecurefunc(name, function(...)
+				Log("BLIZZ", "%s(%s)", name, Args(...))
+			end)
+		end
+	end
+
+	local lastCursor
+	local events = CreateFrame("Frame")
+	local EVENTS = {
+		"BANKFRAME_OPENED", "BANKFRAME_CLOSED", "MERCHANT_SHOW", "MERCHANT_CLOSED", "MAIL_SHOW", "MAIL_CLOSED",
+		"AUCTION_HOUSE_SHOW", "AUCTION_HOUSE_CLOSED", "GUILDBANKFRAME_OPENED", "GUILDBANKFRAME_CLOSED",
+		"TRADE_SHOW", "TRADE_CLOSED", "PLAYER_INTERACTION_MANAGER_FRAME_SHOW", "PLAYER_INTERACTION_MANAGER_FRAME_HIDE",
+		"UI_ERROR_MESSAGE", "CURSOR_CHANGED", "BAG_CONTAINER_UPDATE", "PLAYERBANKSLOTS_CHANGED",
+		"BANK_TABS_CHANGED", "BANK_TAB_SETTINGS_UPDATED", "EQUIPMENT_SWAP_FINISHED",
+	}
+	for _, event in ipairs(EVENTS) do
+		pcall(events.RegisterEvent, events, event)
+	end
+	events:SetScript("OnEvent", function(_, event, ...)
+		if not (BagnonGamepadDB and BagnonGamepadDB.debug) then return end
+		if event == "CURSOR_CHANGED" then
+			local text = CursorText()
+			if text ~= lastCursor then
+				lastCursor = text
+				Log("EVENT", "CURSOR_CHANGED -> %s", text)
+			end
+		else
+			Log("EVENT", "%s %s", event, Args(...))
+		end
+	end)
+end
+LogActivityHooks()
 
 --[[ Highlight ]]--
 
@@ -519,6 +891,10 @@ local function NewOverlay(name, target)
 	overlay:RegisterForClicks("AnyUp", "AnyDown") -- the template picks up or down itself
 	overlay:SetAttribute("type", "click")
 	overlay:Hide()
+	overlay:SetScript("PostClick", function(self, button, down)
+		Log("CLICK", "%s %s %s -> %s", self:GetName(), tostring(button), down and "down" or "up",
+			Name(self:GetAttribute("clickbutton")))
+	end)
 	target:HookScript("OnHide", function()
 		if not InCombatLockdown() then
 			overlay:Hide()
@@ -531,6 +907,10 @@ end
 
 local function ShowOverlay(overlay, show)
 	if InCombatLockdown() then return end
+	if (show and true or false) ~= overlay:IsShown() then
+		Log("OVERLAY", "%s %s over %s -> %s", overlay:GetName(), show and "show" or "hide",
+			Name(overlay.target), Name(overlay:GetAttribute("clickbutton")))
+	end
 	if show then
 		local target = overlay.target
 		overlay:ClearAllPoints()
@@ -679,8 +1059,10 @@ local function GuardBagnonMenus()
 			class[method] = function(self, ...)
 				if GamepadUI() and opensMenu(self, ...) then
 					if entry[4] then
+						Log("GUARD", "%s.%s on %s: own picker instead of Blizzard's menu", entry[1], method, Name(self))
 						return entry[4](self, ...)
 					end
+					Log("GUARD", "skipped menu %s.%s on %s", entry[1], method, Name(self))
 					if not menuNoted then
 						menuNoted = true
 						print("|cff33eeffBagnon Gamepad:|r Bagnon's right-click menus are off while the controller interface is on (on Forever they break the controller UI).")
@@ -935,6 +1317,7 @@ OpenMoneyPrompt = function(mode, anchor)
 		return
 	end
 	money = { mode = mode, amount = 0, max = MoneyMax(mode), unit = 1, anchor = anchor }
+	Log("MONEY", "prompt %s, max %d", mode, money.max)
 	ShowMoney()
 	Apply()
 end
@@ -949,6 +1332,7 @@ end
 local function ConfirmMoney()
 	if not money then return end
 	local mode, amount = money.mode, money.amount
+	Log("MONEY", "%s %d", mode, amount)
 	CloseMoney()
 	if mode == "deposit" and amount > 0 then
 		DepositGuildBankMoney(amount)
@@ -1059,6 +1443,7 @@ local ChoosePicker, ShowPicker
 
 local function ClosePicker()
 	if not picker then return end
+	Log("PICKER", "closed")
 	local anchor = picker.anchor
 	picker = nil
 	pickerFrame:Hide()
@@ -1139,12 +1524,14 @@ local function StepPicker(step)
 		index = (index - 1 + step) % #entries + 1
 	until not entries[index].header or index == picker.index
 	picker.index = index
+	Log("PICKER", "step %d -> %s", step, tostring(picker.entries[index].log))
 	ShowPicker()
 end
 
 ChoosePicker = function()
 	local entry = picker and picker.entries[picker.index]
 	if not entry or entry.header then return end
+	Log("PICKER", "chose %s", entry.log)
 	ClosePicker()
 	entry.choose()
 end
@@ -1160,6 +1547,7 @@ OpenPicker = function(selector)
 			local id = frame.id
 			entries[#entries + 1] = {
 				text = (frame.icon and CreateSimpleTextureMarkup(frame.icon, 16, 16) .. " " or "") .. tostring(frame.name or id),
+				log = "location " .. tostring(id),
 				choose = function() Bags.Frames:Show(id) end,
 			}
 		end
@@ -1177,12 +1565,14 @@ OpenPicker = function(selector)
 			local isCurrent = ownerInfo == current
 			entries[#entries + 1] = {
 				text = (isCurrent and "|cffffd100>|r " or "   ") .. name,
+				log = "owner " .. tostring(ownerInfo.name or name),
 				choose = function() Bags.Frames:Show(ownerInfo.isguild and "guild" or frameID, ownerInfo) end,
 			}
 			if isCurrent then start = #entries end
 		end
 	end
 	picker = { anchor = selector, entries = entries, index = start or 2, title = "Offline Viewing" }
+	Log("PICKER", "opened with %d entries", #entries)
 	ShowPicker()
 	Apply()
 end
@@ -1436,6 +1826,9 @@ Apply = function()
 	BindTriggers()
 	if not (active and active:IsShown() and GamepadUI()) or released
 		or (BagnonGamepadDB and BagnonGamepadDB.enabled == false) then
+		Log("BIND", "cleared (active=%s shown=%s gamepadUI=%s released=%s enabled=%s)", Name(active),
+			tostring(active and active:IsShown()), tostring(GamepadUI()), tostring(released),
+			tostring(not (BagnonGamepadDB and BagnonGamepadDB.enabled == false)))
 		cursor:Hide()
 		arrow:Hide()
 		UpdateLegend(false)
@@ -1454,6 +1847,7 @@ Apply = function()
 		SetOverrideBindingClick(owner, true, "PAD1", "BagnonGamepadMoneyOK")
 		SetOverrideBindingClick(owner, true, "PAD2", "BagnonGamepadMoneyCancel")
 		bound = true
+		Log("BIND", "money prompt (%s)", money.mode)
 		UpdateLegend(true, OpenWindows())
 		HideBlizzardPointer()
 		return
@@ -1466,6 +1860,7 @@ Apply = function()
 		SetOverrideBindingClick(owner, true, "PAD1", "BagnonGamepadPickerOK")
 		SetOverrideBindingClick(owner, true, "PAD2", "BagnonGamepadPickerCancel")
 		bound = true
+		Log("BIND", "picker")
 		UpdateLegend(true, OpenWindows())
 		HideBlizzardPointer()
 		return
@@ -1474,6 +1869,7 @@ Apply = function()
 		SetOverrideBindingClick(owner, true, "PAD1", "BagnonGamepadSplitOK")
 		SetOverrideBindingClick(owner, true, "PAD2", "BagnonGamepadSplitCancel")
 		bound = true
+		Log("BIND", "split prompt on %s", Name(split.button))
 		UpdateLegend(true, OpenWindows())
 		HideBlizzardPointer()
 		return
@@ -1504,6 +1900,8 @@ Apply = function()
 		end
 	end
 	bound = true
+	Log("BIND", "set: window=%s selected=%s A=%s X=%s", Name(active), Name(selected),
+		tostring(GetBindingAction("PAD1", true)), tostring(GetBindingAction("PAD3", true)))
 	UpdateLegend(true, OpenWindows())
 	HideBlizzardPointer()
 	UpdateHeldItem(true)
@@ -1641,6 +2039,7 @@ end
 --[[ Bagnon windows ]]--
 
 local function OnShown(frame)
+	Log("WIN", "shown %s", Name(frame))
 	for i, f in ipairs(frames) do
 		if f == frame then table.remove(frames, i) break end
 	end
@@ -1654,6 +2053,7 @@ local function OnShown(frame)
 end
 
 local function OnHidden(frame)
+	Log("WIN", "hidden %s", Name(frame))
 	if frame ~= active then return end
 	active = nil
 	for i = #frames, 1, -1 do
@@ -1670,6 +2070,7 @@ local function Hook(frame)
 	frame:HookScript("OnHide", OnHidden)
 	if frame.Layout then
 		hooksecurefunc(frame, "Layout", function(f)
+			V("BAGNON", "Layout %s (%dx%d)", Name(f), f:GetWidth() or 0, f:GetHeight() or 0)
 			if f == active then QueueRefresh() end
 		end)
 	end
@@ -1763,6 +2164,8 @@ local function SyncFocus()
 	end
 	userSwitched = false
 	if released ~= wasReleased then
+		Log("FOCUS", "frame manager focus %s -> %s", Name(manager:GetActiveFrame()),
+			released and "released to it" or "back to Bagnon")
 		if released then
 			Select(nil)
 			Clear()
@@ -1813,6 +2216,7 @@ local reassertQueued = false
 local function MaybeReassert(who, _, key)
 	if who == owner or who == optOwnerFrame or not (bound or triggersBound or opts.bound) or not OUR_KEYS[key]
 		or reassertQueued then return end
+	Log("BIND", "%s re-bound %s, putting ours back", Name(who), tostring(key))
 	reassertQueued = true
 	C_Timer.After(0, function()
 		reassertQueued = false
@@ -1927,6 +2331,7 @@ end
 
 local function LeaveOptions()
 	if not opts.page then return end
+	Log("OPTIONS", "left Bagnon's page")
 	if picker then ClosePicker() end
 	local previous = opts.selected
 	if previous then
@@ -1947,6 +2352,7 @@ local function RefreshOptions()
 		return
 	end
 	if page ~= opts.page then
+		Log("OPTIONS", "driving Bagnon's page %s", Name(page))
 		opts.page, opts.selected = page, nil
 	end
 	opts.list, opts.pageList = CollectOptions(page)
@@ -1997,6 +2403,7 @@ local function OpenChoicePicker(control)
 		local isCurrent = key == current
 		entries[#entries + 1] = {
 			text = (isCurrent and "|cffffd100>|r " or "   ") .. tostring(choice.text or key),
+			log = "choice " .. tostring(key),
 			choose = function()
 				control:SetValue(key)
 				control:FireCalls("OnValue", key)
@@ -2009,6 +2416,7 @@ local function OpenChoicePicker(control)
 	if #entries == 0 then return end
 	local label = control.GetLabel and control:GetLabel()
 	picker = { anchor = control, entries = entries, index = start or 1, title = label ~= "" and label or "Choose" }
+	Log("PICKER", "choices of %s: %d", Name(control), #entries)
 	ShowPicker()
 	ApplyOptions()
 end
@@ -2025,6 +2433,7 @@ local function MoveOption(dir)
 			if wheel then wheel(control, dir == "RIGHT" and 1 or -1)
 			else control:SetValue(control:GetValue() + (dir == "RIGHT" and step or -step), true) end
 		end
+		Log("OPTIONS", "slider %s -> %s", Name(control), tostring(control:GetValue()))
 		return
 	end
 	local nextControl = NearestInDirection(opts.list or {}, control, dir)
@@ -2047,6 +2456,7 @@ do
 		elseif IsColorSwatch(control) then
 			print("|cff33eeffBagnon Gamepad:|r colours open Blizzard's colour picker; change them in mouse and keyboard mode.")
 		elseif not control:IsObjectType("Slider") then
+			Log("OPTIONS", "click %s", Name(control))
 			control:Click("LeftButton")
 			C_Timer.After(0, RefreshOptions)
 		end
@@ -2061,6 +2471,102 @@ if SettingsPanel then
 	SettingsPanel:HookScript("OnHide", function()
 		if ticker then ticker:Cancel() ticker = nil end
 		LeaveOptions()
+	end)
+end
+
+--[[ Debug log: verbose tracing ]]--
+
+-- With "Verbose" on, every call of the functions below is logged with its arguments, results and
+-- run time (TRACE), plus every override binding change by anyone (BINDING), every call into
+-- Forever's frame manager (FCM), and every 10 s frame rate / latency, every 60 s memory (PERF).
+local function Trace(name, fn)
+	return function(...)
+		if not Verbose() then return fn(...) end
+		local start = debugprofilestop()
+		local results = { n = 0 }
+		local function pack(...) results.n = select("#", ...) for i = 1, results.n do results[i] = (select(i, ...)) end end
+		pack(fn(...))
+		Log("TRACE", "%s(%s) -> %s  %.2f ms", name, ArgsText(...),
+			results.n > 0 and ArgsText(unpack(results, 1, results.n)) or "-", debugprofilestop() - start)
+		return unpack(results, 1, results.n)
+	end
+end
+
+Collect = Trace("Collect", Collect)
+TopLeft = Trace("TopLeft", TopLeft)
+Neighbour = Trace("Neighbour", Neighbour)
+Wrap = Trace("Wrap", Wrap)
+Select = Trace("Select", Select)
+Refresh = Trace("Refresh", Refresh)
+Move = Trace("Move", Move)
+Cycle = Trace("Cycle", Cycle)
+Clear = Trace("Clear", Clear)
+Apply = Trace("Apply", Apply)
+SyncFocus = Trace("SyncFocus", SyncFocus)
+UpdateLegend = Trace("UpdateLegend", UpdateLegend)
+UpdateHeldItem = Trace("UpdateHeldItem", UpdateHeldItem)
+HideBlizzardPointer = Trace("HideBlizzardPointer", HideBlizzardPointer)
+ConcealBlizzardBag = Trace("ConcealBlizzardBag", ConcealBlizzardBag)
+UpdateGearOverlay = Trace("UpdateGearOverlay", UpdateGearOverlay)
+UpdateCloseOverlay = Trace("UpdateCloseOverlay", UpdateCloseOverlay)
+UpdateBuyOverlays = Trace("UpdateBuyOverlays", UpdateBuyOverlays)
+UpdateBagOverlays = Trace("UpdateBagOverlays", UpdateBagOverlays)
+BlizzardBagButton = Trace("BlizzardBagButton", BlizzardBagButton)
+SecureChild = Trace("SecureChild", SecureChild)
+TriggersMirrored = Trace("TriggersMirrored", TriggersMirrored)
+BindTriggers = Trace("BindTriggers", BindTriggers)
+OpenSplit = Trace("OpenSplit", OpenSplit)
+CloseSplit = Trace("CloseSplit", CloseSplit)
+AdjustSplit = Trace("AdjustSplit", AdjustSplit)
+CaptureOptionsButton = Trace("CaptureOptionsButton", CaptureOptionsButton)
+
+for _, name in ipairs({ "SetOverrideBinding", "SetOverrideBindingClick", "SetOverrideBindingSpell",
+	"SetOverrideBindingMacro", "SetOverrideBindingItem", "ClearOverrideBindings" }) do
+	if type(_G[name]) == "function" then
+		hooksecurefunc(name, function(...)
+			V("BINDING", "%s(%s)", name, ArgsText(...))
+		end)
+	end
+end
+
+do
+	local manager = GamepadMode and GamepadMode.FrameControlsManager
+	if manager then
+		for _, method in ipairs({ "FocusNextFrame", "FocusPreviousFrame", "FocusFrame", "FrameShown",
+			"FrameHidden", "SetUIFocusState", "SetFallThroughCatcherActive" }) do
+			if type(manager[method]) == "function" then
+				hooksecurefunc(manager, method, function(_, ...)
+					V("FCM", "%s(%s) focus=%s", method, ArgsText(...),
+						Name(manager.GetActiveFrame and manager:GetActiveFrame()))
+				end)
+			end
+		end
+	end
+	if SmartNavigation then
+		for _, method in ipairs({ "ShowCursor", "HideCursor", "ActivateBinding", "DeactivateBinding" }) do
+			if type(SmartNavigation[method]) == "function" then
+				hooksecurefunc(SmartNavigation, method, function(_, ...)
+					V("SMARTNAV", "%s(%s)", method, ArgsText(...))
+				end)
+			end
+		end
+	end
+end
+
+do
+	local ticks = 0
+	C_Timer.NewTicker(10, function()
+		if not Verbose() then return end
+		ticks = ticks + 1
+		local _, _, home, world = GetNetStats()
+		local line = ("fps %.1f, latency home %d / world %d ms"):format(GetFramerate(), home or 0, world or 0)
+		if ticks % 6 == 0 and UpdateAddOnMemoryUsage then
+			UpdateAddOnMemoryUsage()
+			local function kb(addon) return GetAddOnMemoryUsage and GetAddOnMemoryUsage(addon) or 0 end
+			line = line .. (", memory BagnonGamepad %.0f KB, Bagnon %.0f KB, BagBrother %.0f KB, log %d lines")
+				:format(kb("BagnonGamepad"), kb("Bagnon"), kb("BagBrother"), #(BagnonGamepadLog or {}))
+		end
+		Log("PERF", "%s", line)
 	end)
 end
 
@@ -2082,6 +2588,7 @@ owner:SetScript("OnEvent", function(_, event)
 			if bound then Apply() end
 		end
 	elseif event == "PLAYER_REGEN_DISABLED" then
+		Log("COMBAT", "releasing bindings and overlays")
 		ClearOverrideBindings(optOwnerFrame)
 		opts.bound = false
 		-- last moment bindings and secure attributes may still change: navigation pauses and the
@@ -2147,7 +2654,9 @@ local function OpenSecurely(page)
 		print("|cff33eeffBagnon Gamepad:|r Bagnon's options can't open in combat.")
 		return true
 	end
+	Log("OPTIONS", "opening %s (category %s) through Settings.OpenToCategory", Name(page), tostring(id))
 	Settings.OpenToCategory(id)
+	if BagnonGamepadScanTaint then BagnonGamepadScanTaint() end
 	return true
 end
 
@@ -2160,6 +2669,7 @@ local function GuardOptionsOpen()
 			value.Open = function(page, ...)
 				if OpenSecurely(page) then return end
 				if GamepadUI() then
+					Log("GUARD", "skipped Bagnon options open (%s), no secure opener", Name(page))
 					print("|cff33eeffBagnon Gamepad:|r use Esc > Options > AddOns > Bagnon.")
 					return
 				end
@@ -2190,7 +2700,88 @@ AddToBagnonOptions = function()
 			Refresh()
 		end)
 
+		local debug = self:Add("Check", "Debug log")
+		debug:SetTip("Debug log",
+			"Records blocked/forbidden calls with their stack, Lua errors, taint in the controller UI and what Bagnon Gamepad does. Saved on /reload or logout to WTF > Account > SavedVariables > BagnonGamepad.lua (BagnonGamepadLog). /bagnonpad log for more.")
+		debug:SetValue(BagnonGamepadDB.debug and true or false)
+		debug:SetCall("OnClick", function(_, _, v)
+			SetDebug(v)
+		end)
+
+		local verbose = self:Add("Check", "Verbose debug log")
+		verbose:SetTip("Verbose debug log",
+			"Also logs every navigation step, binding change, frame manager call, item hover and timing (ms per call), plus frame rate and memory. Large logs; for finding slow or wrong behaviour.")
+		verbose:SetValue(BagnonGamepadDB.debugVerbose and true or false)
+		verbose:SetCall("OnClick", function(_, _, v)
+			BagnonGamepadDB.debugVerbose = v and true or false
+			Log("SESSION", "verbose %s", v and "on" or "off")
+		end)
+
+		local chat = self:Add("Check", "Also print the debug log to chat")
+		chat:SetValue(BagnonGamepadDB.debugChat and true or false)
+		chat:SetCall("OnClick", function(_, _, v)
+			BagnonGamepadDB.debugChat = v and true or false
+		end)
 	end)
+end
+
+local function AddonList()
+	local names = {}
+	local count = C_AddOns and C_AddOns.GetNumAddOns and C_AddOns.GetNumAddOns() or 0
+	for i = 1, count do
+		if C_AddOns.IsAddOnLoaded(i) then
+			local addon = C_AddOns.GetAddOnInfo(i)
+			local version = C_AddOns.GetAddOnMetadata(i, "Version")
+			names[#names + 1] = version and (addon .. " " .. version) or addon
+		end
+	end
+	return table.concat(names, ", ")
+end
+
+LogSession = function(tag)
+	local version, build, _, toc = GetBuildInfo()
+	Log("SESSION", "==== %s: %s, game %s.%s (toc %s), BagnonGamepad %s, Bagnon %s ====", tag,
+		date("%Y-%m-%d %H:%M:%S"), tostring(version), tostring(build), tostring(toc),
+		tostring(C_AddOns.GetAddOnMetadata("BagnonGamepad", "Version")),
+		tostring(C_AddOns.GetAddOnMetadata("Bagnon", "Version")))
+end
+
+Snapshot = function(tag)
+	if not (BagnonGamepadDB and BagnonGamepadDB.debug) then return end
+	local manager = GamepadMode and GamepadMode.FrameControlsManager
+	local shown = {}
+	if manager and type(manager.shownFrames) == "table" then
+		for _, f in ipairs(manager.shownFrames) do shown[#shown + 1] = Name(f) end
+	end
+	local keys = {}
+	for key in pairs(OUR_KEYS) do
+		keys[#keys + 1] = key .. "=" .. tostring(GetBindingAction(key, true))
+	end
+	table.sort(keys)
+	Log("STATE", "%s: gamepadUI=%s enabled=%s bound=%s released=%s window=%s selected=%s split=%s"
+		.. " | manager focus=%s shown=[%s] | blizzard bag shown=%s alpha=%.2f | optionsButton=%s"
+		.. " | cvars GamePadEnable=%s combinedBags=%s | keys %s",
+		tag, tostring(GamepadUI()), tostring(BagnonGamepadDB.enabled), tostring(bound), tostring(released),
+		Name(active), Name(selected), tostring(split ~= nil),
+		Name(manager and manager.GetActiveFrame and manager:GetActiveFrame()), table.concat(shown, ", "),
+		tostring(ContainerFrameCombinedBags and ContainerFrameCombinedBags:IsShown()),
+		ContainerFrameCombinedBags and ContainerFrameCombinedBags:GetAlpha() or -1,
+		Name(optionsButton), tostring(C_CVar.GetCVar("GamePadEnable")), tostring(C_CVar.GetCVar("combinedBags")),
+		table.concat(keys, " "))
+end
+
+SetDebug = function(on)
+	BagnonGamepadDB.debug = on and true or false
+	if on then
+		BagnonGamepadDebugStart()
+		LogSession("debug on")
+		Log("SESSION", "addons: %s", AddonList())
+		Snapshot("debug on")
+		BagnonGamepadScanTaint()
+	else
+		BagnonGamepadDebugStop()
+	end
+	print("|cff33eeffBagnon Gamepad:|r debug log " .. (on and "on (saved on /reload or logout)" or "off"))
 end
 
 local loader = CreateFrame("Frame")
@@ -2205,14 +2796,23 @@ loader:SetScript("OnEvent", function(_, event, name)
 		-- does nothing.
 		if Bags.IsForever and C_AddOns and C_AddOns.IsAddOnLoaded and not C_AddOns.IsAddOnLoaded("Bagnon_Config")
 			and not InCombatLockdown() then
-			pcall(C_AddOns.LoadAddOn, "Bagnon_Config")
+			local ok, loaded, reason = pcall(C_AddOns.LoadAddOn, "Bagnon_Config")
+			Log("OPTIONS", "preloaded Bagnon_Config: %s %s", tostring(ok and loaded), tostring(reason))
 		end
 		HookGameMenu()
+		Snapshot("login")
 	elseif name == "BagnonGamepad" then
 		BagnonGamepadDB = BagnonGamepadDB or {}
 		-- settings of earlier versions (icon styles)
 		BagnonGamepadDB.glyphs, BagnonGamepadDB.gameIcons, BagnonGamepadDB.originalLabels = nil, nil, nil
 		if BagnonGamepadDB.enabled == nil then BagnonGamepadDB.enabled = true end
+		BagnonGamepadLog = BagnonGamepadLog or {}
+		if BagnonGamepadDB.debug then
+			BagnonGamepadDebugStart()
+			LogSession("load")
+		end
+	elseif name and name:find("^Bagnon") then
+		LogActivityHooks()
 	end
 	if name == "Bagnon_Config" then
 		AddToBagnonOptions()
@@ -2226,7 +2826,39 @@ loader:SetScript("OnEvent", function(_, event, name)
 end)
 
 SLASH_BAGNONGAMEPAD1 = "/bagnonpad"
-SlashCmdList.BAGNONGAMEPAD = function()
+SlashCmdList.BAGNONGAMEPAD = function(msg)
+	msg = strtrim(msg or "")
+	local cmd, arg = msg:match("^(%S*)%s*(.-)$")
+	if cmd == "log" then
+		if arg == "on" or arg == "off" then
+			SetDebug(arg == "on")
+		elseif arg == "verbose on" or arg == "verbose off" then
+			BagnonGamepadDB.debugVerbose = arg == "verbose on"
+			if BagnonGamepadDB.debugVerbose and not BagnonGamepadDB.debug then SetDebug(true) end
+			Log("SESSION", "verbose %s", BagnonGamepadDB.debugVerbose and "on" or "off")
+			print("|cff33eeffBagnon Gamepad:|r verbose debug log " .. (BagnonGamepadDB.debugVerbose and "on" or "off"))
+		elseif arg == "clear" then
+			wipe(BagnonGamepadLog)
+			if BagnonGamepadDB.debug then LogSession("cleared") end
+			print("|cff33eeffBagnon Gamepad:|r debug log cleared")
+		elseif arg == "mark" or arg:match("^mark ") then
+			Log("MARK", "%s", arg:sub(6) ~= "" and arg:sub(6) or "----")
+			Snapshot("mark")
+			print("|cff33eeffBagnon Gamepad:|r mark added")
+		elseif arg == "scan" then
+			BagnonGamepadDeepScan("manual")
+			print("|cff33eeffBagnon Gamepad:|r deep taint scan written to the log")
+		elseif arg == "state" then
+			Snapshot("manual")
+			BagnonGamepadScanTaint()
+			print("|cff33eeffBagnon Gamepad:|r state written to the log")
+		else
+			print("|cff33eeffBagnon Gamepad:|r debug log is " .. (BagnonGamepadDB.debug and "on" or "off")
+				.. (BagnonGamepadDB.debugVerbose and " (verbose)" or "")
+				.. (", %d lines. /bagnonpad log on | off | verbose on | verbose off | clear | state | mark <note>"):format(#BagnonGamepadLog))
+		end
+		return
+	end
 	BagnonGamepadDB.enabled = not BagnonGamepadDB.enabled
 	print("|cff33eeffBagnon Gamepad:|r controller navigation " .. (BagnonGamepadDB.enabled and "on" or "off"))
 	Refresh()

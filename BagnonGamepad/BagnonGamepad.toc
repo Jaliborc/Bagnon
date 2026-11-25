@@ -4,6 +4,6 @@
 ## Author: Syber Hexen
 ## Version: 2.37.0
 ## Dependencies: Bagnon
-## SavedVariables: BagnonGamepadDB
+## SavedVariables: BagnonGamepadDB, BagnonGamepadLog
 
 BagnonGamepad.lua

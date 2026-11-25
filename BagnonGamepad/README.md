@@ -21,3 +21,7 @@ on the `forever-gamepad` branch of the BagBrother fork (bank panels, combined ba
   be set by addons (the game forbids it) and stays keyboard and mouse.
 - The small windows (split stack, picker, money) use the window's Bagnon skin.
 - In combat the controller bindings are released; the bags keep working with the mouse.
+- Debug log (Bagnon options > Controller, or `/bagnonpad log`), saved to `BagnonGamepadLog`:
+  blocked and forbidden calls with stacks, Lua errors, taint in Forever's controller tables, and a
+  trace of Bagnon and Bagnon Gamepad activity with mouse and controller; an optional verbose mode
+  adds per-call timing.
