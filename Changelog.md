@@ -1,3 +1,8 @@
+### 12.1.14
+* __Forever__: Only characters in the current ruleset are now shown.
+* __All__: Added option to only show characters in your current faction (co-authored by _tolache_).
+* __All__: Multiple client sorting bugs fixed by _lucienve_.
+
 ### 12.1.13
 * __All__: You can now toggle the deposit button of the guild bank frame.
 
