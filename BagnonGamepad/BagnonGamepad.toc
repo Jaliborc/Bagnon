@@ -1,0 +1,9 @@
+## Interface: 16001
+## Title: Bagnon Gamepad
+## Notes: Controller navigation for Bagnon on WoW Forever: D-pad moves between slots and buttons, A uses, X picks up, LB/RB switch windows.
+## Author: Syber Hexen
+## Version: 2.37.0
+## Dependencies: Bagnon
+## SavedVariables: BagnonGamepadDB, BagnonGamepadLog
+
+BagnonGamepad.lua
